@@ -1,0 +1,114 @@
+const getNews = async function () {
+  const response = await fetch(
+    "https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=3ac5523d43eb420aa810389f8d45a190"
+  );
+  const data = await response.json();
+  console.log(data);
+
+  // document.querySelector(".images").innerHTML = data.articles
+  // .map((el) => {
+  //   if (!el.urlToImage) return;
+  //   return ` <div class="card">
+  //   <img class="card-img" src="${el.urlToImage}" alt="" />
+  //   <div class="card-info">
+  //     <p class="card-date">${el.publishedAt.slice(0, 10)}</p>
+  //     <h1 class="card-title">${el.title}</h1>
+  //     <p class="card-description">
+  //     ${el?.content}
+  //     </p>
+  //     <p class="card-source">${el.source.name}</p>
+  //     <button class="card-button">Check it out</button>
+  //   </div>
+  // </div>`;
+  // })
+  // .join("");
+};
+
+getNews();
+
+const emailInput = document.querySelector(".email-input");
+
+document.querySelectorAll("li").forEach((el) =>
+  el.addEventListener("mouseover", function (e) {
+    document.querySelectorAll("li").forEach((el) => (el.style.opacity = "0.5"));
+    e.target.style.opacity = "1";
+  })
+);
+
+document.querySelectorAll("li").forEach((el) =>
+  el.addEventListener("mouseleave", function (e) {
+    document.querySelectorAll("li").forEach((el) => (el.style.opacity = "1"));
+  })
+);
+
+const blurBackground = () => {
+  const elementsToBlur = document.querySelectorAll("body > *:not(.modal)");
+  elementsToBlur.forEach((element) => {
+    element.style.filter = "blur(5px)";
+  });
+};
+const unblurBackground = () => {
+  const elementsToUnblur = document.querySelectorAll("body > *:not(.modal)");
+  elementsToUnblur.forEach((element) => {
+    element.style.filter = "none";
+  });
+};
+
+document
+  .querySelector(".email-container")
+  .addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (!emailInput.value) {
+      document.querySelector(".invalid-container").classList.remove("hidden");
+      emailInput.style.border = "1px solid red";
+      document.querySelector(
+        ".invalid-input"
+      ).innerHTML = `<p>Input can not be empty</p>`;
+
+      setTimeout(() => {
+        document.querySelector(".invalid-container").classList.add("hidden");
+        emailInput.style.border = "1px solid lime";
+      }, 1500);
+
+      return;
+    }
+    if (!emailInput.value.endsWith("@gmail.com")) {
+      document.querySelector(".invalid-container").classList.remove("hidden");
+      emailInput.style.border = "1px solid red";
+      document.querySelector(
+        ".invalid-input"
+      ).innerHTML = `<p> Email must end with @gmail.com</p>`;
+
+      setTimeout(() => {
+        document.querySelector(".invalid-container").classList.add("hidden");
+        emailInput.style.border = "1px solid lime";
+      }, 1500);
+
+      return;
+    }
+
+    if (emailInput.value.slice(0, -10).length < 5) {
+      document.querySelector(".invalid-container").classList.remove("hidden");
+      emailInput.style.border = "1px solid red";
+      document.querySelector(
+        ".invalid-input"
+      ).innerHTML = `<p>Email must be more than 5 letters long.</p>`;
+      setTimeout(() => {
+        document.querySelector(".invalid-container").classList.add("hidden");
+        emailInput.style.border = "1px solid lime";
+      }, 1500);
+
+      return;
+    }
+    document.querySelector(".modal").style.height = "80svh";
+    document.querySelector(".modal").style.width = "40vw";
+    emailInput.value = "";
+    blurBackground();
+
+    document.addEventListener("click", function (e) {
+      if (e.target.closest(".modal")) return;
+      document.querySelector(".modal").style.height = "0svh";
+      document.querySelector(".modal").style.width = "0vw";
+      unblurBackground();
+    });
+  });
