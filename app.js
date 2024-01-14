@@ -59,44 +59,18 @@ document
   .addEventListener("submit", function (e) {
     e.preventDefault();
     if (!emailInput.value) {
-      document.querySelector(".invalid-container").classList.remove("hidden");
-      emailInput.style.border = "1px solid red";
-      document.querySelector(
-        ".invalid-input"
-      ).innerHTML = `<p>Input can not be empty</p>`;
-
-      setTimeout(() => {
-        document.querySelector(".invalid-container").classList.add("hidden");
-        emailInput.style.border = "1px solid lime";
-      }, 1500);
+      renderError("Input can't be empty.");
 
       return;
     }
     if (!emailInput.value.endsWith("@gmail.com")) {
-      document.querySelector(".invalid-container").classList.remove("hidden");
-      emailInput.style.border = "1px solid red";
-      document.querySelector(
-        ".invalid-input"
-      ).innerHTML = `<p> Email must end with @gmail.com</p>`;
-
-      setTimeout(() => {
-        document.querySelector(".invalid-container").classList.add("hidden");
-        emailInput.style.border = "1px solid lime";
-      }, 1500);
+      renderError("Input must end in @gmail.com.");
 
       return;
     }
 
     if (emailInput.value.slice(0, -10).length < 5) {
-      document.querySelector(".invalid-container").classList.remove("hidden");
-      emailInput.style.border = "1px solid red";
-      document.querySelector(
-        ".invalid-input"
-      ).innerHTML = `<p>Email must be more than 5 letters long.</p>`;
-      setTimeout(() => {
-        document.querySelector(".invalid-container").classList.add("hidden");
-        emailInput.style.border = "1px solid lime";
-      }, 1500);
+      renderError("Input must have more than 5 characters.");
 
       return;
     }
@@ -112,3 +86,44 @@ document
       unblurBackground();
     });
   });
+
+let timeoutID;
+const renderError = function (text) {
+  clearTimeout(timeoutID);
+
+  document.querySelector(".invalid-container").classList.remove("hidden");
+  emailInput.style.border = "1px solid red";
+  document.querySelector(".invalid-input").innerHTML = `<p>${text}</p>`;
+
+  timeoutID = setTimeout(function () {
+    document.querySelector(".invalid-container").classList.add("hidden");
+    emailInput.style.border = "1px solid lime";
+  }, 1500);
+};
+document.querySelectorAll(".animated").forEach((el) =>
+  el.addEventListener("click", function (e) {
+    if (
+      e.target.parentElement.nextElementSibling.classList.contains("active")
+    ) {
+      e.target.parentElement.nextElementSibling.style.height = "0px";
+      e.target.parentElement.nextElementSibling.style.color = "transparent";
+      e.target.style.transform = "rotate(0deg)";
+
+      e.target.parentElement.nextElementSibling.classList.remove("active");
+      return;
+    }
+    document.querySelectorAll(".animated").forEach((el) => {
+      console.log("thru");
+      el.parentElement.nextElementSibling.classList.remove("active");
+      el.parentElement.nextElementSibling.style.height = "0px";
+      el.parentElement.nextElementSibling.style.color = "transparent";
+      el.style.transform = "rotate(0deg)";
+
+      e.target.parentElement.nextElementSibling.classList.add("active");
+
+      e.target.parentElement.nextElementSibling.style.height = "30rem";
+      e.target.parentElement.nextElementSibling.style.color = "black";
+      e.target.style.transform = "rotate(180deg)";
+    });
+  })
+);
