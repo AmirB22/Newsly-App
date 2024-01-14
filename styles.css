@@ -19,12 +19,23 @@ body {
 .hidden {
   display: none;
 }
+.sticky {
+  position: fixed;
+  left: 0px;
+  right: 0px;
+  background-color: white;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+}
+.underline {
+  text-decoration: underline;
+}
 .main-page {
   position: relative;
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: space-between;
+  box-shadow: inset -100px -50px 500px rgba(0, 0, 0, 0.2);
 }
 .left-side {
   display: flex;
@@ -45,12 +56,18 @@ body {
   width: 30%;
 }
 
-nav {
+.header {
+  font-weight: bold;
   position: absolute;
   top: 0px;
   left: 0px;
   right: 0px;
   height: 7rem;
+  z-index: 3;
+  background-color: white;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+}
+.nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -99,18 +116,19 @@ nav {
     rgba(196, 252, 69, 1) 100%
   );
 }
+.welcome-title-container {
+  display: flex;
+  align-items: center;
+  font-size: 2rem;
+}
 .title-container {
   display: flex;
-  flex-direction: column;
   align-items: center;
+  flex-direction: column;
+  width: 100%;
   margin-top: -15rem;
 }
-.welcome {
-  font-family: "Anton";
-  font-size: 3rem;
-  margin-left: -15rem;
-  color: gray;
-}
+
 .site-title {
   padding: 1rem;
   font-size: 4rem;
@@ -122,30 +140,45 @@ nav {
     rgba(196, 252, 69, 1) 100%
   );
   border-radius: 2rem;
+  margin-left: 2rem;
 }
-.site-title h1 {
+.site-title h1,
+.site-title-two h1 {
   transform: skew(30deg);
   font-family: "Exo 2";
   color: white;
 }
+.site-title-two {
+  padding: 1rem;
+  font-size: 2rem;
+  transform: skew(-30deg);
+  background: rgb(73, 180, 58);
+  background: linear-gradient(
+    135deg,
+    rgba(73, 180, 58, 1) 0%,
+    rgba(196, 252, 69, 1) 100%
+  );
+  border-radius: 2rem;
+  margin-left: 2rem;
+  margin-right: 1rem;
+}
+.added-text {
+  font-size: 4rem;
+  display: flex;
+  align-items: center;
+}
 .title-paragraph {
-  font-size: 1.5rem;
+  font-size: 2rem;
   color: gray;
   margin-top: 3rem;
   width: 80%;
   text-align: center;
 }
-
-.email {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  margin-left: 5rem;
-}
-.email-paragraph {
+/* .email-paragraph {
+  text-align: center;
   color: gray;
   font-size: 2rem;
-  width: 50%;
+  width: 70%;
 }
 .email-container {
   display: flex;
@@ -156,7 +189,7 @@ nav {
   padding: 10px;
   font-size: 2rem;
   border: 1px solid lime;
-}
+} 
 .invalid-container {
   width: auto;
   text-align: center;
@@ -232,7 +265,7 @@ nav {
   box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
   z-index: 1;
   transition: all 1s;
-}
+} */
 .reason-we-are-the-best {
   position: absolute;
   bottom: 4.2rem;
@@ -268,8 +301,18 @@ nav {
   gap: 2rem;
   width: 20%;
   padding: 2rem;
-  transition: all 1s;
+  transition: all 1s, background-color 0.2s;
+}
+.reasons-container div:hover {
+  transform: translateY(-10rem) scale(1.1);
+  border-radius: 1rem;
+  width: 20%;
   background-color: white;
+
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
+  & p {
+    transform: scale(1.1);
+  }
 }
 .reason-we-are-the-best h2 {
   background: rgb(73, 180, 58);
@@ -288,24 +331,47 @@ nav {
   width: 60%;
   transition: all 1s;
 }
-.reasons-container div:hover {
-  transform: translateY(-10rem) scale(1.1);
-  border-radius: 1rem;
-  width: 20%;
-
-  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
-  & p {
-    transform: scale(1.1);
-  }
-}
 .second-page {
   border-top: 1px solid lightgreen;
-  height: 100svh;
+  height: 120svh;
   width: 100%;
   display: flex;
+  box-shadow: inset 100px 50px 500px rgba(0, 0, 0, 0.2);
 }
 .left-side-scnd {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
   flex: 5;
+}
+.left-side-scnd-title {
+  position: absolute;
+  top: 5rem;
+  left: 50%;
+  width: 100rem;
+  height: 15rem;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  border-radius: 1rem;
+  background-color: white;
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.2);
+}
+.left-side-scnd-title h1 {
+  font-size: 4rem;
+  color: black;
+}
+.left-side-scnd-title p {
+  font-size: 2rem;
+  color: lime;
+}
+.left-side-scnd-image {
+  width: 70rem;
 }
 .right-side-scnd {
   flex: 5;
@@ -315,7 +381,7 @@ nav {
 }
 .menu-container {
   height: 30rem;
-  margin-top: 10rem;
+  margin-top: 30rem;
 }
 .menu-container div {
   display: flex;
@@ -362,7 +428,7 @@ nav {
 .menu-container i {
   transition: all 0.5s;
   padding: 0.5rem 1rem;
-  border-radius: 50%;
+  border-radius: 3rem;
 }
 .menu-container div:nth-child(4) i:hover {
   cursor: pointer;
@@ -385,13 +451,50 @@ nav {
 .third-page {
   height: 100svh;
   width: 100%;
-  background-color: blue;
+  box-shadow: inset -100px -50px 500px rgba(0, 0, 0, 0.2);
+  border-top: 1px solid lime;
+}
+.third-page-title-container {
+  position: absolute;
+  top: 5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 15rem;
+  position: relative;
+  padding: 2rem;
+  border-radius: 1rem;
+  background-color: white;
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.2);
+  width: 120rem;
+  align-self: center;
+}
+.third-page-title {
+  font-size: 4rem;
+}
+.moved-left,
+.moved-right {
+  font-size: 2rem;
+  position: absolute;
+  color: lime;
+}
+.moved-left {
+  left: 7rem;
+  top: 5rem;
+}
+.moved-right {
+  right: 7rem;
+  bottom: 5rem;
 }
 .fourth-page {
   height: 100svh;
   width: 100%;
   background-color: orange;
 }
+
 /* .images {
   display: flex;
   justify-content: center;

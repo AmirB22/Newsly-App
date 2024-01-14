@@ -41,65 +41,65 @@ document.querySelectorAll("li").forEach((el) =>
   })
 );
 
-const blurBackground = () => {
-  const elementsToBlur = document.querySelectorAll("body > *:not(.modal)");
-  elementsToBlur.forEach((element) => {
-    element.style.filter = "blur(5px)";
-  });
-};
-const unblurBackground = () => {
-  const elementsToUnblur = document.querySelectorAll("body > *:not(.modal)");
-  elementsToUnblur.forEach((element) => {
-    element.style.filter = "none";
-  });
-};
+// const blurBackground = () => {
+//   const elementsToBlur = document.querySelectorAll("body > *:not(.modal)");
+//   elementsToBlur.forEach((element) => {
+//     element.style.filter = "blur(5px)";
+//   });
+// };
+// const unblurBackground = () => {
+//   const elementsToUnblur = document.querySelectorAll("body > *:not(.modal)");
+//   elementsToUnblur.forEach((element) => {
+//     element.style.filter = "none";
+//   });
+// };
 
-document
-  .querySelector(".email-container")
-  .addEventListener("submit", function (e) {
-    e.preventDefault();
-    if (!emailInput.value) {
-      renderError("Input can't be empty.");
+// document
+//   .querySelector(".email-container")
+//   .addEventListener("submit", function (e) {
+//     e.preventDefault();
+//     if (!emailInput.value) {
+//       renderError("Input can't be empty.");
 
-      return;
-    }
-    if (!emailInput.value.endsWith("@gmail.com")) {
-      renderError("Input must end in @gmail.com.");
+//       return;
+//     }
+//     if (!emailInput.value.endsWith("@gmail.com")) {
+//       renderError("Input must end in @gmail.com.");
 
-      return;
-    }
+//       return;
+//     }
 
-    if (emailInput.value.slice(0, -10).length < 5) {
-      renderError("Input must have more than 5 characters.");
+//     if (emailInput.value.slice(0, -10).length < 5) {
+//       renderError("Input must have more than 5 characters.");
 
-      return;
-    }
-    document.querySelector(".modal").style.height = "80svh";
-    document.querySelector(".modal").style.width = "40vw";
-    emailInput.value = "";
-    blurBackground();
+//       return;
+//     }
+//     document.querySelector(".modal").style.height = "80svh";
+//     document.querySelector(".modal").style.width = "40vw";
+//     emailInput.value = "";
+//     blurBackground();
 
-    document.addEventListener("click", function (e) {
-      if (e.target.closest(".modal")) return;
-      document.querySelector(".modal").style.height = "0svh";
-      document.querySelector(".modal").style.width = "0vw";
-      unblurBackground();
-    });
-  });
+//     document.addEventListener("click", function (e) {
+//       if (e.target.closest(".modal")) return;
+//       document.querySelector(".modal").style.height = "0svh";
+//       document.querySelector(".modal").style.width = "0vw";
+//       unblurBackground();
+//     });
+//   });
 
-let timeoutID;
-const renderError = function (text) {
-  clearTimeout(timeoutID);
+// let timeoutID;
+// const renderError = function (text) {
+//   clearTimeout(timeoutID);
 
-  document.querySelector(".invalid-container").classList.remove("hidden");
-  emailInput.style.border = "1px solid red";
-  document.querySelector(".invalid-input").innerHTML = `<p>${text}</p>`;
+//   document.querySelector(".invalid-container").classList.remove("hidden");
+//   emailInput.style.border = "1px solid red";
+//   document.querySelector(".invalid-input").innerHTML = `<p>${text}</p>`;
 
-  timeoutID = setTimeout(function () {
-    document.querySelector(".invalid-container").classList.add("hidden");
-    emailInput.style.border = "1px solid lime";
-  }, 1500);
-};
+//   timeoutID = setTimeout(function () {
+//     document.querySelector(".invalid-container").classList.add("hidden");
+//     emailInput.style.border = "1px solid lime";
+//   }, 1500);
+// };
 document.querySelectorAll(".animated").forEach((el) =>
   el.addEventListener("click", function (e) {
     if (
@@ -127,3 +127,26 @@ document.querySelectorAll(".animated").forEach((el) =>
     });
   })
 );
+const nav = document.querySelector(".nav");
+const header = document.querySelector(".header");
+const mainPage = document.querySelector(".main-page");
+const mainPageHeight = mainPage.getBoundingClientRect().height;
+const headerHeight = header.getBoundingClientRect().height;
+
+const stickyNav = function (entries) {
+  const [entry] = entries;
+  // console.log(entry);
+  if (!entry.isIntersecting) {
+    nav.classList.add("sticky");
+    console.log(5);
+  } else {
+    console.log(1);
+    nav.classList.remove("sticky");
+  }
+};
+const headerObserver = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0,
+  rootMargin: `${mainPageHeight - 2.2 * headerHeight}px`,
+});
+headerObserver.observe(header);
