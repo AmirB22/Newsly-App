@@ -106,7 +106,6 @@ document.querySelectorAll(".animated").forEach((el) =>
       e.target.parentElement.nextElementSibling.classList.contains("active")
     ) {
       e.target.parentElement.nextElementSibling.style.height = "0px";
-      e.target.parentElement.nextElementSibling.style.color = "transparent";
       e.target.style.transform = "rotate(0deg)";
 
       e.target.parentElement.nextElementSibling.classList.remove("active");
@@ -116,13 +115,11 @@ document.querySelectorAll(".animated").forEach((el) =>
       console.log("thru");
       el.parentElement.nextElementSibling.classList.remove("active");
       el.parentElement.nextElementSibling.style.height = "0px";
-      el.parentElement.nextElementSibling.style.color = "transparent";
       el.style.transform = "rotate(0deg)";
 
       e.target.parentElement.nextElementSibling.classList.add("active");
 
       e.target.parentElement.nextElementSibling.style.height = "30rem";
-      e.target.parentElement.nextElementSibling.style.color = "black";
       e.target.style.transform = "rotate(180deg)";
     });
   })
@@ -138,12 +135,15 @@ const stickyNav = function (entries) {
   // console.log(entry);
   if (!entry.isIntersecting) {
     nav.classList.add("sticky");
-    console.log(5);
+    document.querySelector(".button-up").style.height = "5.5rem";
+    document.querySelector(".button-up").style.fontSize = "3rem";
   } else {
-    console.log(1);
     nav.classList.remove("sticky");
+    document.querySelector(".button-up").style.height = "0rem";
+    document.querySelector(".button-up").style.fontSize = "0rem";
   }
 };
+
 const headerObserver = new IntersectionObserver(stickyNav, {
   root: null,
   threshold: 0,
