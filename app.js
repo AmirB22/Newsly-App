@@ -26,6 +26,7 @@ const getNews = async function () {
 
 getNews();
 
+//Assigning variables
 const nav = document.querySelector(".nav");
 const header = document.querySelector(".header");
 const mainPage = document.querySelector(".main-page");
@@ -34,22 +35,26 @@ const headerHeight = header.getBoundingClientRect().height;
 const emailInput = document.querySelector(".email-input");
 const upBtn = document.querySelector(".button-up");
 
-document.querySelectorAll(".nav-li").forEach((el) =>
-  el.addEventListener("mouseover", function (e) {
-    document
-      .querySelectorAll(".nav-li")
-      .forEach((el) => (el.style.opacity = "0.5"));
-    e.target.style.opacity = "1";
-  })
-);
+const reviewLeft = document.querySelector(".review-left");
+const reviewRight = document.querySelector(".review-right");
 
-document.querySelectorAll(".nav-li").forEach((el) =>
-  el.addEventListener("mouseleave", function (e) {
-    document
-      .querySelectorAll(".nav-li")
-      .forEach((el) => (el.style.opacity = "1"));
-  })
-);
+const arrOfReviews = document.querySelectorAll(".review");
+const arrOfNavLists = document.querySelectorAll(".nav-li");
+
+const animatedBtn = document.querySelectorAll(".animated");
+
+const updateNavOpacity = function (opacity) {
+  arrOfNavLists.forEach((el) => (el.style.opacity = opacity));
+};
+
+/*Hovering over an element in the navbar modifies every other element's opacity to 0.5. */
+arrOfNavLists.forEach((el) => {
+  el.addEventListener("mouseover", (e) => {
+    updateNavOpacity("0.5");
+    e.target.style.opacity = "1";
+  });
+  el.addEventListener("mouseleave", () => updateNavOpacity("1"));
+});
 
 // const blurBackground = () => {
 //   const elementsToBlur = document.querySelectorAll("body > *:not(.modal)");
@@ -110,34 +115,41 @@ document.querySelectorAll(".nav-li").forEach((el) =>
 //     emailInput.style.border = "1px solid lime";
 //   }, 1500);
 // };
-document.querySelectorAll(".animated").forEach((el) =>
-  el.addEventListener("click", function (e) {
-    if (
-      e.target.parentElement.nextElementSibling.classList.contains("active")
-    ) {
-      e.target.parentElement.nextElementSibling.style.height = "0px";
-      e.target.style.transform = "rotate(0deg)";
 
-      e.target.parentElement.nextElementSibling.classList.remove("active");
+/*Second page-> Every button gets an event listener, when the button is clicked, the paragraph that's originally hidden
+gets modified in a way to create a smooth animation of it appearing on screen. */
+animatedBtn.forEach((el) =>
+  el.addEventListener("click", function (e) {
+    const textContainer = e.target.parentElement.nextElementSibling;
+
+    /*If the button we clicked on already was active (paragraph already showing) 
+    then we want to hide the paragraph and reset the icons rotation so that it points downwards. */
+    if (textContainer.classList.contains("active")) {
+      textContainer.style.height = "0px";
+      e.target.style.transform = "rotate(0deg)";
+      textContainer.classList.remove("active");
       return;
     }
-    document.querySelectorAll(".animated").forEach((el) => {
-      console.log("thru");
+    /*If the button we clicked on wasn't active, we remove the active class from every other
+    element so that if any other element is already showing their paragraph, we hide it, then
+    we show the paragraph thats the child element of the button that we pressed, again modifying it
+    in a way to create a smooth effect of the paragraph appearing and the icon rotating upwards. */
+    animatedBtn.forEach((el) => {
       el.parentElement.nextElementSibling.classList.remove("active");
       el.parentElement.nextElementSibling.style.height = "0px";
       el.style.transform = "rotate(0deg)";
 
-      e.target.parentElement.nextElementSibling.classList.add("active");
-
-      e.target.parentElement.nextElementSibling.style.height = "30rem";
+      textContainer.classList.add("active");
+      textContainer.style.height = "30rem";
       e.target.style.transform = "rotate(180deg)";
     });
   })
 );
 
+/*Observer function, waits for us to leave the main page to show the navbar, navbar shows a little before
+we leave the main page, exactly when the navbar would fit perfectly on the screen before the second page starts. */
 const stickyNav = function (entries) {
   const [entry] = entries;
-  // console.log(entry);
   if (!entry.isIntersecting) {
     nav.classList.add("sticky");
     upBtn.style.height = "5.5rem";
@@ -148,7 +160,7 @@ const stickyNav = function (entries) {
     upBtn.style.fontSize = "0rem";
   }
 };
-
+/*Observator declaration and option object */
 const headerObserver = new IntersectionObserver(stickyNav, {
   root: null,
   threshold: 0,
@@ -156,51 +168,57 @@ const headerObserver = new IntersectionObserver(stickyNav, {
 });
 headerObserver.observe(header);
 
-document.querySelectorAll(".review").forEach((el) => {
-  let number = el.dataset.review;
-  el.style.transform = `translateX(${number * 100}%) translateX(-50%)`;
-});
+/*Used in showNextReview and showPrevReview, used to update the Translate transformations of every element with the "review"
+ class based on their review dataset */
+const updateTransform = function () {
+  arrOfReviews.forEach((el) => {
+    el.style.transform = `translateX(${
+      +el.dataset.review * 100
+    }%) translate(-50%, -50%)`;
+  });
+};
+/*Used in the same two functions, used to update the dataset only when we reach the maximum or minimum amount of reviews. If
+we click to go to a review that doesn't exist (before/after our first/last review), we send the last/first review
+to the center of the page. */
+const updateDataset = function (number) {
+  arrOfReviews.forEach((el) => {
+    el.dataset.review = +el.dataset.review + number;
+  });
+};
 
-document.querySelector(".left").addEventListener("click", function () {
-  document.querySelectorAll(".review").forEach((el) => {
+/*Clicking right button shows us the next review with the use of the 2 previous functions */
+const showNextReview = function () {
+  arrOfReviews.forEach((el) => {
+    +el.dataset.review--;
+    arrOfReviews.forEach((el) => {
+      if (el.dataset.review == -4) {
+        updateDataset(4);
+        updateTransform();
+      }
+    });
+    updateTransform();
+  });
+};
+
+/*Clicking left button shows us the previous review with the use of the 2 previous functions */
+const showPrevReview = function () {
+  arrOfReviews.forEach((el) => {
     +el.dataset.review++;
 
-    document.querySelectorAll(".review").forEach((el) => {
+    arrOfReviews.forEach((el) => {
       if (el.dataset.review == 4) {
         {
-          document.querySelectorAll(".review").forEach((el) => {
-            el.dataset.review = +el.dataset.review - 4;
-            el.style.transform = `translateX(${
-              +el.dataset.review * 100
-            }%) translateX(-50%)`;
-          });
+          updateDataset(-4);
+          updateTransform();
         }
       }
     });
-
-    el.style.transform = `translateX(${
-      +el.dataset.review * 100
-    }%) translateX(-50%)`;
+    updateTransform();
   });
-});
+};
 
-document.querySelector(".right").addEventListener("click", function () {
-  document.querySelectorAll(".review").forEach((el) => {
-    +el.dataset.review--;
-    document.querySelectorAll(".review").forEach((el) => {
-      if (el.dataset.review == -4) {
-        {
-          document.querySelectorAll(".review").forEach((el) => {
-            el.dataset.review = +el.dataset.review + 4;
-            el.style.transform = `translateX(${
-              +el.dataset.review * 100
-            }%) translateX(-50%)`;
-          });
-        }
-      }
-    });
-    el.style.transform = `translateX(${
-      +el.dataset.review * 100
-    }%) translateX(-50%)`;
-  });
-});
+/*When page loads, we want every review to be in their place. */
+arrOfReviews.forEach((el) => updateTransform());
+
+reviewRight.addEventListener("click", showNextReview);
+reviewLeft.addEventListener("click", showPrevReview);
