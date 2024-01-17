@@ -416,3 +416,5 @@ const loggedIn = function () {
   checkIfLoggedOn();
   if (error) return;
 };
+
+//TODO: OPTIMIZE CODE AND MAKE FORGOT PASSWORD FUNCTIONAL!
