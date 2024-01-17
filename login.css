@@ -206,7 +206,11 @@ body {
   cursor: pointer;
   margin-top: 5rem;
 }
+.back-to-site-href {
+  text-decoration: none;
+}
 .created-account-log-in-button,
+.back-to-site-button,
 .log-out {
   font-weight: bold;
   font-size: 2rem;
@@ -216,7 +220,17 @@ body {
   border-radius: 2rem;
   padding: 2rem 4rem;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
 }
+.log-out {
+  position: absolute;
+  right: -43rem;
+  bottom: 0rem;
+}
+
 .bottom-text {
   position: absolute;
   bottom: 1rem;
@@ -256,7 +270,7 @@ body {
   font-size: 1rem;
   color: red;
   z-index: 1;
-  width: 120%;
+  width: 140%;
 }
 .error-credentials {
   color: red;

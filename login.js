@@ -4,36 +4,54 @@ const signUpContainer = document.querySelector(".sign-up-container");
 const logInContainer = document.querySelector(".log-in-container");
 
 const SignUpTransferBtn = document.querySelector(".log-sign-up");
+
+const alreadyLoggedText = document.querySelector(".already-logged-in");
+const bttmSlidingContainerText = document.querySelector(
+  ".log-in-ways-container"
+);
+
+/*getting localstorage */
 const userAccounts = JSON.parse(localStorage.getItem("accounts")) || [];
 let Logged = JSON.parse(localStorage.getItem("logged")) || false;
+let loggedInAs = JSON.parse(localStorage.getItem("loggedInAs")) || {};
+let LoggedIn;
 
-const checkIfLoggedOn = function () {
+/**
+ * When page loads, we chech if the user is already logged in, if they are, we hide the log in form and tell them that
+ * they are already logged in.
+ */
+const checkIfLoggedIn = function () {
   if (Logged) {
     slidingContainer.style.transform = "translateX(-50%)";
     slidingContainer.style.borderRadius = "0px";
     slidingContainer.style.width = "100%";
-    document.querySelector(
-      ".log-in-ways-container"
-    ).innerHTML = `<button class="log-out">Log out</button>`;
-    if (document.querySelector(".already-logged-in").innerHTML === "")
-      document.querySelector(
-        ".already-logged-in"
-      ).innerHTML = `<h1>You are already logged in</h1> <p>Go back to the site and enjoy everything its got to offer</p>`;
+    //prettier-ignore
+    bttmSlidingContainerText.innerHTML = `
+    <a class="back-to-site-href" href="./index.html">
+    <button class="back-to-site-button"><i class="fa-solid fa-arrow-left"></i> Back to site</button>
+    </a>
+      <button class="log-out"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log out</button>`;
+    if (!alreadyLoggedText.innerHTML)
+      //prettier-ignore
+      alreadyLoggedText.innerHTML = `
+      <h1>You are already logged in</h1> <p>Go back to the site and enjoy everything its got to offer</p>`;
 
+    /*Allowing user to Log out if they want to change accounts */
     document.querySelector(".log-out").addEventListener("click", function () {
       LoggedIn = false;
+      loggedInAs = {};
+      localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
       localStorage.setItem("logged", JSON.stringify(LoggedIn));
       Logged = JSON.parse(localStorage.getItem("logged")) || false;
-      checkIfLoggedOn();
+      checkIfLoggedIn();
     });
   } else {
     slidingContainer.style.transform = "translateX(0%)";
     slidingContainer.style.borderRadius = "15rem 0rem 0rem 15rem";
     slidingContainer.style.width = "50%";
-    document.querySelector(".already-logged-in").innerHTML = ``;
-    document.querySelector(
-      ".log-in-ways-container"
-    ).innerHTML = ` <div class="log-in-ways-container">
+    alreadyLoggedText.innerHTML = ``;
+    bttmSlidingContainerText.innerHTML = ` 
+    <div class="log-in-ways-container">
           <h1 class="sliding-title">Log in using</h1>
           <div class="log-in-ways">
             <p class="google"><i class="fa-brands fa-google"></i></p>
@@ -41,19 +59,22 @@ const checkIfLoggedOn = function () {
             <p class="instagram"><i class="fa-brands fa-instagram"></i></p>
             <p class="pinterest"><i class="fa-brands fa-pinterest"></i></p>
           </div>
-        </div>`;
+        </div>
+`;
   }
 };
-checkIfLoggedOn();
-let LoggedIn;
+checkIfLoggedIn();
+
 /**
- *
+ * Helper function, as the name suggests, used to help the general function in gathering parameters.
  * @param {String} translateTo the parameter is later used to determined the further params for the general function.
  * Based on the string, the general function knows where to move the sliding container and which text to show to the user.
  */
 const helper = function (translateTo) {
+  /*If user clicks Log out, width of sliding container is 100% so we need to change width and position */
   slidingContainer.style.width = "50%";
-  document.querySelector(".already-logged-in").innerHTML = ``;
+  alreadyLoggedText.innerHTML = ``;
+
   let translateValue, opacity, html;
   if (translateTo === "Sign up") {
     translateValue = "-100";
@@ -164,9 +185,8 @@ const helper = function (translateTo) {
   }
   general(translateValue, translateTo, opacity, html);
 };
-
 /**
- *
+ * General function is used to show the Sign-up or Log-in forms based on where the user clicks.
  * @param {String | Number} translateValue used in telling the general command where to place the sliding container
  * (left or right side)
  * @param {String} translateTo main param, used in basically creating every other param, and used for a lot of ternary
@@ -176,6 +196,8 @@ const helper = function (translateTo) {
  * @param {String} html used to put html in an appropriate container after clicking login || signup.
  */
 const general = function (translateValue, translateTo, opacity, html) {
+  window.location.hash = translateTo === "Sign up" ? "#signup" : "#login";
+
   slidingContainer.style.transform = `translateX(${translateValue}%)`;
   translateTo === "Sign up"
     ? (slidingContainer.style.borderRadius = "0rem 15rem 15rem 0rem")
@@ -232,7 +254,214 @@ const general = function (translateValue, translateTo, opacity, html) {
           });
   }, 1000);
 };
+const checkHash = function () {
+  if (!window.location.hash) {
+    Logged ? checkIfLoggedIn() : (window.location.hash = "#login");
+  } else if (window.location.hash === "#signup") {
+    Logged ? checkIfLoggedIn() : helper("Sign up");
+  } else if (window.location.hash === "#login") {
+    Logged ? checkIfLoggedIn() : helper("Log in");
+  }
+};
+checkHash();
+window.addEventListener("hashchange", checkHash);
+/**
+ * Global error rendering function for signup and login forms, used to render errors.
+ * @param {String} inputName used to see where the error occured, and where the error message needs to be displayed, along with
+ * changing the appropriate border color.
+ * @param {String} message used to tell the function what to put inside the error.
+ */
+const renderInputErrors = function (inputName, message) {
+  const signupEmailInput = document.querySelector("#email");
+  const signupFirstPswInput = document.querySelector("#first-password");
+  const signupScndPswInput = document.querySelector("#confirm-password");
+  const sigupUsernameInput = document.querySelector("#signup-username");
 
+  const loginUsernameInput = document.querySelector("#username");
+  const loginPasswordInput = document.querySelector("#password");
+  //prettier-ignore
+  let element;
+  if (inputName === "signup-email") {
+    signupEmailInput.style.borderColor = "red";
+    element = ".error-email";
+  }
+  if (inputName === "signup-first-password") {
+    signupFirstPswInput.style.borderColor = "red";
+    element = ".error-first-password";
+  }
+  if (inputName === "signup-second-password") {
+    signupScndPswInput.style.borderColor = "red";
+    element = ".error-scnd-password";
+  }
+  if (inputName === "signup-username") {
+    sigupUsernameInput.style.borderColor = "red";
+    element = ".error-signup-username";
+  }
+
+  if (inputName === "login-username") {
+    loginUsernameInput.style.borderColor = "red";
+    element = ".error-username";
+  }
+  if (inputName === "login-password") {
+    loginPasswordInput.style.borderColor = "red";
+    element = ".error-password";
+  }
+  if (inputName === "login-credentials") {
+    loginUsernameInput.style.borderColor = "red";
+    loginPasswordInput.style.borderColor = "red";
+    element = ".error-credentials";
+  }
+  document.querySelector(`${element}`).classList.remove("hidden");
+  document.querySelector(`${element}`).textContent = `* ${message}`;
+};
+const signedUp = function () {
+  let error = 0;
+
+  const email = document.querySelector("#email");
+  const firstPassword = document.querySelector("#first-password");
+  const secondPassword = document.querySelector("#confirm-password");
+  const username = document.querySelector("#signup-username");
+
+  const arrayOfInputs = [username, secondPassword, firstPassword, email];
+
+  /*Removing any errors after clicking the signup button and rendering new ones */
+  arrayOfInputs.forEach((el) => {
+    el.nextElementSibling.classList.add("hidden");
+    el.style.borderColor = "lime";
+  });
+
+  /*Rendering errors */
+  if (!email.value) {
+    renderInputErrors("signup-email", "Email can not be empty");
+    error++;
+  } else if (!email.value.endsWith("@gmail.com")) {
+    renderInputErrors("signup-email", "Email must end in @gmail.com");
+    error++;
+  } else if (email.value.slice(0, -10).length < 5) {
+    //prettier-ignore
+    renderInputErrors("signup-email", "Must be at least 5 characters");
+    error++;
+  }
+  if (!firstPassword.value) {
+    renderInputErrors("signup-first-password", "Password can not be empty");
+    error++;
+  }
+  if (!username.value) {
+    renderInputErrors("signup-username", "Username can not be empty");
+    error++;
+  }
+  if (!secondPassword.value) {
+    //prettier-ignore
+    renderInputErrors("signup-second-password","Confirmation can not be empty");
+    error++;
+  }
+  if (firstPassword.value !== secondPassword.value) {
+    renderInputErrors("signup-second-password", "Passwords do not match");
+    error++;
+  }
+  //prettier-ignore
+  if (!userAccounts ||userAccounts.some((el) => el.email === email.value)) {
+    //prettier-ignore
+    renderInputErrors("signup-email", "Email already taken");
+    error++;
+  }
+  //prettier-ignore
+  if (!userAccounts || userAccounts.some((el) => el.username === username.value)) {
+    renderInputErrors("signup-username", "Username already taken");
+    error++
+}
+  if (error) return;
+
+  /*Showing message that the account was created*/
+  accountCreated();
+
+  /*Actually adding the account to localStorage */
+  userAccounts.push({
+    email: email.value,
+    username: username.value,
+    password: firstPassword.value,
+    img: "https://svet-scandal.rs/wp-content/uploads/2023/01/barbara-bobak.webp",
+  });
+  localStorage.setItem("accounts", JSON.stringify(userAccounts));
+};
+const accountCreated = function () {
+  /*Centering sliding container and making it 100% width, adding text,and a Log in button*/
+  slidingContainer.style.transform = "translateX(-50%)";
+  slidingContainer.style.borderRadius = "0px";
+  slidingContainer.style.width = "100%";
+  alreadyLoggedText.innerHTML = `<h1>Successfully created an account</h1> <p>You can go back and log in!</p>`;
+  bttmSlidingContainerText.innerHTML = `<button class="created-account-log-in-button">Log in</button>`;
+  const newLogInBtn = document.querySelector(".created-account-log-in-button");
+
+  newLogInBtn.addEventListener("click", () => {
+    helper("Log in");
+  });
+};
+const loggedIn = function () {
+  let error = 0;
+  const username = document.querySelector("#username");
+  const password = document.querySelector("#password");
+
+  const arrOfLoginInputs = [username, password];
+
+  /*Removing visible errors and rendering new ones */
+  arrOfLoginInputs.forEach((el) => {
+    el.style.borderColor = "lime";
+    el.nextElementSibling.classList.add("hidden");
+  });
+  document.querySelector(".error-credentials").classList.add("hidden");
+
+  /*Rendering new errors */
+  if (!username.value) {
+    renderInputErrors("login-username", "Username can not be empty");
+    error++;
+  }
+  if (!password.value) {
+    renderInputErrors("login-password", "Password can not be empty");
+    error++;
+  }
+
+  if (error) return;
+
+  /*Creating a variable thats gonna help us see if the username and password exist as a pair in the userAccounts array */
+  let found = false;
+  let name = "";
+  //prettier-ignore
+  userAccounts.forEach((el) => {
+    if (el.username === username.value && el.password === password.value) {
+      LoggedIn = true;
+      found = true;
+      name = el.username;
+
+      /*Getting current account info */
+      let loggedInAs = {
+        username: el.username,
+        password: el.password,
+        email: el.email,
+      };
+
+      /*Changing localStorage data, changing loggedIn to True and LoggedInAs to the currently logged in account */
+      localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+      localStorage.setItem("logged", JSON.stringify(LoggedIn));
+    }
+  });
+
+  /*If account wasn't found we render an error */
+  if (!found) {
+    //prettier-ignore
+    renderInputErrors("login-credentials","No account found under the given credentials")
+    error++;
+  }
+  if (error) return;
+
+  alreadyLoggedText.innerHTML = `
+  <h1>Successfully logged in as ${name}!</h1>
+   <p>Go back to the site and enjoy everything its got to offer</p>`;
+
+  /*Changing value of Logged, then calling a function to change sliding container text and width/position */
+  Logged = JSON.parse(localStorage.getItem("logged")) || false;
+  checkIfLoggedIn();
+};
 /*giving sign-up button an event listener to start off the whole process*/
 SignUpTransferBtn.addEventListener("click", function () {
   helper("Sign up");
@@ -241,180 +470,4 @@ document.querySelector(".log-in-form").addEventListener("submit", function (e) {
   e.preventDefault();
   loggedIn();
 });
-
-const signedUp = function () {
-  let error = 0;
-  const emailInput = document.querySelector("#email");
-  const firstPswInput = document.querySelector("#first-password");
-  const secondPswInput = document.querySelector("#confirm-password");
-  const usernameInput = document.querySelector("#signup-username");
-
-  const arrayOfInputs = [
-    usernameInput,
-    secondPswInput,
-    firstPswInput,
-    emailInput,
-  ];
-  arrayOfInputs.forEach((el) => {
-    el.nextElementSibling.classList.add("hidden");
-    el.style.borderColor = "lime";
-  });
-
-  let email = emailInput.value;
-  if (!emailInput.value) {
-    emailInput.style.borderColor = "red";
-    document.querySelector(".error-email").classList.remove("hidden");
-    document.querySelector(".error-email").textContent =
-      "* Email can not be empty";
-    error++;
-  } else if (!emailInput.value.endsWith("@gmail.com")) {
-    emailInput.style.borderColor = "red";
-    document.querySelector(".error-email").classList.remove("hidden");
-    document.querySelector(".error-email").textContent =
-      "* Email must end in @gmail.com";
-    error++;
-  } else if (email.slice(0, -10).length < 5) {
-    emailInput.style.borderColor = "red";
-    document.querySelector(".error-email").classList.remove("hidden");
-    document.querySelector(".error-email").textContent =
-      "* Email must have more than 5 characters";
-    error++;
-  }
-  if (!firstPswInput.value) {
-    firstPswInput.style.borderColor = "red";
-    document.querySelector(".error-first-password").classList.remove("hidden");
-    document.querySelector(".error-first-password").textContent =
-      "* Password can not be empty";
-    error++;
-  }
-  if (!usernameInput.value) {
-    usernameInput.style.borderColor = "red";
-    document.querySelector(".error-signup-username").classList.remove("hidden");
-    document.querySelector(".error-signup-username").textContent =
-      "* Username can not be empty";
-    error++;
-  }
-  if (!secondPswInput.value) {
-    secondPswInput.style.borderColor = "red";
-    document.querySelector(".error-scnd-password").classList.remove("hidden");
-    document.querySelector(".error-scnd-password").textContent =
-      "* Confirmation can not be empty";
-    error++;
-  }
-  if (firstPswInput.value !== secondPswInput.value) {
-    secondPswInput.style.borderColor = "red";
-    document.querySelector(".error-scnd-password").classList.remove("hidden");
-    document.querySelector(".error-scnd-password").textContent =
-      "* Passwords do not match";
-    error++;
-  }
-  if (
-    !userAccounts ||
-    userAccounts.some((el) => el.email === emailInput.value)
-  ) {
-    emailInput.style.borderColor = "red";
-    document.querySelector(".error-email").classList.remove("hidden");
-    document.querySelector(".error-email").textContent = "* Email taken";
-    error++;
-  }
-  if (
-    !userAccounts ||
-    userAccounts.some((el) => el.username === usernameInput.value)
-  ) {
-    usernameInput.style.borderColor = "red";
-    document.querySelector(".error-signup-username").classList.remove("hidden");
-    document.querySelector(".error-signup-username").textContent =
-      "* Username taken";
-    error++;
-  }
-  if (error) return;
-
-  let username = usernameInput.value;
-  let password = firstPswInput.value;
-  accountCreated();
-
-  userAccounts.push({
-    email,
-    username,
-    password,
-    img: "https://svet-scandal.rs/wp-content/uploads/2023/01/barbara-bobak.webp",
-  });
-
-  localStorage.setItem("accounts", JSON.stringify(userAccounts));
-};
-
-const accountCreated = function () {
-  slidingContainer.style.transform = "translateX(-50%)";
-  slidingContainer.style.borderRadius = "0px";
-  slidingContainer.style.width = "100%";
-  document.querySelector(
-    ".already-logged-in"
-  ).innerHTML = `<h1>Successfully created an account</h1> <p>You can go back and log in!</p>`;
-  document.querySelector(
-    ".log-in-ways-container"
-  ).innerHTML = `<button class="created-account-log-in-button">Log in</button>`;
-  document
-    .querySelector(".created-account-log-in-button")
-    .addEventListener("click", function () {
-      helper("Log in");
-    });
-};
-const loggedIn = function () {
-  let error = 0;
-  const usernameInput = document.querySelector("#username");
-  const passwordInput = document.querySelector("#password");
-
-  const arrOfLoginInputs = [usernameInput, passwordInput];
-  arrOfLoginInputs.forEach((el) => {
-    el.style.borderColor = "lime";
-    el.nextElementSibling.classList.add("hidden");
-  });
-
-  document.querySelector(".error-credentials").classList.add("hidden");
-
-  if (!usernameInput.value) {
-    usernameInput.style.borderColor = "red";
-    document.querySelector(".error-username").classList.remove("hidden");
-    document.querySelector(".error-username").textContent =
-      "* Username can not be empty";
-    error++;
-  }
-  if (!passwordInput.value) {
-    passwordInput.style.borderColor = "red";
-    document.querySelector(".error-login-password").classList.remove("hidden");
-    document.querySelector(".error-login-password").textContent =
-      "* Password can not be empty";
-    error++;
-  }
-  if (error) return;
-  let found = false;
-  let name = "";
-  userAccounts.forEach((el) => {
-    if (
-      el.username === usernameInput.value &&
-      el.password === passwordInput.value
-    ) {
-      LoggedIn = true;
-      found = true;
-      name = el.username;
-      localStorage.setItem("logged", JSON.stringify(LoggedIn));
-    }
-  });
-  if (found) console.log(`Logged in as ${name}`);
-  else {
-    document.querySelector(".error-credentials").classList.remove("hidden");
-    document.querySelector(".error-credentials").textContent =
-      "* No account found under given credentials";
-    passwordInput.style.borderColor = "red";
-    usernameInput.style.borderColor = "red";
-    error++;
-  }
-  document.querySelector(
-    ".already-logged-in"
-  ).innerHTML = `<h1>Successfully logged in as ${name}!</h1> <p>Go back to the site and enjoy everything its got to offer`;
-  Logged = JSON.parse(localStorage.getItem("logged")) || false;
-  checkIfLoggedOn();
-  if (error) return;
-};
-
 //TODO: OPTIMIZE CODE AND MAKE FORGOT PASSWORD FUNCTIONAL!

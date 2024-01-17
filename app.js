@@ -46,15 +46,40 @@ const animatedBtn = document.querySelectorAll(".animated");
 const updateNavOpacity = function (opacity) {
   arrOfNavLists.forEach((el) => (el.style.opacity = opacity));
 };
+const userAccounts = JSON.parse(localStorage.getItem("accounts")) || [];
+let Logged = JSON.parse(localStorage.getItem("logged")) || false;
+let account = JSON.parse(localStorage.getItem("loggedInAs")) || {};
 
 /*Hovering over an element in the navbar modifies every other element's opacity to 0.5. */
 arrOfNavLists.forEach((el) => {
   el.addEventListener("mouseover", (e) => {
     updateNavOpacity("0.5");
+    if (!Logged && e.target.classList.contains("get-news")) {
+      e.target.style.cursor = "default";
+      return;
+    }
     e.target.style.opacity = "1";
   });
   el.addEventListener("mouseleave", () => updateNavOpacity("1"));
 });
+
+const checkIfLoggedIn = function () {
+  if (Logged) {
+    document.querySelector(
+      ".right-side-nav"
+    ).innerHTML = `<button class="nav-button log-out">Log out</button>`;
+  } else if (!Logged && userAccounts.length !== 0) {
+    document.querySelector(
+      ".right-side-nav"
+    ).innerHTML = `<a class="nav-button" href="./login-page.html#login"><button>Log in</button></a>`;
+  } else if (!Logged && userAccounts.length === 0) {
+    document.querySelector(
+      ".right-side-nav"
+    ).innerHTML = `<a class="nav-button" href="./login-page.html#signup"><button>Create an account</button></a>`;
+  }
+  console.log(123);
+};
+checkIfLoggedIn();
 
 // const blurBackground = () => {
 //   const elementsToBlur = document.querySelectorAll("body > *:not(.modal)");
@@ -222,7 +247,3 @@ arrOfReviews.forEach((el) => updateTransform());
 
 reviewRight.addEventListener("click", showNextReview);
 reviewLeft.addEventListener("click", showPrevReview);
-
-const userAccounts = JSON.parse(localStorage.getItem("accounts")) || [];
-
-console.log(userAccounts);

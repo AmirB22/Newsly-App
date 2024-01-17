@@ -129,18 +129,24 @@ body {
   align-items: center;
 }
 .nav-button {
-  width: 15rem;
-  height: 5rem;
-  border: none;
-  color: white;
   cursor: pointer;
-  border-radius: 1rem;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.7rem;
+}
+.nav-button button {
   background: rgb(73, 180, 58);
   background: linear-gradient(
     135deg,
     rgba(73, 180, 58, 1) 0%,
     rgba(196, 252, 69, 1) 100%
   );
+  color: white;
+  padding: 1.5rem 2rem;
+  border-radius: 1rem;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
 }
 .welcome-title-container {
   display: flex;
