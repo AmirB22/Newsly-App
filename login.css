@@ -9,10 +9,14 @@ body {
   display: grid;
   place-items: center;
   font-family: "Poppins", sans-serif;
+  background-image: url("./loginbackground.jpg");
 }
 * {
   margin: 0px;
   padding: 0px;
+}
+.hidden {
+  display: none;
 }
 .log-in {
   font-size: 1.5rem;
@@ -23,6 +27,7 @@ body {
   box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.2);
   border-radius: 1rem;
   overflow: hidden;
+  display: flex;
 }
 .sliding-container {
   width: 50%;
@@ -40,37 +45,119 @@ body {
   z-index: 1;
   border-top-left-radius: 15rem;
   border-bottom-left-radius: 15rem;
-}
-.movement-buttons {
-  position: absolute;
   display: flex;
-  top: 0px;
+  justify-content: start;
+  align-items: center;
+  flex-direction: column;
+  gap: 10rem;
+}
+.log-in-ways-container {
+  position: absolute;
+  bottom: 3rem;
+  display: grid;
+  place-items: center;
+  transition: opacity 0.5s;
+}
+.sliding-image {
+  width: 15rem;
+  margin-top: 5rem;
+}
+.sliding-title {
+  color: white;
+  font-size: 3rem;
+}
+.already-logged-in {
+  color: white;
+  display: grid;
+  place-items: center;
+}
+.already-logged-in p {
+  color: black;
+}
+
+.log-in-ways {
+  display: flex;
   gap: 2rem;
 }
-.movement-buttons button {
-  z-index: 2;
-  width: 10rem;
+.log-in-ways i {
+  display: grid;
+  place-items: center;
+  font-size: 3rem;
+  width: 5rem;
+  height: 5rem;
+}
+.log-in-ways p {
+  border-radius: 1rem;
   cursor: pointer;
-  height: 4rem;
-  background-color: blue;
-  border: none;
+}
+.google {
+  background-color: #ea4335;
   color: white;
 }
-.log-in-container {
+.facebook {
+  background-color: rgb(66, 103, 178);
+  color: white;
+}
+.instagram {
+  background: #d6249f;
+  background: radial-gradient(
+    circle at 30% 107%,
+    #fdf497 0%,
+    #fdf497 5%,
+    #fd5949 45%,
+    #d6249f 60%,
+    #285aeb 90%
+  );
+  color: white;
+}
+.pinterest {
+  background-color: white;
+  color: red;
+}
+.log-in-title,
+.sign-up-title {
+  display: grid;
+  place-items: center;
+}
+.log-in-container,
+.sign-up-container {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   width: 50%;
   height: 100%;
-  z-index: 1;
+  z-index: 0;
+  position: relative;
+  transition: opacity 0.5s;
 }
-.credentials-container {
+.sign-up-container {
+  opacity: 0;
+}
+.credentials-container,
+.signup-credentials-container {
   display: flex;
   flex-direction: column;
   flex: 5;
-  justify-content: end;
+  justify-content: center;
   align-items: center;
+}
+.log-in-form,
+.sign-up-form {
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 4rem;
+  position: relative;
+}
+.sign-up-container .sign-up-form {
+  margin-top: 0rem;
+}
+.sign-up-title {
+  position: relative;
+  bottom: 2rem;
 }
 .username-container,
 .password-container {
@@ -78,23 +165,34 @@ body {
   display: flex;
   flex-direction: column;
 }
-.log-in-container input {
-  padding: 0.5rem 1rem;
+.log-in-container input,
+.sign-up-container input {
+  border: none;
+  border-bottom: 1px solid lime;
+  padding: 2rem 2rem;
+  padding-bottom: 1rem;
+  padding-left: 1rem;
   font-size: 1.5rem;
+}
+.log-in-container input:focus,
+.sign-up-container input:focus {
+  outline: none;
 }
 .forgot-password {
   position: absolute;
   bottom: -2rem;
-  right: 0px;
+  right: -5rem;
   font-size: 1rem;
   color: teal;
   text-decoration: underline;
   cursor: pointer;
 }
 .bottom-of-log-in {
-  flex: 5;
+  flex: 1;
 }
-.log-in-button {
+.log-in-button,
+.sign-up-button {
+  font-size: 2rem;
   background: rgb(73, 180, 58);
   background: linear-gradient(
     135deg,
@@ -105,15 +203,80 @@ body {
   color: white;
   border-radius: 2rem;
   padding: 2rem 4rem;
-  margin-top: 10rem;
+  cursor: pointer;
+  margin-top: 5rem;
+}
+.created-account-log-in-button,
+.log-out {
+  font-weight: bold;
+  font-size: 2rem;
+  background-color: white;
+  border: none;
+  color: lime;
+  border-radius: 2rem;
+  padding: 2rem 4rem;
   cursor: pointer;
 }
 .bottom-text {
   position: absolute;
   bottom: 1rem;
+  left: 50%;
+  width: 100%;
+  transform: translateX(-50%);
+  text-align: center;
 }
 .bottom-text span {
   text-decoration: underline;
   color: lime;
   cursor: pointer;
+}
+.signup-password-container {
+  display: flex;
+}
+.signup-password-container input {
+  width: 70%;
+}
+.second-password,
+.first-password {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.error-scnd-password,
+.error-first-password,
+.error-email,
+.error-signup-username,
+.error-login-password,
+.error-username {
+  position: absolute;
+  bottom: -2rem;
+  left: 2rem;
+  font-size: 1rem;
+  color: red;
+  z-index: 1;
+  width: 120%;
+}
+.error-credentials {
+  color: red;
+  font-size: 1rem;
+  width: 120%;
+  position: absolute;
+  top: -2rem;
+  text-align: center;
+  z-index: 2;
+}
+.signup-username-container,
+.signup-email-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  width: 50%;
+  position: relative;
+}
+.signup-username-container input,
+.signup-email-container input {
+  width: 100%;
 }

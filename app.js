@@ -32,7 +32,7 @@ const header = document.querySelector(".header");
 const mainPage = document.querySelector(".main-page");
 const mainPageHeight = mainPage.getBoundingClientRect().height;
 const headerHeight = header.getBoundingClientRect().height;
-const emailInput = document.querySelector(".email-input");
+// const emailInput = document.querySelector(".email-input");
 const upBtn = document.querySelector(".button-up");
 
 const reviewLeft = document.querySelector(".review-left");
@@ -115,7 +115,6 @@ arrOfNavLists.forEach((el) => {
 //     emailInput.style.border = "1px solid lime";
 //   }, 1500);
 // };
-const userAccounts = [];
 
 /*Second page-> Every button gets an event listener, when the button is clicked, the paragraph that's originally hidden
 gets modified in a way to create a smooth animation of it appearing on screen. */
@@ -223,3 +222,7 @@ arrOfReviews.forEach((el) => updateTransform());
 
 reviewRight.addEventListener("click", showNextReview);
 reviewLeft.addEventListener("click", showPrevReview);
+
+const userAccounts = JSON.parse(localStorage.getItem("accounts")) || [];
+
+console.log(userAccounts);

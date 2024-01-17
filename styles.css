@@ -657,18 +657,24 @@ body {
   justify-content: center;
   align-items: center;
 }
-.between-page-create-button {
+.between-page-create-link {
   width: 30%;
   height: 50%;
+}
+.between-page-create-button {
+  width: 100%;
+  height: 100%;
+  font-size: 2.5rem;
+  border-radius: 25rem;
+  color: white;
+
   background: rgb(73, 180, 58);
   background: linear-gradient(
     135deg,
     rgba(73, 180, 58, 1) 0%,
     rgba(196, 252, 69, 1) 100%
   );
-  font-size: 2.5rem;
-  color: white;
-  border-radius: 25rem;
+
   cursor: pointer;
 }
 
