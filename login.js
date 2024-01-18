@@ -427,6 +427,7 @@ const forgotPassword = function () {
           </div>
    <button class="forgot-password-confirm">Confirm</button>`;
   document.querySelector(".go-back").addEventListener("click", function () {
+    document.querySelector(".forgot-password-container").style.opacity = "0";
     window.history.back();
   });
   logInContainer.style.opacity = "0";
@@ -781,4 +782,5 @@ document.querySelector(".log-in-form").addEventListener("submit", function (e) {
   loggedIn();
 });
 window.addEventListener("hashchange", checkHash);
-//TODO: OPTIMIZE CODE AND MAKE FORGOT PASSWORD FUNCTIONAL!
+
+//TODO: OPTIMIZE CODE AND MAKE IT NICER
