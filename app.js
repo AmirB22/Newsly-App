@@ -300,15 +300,16 @@ const hideProfilePreview = function () {
 const profilePicture = document.querySelector(".profile-picture");
 const accountPreview = document.querySelector(".account-preview");
 
-const arrayForPreview = [profilePicture, accountPreview];
-
 if (Logged) {
-  arrayForPreview.forEach((el) => {
-    el.addEventListener("mouseover", showProfilePreview);
+  profilePicture.addEventListener("click", showProfilePreview);
 
-    document.addEventListener("click", function (e) {
-      if (e.target.closest(".account-preview")) return;
-      else hideProfilePreview();
-    });
+  document.addEventListener("click", function (e) {
+    if (e.target.classList.contains("log-out")) return;
+    if (
+      e.target.closest(".account-preview") ||
+      e.target.closest(".profile-picture")
+    )
+      return;
+    else hideProfilePreview();
   });
 }

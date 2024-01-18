@@ -2,6 +2,9 @@
 const slidingContainer = document.querySelector(".sliding-container");
 const signUpContainer = document.querySelector(".sign-up-container");
 const logInContainer = document.querySelector(".log-in-container");
+const forgotPasswordContainer = document.querySelector(
+  ".forgot-password-container"
+);
 
 const SignUpTransferBtn = document.querySelector(".log-sign-up");
 
@@ -21,37 +24,46 @@ let LoggedIn;
  */
 const checkIfLoggedIn = function () {
   if (Logged) {
+    logInContainer.style.opacity = "0";
+    setTimeout(() => {
+      logInContainer.innerHTML = "";
+    }, 650);
     slidingContainer.style.transform = "translateX(-50%)";
     slidingContainer.style.borderRadius = "0px";
     slidingContainer.style.width = "100%";
+    bttmSlidingContainerText.style.opacity = "1";
     //prettier-ignore
     bttmSlidingContainerText.innerHTML = `
     <a class="back-to-site-href" href="./index.html">
-    <button class="back-to-site-button"><i class="fa-solid fa-arrow-left"></i> Back to site</button>
+    <button class="back-to-site-button">
+    <i class="fa-solid fa-arrow-left"></i>
+     Back to site </button>
     </a>
-      <button class="log-out logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log out</button>`;
+      <button class="log-out logout">
+      <i class="fa-solid fa-arrow-right-from-bracket"></i>
+       Log out</button>`;
+
     if (!alreadyLoggedText.innerHTML)
       //prettier-ignore
       alreadyLoggedText.innerHTML = `
       <h1>You are already logged in as ${loggedInAs.username}</h1>
-       <p>Go back to the site and enjoy everything its got to offer</p>
-        <button class="already-logged-log-out logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log out</button>`;
+       <p>Go back to the site and enjoy everything its got to offer</p>`;
 
     /*Allowing user to Log out if they want to change accounts */
     document.querySelector(".logout").addEventListener("click", function () {
+      helper("Log in");
       LoggedIn = false;
       loggedInAs = {};
       localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
       localStorage.setItem("logged", JSON.stringify(LoggedIn));
       Logged = JSON.parse(localStorage.getItem("logged")) || false;
-      checkIfLoggedIn();
     });
   } else {
     slidingContainer.style.transform = "translateX(0%)";
     slidingContainer.style.borderRadius = "15rem 0rem 0rem 15rem";
     slidingContainer.style.width = "50%";
     alreadyLoggedText.innerHTML = ``;
-    bttmSlidingContainerText.innerHTML = ` 
+    bttmSlidingContainerText.innerHTML = `
     <div class="log-in-ways-container">
           <h1 class="sliding-title">Log in using</h1>
           <div class="log-in-ways">
@@ -67,14 +79,112 @@ const checkIfLoggedIn = function () {
 checkIfLoggedIn();
 
 /**
+ * Global error rendering function for signup and login forms, used to render errors.
+ * @param {String} inputName used to see where the error occured, and where the error message needs to be displayed, along with
+ * changing the appropriate border color.
+ * @param {String} message used to tell the function what to put inside the error.
+ */
+const renderInputErrors = function (inputName, message) {
+  const signupEmailInput = document.querySelector("#email");
+  const signupFirstPswInput = document.querySelector("#first-password");
+  const signupScndPswInput = document.querySelector("#confirm-password");
+  const sigupUsernameInput = document.querySelector("#signup-username");
+
+  const loginUsernameInput = document.querySelector("#username");
+  const loginPasswordInput = document.querySelector("#password");
+
+  //prettier-ignore
+  const forgotPasswordUsernameInput = document.querySelector("#forgot-password-username");
+  //prettier-ignore
+  const forgotPasswordEmailInput = document.querySelector("#forgot-password-email");
+  const forgotPasswordPinInput = document.querySelector("#forgot-password-pin");
+
+  //prettier-ignore
+  const changePasswordFirstPasswordInput = document.querySelector("#change-password-first");
+  //prettier-ignore
+  const changePasswordConfirmPasswordInput = document.querySelector("#change-password-confirm")
+
+  //prettier-ignore
+  let element;
+  if (inputName === "signup-email") {
+    signupEmailInput.style.borderColor = "red";
+    element = ".error-email";
+  }
+  if (inputName === "signup-first-password") {
+    signupFirstPswInput.style.borderColor = "red";
+    element = ".error-first-password";
+  }
+  if (inputName === "signup-second-password") {
+    signupScndPswInput.style.borderColor = "red";
+    element = ".error-scnd-password";
+  }
+  if (inputName === "signup-username") {
+    sigupUsernameInput.style.borderColor = "red";
+    element = ".error-signup-username";
+  }
+
+  if (inputName === "login-username") {
+    loginUsernameInput.style.borderColor = "red";
+    element = ".error-username";
+  }
+  if (inputName === "login-password") {
+    loginPasswordInput.style.borderColor = "red";
+    element = ".error-password";
+  }
+  if (inputName === "login-credentials") {
+    loginUsernameInput.style.borderColor = "red";
+    loginPasswordInput.style.borderColor = "red";
+    element = ".error-credentials";
+  }
+
+  if (inputName === "forgot-password-email") {
+    forgotPasswordEmailInput.style.borderColor = "red";
+    element = ".forgot-password-error-email";
+  }
+  if (inputName === "forgot-password-username") {
+    forgotPasswordUsernameInput.style.borderColor = "red";
+    element = ".forgot-password-error-username";
+  }
+  if (inputName === "forgot-password-pin") {
+    forgotPasswordPinInput.style.borderColor = "red";
+    element = ".forgot-password-error-pin";
+  }
+  if (inputName === "forgot-password-credentials") {
+    forgotPasswordUsernameInput.style.borderColor = "red";
+    forgotPasswordEmailInput.style.borderColor = "red";
+    forgotPasswordPinInput.style.borderColor = "red";
+    element = ".forgot-password-error-credentials";
+  }
+
+  if (inputName === "change-password-first-password") {
+    changePasswordFirstPasswordInput.style.borderColor = "red";
+    element = ".change-password-error-first";
+  }
+  if (inputName === "change-password-confirm-password") {
+    changePasswordConfirmPasswordInput.style.borderColor = "red";
+    element = ".change-password-error-confirm";
+  }
+
+  document.querySelector(`${element}`).classList.remove("hidden");
+  document.querySelector(`${element}`).textContent = `* ${message}`;
+};
+/**
  * Helper function, as the name suggests, used to help the general function in gathering parameters.
  * @param {String} translateTo the parameter is later used to determined the further params for the general function.
  * Based on the string, the general function knows where to move the sliding container and which text to show to the user.
  */
 const helper = function (translateTo) {
+  document.querySelector(".go-back-container").innerHTML = "";
+  document.querySelector(".sliding-image").style.top = "0rem";
   /*If user clicks Log out, width of sliding container is 100% so we need to change width and position */
   slidingContainer.style.width = "50%";
   alreadyLoggedText.innerHTML = ``;
+  document.querySelector(".change-password-container")
+    ? (document.querySelector(".change-password-container").innerHTML = "")
+    : "";
+  document.querySelector(".forgot-password-container")
+    ? (document.querySelector(".forgot-password-container").innerHTML = "")
+    : " ";
 
   let translateValue, opacity, html;
   if (translateTo === "Sign up") {
@@ -226,18 +336,22 @@ const general = function (translateValue, translateTo, opacity, html) {
       ? (signUpContainer.innerHTML = `${html}`)
       : (logInContainer.innerHTML = `${html}`);
 
-    translateTo === "Sign up"
-      ? document
-          .querySelector(".sign-log-in")
-          .addEventListener("click", function () {
-            helper("Log in");
-          })
-      : document
-          .querySelector(".log-sign-up")
-          .addEventListener("click", function () {
-            helper("Sign up");
-          });
-
+    if (translateTo === "Sign up")
+      document
+        .querySelector(".sign-log-in")
+        .addEventListener("click", function () {
+          helper("Log in");
+        });
+    else {
+      document
+        .querySelector(".log-sign-up")
+        .addEventListener("click", function () {
+          helper("Sign up");
+        });
+      document
+        .querySelector(".forgot-password")
+        .addEventListener("click", forgotPassword);
+    }
     translateTo === "Sign up"
       ? document
           .querySelector(".sign-up-form")
@@ -254,6 +368,239 @@ const general = function (translateValue, translateTo, opacity, html) {
   }, 1000);
 };
 /*Checking hash and showing signup or login form based on the hash. */
+
+let pin;
+const generatePIN = function () {
+  pin = `${Math.floor(Math.random() * 10)}${Math.floor(
+    Math.random() * 10
+  )}${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}`;
+  userAccounts.forEach((el) => {
+    if (el.pin === pin) generatePIN();
+  });
+  return pin;
+};
+let getPin = "";
+
+const forgotPassword = function () {
+  window.location.hash = "#reset-password";
+  document.querySelector(
+    ".go-back-container"
+  ).innerHTML = `   <button class="go-back"><i class="fa-solid fa-arrow-left"></i> Go back </button>`;
+  document.querySelector(
+    ".forgot-password-container"
+  ).innerHTML = `  <p class="forgot-password-error-credentials"></p>
+   <div class="forgot-password-username-container">
+            <p>Enter your account's username</p>
+            <input
+              class="forgot-password-username"
+              type="text"
+              placeholder="Username"
+              name=""
+              id="forgot-password-username"
+            />
+            <p class="forgot-password-error-username hidden">
+            </p>
+          </div>
+          <div class="forgot-password-email-container">
+            <p>Enter your account's email</p>
+            <input
+              class="forgot-password-email"
+              type="text"
+              placeholder="Email"
+              name=""
+              id="forgot-password-email"
+            />
+            <p class="forgot-password-error-email hidden"></p>
+          </div>
+          <div class="forgot-password-pin-container">
+            <p>Enter your account's PIN</p>
+            <input
+              class="forgot-password-pin"
+              autocomplete="pin"
+              type="password"
+              maxlength="4"
+              placeholder="PIN"
+              name=""
+              id="forgot-password-pin"
+            />
+            <p class="forgot-password-error-pin hidden"></p>
+          </div>
+   <button class="forgot-password-confirm">Confirm</button>`;
+  document.querySelector(".go-back").addEventListener("click", function () {
+    window.history.back();
+  });
+  logInContainer.style.opacity = "0";
+  signUpContainer.style.opacity = "0";
+  bttmSlidingContainerText.style.opacity = "0";
+  setTimeout(() => {
+    logInContainer.innerHTML = "";
+    signUpContainer.innerHTML = "";
+    bttmSlidingContainerText.innerHTML = "";
+    forgotPasswordContainer.style.opacity = "1";
+  }, 1300);
+
+  slidingContainer.style.transform = "translateX(-50%)";
+  slidingContainer.style.borderRadius = "15rem";
+  document.querySelector(".sliding-image").style.top = "75%";
+
+  document
+    .querySelector(".forgot-password-container")
+    .addEventListener("submit", function (e) {
+      e.preventDefault();
+      let error = 0;
+      let found = false;
+      let foundAccount = {};
+      const username = document.querySelector(".forgot-password-username");
+      const email = document.querySelector(".forgot-password-email");
+      const pin = document.querySelector(".forgot-password-pin");
+
+      const arrOfInputs = [username, email, pin];
+
+      arrOfInputs.forEach((el) => {
+        el.nextElementSibling.classList.add("hidden");
+        el.style.borderColor = "white";
+      });
+      document
+        .querySelector(".forgot-password-error-credentials")
+        .classList.add("hidden");
+
+      if (!email.value) {
+        renderInputErrors("forgot-password-email", "Email can not be empty");
+        error++;
+      }
+      if (!username.value) {
+        //prettier-ignore
+        renderInputErrors("forgot-password-username","Username can not be empty");
+        error++;
+      }
+      if (!pin.value) {
+        renderInputErrors("forgot-password-pin", "Pin can not be empty");
+        error++;
+      }
+
+      if (error) return;
+
+      userAccounts.forEach((el) => {
+        if (
+          el.username === username.value &&
+          el.email === email.value &&
+          el.pin === pin.value
+        ) {
+          found = true;
+          foundAccount = el;
+          getPin = el.pin;
+        }
+      });
+      if (found) {
+        document.querySelector(".forgot-password-container").style.opacity =
+          "0";
+        document.querySelector(
+          ".change-password-container"
+        ).innerHTML = `  <form class="change-password-container"> <div class="forgot-password-first-password">
+            <p>Enter a new password</p>
+            <input class="change-password-first-password" type="password" autocomplete="first-password" name="" id="change-password-first" />
+            <p class="change-password-error-first"></p> 
+          </div>
+          <div class="forgot-password-confirm-password">
+            <p>Confirm password</p>
+            <input class="change-password-confirm-password" type="password" autocomplete="confirm-password" name="" id="change-password-confirm" />
+            <p class="change-password-error-confirm"></p>
+          </div>
+          <button class="forgot-password-reset">Reset password</button></form>`;
+
+        setTimeout(() => {
+          document.querySelector(".forgot-password-container").innerHTML = "";
+        }, 600);
+        setTimeout(() => {
+          document.querySelector(".change-password-container").style.opacity =
+            "1";
+        }, 1000);
+        document
+          .querySelector(".change-password-container")
+          .addEventListener("submit", function (e) {
+            e.preventDefault();
+            let error = 0;
+            //prettier-ignore
+            const firstPassword = document.querySelector(".change-password-first-password");
+            //prettier-ignore
+            const confirmPassword = document.querySelector(".change-password-confirm-password")
+
+            const arrOfInputs = [confirmPassword, firstPassword];
+
+            arrOfInputs.forEach((el) => {
+              el.nextElementSibling.classList.add("hidden");
+              el.style.borderColor = "white";
+            });
+            if (!firstPassword.value) {
+              //prettier-ignore
+              renderInputErrors("change-password-first-password","Password can not be empty");
+              error++;
+            }
+            if (!confirmPassword.value) {
+              //prettier-ignore
+              renderInputErrors("change-password-confirm-password","Confirmation can not be empty")
+              error++;
+            }
+            if (firstPassword.value === foundAccount.password) {
+              //prettier-ignore
+              renderInputErrors("change-password-first-password","Password can not be the same as your previous password")
+              error++;
+            } else if (confirmPassword.value !== firstPassword.value) {
+              //prettier-ignore
+              renderInputErrors("change-password-confirm-password","Passwords do not match")
+              error++;
+            }
+            if (error) return;
+
+            userAccounts.forEach((el) => {
+              if (el.pin === getPin) {
+                el.password = firstPassword.value;
+              }
+            });
+            localStorage.setItem("accounts", JSON.stringify(userAccounts));
+
+            document.querySelector(".change-password-container").style.opacity =
+              "0";
+            document.querySelector(".sliding-image").style.top = "0rem";
+            setTimeout(() => {
+              document.querySelector(
+                ".change-password-container"
+              ).innerHTML = `<div class="change-password-changed">
+              <h1 class="change-password-message">Password successfully changed</h1>
+              <p class="change-password-new-password">New password is <span>${firstPassword.value}</span></p></div>`;
+              document.querySelector(
+                ".change-password-container"
+              ).style.opacity = "1";
+              bttmSlidingContainerText.innerHTML = `<button class="changed-password-log-in-button"><i class="fa-solid fa-right-to-bracket"></i>Log in</button>`;
+              setTimeout(() => {
+                bttmSlidingContainerText.style.opacity = "1";
+                document
+                  .querySelector(".changed-password-log-in-button")
+                  .addEventListener("click", function () {
+                    document.querySelector(
+                      ".change-password-container"
+                    ).style.opacity = 0;
+                    setTimeout(() => {
+                      document.querySelector(
+                        ".change-password-container"
+                      ).innerHTML = "";
+                    }, 500);
+                    helper("Log in");
+                  });
+              }, 500);
+            }, 500);
+          });
+      } else {
+        renderInputErrors(
+          "forgot-password-credentials",
+          "No account found under given credentials"
+        );
+        error++;
+      }
+      if (error) return;
+    });
+};
+
 const checkHash = function () {
   if (!window.location.hash) {
     Logged ? checkIfLoggedIn() : (window.location.hash = "#login");
@@ -261,58 +608,10 @@ const checkHash = function () {
     Logged ? checkIfLoggedIn() : helper("Sign up");
   } else if (window.location.hash === "#login") {
     Logged ? checkIfLoggedIn() : helper("Log in");
-  }
+  } else if (window.location.hash === "#reset-password")
+    Logged ? checkIfLoggedIn() : forgotPassword();
 };
 checkHash();
-/**
- * Global error rendering function for signup and login forms, used to render errors.
- * @param {String} inputName used to see where the error occured, and where the error message needs to be displayed, along with
- * changing the appropriate border color.
- * @param {String} message used to tell the function what to put inside the error.
- */
-const renderInputErrors = function (inputName, message) {
-  const signupEmailInput = document.querySelector("#email");
-  const signupFirstPswInput = document.querySelector("#first-password");
-  const signupScndPswInput = document.querySelector("#confirm-password");
-  const sigupUsernameInput = document.querySelector("#signup-username");
-
-  const loginUsernameInput = document.querySelector("#username");
-  const loginPasswordInput = document.querySelector("#password");
-  //prettier-ignore
-  let element;
-  if (inputName === "signup-email") {
-    signupEmailInput.style.borderColor = "red";
-    element = ".error-email";
-  }
-  if (inputName === "signup-first-password") {
-    signupFirstPswInput.style.borderColor = "red";
-    element = ".error-first-password";
-  }
-  if (inputName === "signup-second-password") {
-    signupScndPswInput.style.borderColor = "red";
-    element = ".error-scnd-password";
-  }
-  if (inputName === "signup-username") {
-    sigupUsernameInput.style.borderColor = "red";
-    element = ".error-signup-username";
-  }
-
-  if (inputName === "login-username") {
-    loginUsernameInput.style.borderColor = "red";
-    element = ".error-username";
-  }
-  if (inputName === "login-password") {
-    loginPasswordInput.style.borderColor = "red";
-    element = ".error-password";
-  }
-  if (inputName === "login-credentials") {
-    loginUsernameInput.style.borderColor = "red";
-    loginPasswordInput.style.borderColor = "red";
-    element = ".error-credentials";
-  }
-  document.querySelector(`${element}`).classList.remove("hidden");
-  document.querySelector(`${element}`).textContent = `* ${message}`;
-};
 const signedUp = function () {
   let error = 0;
 
@@ -325,6 +624,8 @@ const signedUp = function () {
   const date = `${new Date().getDate()}/${
     new Date().getMonth() + 1
   }/${new Date().getFullYear()}`;
+
+  const PIN = generatePIN();
   /*Removing any errors after clicking the signup button and rendering new ones */
   arrayOfInputs.forEach((el) => {
     el.nextElementSibling.classList.add("hidden");
@@ -374,7 +675,8 @@ const signedUp = function () {
   if (error) return;
 
   /*Showing message that the account was created*/
-  accountCreated();
+  accountCreated(PIN);
+  signUpContainer.innerHTML = "";
 
   /*Actually adding the account to localStorage */
   userAccounts.push({
@@ -382,17 +684,18 @@ const signedUp = function () {
     username: username.value,
     password: firstPassword.value,
     joined: date,
+    pin: PIN,
     img: "https://svet-scandal.rs/wp-content/uploads/2023/01/barbara-bobak.webp",
   });
   localStorage.setItem("accounts", JSON.stringify(userAccounts));
 };
-const accountCreated = function () {
+const accountCreated = function (pin) {
   /*Centering sliding container and making it 100% width, adding text,and a Log in button*/
   slidingContainer.style.transform = "translateX(-50%)";
   slidingContainer.style.borderRadius = "0px";
   slidingContainer.style.width = "100%";
-  alreadyLoggedText.innerHTML = `<h1>Successfully created an account</h1> <p>You can go back and log in!</p>`;
-  bttmSlidingContainerText.innerHTML = `<button class="created-account-log-in-button">Log in</button>`;
+  alreadyLoggedText.innerHTML = `<p class="pin">Your PIN is ${pin}</p><h1>Successfully created an account</h1> <p>You can go back and log in!</p> `;
+  bttmSlidingContainerText.innerHTML = `<button class="created-account-log-in-button"><i class="fa-solid fa-right-to-bracket"></i>Log in</button>`;
   const newLogInBtn = document.querySelector(".created-account-log-in-button");
 
   newLogInBtn.addEventListener("click", () => {
@@ -460,6 +763,10 @@ const loggedIn = function () {
   alreadyLoggedText.innerHTML = `
   <h1>Successfully logged in as ${name}!</h1>
    <p>Go back to the site and enjoy everything its got to offer</p>`;
+  logInContainer.style.opacity = "0";
+  setTimeout(() => {
+    logInContainer.innerHTML = "";
+  }, 650);
 
   /*Changing value of Logged, then calling a function to change sliding container text and width/position */
   Logged = JSON.parse(localStorage.getItem("logged")) || false;
