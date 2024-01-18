@@ -71,14 +71,14 @@ const checkIfLoggedIn = function () {
     document.querySelector(".right-side-nav").innerHTML = `
               <img
                 class="profile-picture"
-                src="user.png"
+                src="https://www.iconpacks.net/icons/2/free-user-icon-3297-thumb.png"
                 alt="User's profile picture"
               />
               <div class="account-preview">
                 <div class="top-account-section">
                   <img
                     class="profile-picture"
-                    src="user.png"
+                    src="https://www.iconpacks.net/icons/2/free-user-icon-3297-thumb.png"
                     alt="User's profile picture"
                   />
                   <h2>${loggedInAs.username}</h2>
