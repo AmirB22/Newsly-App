@@ -383,9 +383,17 @@ let getPin = "";
 
 const forgotPassword = function () {
   window.location.hash = "#reset-password";
-  document.querySelector(
-    ".go-back-container"
-  ).innerHTML = `   <button class="go-back"><i class="fa-solid fa-arrow-left"></i> Go back </button>`;
+
+  setTimeout(() => {
+    document.querySelector(
+      ".go-back-container"
+    ).innerHTML = `   <button class="go-back"><i class="fa-solid fa-arrow-left"></i> Go back </button>`;
+    document.querySelector(".go-back").addEventListener("click", function () {
+      document.querySelector(".forgot-password-container").style.opacity = "0";
+      document.querySelector(".change-password-container").style.opacity = "0";
+      window.history.back();
+    });
+  }, 1300);
   document.querySelector(
     ".forgot-password-container"
   ).innerHTML = `  <p class="forgot-password-error-credentials"></p>
@@ -426,10 +434,7 @@ const forgotPassword = function () {
             <p class="forgot-password-error-pin hidden"></p>
           </div>
    <button class="forgot-password-confirm">Confirm</button>`;
-  document.querySelector(".go-back").addEventListener("click", function () {
-    document.querySelector(".forgot-password-container").style.opacity = "0";
-    window.history.back();
-  });
+
   logInContainer.style.opacity = "0";
   signUpContainer.style.opacity = "0";
   bttmSlidingContainerText.style.opacity = "0";
@@ -438,6 +443,7 @@ const forgotPassword = function () {
     signUpContainer.innerHTML = "";
     bttmSlidingContainerText.innerHTML = "";
     forgotPasswordContainer.style.opacity = "1";
+    document.querySelector(".go-back").style.opacity = "1";
   }, 1300);
 
   slidingContainer.style.transform = "translateX(-50%)";
