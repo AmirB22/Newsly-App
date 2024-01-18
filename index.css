@@ -18,7 +18,43 @@ body {
   margin: 0px;
   padding: 0px;
 }
-
+.news-container {
+  height: 0rem;
+  padding: 0rem 1rem;
+  font-family: "Poppins", sans-serif;
+  position: absolute;
+  background-color: white;
+  bottom: -1rem;
+  width: 25rem;
+  place-items: center;
+  text-align: center;
+  transition: all 0.5s;
+  overflow: hidden;
+  cursor: default;
+}
+.news-container h1 {
+  font-size: 1.5rem;
+  display: grid;
+}
+.news-container p {
+  font-weight: normal;
+}
+.news-page {
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+a.disabled {
+  cursor: pointer;
+}
+a.disabled:hover {
+  background-color: rgba(255, 0, 0, 0.2);
+  border-radius: 1rem;
+}
 .hidden {
   display: none;
 }

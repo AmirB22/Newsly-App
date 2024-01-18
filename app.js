@@ -68,6 +68,8 @@ arrOfNavLists.forEach((el) => {
 
 const checkIfLoggedIn = function () {
   if (Logged) {
+    document.querySelector(".news-page").classList.remove("disabled");
+
     document.querySelector(".right-side-nav").innerHTML = `
               <img
                 class="profile-picture"
@@ -106,9 +108,64 @@ const checkIfLoggedIn = function () {
     });
   } else if (!Logged && userAccounts.length !== 0) {
     document.querySelector(
+      ".news-container"
+    ).innerHTML = `      <h1>You aren't logged in yet!</h1>
+                    <p>Log in to see the news.</p>`;
+    document.querySelector(".news-page").classList.add("disabled");
+    document
+      .querySelector(".news-page")
+      .addEventListener("click", function (e) {
+        e.preventDefault();
+      });
+    document
+      .querySelector(".news-page")
+      .addEventListener("mouseover", function () {
+        document.querySelector(".news-container").style.bottom = "-8.74rem";
+        document.querySelector(".news-container").style.height = "4.6rem";
+        document.querySelector(".news-container").style.padding = "1rem";
+        document.querySelector(".news-container").style.boxShadow =
+          "0px 10px 10px rgba(0, 0, 0, 0.3)";
+      });
+    document
+      .querySelector(".news-page")
+      .addEventListener("mouseleave", function () {
+        document.querySelector(".news-container").style.bottom = "-1rem";
+        document.querySelector(".news-container").style.height = "0rem";
+        document.querySelector(".news-container").style.padding = "0rem 1rem";
+        document.querySelector(".news-container").style.boxShadow = "none";
+      });
+    document.querySelector(
       ".right-side-nav"
     ).innerHTML = `<a class="nav-button" href="./login-page.html#login"><button>Log in</button></a>`;
   } else if (!Logged && userAccounts.length === 0) {
+    document.querySelector(
+      ".news-container"
+    ).innerHTML = `      <h1>You don't have an account!</h1>
+                    <p>Create one to see the news.</p>`;
+    document.querySelector(".news-page").classList.add("disabled");
+    document
+      .querySelector(".news-page")
+      .addEventListener("click", function (e) {
+        e.preventDefault();
+      });
+
+    document
+      .querySelector(".news-page")
+      .addEventListener("mouseover", function () {
+        document.querySelector(".news-container").style.bottom = "-8.74rem";
+        document.querySelector(".news-container").style.height = "4.6rem";
+        document.querySelector(".news-container").style.padding = "1rem";
+        document.querySelector(".news-container").style.boxShadow =
+          "0px 10px 10px rgba(0, 0, 0, 0.3)";
+      });
+    document
+      .querySelector(".news-page")
+      .addEventListener("mouseleave", function () {
+        document.querySelector(".news-container").style.bottom = "-1rem";
+        document.querySelector(".news-container").style.height = "0rem";
+        document.querySelector(".news-container").style.padding = "0rem 1rem";
+        document.querySelector(".news-container").style.boxShadow = "none";
+      });
     document.querySelector(
       ".right-side-nav"
     ).innerHTML = `<a class="nav-button" href="./login-page.html#signup"><button>Create an account</button></a>`;

@@ -250,6 +250,7 @@ body {
   align-items: center;
   justify-content: center;
   gap: 1rem;
+  z-index: 10;
 }
 .log-out {
   position: absolute;
@@ -352,7 +353,7 @@ body {
   gap: 2rem;
   height: 80%;
   opacity: 0;
-  transition: opacity 0.5s;
+  transition: all 0.5s;
 }
 .forgot-password-container div {
   display: flex;
@@ -384,7 +385,11 @@ body {
 .change-password-message {
   color: white;
 }
-.go-back {
+.go-back-container {
+  width: 100%;
+}
+.go-back,
+.nonex-go-back {
   background-color: transparent;
   border: none;
   padding: 1rem;
@@ -395,4 +400,8 @@ body {
   transform: translate(-50%);
   transition: opacity 0.3s;
   opacity: 0;
+}
+.nonex-go-back {
+  left: 10rem;
+  opacity: 1;
 }

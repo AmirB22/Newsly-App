@@ -2,9 +2,6 @@
 const slidingContainer = document.querySelector(".sliding-container");
 const signUpContainer = document.querySelector(".sign-up-container");
 const logInContainer = document.querySelector(".log-in-container");
-const forgotPasswordContainer = document.querySelector(
-  ".forgot-password-container"
-);
 
 const SignUpTransferBtn = document.querySelector(".log-sign-up");
 
@@ -176,15 +173,11 @@ const renderInputErrors = function (inputName, message) {
 const helper = function (translateTo) {
   document.querySelector(".go-back-container").innerHTML = "";
   document.querySelector(".sliding-image").style.top = "0rem";
+  firstForm ? firstForm.remove() : "";
+  secondForm ? secondForm.remove() : "";
   /*If user clicks Log out, width of sliding container is 100% so we need to change width and position */
   slidingContainer.style.width = "50%";
   alreadyLoggedText.innerHTML = ``;
-  document.querySelector(".change-password-container")
-    ? (document.querySelector(".change-password-container").innerHTML = "")
-    : "";
-  document.querySelector(".forgot-password-container")
-    ? (document.querySelector(".forgot-password-container").innerHTML = "")
-    : " ";
 
   let translateValue, opacity, html;
   if (translateTo === "Sign up") {
@@ -380,23 +373,14 @@ const generatePIN = function () {
   return pin;
 };
 let getPin = "";
-
+let accountFound = {};
+let firstForm;
+let secondForm;
 const forgotPassword = function () {
-  window.location.hash = "#reset-password";
-
-  setTimeout(() => {
-    document.querySelector(
-      ".go-back-container"
-    ).innerHTML = `   <button class="go-back"><i class="fa-solid fa-arrow-left"></i> Go back </button>`;
-    document.querySelector(".go-back").addEventListener("click", function () {
-      document.querySelector(".forgot-password-container").style.opacity = "0";
-      document.querySelector(".change-password-container").style.opacity = "0";
-      window.history.back();
-    });
-  }, 1300);
-  document.querySelector(
-    ".forgot-password-container"
-  ).innerHTML = `  <p class="forgot-password-error-credentials"></p>
+  if (firstForm) firstForm.remove();
+  firstForm = document.createElement("form");
+  firstForm.classList.add("forgot-password-container");
+  firstForm.innerHTML = `  <p class="forgot-password-error-credentials"></p>
    <div class="forgot-password-username-container">
             <p>Enter your account's username</p>
             <input
@@ -434,7 +418,20 @@ const forgotPassword = function () {
             <p class="forgot-password-error-pin hidden"></p>
           </div>
    <button class="forgot-password-confirm">Confirm</button>`;
+  slidingContainer.appendChild(firstForm);
 
+  window.location.hash = "#reset-password";
+
+  setTimeout(() => {
+    document.querySelector(
+      ".go-back-container"
+    ).innerHTML = `   <button class="go-back"><i class="fa-solid fa-arrow-left"></i> Go back </button>`;
+    document.querySelector(".go-back").addEventListener("click", function () {
+      firstForm ? (firstForm.style.opacity = "0") : "";
+      secondForm ? (secondForm.style.opacity = "0") : "";
+      window.history.back();
+    });
+  }, 1300);
   logInContainer.style.opacity = "0";
   signUpContainer.style.opacity = "0";
   bttmSlidingContainerText.style.opacity = "0";
@@ -442,7 +439,7 @@ const forgotPassword = function () {
     logInContainer.innerHTML = "";
     signUpContainer.innerHTML = "";
     bttmSlidingContainerText.innerHTML = "";
-    forgotPasswordContainer.style.opacity = "1";
+    firstForm.style.opacity = "1";
     document.querySelector(".go-back").style.opacity = "1";
   }, 1300);
 
@@ -450,60 +447,63 @@ const forgotPassword = function () {
   slidingContainer.style.borderRadius = "15rem";
   document.querySelector(".sliding-image").style.top = "75%";
 
-  document
-    .querySelector(".forgot-password-container")
-    .addEventListener("submit", function (e) {
-      e.preventDefault();
-      let error = 0;
-      let found = false;
-      let foundAccount = {};
-      const username = document.querySelector(".forgot-password-username");
-      const email = document.querySelector(".forgot-password-email");
-      const pin = document.querySelector(".forgot-password-pin");
+  firstForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    let error = 0;
+    let found = false;
+    const username = document.querySelector(".forgot-password-username");
+    const email = document.querySelector(".forgot-password-email");
+    const pin = document.querySelector(".forgot-password-pin");
 
-      const arrOfInputs = [username, email, pin];
+    const arrOfInputs = [username, email, pin];
 
-      arrOfInputs.forEach((el) => {
-        el.nextElementSibling.classList.add("hidden");
-        el.style.borderColor = "white";
-      });
-      document
-        .querySelector(".forgot-password-error-credentials")
-        .classList.add("hidden");
+    arrOfInputs.forEach((el) => {
+      el.nextElementSibling.classList.add("hidden");
+      el.style.borderColor = "white";
+    });
+    document
+      .querySelector(".forgot-password-error-credentials")
+      .classList.add("hidden");
 
-      if (!email.value) {
-        renderInputErrors("forgot-password-email", "Email can not be empty");
-        error++;
+    if (!email.value) {
+      renderInputErrors("forgot-password-email", "Email can not be empty");
+      error++;
+    }
+    if (!username.value) {
+      //prettier-ignore
+      renderInputErrors("forgot-password-username","Username can not be empty");
+      error++;
+    }
+    if (!pin.value) {
+      renderInputErrors("forgot-password-pin", "Pin can not be empty");
+      error++;
+    }
+
+    if (error) return;
+
+    userAccounts.forEach((el) => {
+      if (
+        el.username === username.value &&
+        el.email === email.value &&
+        el.pin === pin.value
+      ) {
+        found = true;
+        accountFound = el;
+        getPin = el.pin;
       }
-      if (!username.value) {
-        //prettier-ignore
-        renderInputErrors("forgot-password-username","Username can not be empty");
-        error++;
-      }
-      if (!pin.value) {
-        renderInputErrors("forgot-password-pin", "Pin can not be empty");
-        error++;
-      }
+    });
 
-      if (error) return;
-
-      userAccounts.forEach((el) => {
-        if (
-          el.username === username.value &&
-          el.email === email.value &&
-          el.pin === pin.value
-        ) {
-          found = true;
-          foundAccount = el;
-          getPin = el.pin;
-        }
-      });
-      if (found) {
-        document.querySelector(".forgot-password-container").style.opacity =
-          "0";
-        document.querySelector(
-          ".change-password-container"
-        ).innerHTML = `  <form class="change-password-container"> <div class="forgot-password-first-password">
+    if (found) {
+      secondSubmit();
+      firstForm.style.opacity = "0";
+    } else renderInputErrors("forgot-password-credentials", "No account found under given credentials");
+  });
+};
+function secondSubmit() {
+  if (secondForm) secondForm.remove();
+  secondForm = document.createElement("form");
+  secondForm.classList.add("change-password-container");
+  secondForm.innerHTML = `  <form class="change-password-container"> <div class="forgot-password-first-password">
             <p>Enter a new password</p>
             <input class="change-password-first-password" type="password" autocomplete="first-password" name="" id="change-password-first" />
             <p class="change-password-error-first"></p> 
@@ -514,100 +514,102 @@ const forgotPassword = function () {
             <p class="change-password-error-confirm"></p>
           </div>
           <button class="forgot-password-reset">Reset password</button></form>`;
+  slidingContainer.appendChild(secondForm);
 
-        setTimeout(() => {
-          document.querySelector(".forgot-password-container").innerHTML = "";
-        }, 600);
-        setTimeout(() => {
-          document.querySelector(".change-password-container").style.opacity =
-            "1";
-        }, 1000);
-        document
-          .querySelector(".change-password-container")
-          .addEventListener("submit", function (e) {
-            e.preventDefault();
-            let error = 0;
-            //prettier-ignore
-            const firstPassword = document.querySelector(".change-password-first-password");
-            //prettier-ignore
-            const confirmPassword = document.querySelector(".change-password-confirm-password")
+  setTimeout(() => {
+    firstForm.remove();
+    document.querySelector(".change-password-container").style.opacity = "1";
+  }, 500);
 
-            const arrOfInputs = [confirmPassword, firstPassword];
+  document
+    .querySelector(".change-password-container")
+    .addEventListener("submit", function (e) {
+      e.preventDefault();
 
-            arrOfInputs.forEach((el) => {
-              el.nextElementSibling.classList.add("hidden");
-              el.style.borderColor = "white";
-            });
-            if (!firstPassword.value) {
-              //prettier-ignore
-              renderInputErrors("change-password-first-password","Password can not be empty");
-              error++;
-            }
-            if (!confirmPassword.value) {
-              //prettier-ignore
-              renderInputErrors("change-password-confirm-password","Confirmation can not be empty")
-              error++;
-            }
-            if (firstPassword.value === foundAccount.password) {
-              //prettier-ignore
-              renderInputErrors("change-password-first-password","Password can not be the same as your previous password")
-              error++;
-            } else if (confirmPassword.value !== firstPassword.value) {
-              //prettier-ignore
-              renderInputErrors("change-password-confirm-password","Passwords do not match")
-              error++;
-            }
-            if (error) return;
+      let error = 0;
+      //prettier-ignore
+      const firstPassword = document.querySelector(".change-password-first-password");
+      //prettier-ignore
+      const confirmPassword = document.querySelector(".change-password-confirm-password")
 
-            userAccounts.forEach((el) => {
-              if (el.pin === getPin) {
-                el.password = firstPassword.value;
-              }
-            });
-            localStorage.setItem("accounts", JSON.stringify(userAccounts));
+      const arrOfInputs = [confirmPassword, firstPassword];
 
-            document.querySelector(".change-password-container").style.opacity =
-              "0";
-            document.querySelector(".sliding-image").style.top = "0rem";
-            setTimeout(() => {
-              document.querySelector(
-                ".change-password-container"
-              ).innerHTML = `<div class="change-password-changed">
-              <h1 class="change-password-message">Password successfully changed</h1>
-              <p class="change-password-new-password">New password is <span>${firstPassword.value}</span></p></div>`;
-              document.querySelector(
-                ".change-password-container"
-              ).style.opacity = "1";
-              bttmSlidingContainerText.innerHTML = `<button class="changed-password-log-in-button"><i class="fa-solid fa-right-to-bracket"></i>Log in</button>`;
-              setTimeout(() => {
-                bttmSlidingContainerText.style.opacity = "1";
-                document
-                  .querySelector(".changed-password-log-in-button")
-                  .addEventListener("click", function () {
-                    document.querySelector(
-                      ".change-password-container"
-                    ).style.opacity = 0;
-                    setTimeout(() => {
-                      document.querySelector(
-                        ".change-password-container"
-                      ).innerHTML = "";
-                    }, 500);
-                    helper("Log in");
-                  });
-              }, 500);
-            }, 500);
-          });
-      } else {
-        renderInputErrors(
-          "forgot-password-credentials",
-          "No account found under given credentials"
-        );
+      arrOfInputs.forEach((el) => {
+        el.nextElementSibling.classList.add("hidden");
+        el.style.borderColor = "white";
+      });
+      if (!firstPassword.value) {
+        //prettier-ignore
+        renderInputErrors("change-password-first-password","Password can not be empty");
+        error++;
+      }
+      if (!confirmPassword.value) {
+        //prettier-ignore
+        renderInputErrors("change-password-confirm-password","Confirmation can not be empty")
+        error++;
+      }
+      if (firstPassword.value === accountFound.password) {
+        //prettier-ignore
+        renderInputErrors("change-password-first-password","Password can not be the same as your previous password")
+        error++;
+      } else if (confirmPassword.value !== firstPassword.value) {
+        //prettier-ignore
+        renderInputErrors("change-password-confirm-password","Passwords do not match")
         error++;
       }
       if (error) return;
-    });
-};
 
+      userAccounts.forEach((el) => {
+        if (el.pin === getPin) {
+          el.password = firstPassword.value;
+        }
+      });
+      localStorage.setItem("accounts", JSON.stringify(userAccounts));
+
+      secondForm.style.opacity = "0";
+      document.querySelector(".sliding-image").style.top = "0rem";
+      document.querySelector(".go-back").style.opacity = "0";
+      setTimeout(() => {
+        document.querySelector(".go-back-container").innerHTML = "";
+        secondForm.innerHTML = `<div class="change-password-changed">
+              <h1 class="change-password-message">Password successfully changed</h1>
+              <p class="change-password-new-password">New password is <span>${firstPassword.value}</span></p></div>`;
+        document.querySelector(".change-password-container").style.opacity =
+          "1";
+        bttmSlidingContainerText.innerHTML = `<button class="changed-password-log-in-button"><i class="fa-solid fa-right-to-bracket"></i>Log in</button>`;
+        document
+          .querySelector(".changed-password-log-in-button")
+          .addEventListener("click", function () {
+            helper("Log in");
+            secondForm.remove();
+          });
+        setTimeout(() => {
+          bttmSlidingContainerText.style.opacity = "1";
+        }, 500);
+      }, 500);
+    });
+}
+const nonexistantHashScreen = function () {
+  slidingContainer.style.width = "100%";
+  slidingContainer.style.transform = "translateX(-50%)";
+  slidingContainer.style.borderRadius = "0rem";
+
+  document.querySelector(
+    ".go-back-container"
+  ).innerHTML = `   <button class="nonex-go-back"><i class="fa-solid fa-arrow-left"></i> Go back </button>`;
+  document.querySelector(".go-back-container").style.opacity = "1";
+
+  document
+    .querySelector(".nonex-go-back")
+    .addEventListener("click", function () {
+      window.location.hash = "#login";
+      checkHash();
+    });
+  bttmSlidingContainerText.innerHTML = "";
+
+  alreadyLoggedText.innerHTML =
+    "<h1>Page you are looking for does not exist</h1>";
+};
 const checkHash = function () {
   if (!window.location.hash) {
     Logged ? checkIfLoggedIn() : (window.location.hash = "#login");
@@ -617,8 +619,10 @@ const checkHash = function () {
     Logged ? checkIfLoggedIn() : helper("Log in");
   } else if (window.location.hash === "#reset-password")
     Logged ? checkIfLoggedIn() : forgotPassword();
+  else nonexistantHashScreen();
 };
 checkHash();
+
 const signedUp = function () {
   let error = 0;
 
