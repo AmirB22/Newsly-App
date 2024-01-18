@@ -29,6 +29,7 @@ body {
   background-color: white;
   box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
 }
+
 .underline {
   text-decoration: underline;
 }
@@ -89,6 +90,7 @@ body {
   left: 0px;
   right: 0px;
   height: 7rem;
+  padding: 0.5rem 2rem;
   z-index: 3;
   background-color: white;
   box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
@@ -97,7 +99,6 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 2rem;
 }
 .nav-image-name-container {
   display: flex;
@@ -134,6 +135,9 @@ body {
   font-weight: bold;
   font-size: 1.7rem;
 }
+.right-side-nav {
+  height: 100%;
+}
 .nav-button button {
   background: rgb(73, 180, 58);
   background: linear-gradient(
@@ -147,6 +151,75 @@ body {
   border: none;
   cursor: pointer;
   font-weight: bold;
+}
+.profile-picture {
+  height: 5rem;
+  border-radius: 2.5rem;
+  cursor: pointer;
+  position: relative;
+}
+.account-preview {
+  position: relative;
+  height: 0rem;
+  width: 20rem;
+  padding: 0rem 0rem;
+  overflow: hidden;
+  position: absolute;
+  background-color: white;
+  bottom: 0rem;
+  right: 0rem;
+  display: flex;
+  flex-direction: column;
+  font-family: "Poppins" sans-serif;
+  gap: 1rem;
+  transition: all 0.5s;
+}
+.mid-account-section {
+  width: 100%;
+  border-top: 1px solid lime;
+  padding: 1rem 0rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.account-preview p {
+  font-size: 1.2rem;
+}
+.account-preview span {
+  font-weight: normal;
+}
+.account-preview .profile-picture {
+  align-self: start;
+}
+.settings {
+  border-top: 1px solid lightgray;
+  display: flex;
+  flex-direction: column;
+}
+.settings p {
+  width: 50%;
+  display: inline;
+  padding: 0.5rem 0rem;
+}
+.settings p:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+.log-out {
+  background: rgb(73, 180, 58);
+  background: linear-gradient(
+    135deg,
+    rgba(73, 180, 58, 1) 0%,
+    rgba(196, 252, 69, 1) 100%
+  );
+  border: none;
+  width: 50%;
+  align-self: center;
+  color: white;
+  padding: 1rem;
+  border-radius: 1rem;
+  font-weight: bold;
+  cursor: pointer;
 }
 .welcome-title-container {
   display: flex;

@@ -57,6 +57,7 @@ body {
   display: grid;
   place-items: center;
   transition: opacity 0.5s;
+  opacity: 0;
 }
 .sliding-image {
   width: 15rem;
@@ -211,7 +212,8 @@ body {
 }
 .created-account-log-in-button,
 .back-to-site-button,
-.log-out {
+.log-out,
+.already-logged-log-out {
   font-weight: bold;
   font-size: 2rem;
   background-color: white;
@@ -224,6 +226,10 @@ body {
   align-items: center;
   justify-content: center;
   gap: 1rem;
+}
+.already-logged-log-out {
+  position: absolute;
+  bottom: 5rem;
 }
 .log-out {
   position: absolute;

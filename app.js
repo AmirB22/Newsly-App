@@ -44,18 +44,21 @@ const arrOfNavLists = document.querySelectorAll(".nav-li");
 const animatedBtn = document.querySelectorAll(".animated");
 
 const updateNavOpacity = function (opacity) {
-  arrOfNavLists.forEach((el) => (el.style.opacity = opacity));
+  arrOfNavLists.forEach((el) => {
+    el.style.opacity = opacity;
+  });
 };
 const userAccounts = JSON.parse(localStorage.getItem("accounts")) || [];
 let Logged = JSON.parse(localStorage.getItem("logged")) || false;
-let account = JSON.parse(localStorage.getItem("loggedInAs")) || {};
+let loggedInAs = JSON.parse(localStorage.getItem("loggedInAs")) || {};
+let LoggedIn;
 
 /*Hovering over an element in the navbar modifies every other element's opacity to 0.5. */
 arrOfNavLists.forEach((el) => {
   el.addEventListener("mouseover", (e) => {
     updateNavOpacity("0.5");
     if (!Logged && e.target.classList.contains("get-news")) {
-      e.target.style.cursor = "default";
+      e.target.style.cursor = "not-allowed";
       return;
     }
     e.target.style.opacity = "1";
@@ -65,9 +68,42 @@ arrOfNavLists.forEach((el) => {
 
 const checkIfLoggedIn = function () {
   if (Logged) {
-    document.querySelector(
-      ".right-side-nav"
-    ).innerHTML = `<button class="nav-button log-out">Log out</button>`;
+    document.querySelector(".right-side-nav").innerHTML = `
+              <img
+                class="profile-picture"
+                src="user.jpg"
+                alt="User's profile picture"
+              />
+              <div class="account-preview">
+                <div class="top-account-section">
+                  <img
+                    class="profile-picture"
+                    src="user.jpg"
+                    alt="User's profile picture"
+                  />
+                  <h2>${loggedInAs.username}</h2>
+                </div>
+                <div class="mid-account-section">
+                  <p>Email: <span>${loggedInAs.email}</span></p>
+                  <p>Level: <span>0</span></p>
+                  <p>Joined: <span>${loggedInAs.joined}</span></p>
+                </div>
+                <div class="settings">
+                  <p>User settings</p>
+                  <p>Preferences</p>
+                  <p>Bookmarks</p>
+                </div>
+                <button class="log-out">Log out</button>
+              </div>
+  `;
+    document.querySelector(".log-out").addEventListener("click", function () {
+      LoggedIn = false;
+      loggedInAs = {};
+      localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+      localStorage.setItem("logged", JSON.stringify(LoggedIn));
+      Logged = JSON.parse(localStorage.getItem("logged")) || false;
+      checkIfLoggedIn();
+    });
   } else if (!Logged && userAccounts.length !== 0) {
     document.querySelector(
       ".right-side-nav"
@@ -77,7 +113,6 @@ const checkIfLoggedIn = function () {
       ".right-side-nav"
     ).innerHTML = `<a class="nav-button" href="./login-page.html#signup"><button>Create an account</button></a>`;
   }
-  console.log(123);
 };
 checkIfLoggedIn();
 
@@ -247,3 +282,31 @@ arrOfReviews.forEach((el) => updateTransform());
 
 reviewRight.addEventListener("click", showNextReview);
 reviewLeft.addEventListener("click", showPrevReview);
+
+const showProfilePreview = function () {
+  document.querySelector(".account-preview").style.height = "26rem";
+  document.querySelector(".account-preview").style.padding = "3rem 1rem";
+  document.querySelector(".account-preview").style.bottom = "-32rem";
+  document.querySelector(".account-preview").style.boxShadow =
+    "0px 10px 10px rgba(0, 0, 0, 0.3)";
+};
+let timeoutID;
+const hideProfilePreview = function () {
+  document.querySelector(".account-preview").style.height = "0rem";
+  document.querySelector(".account-preview").style.padding = "0rem 1rem";
+  document.querySelector(".account-preview").style.bottom = "-0rem";
+  document.querySelector(".account-preview").style.boxShadow = "none";
+};
+const profilePicture = document.querySelector(".profile-picture");
+const accountPreview = document.querySelector(".account-preview");
+
+const arrayForPreview = [profilePicture, accountPreview];
+
+arrayForPreview.forEach((el) => {
+  el.addEventListener("mouseover", showProfilePreview);
+
+  document.addEventListener("click", function (e) {
+    if (e.target.closest(".account-preview")) return;
+    else hideProfilePreview();
+  });
+});

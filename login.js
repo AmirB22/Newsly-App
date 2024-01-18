@@ -5,10 +5,9 @@ const logInContainer = document.querySelector(".log-in-container");
 
 const SignUpTransferBtn = document.querySelector(".log-sign-up");
 
+//prettier-ignore
+const bttmSlidingContainerText = document.querySelector(".log-in-ways-container");
 const alreadyLoggedText = document.querySelector(".already-logged-in");
-const bttmSlidingContainerText = document.querySelector(
-  ".log-in-ways-container"
-);
 
 /*getting localstorage */
 const userAccounts = JSON.parse(localStorage.getItem("accounts")) || [];
@@ -30,14 +29,16 @@ const checkIfLoggedIn = function () {
     <a class="back-to-site-href" href="./index.html">
     <button class="back-to-site-button"><i class="fa-solid fa-arrow-left"></i> Back to site</button>
     </a>
-      <button class="log-out"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log out</button>`;
+      <button class="log-out logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log out</button>`;
     if (!alreadyLoggedText.innerHTML)
       //prettier-ignore
       alreadyLoggedText.innerHTML = `
-      <h1>You are already logged in</h1> <p>Go back to the site and enjoy everything its got to offer</p>`;
+      <h1>You are already logged in as ${loggedInAs.username}</h1>
+       <p>Go back to the site and enjoy everything its got to offer</p>
+        <button class="already-logged-log-out logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log out</button>`;
 
     /*Allowing user to Log out if they want to change accounts */
-    document.querySelector(".log-out").addEventListener("click", function () {
+    document.querySelector(".logout").addEventListener("click", function () {
       LoggedIn = false;
       loggedInAs = {};
       localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
@@ -202,19 +203,17 @@ const general = function (translateValue, translateTo, opacity, html) {
   translateTo === "Sign up"
     ? (slidingContainer.style.borderRadius = "0rem 15rem 15rem 0rem")
     : (slidingContainer.style.borderRadius = "15rem 0rem 0rem 15rem");
-  document.querySelector(".log-in-ways-container").style.opacity = "0";
+  bttmSlidingContainerText.style.opacity = "0";
 
   setTimeout(() => {
-    document.querySelector(
-      ".log-in-ways-container"
-    ).innerHTML = `<h1 class="sliding-title">${translateTo} using</h1>
+    bttmSlidingContainerText.innerHTML = `<h1 class="sliding-title">${translateTo} using</h1>
           <div class="log-in-ways">
             <p class="google"><i class="fa-brands fa-google"></i></p>
             <p class="facebook"><i class="fa-brands fa-facebook-f"></i></p>
             <p class="instagram"><i class="fa-brands fa-instagram"></i></p>
             <p class="pinterest"><i class="fa-brands fa-pinterest"></i></p>
           </div>`;
-    document.querySelector(".log-in-ways-container").style.opacity = "1";
+    bttmSlidingContainerText.style.opacity = "1";
     signUpContainer.style.opacity = opacity;
     logInContainer.style.opacity = `${opacity === 1 ? 0 : 1}`;
   }, 1300);
@@ -254,6 +253,7 @@ const general = function (translateValue, translateTo, opacity, html) {
           });
   }, 1000);
 };
+/*Checking hash and showing signup or login form based on the hash. */
 const checkHash = function () {
   if (!window.location.hash) {
     Logged ? checkIfLoggedIn() : (window.location.hash = "#login");
@@ -264,7 +264,6 @@ const checkHash = function () {
   }
 };
 checkHash();
-window.addEventListener("hashchange", checkHash);
 /**
  * Global error rendering function for signup and login forms, used to render errors.
  * @param {String} inputName used to see where the error occured, and where the error message needs to be displayed, along with
@@ -323,7 +322,9 @@ const signedUp = function () {
   const username = document.querySelector("#signup-username");
 
   const arrayOfInputs = [username, secondPassword, firstPassword, email];
-
+  const date = `${new Date().getDate()}/${
+    new Date().getMonth() + 1
+  }/${new Date().getFullYear()}`;
   /*Removing any errors after clicking the signup button and rendering new ones */
   arrayOfInputs.forEach((el) => {
     el.nextElementSibling.classList.add("hidden");
@@ -380,6 +381,7 @@ const signedUp = function () {
     email: email.value,
     username: username.value,
     password: firstPassword.value,
+    joined: date,
     img: "https://svet-scandal.rs/wp-content/uploads/2023/01/barbara-bobak.webp",
   });
   localStorage.setItem("accounts", JSON.stringify(userAccounts));
@@ -438,6 +440,7 @@ const loggedIn = function () {
         username: el.username,
         password: el.password,
         email: el.email,
+        joined: el.joined
       };
 
       /*Changing localStorage data, changing loggedIn to True and LoggedInAs to the currently logged in account */
@@ -470,4 +473,5 @@ document.querySelector(".log-in-form").addEventListener("submit", function (e) {
   e.preventDefault();
   loggedIn();
 });
+window.addEventListener("hashchange", checkHash);
 //TODO: OPTIMIZE CODE AND MAKE FORGOT PASSWORD FUNCTIONAL!
