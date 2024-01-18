@@ -71,14 +71,14 @@ const checkIfLoggedIn = function () {
     document.querySelector(".right-side-nav").innerHTML = `
               <img
                 class="profile-picture"
-                src="user.jpg"
+                src="user.png"
                 alt="User's profile picture"
               />
               <div class="account-preview">
                 <div class="top-account-section">
                   <img
                     class="profile-picture"
-                    src="user.jpg"
+                    src="user.png"
                     alt="User's profile picture"
                   />
                   <h2>${loggedInAs.username}</h2>
@@ -302,11 +302,13 @@ const accountPreview = document.querySelector(".account-preview");
 
 const arrayForPreview = [profilePicture, accountPreview];
 
-arrayForPreview.forEach((el) => {
-  el.addEventListener("mouseover", showProfilePreview);
+if (Logged) {
+  arrayForPreview.forEach((el) => {
+    el.addEventListener("mouseover", showProfilePreview);
 
-  document.addEventListener("click", function (e) {
-    if (e.target.closest(".account-preview")) return;
-    else hideProfilePreview();
+    document.addEventListener("click", function (e) {
+      if (e.target.closest(".account-preview")) return;
+      else hideProfilePreview();
+    });
   });
-});
+}
