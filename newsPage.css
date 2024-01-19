@@ -46,7 +46,7 @@ body {
 }
 
 .logo-container {
-  flex: 2;
+  flex: 1;
   display: flex;
   align-items: center;
   color: black;
@@ -55,14 +55,14 @@ body {
   height: 5.5rem;
 }
 .search-container {
-  flex: 7;
+  flex: 8;
   display: flex;
   justify-content: center;
 }
 .search-container input {
   padding: 1.5rem 1rem;
   width: 60rem;
-  border: 1px solid lightgreen;
+  border: 2px solid lightgreen;
   border-top-right-radius: 1rem;
   border-bottom-right-radius: 1rem;
   font-size: 1.6rem;
@@ -75,14 +75,12 @@ body {
   border-top-left-radius: 1rem;
   border-bottom-left-radius: 1rem;
   font-size: 1.7rem;
-  color: white;
   cursor: pointer;
-  background: linear-gradient(
-    135deg,
-    rgba(73, 180, 58, 1) 0%,
-    rgba(196, 252, 69, 1) 100%
-  );
   border: none;
+  border: 1px solid lime;
+  border-right: none;
+  background-color: white;
+  color: lime;
   position: relative;
   right: -1rem;
 }
@@ -90,7 +88,7 @@ body {
   padding: 1.3rem;
 }
 .search-container button:hover i {
-  background-color: rgba(111, 111, 111, 0.5);
+  background-color: rgba(111, 111, 111, 0.2);
   padding: 1.3rem;
   border-radius: 2rem;
 }
@@ -114,14 +112,39 @@ body {
 .first-list,
 .second-list,
 .list-container span {
-  color: black;
+  color: rgb(144, 144, 144);
   display: flex;
-  gap: 2rem;
   list-style: none;
   align-items: end;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   font-weight: bold;
-  padding-bottom: 1rem;
+  padding-bottom: 0.6rem;
+}
+.list-container li {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 2rem;
+  width: auto;
+  cursor: pointer;
+  padding: 0.2rem 1.25rem;
+}
+.list-clicked {
+  color: lime;
+}
+.list-unclicked:hover {
+  color: black;
+}
+.list-clicked::after {
+  content: "";
+  position: absolute;
+  bottom: -0.7rem;
+  width: 90%;
+  height: 0.5rem;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  background-color: lime;
 }
 .list-container span {
   font-weight: 100;
