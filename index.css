@@ -69,6 +69,10 @@ a.disabled:hover {
 .underline {
   text-decoration: underline;
 }
+.site-logo-title a {
+  color: black;
+  text-decoration: none;
+}
 .button-up {
   z-index: 10;
   height: 0rem;
@@ -126,12 +130,12 @@ a.disabled:hover {
   left: 0px;
   right: 0px;
   height: 7rem;
-  padding: 0.5rem 2rem;
   z-index: 3;
   background-color: white;
   box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
 }
 .nav {
+  padding: 0.5rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -568,15 +572,15 @@ a.disabled:hover {
   justify-content: space-between;
   padding-right: 2rem;
 }
-.menu-container div:nth-child(1) h1,
-.menu-container div:nth-child(1) p {
+.menu-container div/*:nth-child(1)*/ h1,
+.menu-container div/*:nth-child(1)*/ p {
   border: 5px solid lime;
 }
-.menu-container div:nth-child(1) i:hover {
+.menu-container div/*:nth-child(1)*/ i:hover {
   cursor: pointer;
   background-color: rgba(73, 180, 58, 0.5);
 }
-.menu-container div:nth-child(2) h1,
+/* .menu-container div:nth-child(2) h1,
 .menu-container div:nth-child(2) p {
   border: 5px solid red;
 }
@@ -595,7 +599,7 @@ a.disabled:hover {
 .menu-container div:nth-child(4) h1,
 .menu-container div:nth-child(4) p {
   border: 5px solid cyan;
-}
+} */
 .menu-container i {
   transition: all 0.5s;
   padding: 0.5rem 1rem;

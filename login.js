@@ -22,6 +22,7 @@ let LoggedIn;
 const checkIfLoggedIn = function () {
   if (Logged) {
     logInContainer.style.opacity = "0";
+    document.querySelector(".go-back-container").textContent = "";
     setTimeout(() => {
       logInContainer.innerHTML = "";
     }, 650);
@@ -40,7 +41,11 @@ const checkIfLoggedIn = function () {
       <i class="fa-solid fa-arrow-right-from-bracket"></i>
        Log out</button>`;
 
-    if (!alreadyLoggedText.innerHTML)
+    if (
+      !alreadyLoggedText.innerHTML ||
+      alreadyLoggedText.textContent ===
+        "Page you are looking for does not exist"
+    )
       //prettier-ignore
       alreadyLoggedText.innerHTML = `
       <h1>You are already logged in as ${loggedInAs.username}</h1>
@@ -377,7 +382,14 @@ let accountFound = {};
 let firstForm;
 let secondForm;
 const forgotPassword = function () {
-  if (firstForm) firstForm.remove();
+  slidingContainer.style.width = "50%";
+  firstForm ? firstForm.remove() : -1;
+  alreadyLoggedText.innerHTML = "";
+
+  document.querySelector(".nonex-go-back")
+    ? document.querySelector(".nonex-go-back").remove()
+    : -1;
+
   firstForm = document.createElement("form");
   firstForm.classList.add("forgot-password-container");
   firstForm.innerHTML = `  <p class="forgot-password-error-credentials"></p>
@@ -590,25 +602,38 @@ function secondSubmit() {
     });
 }
 const nonexistantHashScreen = function () {
+  firstForm ? firstForm.remove() : -1;
+  secondForm ? secondForm.remove() : -1;
+
+  document.querySelector(".sliding-image").style.top = "0rem";
+  alreadyLoggedText.style.opacity = "0";
+
+  document.querySelector(".go-back-container").style.opacity = "1";
+
+  setTimeout(() => {
+    document
+      .querySelector(".go-back-container")
+      .insertAdjacentHTML(
+        "afterbegin",
+        `<button class="nonex-go-back"><i class="fa-solid fa-arrow-left"></i> Go back </button>`
+      );
+
+    alreadyLoggedText.style.opacity = "1";
+    alreadyLoggedText.innerHTML =
+      "<h1>Page you are looking for does not exist</h1>";
+    document
+      .querySelector(".nonex-go-back")
+      .addEventListener("click", function () {
+        window.location.hash = "#login";
+        checkHash();
+      });
+  }, 1301);
+
   slidingContainer.style.width = "100%";
   slidingContainer.style.transform = "translateX(-50%)";
   slidingContainer.style.borderRadius = "0rem";
 
-  document.querySelector(
-    ".go-back-container"
-  ).innerHTML = `   <button class="nonex-go-back"><i class="fa-solid fa-arrow-left"></i> Go back </button>`;
-  document.querySelector(".go-back-container").style.opacity = "1";
-
-  document
-    .querySelector(".nonex-go-back")
-    .addEventListener("click", function () {
-      window.location.hash = "#login";
-      checkHash();
-    });
   bttmSlidingContainerText.innerHTML = "";
-
-  alreadyLoggedText.innerHTML =
-    "<h1>Page you are looking for does not exist</h1>";
 };
 const checkHash = function () {
   if (!window.location.hash) {
@@ -794,3 +819,4 @@ document.querySelector(".log-in-form").addEventListener("submit", function (e) {
 window.addEventListener("hashchange", checkHash);
 
 //TODO: OPTIMIZE CODE AND MAKE IT NICER
+//TODO: MAKE LOGIN PAGE WORK WITH FAST HASH CHANGES

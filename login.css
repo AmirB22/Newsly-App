@@ -80,6 +80,7 @@ body {
   color: white;
   display: grid;
   place-items: center;
+  transition: all 0.5s;
 }
 .already-logged-in p {
   color: black;
