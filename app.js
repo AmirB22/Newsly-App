@@ -120,7 +120,7 @@ const checkIfLoggedIn = function () {
     document
       .querySelector(".news-page")
       .addEventListener("mouseover", function () {
-        document.querySelector(".news-container").style.bottom = "-8.74rem";
+        document.querySelector(".news-container").style.bottom = "-7.73rem";
         document.querySelector(".news-container").style.height = "4.6rem";
         document.querySelector(".news-container").style.padding = "1rem";
         document.querySelector(".news-container").style.boxShadow =

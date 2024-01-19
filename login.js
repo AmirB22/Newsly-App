@@ -609,6 +609,9 @@ const nonexistantHashScreen = function () {
   alreadyLoggedText.style.opacity = "0";
 
   document.querySelector(".go-back-container").style.opacity = "1";
+  document.querySelector(".go-back")
+    ? (document.querySelector(".go-back").style.opacity = "0")
+    : -1;
 
   setTimeout(() => {
     document
