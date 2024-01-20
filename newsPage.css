@@ -159,8 +159,9 @@ body {
 }
 
 #main {
-  width: 47vw;
+  width: 55vw;
   margin-top: 12rem;
+  padding-bottom: 5rem;
 }
 .page-title {
   font-weight: normal;
@@ -172,7 +173,41 @@ body {
   margin-bottom: 1rem;
   font-family: "Roboto", sans-serif;
 }
+.page-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+.page-top-right {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  padding: 1rem;
+  border-radius: 1.5rem;
+  gap: 2rem;
+  color: black;
+  font-size: 1.2rem;
+  font-family: "Roboto", sans-serif;
+}
+.weather-temperature {
+  font-size: 2rem;
+  font-weight: normal;
+}
+.weather-link {
+  color: teal;
+  text-decoration: none;
+}
+.page-top-right img {
+  width: 3rem;
+}
+.first-second-container-wrapper {
+  gap: 2rem;
+  display: flex;
+  justify-content: space-between;
+}
 .first-container {
+  width: 65%;
   background-color: white;
   padding: 1.5rem;
   color: black;
@@ -181,12 +216,69 @@ body {
   display: flex;
   flex-direction: column;
 }
+.second-container {
+  width: 30%;
+  background-color: white;
+  height: 100%;
+  border-radius: 2rem;
+  padding: 1.5rem;
+  color: black;
+}
+.right-side-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgb(220, 220, 220);
+  padding: 0rem 0rem 1.5rem 0rem;
+}
+.right-side-title h1 {
+  font-weight: normal;
+}
+.right-side-title p {
+  font-size: 1.5rem;
+  font-weight: bold;
+  border-radius: 2rem;
+  border: 2px solid black;
+  padding: 0rem 0.75rem;
+  cursor: pointer;
+}
+.right-side-card {
+  padding: 1rem 0rem;
+  display: flex;
+  border-bottom: 1px solid rgb(220, 220, 220);
+  position: relative;
+  font-family: "Roboto", sans-serif;
+}
+.right-side-card:last-child {
+  border-bottom: none;
+}
+.right-side-card-left {
+  flex: 8;
+}
+.right-side-card-right {
+  flex: 2;
+  display: flex;
+  justify-content: end;
+  align-items: start;
+}
+.right-side-card-image {
+  width: 6rem;
+  height: 6rem;
+  object-fit: cover;
+  border-radius: 1.5rem;
+}
+.right-side-card-title {
+  font-size: 1.7rem;
+  height: 6rem;
+  font-weight: normal;
+  overflow: hidden;
+}
 .small-news-container {
   width: 100%;
   display: flex;
   height: 10rem;
   padding: 1rem 0rem;
-  border-bottom: 1px solid gray;
+  border-bottom: 1px solid rgb(220, 220, 220);
 }
 .small-news {
   position: relative;
@@ -229,7 +321,7 @@ body {
   width: 100%;
   height: 25rem;
   padding: 1rem 0rem;
-  border-bottom: 1px solid gray;
+  border-bottom: 1px solid rgb(220, 220, 220);
   gap: 1.5rem;
 }
 .main-news {
@@ -276,4 +368,31 @@ body {
 .image-side {
   width: 2rem;
   object-fit: scale-down;
+}
+.for-you-container {
+  color: black;
+  display: flex;
+  background-color: white;
+  border-radius: 2rem;
+  padding: 1rem 0rem;
+}
+.for-you-container .right-side-card {
+  padding: 1rem 1rem;
+}
+.for-you-left-side {
+  border-right: 1px solid rgb(220, 220, 220);
+}
+.for-you-right-side,
+.for-you-left-side {
+  padding: 0rem 1rem;
+}
+.fourth-container-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+  row-gap: 2rem;
+}
+.fourth-container-wrapper .second-container {
+  width: 29.7%;
 }

@@ -1,31 +1,3 @@
-const getNews = async function () {
-  const response = await fetch(
-    "https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=3ac5523d43eb420aa810389f8d45a190"
-  );
-  const data = await response.json();
-  console.log(data);
-
-  // document.querySelector(".images").innerHTML = data.articles
-  // .map((el) => {
-  //   if (!el.urlToImage) return;
-  //   return ` <div class="card">
-  //   <img class="card-img" src="${el.urlToImage}" alt="" />
-  //   <div class="card-info">
-  //     <p class="card-date">${el.publishedAt.slice(0, 10)}</p>
-  //     <h1 class="card-title">${el.title}</h1>
-  //     <p class="card-description">
-  //     ${el?.content}
-  //     </p>
-  //     <p class="card-source">${el.source.name}</p>
-  //     <button class="card-button">Check it out</button>
-  //   </div>
-  // </div>`;
-  // })
-  // .join("");
-};
-
-getNews();
-
 //Assigning variables
 const nav = document.querySelector(".nav");
 const header = document.querySelector(".header");
