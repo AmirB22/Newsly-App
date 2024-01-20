@@ -176,7 +176,6 @@ const renderInputErrors = function (inputName, message) {
  * Based on the string, the general function knows where to move the sliding container and which text to show to the user.
  */
 const helper = function (translateTo) {
-  document.querySelector(".go-back-container").innerHTML = "";
   document.querySelector(".sliding-image").style.top = "0rem";
   firstForm ? firstForm.remove() : "";
   secondForm ? secondForm.remove() : "";
@@ -304,8 +303,11 @@ const helper = function (translateTo) {
  * smoother effects, not allowing the text to appear out of nowhere but to slowly fade in/out
  * @param {String} html used to put html in an appropriate container after clicking login || signup.
  */
+
+let logInTimeoutID, signUpTimeoutID, creatingBottomTextTimeoutID;
 const general = function (translateValue, translateTo, opacity, html) {
   window.location.hash = translateTo === "Sign up" ? "#signup" : "#login";
+  document.querySelector(".go-back-container").innerHTML = "";
 
   slidingContainer.style.transform = `translateX(${translateValue}%)`;
   translateTo === "Sign up"
@@ -313,7 +315,7 @@ const general = function (translateValue, translateTo, opacity, html) {
     : (slidingContainer.style.borderRadius = "15rem 0rem 0rem 15rem");
   bttmSlidingContainerText.style.opacity = "0";
 
-  setTimeout(() => {
+  creatingBottomTextTimeoutID = setTimeout(() => {
     bttmSlidingContainerText.innerHTML = `<h1 class="sliding-title">${translateTo} using</h1>
           <div class="log-in-ways">
             <p class="google"><i class="fa-brands fa-google"></i></p>
@@ -324,23 +326,42 @@ const general = function (translateValue, translateTo, opacity, html) {
     bttmSlidingContainerText.style.opacity = "1";
     signUpContainer.style.opacity = opacity;
     logInContainer.style.opacity = `${opacity === 1 ? 0 : 1}`;
-  }, 1300);
-  setTimeout(() => {
-    translateTo === "Sign up"
-      ? (logInContainer.innerHTML = "")
-      : (signUpContainer.innerHTML = "");
 
-    translateTo === "Sign up"
-      ? (signUpContainer.innerHTML = `${html}`)
-      : (logInContainer.innerHTML = `${html}`);
-
-    if (translateTo === "Sign up")
+    console.log("123");
+  }, 1000);
+  if (translateTo === "Sign up") {
+    clearTimeout(creatingFirstFormTimeoutID);
+    clearTimeout(createBackButtonTimeoutID);
+    clearTimeout(logInTimeoutID);
+    signUpTimeoutID = setTimeout(() => {
+      logInContainer.innerHTML = "";
+      signUpContainer.innerHTML = `${html}`;
+      document
+        .querySelector(".sign-up-button")
+        .addEventListener("click", function (e) {
+          e.preventDefault();
+          signedUp();
+        });
       document
         .querySelector(".sign-log-in")
         .addEventListener("click", function () {
           helper("Log in");
         });
-    else {
+    }, 1000);
+    console.log("sign up");
+  } else {
+    clearTimeout(creatingFirstFormTimeoutID);
+    clearTimeout(createBackButtonTimeoutID);
+    clearTimeout(signUpTimeoutID);
+    logInTimeoutID = setTimeout(() => {
+      signUpContainer.innerHTML = "";
+      logInContainer.innerHTML = `${html}`;
+      document
+        .querySelector(".log-in-button")
+        .addEventListener("click", function (e) {
+          e.preventDefault();
+          loggedIn();
+        });
       document
         .querySelector(".log-sign-up")
         .addEventListener("click", function () {
@@ -349,21 +370,9 @@ const general = function (translateValue, translateTo, opacity, html) {
       document
         .querySelector(".forgot-password")
         .addEventListener("click", forgotPassword);
-    }
-    translateTo === "Sign up"
-      ? document
-          .querySelector(".sign-up-form")
-          .addEventListener("submit", function (e) {
-            e.preventDefault();
-            signedUp();
-          })
-      : document
-          .querySelector(".log-in-form")
-          .addEventListener("submit", function (e) {
-            e.preventDefault();
-            loggedIn();
-          });
-  }, 1000);
+      console.log("log in");
+    }, 1000);
+  }
 };
 /*Checking hash and showing signup or login form based on the hash. */
 
@@ -381,14 +390,20 @@ let getPin = "";
 let accountFound = {};
 let firstForm;
 let secondForm;
+let createBackButtonTimeoutID,
+  creatingFirstFormTimeoutID,
+  creatingSecondFormTimeoutID,
+  createPasswordChangedContainerTextID;
 const forgotPassword = function () {
+  clearTimeout(creatingBottomTextTimeoutID);
+  clearTimeout(signUpTimeoutID);
+  clearTimeout(logInTimeoutID);
+
   slidingContainer.style.width = "50%";
   firstForm ? firstForm.remove() : -1;
-  alreadyLoggedText.innerHTML = "";
+  alreadyLoggedText.opacity = "0";
 
-  document.querySelector(".nonex-go-back")
-    ? document.querySelector(".nonex-go-back").remove()
-    : -1;
+  alreadyLoggedText.innerHTML = "";
 
   firstForm = document.createElement("form");
   firstForm.classList.add("forgot-password-container");
@@ -434,7 +449,7 @@ const forgotPassword = function () {
 
   window.location.hash = "#reset-password";
 
-  setTimeout(() => {
+  createBackButtonTimeoutID = setTimeout(() => {
     document.querySelector(
       ".go-back-container"
     ).innerHTML = `   <button class="go-back"><i class="fa-solid fa-arrow-left"></i> Go back </button>`;
@@ -443,17 +458,20 @@ const forgotPassword = function () {
       secondForm ? (secondForm.style.opacity = "0") : "";
       window.history.back();
     });
-  }, 1300);
+  }, 1000);
   logInContainer.style.opacity = "0";
   signUpContainer.style.opacity = "0";
   bttmSlidingContainerText.style.opacity = "0";
-  setTimeout(() => {
+
+  creatingFirstFormTimeoutID = setTimeout(() => {
+    bttmSlidingContainerText.innerHTML = "";
     logInContainer.innerHTML = "";
     signUpContainer.innerHTML = "";
     bttmSlidingContainerText.innerHTML = "";
     firstForm.style.opacity = "1";
     document.querySelector(".go-back").style.opacity = "1";
-  }, 1300);
+    console.log("forgot-password");
+  }, 1000);
 
   slidingContainer.style.transform = "translateX(-50%)";
   slidingContainer.style.borderRadius = "15rem";
@@ -528,7 +546,7 @@ function secondSubmit() {
           <button class="forgot-password-reset">Reset password</button></form>`;
   slidingContainer.appendChild(secondForm);
 
-  setTimeout(() => {
+  creatingSecondFormTimeoutID = setTimeout(() => {
     firstForm.remove();
     document.querySelector(".change-password-container").style.opacity = "1";
   }, 500);
@@ -581,7 +599,7 @@ function secondSubmit() {
       secondForm.style.opacity = "0";
       document.querySelector(".sliding-image").style.top = "0rem";
       document.querySelector(".go-back").style.opacity = "0";
-      setTimeout(() => {
+      createPasswordChangedContainerTextID = setTimeout(() => {
         document.querySelector(".go-back-container").innerHTML = "";
         secondForm.innerHTML = `<div class="change-password-changed">
               <h1 class="change-password-message">Password successfully changed</h1>
@@ -602,35 +620,31 @@ function secondSubmit() {
     });
 }
 const nonexistantHashScreen = function () {
+  clearTimeout(signUpTimeoutID);
+  clearTimeout(logInTimeoutID);
+  clearTimeout(creatingBottomTextTimeoutID);
+  clearTimeout(creatingFirstFormTimeoutID);
+  clearTimeout(createBackButtonTimeoutID);
+
   firstForm ? firstForm.remove() : -1;
   secondForm ? secondForm.remove() : -1;
 
   document.querySelector(".sliding-image").style.top = "0rem";
-  alreadyLoggedText.style.opacity = "0";
-
   document.querySelector(".go-back-container").style.opacity = "1";
-  document.querySelector(".go-back")
-    ? (document.querySelector(".go-back").style.opacity = "0")
-    : -1;
 
-  setTimeout(() => {
-    document
-      .querySelector(".go-back-container")
-      .insertAdjacentHTML(
-        "afterbegin",
-        `<button class="nonex-go-back"><i class="fa-solid fa-arrow-left"></i> Go back </button>`
-      );
+  document.querySelector(
+    ".go-back-container"
+  ).innerHTML = `<button class="nonex-go-back"><i class="fa-solid fa-arrow-left"></i> Go back </button>`;
 
-    alreadyLoggedText.style.opacity = "1";
-    alreadyLoggedText.innerHTML =
-      "<h1>Page you are looking for does not exist</h1>";
-    document
-      .querySelector(".nonex-go-back")
-      .addEventListener("click", function () {
-        window.location.hash = "#login";
-        checkHash();
-      });
-  }, 1301);
+  alreadyLoggedText.style.opacity = "1";
+  alreadyLoggedText.innerHTML =
+    "<h1>Page you are looking for does not exist</h1>";
+  document
+    .querySelector(".nonex-go-back")
+    .addEventListener("click", function () {
+      window.location.hash = "#login";
+      checkHash();
+    });
 
   slidingContainer.style.width = "100%";
   slidingContainer.style.transform = "translateX(-50%)";
