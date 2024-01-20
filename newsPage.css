@@ -157,9 +157,123 @@ body {
 .second-list {
   padding-left: 3rem;
 }
+
+#main {
+  width: 47vw;
+  margin-top: 12rem;
+}
+.page-title {
+  font-weight: normal;
+  font-size: 3rem;
+}
+.page-description {
+  font-size: 1.5rem;
+  color: rgb(0, 0, 0);
+  margin-bottom: 1rem;
+  font-family: "Roboto", sans-serif;
+}
 .first-container {
   background-color: white;
-  padding: 1rem;
+  padding: 1.5rem;
   color: black;
   font-family: "Roboto", sans-serif;
+  border-radius: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+.small-news-container {
+  width: 100%;
+  display: flex;
+  height: 10rem;
+  padding: 1rem 0rem;
+  border-bottom: 1px solid gray;
+}
+.small-news {
+  position: relative;
+}
+.logo {
+  font-size: 1rem;
+  display: flex;
+  font-weight: bold;
+  gap: 0.5rem;
+  align-items: end;
+}
+.small-news-title {
+  font-size: 2rem;
+  font-weight: normal;
+  flex: 8;
+}
+.date-author {
+  position: absolute;
+  bottom: 0rem;
+  left: 0rem;
+  font-size: 1.2rem;
+  color: gray;
+  width: 100%;
+  height: 1.5rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.small-news-image {
+  display: flex;
+  justify-content: end;
+  flex: 2;
+}
+.small-news-image img {
+  height: 100%;
+  border-radius: 1rem;
+}
+.big-news {
+  display: flex;
+  width: 100%;
+  height: 25rem;
+  padding: 1rem 0rem;
+  border-bottom: 1px solid gray;
+  gap: 1.5rem;
+}
+.main-news {
+  flex: 3.5;
+  position: relative;
+}
+.main-news-image {
+  width: 100%;
+  height: 60%;
+  object-fit: cover;
+  border-radius: 1rem;
+}
+.main-news-title {
+  font-size: 1.8rem;
+  font-weight: normal;
+  height: 25%;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.on-the-side-news {
+  padding-top: 1rem;
+  flex: 6.5;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  gap: 1rem;
+}
+.on-the-side-new {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  height: auto;
+}
+.on-the-side-title {
+  font-size: 1.4rem;
+}
+.date-author-side {
+  color: gray;
+  font-size: 1.2rem;
+}
+.image-side {
+  width: 2rem;
+  object-fit: scale-down;
 }

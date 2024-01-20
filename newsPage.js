@@ -11,5 +11,7 @@ document.querySelectorAll("li").forEach((el) => {
     });
     e.target.classList.remove("list-unclicked");
     e.target.classList.add("list-clicked");
+
+    document.querySelector(".page-title").textContent = e.target.textContent;
   });
 });
