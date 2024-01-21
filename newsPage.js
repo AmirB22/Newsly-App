@@ -29,38 +29,38 @@ const checkIfLoggedIn = function () {
       .addEventListener("mouseleave", function (e) {
         e.target.classList.remove("not-logged-log-in-hovered");
       });
-  } else if (Logged) {
-    const getWeather = async function (city) {
-      try {
-        const response = await fetch(
-          `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=40af5230b1b9fa8b6a665dc853b4d7d7`
-        );
-        const weatherData = await response.json();
+  }
+};
+const getWeather = async function (city) {
+  try {
+    const response = await fetch(
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=40af5230b1b9fa8b6a665dc853b4d7d7`
+    );
+    const weatherData = await response.json();
 
-        if (!response.ok)
-          throw new Error("Could not find the specified location.");
-        console.log(weatherData);
-        document.querySelector(
-          ".weather-link"
-        ).href = `https://weather.com/weather/today/l/${weatherData.coord.lat},${weatherData.coord.lon}?par=google`;
-        document.querySelector(
-          ".weather-location"
-        ).textContent = `${weatherData.name}`;
-        document.querySelector(".weather-temperature").textContent = `${(
-          weatherData.main.temp - 275.15
-        ).toFixed(1)} C°`;
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    const getHomeHTML = function () {
-      document.querySelector("#main").style.width = "120rem";
-      document.querySelector("#main").innerHTML = `  <div class="page-top">
+    if (!response.ok) throw new Error("Could not find the specified location.");
+    console.log(weatherData);
+    document.querySelector(
+      ".weather-link"
+    ).href = `https://weather.com/weather/today/l/${weatherData.coord.lat},${weatherData.coord.lon}?par=google`;
+    document.querySelector(
+      ".weather-location"
+    ).textContent = `${weatherData.name}`;
+    document.querySelector(".weather-temperature").textContent = `${(
+      weatherData.main.temp - 275.15
+    ).toFixed(1)} C°`;
+  } catch (err) {
+    console.error(err);
+  }
+};
+const getHomeHTML = function () {
+  document.querySelector("#main").style.width = "120rem";
+  document.querySelector("#main").innerHTML = `  <div class="page-top">
         <div class="page-top-left">
           <h2 class="page-title">Your briefing</h2>
           <p class="page-description">${days[new Date().getDay()]}, ${
-        months[new Date().getMonth()]
-      } ${new Date().getDate()}</p>
+    months[new Date().getMonth()]
+  } ${new Date().getDate()}</p>
         </div>
         <div class="page-top-right">
           <div class="weather-search">
@@ -132,177 +132,45 @@ const checkIfLoggedIn = function () {
         <h1 class="page-title">Fact check</h1>
         <p class="page-description">From independent sources</p>
       </div>`;
-      getWeather("Novi Pazar");
+  getWeather("Novi Pazar");
 
+  document
+    .querySelector(".weather-left-button")
+    .addEventListener("click", function () {
       document
-        .querySelector(".weather-left-button")
-        .addEventListener("click", function () {
-          document
-            .querySelector(".weather-search")
-            .classList.toggle("weather-search-active");
-          if (
-            document
-              .querySelector(".weather-search")
-              .classList.contains("weather-search-active")
-          )
-            document.querySelector(".fa-chevron-left").style.transform =
-              "rotate(180deg)";
-          else
-            document.querySelector(".fa-chevron-left").style.transform =
-              "rotate(0deg)";
-        });
-      document
-        .querySelector(".weather-search-input-container")
-        .addEventListener("submit", function (e) {
-          e.preventDefault();
-          const input = document.querySelector(".weather-search-input");
-          if (!input.value) return;
-          getWeather(input.value);
-          document
-            .querySelector(".weather-search")
-            .classList.remove("weather-search-active");
-          document.querySelector(".fa-chevron-left").style.transform =
-            "rotate(0deg)";
-          input.value = "";
-        });
-      changeContainerHTML("World", 19, "first-container");
-      changeContainerHTML("Gym", 3, "second-container");
-      changeContainerHTML("Love", 1000, "third-container", "left");
-      changeContainerHTML("Crypto", 1000, "third-container", "right");
-      changeContainerHTML("mind", 1000, "fourth-container");
-    };
-
-    document.querySelector(".profile-picture-container").innerHTML = `  <img
-                class="profile-picture"
-                src="https://www.iconpacks.net/icons/2/free-user-icon-3297-thumb.png"
-                alt="User's profile picture"
-              />
-              <div class="account-preview">
-                <div class="top-account-section">
-                  <img
-                    class="profile-picture"
-                    src="https://www.iconpacks.net/icons/2/free-user-icon-3297-thumb.png"
-                    alt="User's profile picture"
-                  />
-                  <h2>${loggedInAs.username}</h2>
-                </div>
-                <div class="mid-account-section">
-                  <p>Email: <span>${loggedInAs.email}</span></p>
-                  <p>Level: <span>0</span></p>
-                  <p>Joined: <span>${loggedInAs.joined}</span></p>
-                </div>
-                <div class="settings">
-                  <p>User settings</p>
-                  <p>Preferences</p>
-                  <p>Bookmarks</p>
-                </div>
-                <button class="log-out">Log out</button>
-              </div>`;
-
-    document.querySelector(".log-out").addEventListener("click", function () {
-      LoggedIn = false;
-      loggedInAs = {};
-      localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
-      localStorage.setItem("logged", JSON.stringify(LoggedIn));
-      Logged = JSON.parse(localStorage.getItem("logged")) || false;
-      checkIfLoggedIn();
-    });
-    document
-      .querySelector(".weather-left-button")
-      .addEventListener("click", function () {
+        .querySelector(".weather-search")
+        .classList.toggle("weather-search-active");
+      if (
         document
           .querySelector(".weather-search")
-          .classList.toggle("weather-search-active");
-        if (
-          document
-            .querySelector(".weather-search")
-            .classList.contains("weather-search-active")
-        )
-          document.querySelector(".fa-chevron-left").style.transform =
-            "rotate(180deg)";
-        else
-          document.querySelector(".fa-chevron-left").style.transform =
-            "rotate(0deg)";
-      });
-
-    document
-      .querySelector(".weather-search-input-container")
-      .addEventListener("submit", function (e) {
-        e.preventDefault();
-        const input = document.querySelector(".weather-search-input");
-        if (!input.value) return;
-        getWeather(input.value);
-        document
-          .querySelector(".weather-search")
-          .classList.remove("weather-search-active");
+          .classList.contains("weather-search-active")
+      )
+        document.querySelector(".fa-chevron-left").style.transform =
+          "rotate(180deg)";
+      else
         document.querySelector(".fa-chevron-left").style.transform =
           "rotate(0deg)";
-        input.value = "";
-      });
-    document.querySelectorAll("li").forEach((el) => {
-      el.classList.add("list-unclicked");
-      el.addEventListener("click", function (e) {
-        document.querySelectorAll("li").forEach((el) => {
-          el.classList.add("list-unclicked");
-          el.classList.remove("list-clicked");
-        });
-        e.target.classList.remove("list-unclicked");
-        e.target.classList.add("list-clicked");
-
-        // document.querySelector(".page-title").textContent = e.target.textContent;
-        if (e.target.textContent === "Home") {
-          getHomeHTML();
-          return;
-        }
-        getNewsFromList(`${e.target.textContent}`);
-      });
     });
-    const search = document.querySelector(".search-input");
-    document
-      .querySelector(".search-container")
-      .addEventListener("submit", function (e) {
-        e.preventDefault();
-        getNewsFromInput(search.value);
-      });
-    const showProfilePreview = function () {
-      document.querySelector(".account-preview").style.height = "30rem";
-      document.querySelector(".account-preview").style.padding = "3rem 1rem";
-      document.querySelector(".account-preview").style.bottom = "-36rem";
-      document.querySelector(".account-preview").style.boxShadow =
-        "0px 10px 10px rgba(0, 0, 0, 0.3)";
-    };
-    const hideProfilePreview = function () {
-      document.querySelector(".account-preview").style.height = "0rem";
-      document.querySelector(".account-preview").style.padding = "0rem 1rem";
-      document.querySelector(".account-preview").style.bottom = "-0rem";
-      document.querySelector(".account-preview").style.boxShadow = "none";
-    };
-    const profilePicture = document.querySelector(".profile-picture");
-    profilePicture.addEventListener("click", showProfilePreview);
-
-    document.addEventListener("click", function (e) {
-      if (e.target.classList.contains("log-out")) return;
-      if (
-        e.target.closest(".account-preview") ||
-        e.target.closest(".profile-picture")
-      )
-        return;
-      else hideProfilePreview();
+  document
+    .querySelector(".weather-search-input-container")
+    .addEventListener("submit", function (e) {
+      e.preventDefault();
+      const input = document.querySelector(".weather-search-input");
+      if (!input.value) return;
+      getWeather(input.value);
+      document
+        .querySelector(".weather-search")
+        .classList.remove("weather-search-active");
+      document.querySelector(".fa-chevron-left").style.transform =
+        "rotate(0deg)";
+      input.value = "";
     });
-    document
-      .querySelector(".logo-container-title")
-      .addEventListener("click", (e) => {
-        document.querySelectorAll("li").forEach((el) => {
-          el.classList.replace("list-clicked", "list-unclicked");
-          if (el.textContent === "Home") el.classList.add("list-clicked");
-        });
-        getHomeHTML();
-      });
-    getWeather("Novi Pazar");
-  }
+  changeContainerHTML("World", 19, "first-container");
+  changeContainerHTML("Gym", 3, "second-container");
+  changeContainerHTML("Love", 1000, "third-container", "left");
+  changeContainerHTML("Crypto", 1000, "third-container", "right");
+  changeContainerHTML("mind", 1000, "fourth-container");
 };
-checkIfLoggedIn();
-
 let date;
 let milliseconds;
 let when;
@@ -330,7 +198,137 @@ const days = [
   "Friday",
   "Saturday",
 ];
+document.querySelector(".profile-picture-container").innerHTML = `  <img
+                class="profile-picture"
+                src="https://www.iconpacks.net/icons/2/free-user-icon-3297-thumb.png"
+                alt="User's profile picture"
+              />
+              <div class="account-preview">
+                <div class="top-account-section">
+                  <img
+                    class="profile-picture"
+                    src="https://www.iconpacks.net/icons/2/free-user-icon-3297-thumb.png"
+                    alt="User's profile picture"
+                  />
+                  <h2>${loggedInAs.username}</h2>
+                </div>
+                <div class="mid-account-section">
+                  <p>Email: <span>${loggedInAs.email}</span></p>
+                  <p>Level: <span>0</span></p>
+                  <p>Joined: <span>${loggedInAs.joined}</span></p>
+                </div>
+                <div class="settings">
+                  <p>User settings</p>
+                  <p>Preferences</p>
+                  <p>Bookmarks</p>
+                </div>
+                <button class="log-out">Log out</button>
+              </div>`;
+
+document.querySelector(".log-out").addEventListener("click", function () {
+  LoggedIn = false;
+  loggedInAs = {};
+  localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+  localStorage.setItem("logged", JSON.stringify(LoggedIn));
+  Logged = JSON.parse(localStorage.getItem("logged")) || false;
+  checkIfLoggedIn();
+});
+document
+  .querySelector(".weather-left-button")
+  .addEventListener("click", function () {
+    document
+      .querySelector(".weather-search")
+      .classList.toggle("weather-search-active");
+    if (
+      document
+        .querySelector(".weather-search")
+        .classList.contains("weather-search-active")
+    )
+      document.querySelector(".fa-chevron-left").style.transform =
+        "rotate(180deg)";
+    else
+      document.querySelector(".fa-chevron-left").style.transform =
+        "rotate(0deg)";
+  });
+
+document
+  .querySelector(".weather-search-input-container")
+  .addEventListener("submit", function (e) {
+    e.preventDefault();
+    const input = document.querySelector(".weather-search-input");
+    if (!input.value) return;
+    getWeather(input.value);
+    document
+      .querySelector(".weather-search")
+      .classList.remove("weather-search-active");
+    document.querySelector(".fa-chevron-left").style.transform = "rotate(0deg)";
+    input.value = "";
+  });
+document.querySelectorAll("li").forEach((el) => {
+  el.classList.add("list-unclicked");
+  el.addEventListener("click", function (e) {
+    document.querySelectorAll("li").forEach((el) => {
+      el.classList.add("list-unclicked");
+      el.classList.remove("list-clicked");
+    });
+    e.target.classList.remove("list-unclicked");
+    e.target.classList.add("list-clicked");
+
+    // document.querySelector(".page-title").textContent = e.target.textContent;
+    if (e.target.textContent === "Home") {
+      getHomeHTML();
+      return;
+    }
+    getNewsFromList(`${e.target.textContent}`);
+  });
+});
+const search = document.querySelector(".search-input");
+document
+  .querySelector(".search-container")
+  .addEventListener("submit", function (e) {
+    e.preventDefault();
+    getNewsFromInput(search.value);
+  });
+const showProfilePreview = function () {
+  document.querySelector(".account-preview").style.height = "30rem";
+  document.querySelector(".account-preview").style.padding = "3rem 1rem";
+  document.querySelector(".account-preview").style.bottom = "-36rem";
+  document.querySelector(".account-preview").style.boxShadow =
+    "0px 10px 10px rgba(0, 0, 0, 0.3)";
+};
+const hideProfilePreview = function () {
+  document.querySelector(".account-preview").style.height = "0rem";
+  document.querySelector(".account-preview").style.padding = "0rem 1rem";
+  document.querySelector(".account-preview").style.bottom = "-0rem";
+  document.querySelector(".account-preview").style.boxShadow = "none";
+};
+const profilePicture = document.querySelector(".profile-picture");
+profilePicture.addEventListener("click", showProfilePreview);
+
+document.addEventListener("click", function (e) {
+  if (e.target.classList.contains("log-out")) return;
+  if (
+    e.target.closest(".account-preview") ||
+    e.target.closest(".profile-picture")
+  )
+    return;
+  else hideProfilePreview();
+});
+document
+  .querySelector(".logo-container-title")
+  .addEventListener("click", (e) => {
+    document.querySelectorAll("li").forEach((el) => {
+      el.classList.replace("list-clicked", "list-unclicked");
+      if (el.textContent === "Home") el.classList.add("list-clicked");
+    });
+    getHomeHTML();
+  });
+
+const randomNumber = function (min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+};
 const getHTML = function (data, limit = 1000) {
+  document.querySelectorAll(".fa-rotate-right").forEach((el) => el.remove());
   for (let i = 0; i < data.articles.length; i) {
     date = new Date(`${data.articles[i].publishedAt}`);
     milliseconds = date.getTime();
@@ -353,18 +351,16 @@ const getHTML = function (data, limit = 1000) {
       document.querySelector(
         ".first-container"
       ).innerHTML += `  <div class="second-news big-news">
-          <div class="main-news">
+      <a class="main-news-link" href="${
+        data.articles[i].url
+      }"> <div class="main-news">
             <img
               class="main-news-image"
               src="${data.articles[i].urlToImage}"
               alt=""
             />
             <div class="logo">
-              <img
-                class="image-side"
-                src="https://www.logodesignlove.com/wp-content/uploads/2010/06/cnn-logo-white-on-red.jpg"
-                alt=""
-              />
+           
               <p>${data.articles[i].source.name}</p>
             </div>
             <h3 class="main-news-title">
@@ -373,7 +369,7 @@ const getHTML = function (data, limit = 1000) {
             <span class="date-author">${when} · ${
         data.articles[i]?.author ?? ""
       }</span>
-          </div>
+          </div> </a>
           <div class="on-the-side-news" data-side="${i}">
             </div>
         </div>`;
@@ -383,13 +379,11 @@ const getHTML = function (data, limit = 1000) {
         if (data.articles[j].content === "[Removed]") continue;
 
         document.querySelector(`[data-side="${i}"]`).innerHTML += `
-            <div class="on-the-side-new">
+            <a class="on-the-side-news-link" href="${
+              data.articles[j].url
+            }"><div class="on-the-side-new">
               <div class="logo">
-                <img
-                  class="image-side"
-                  src="https://www.logodesignlove.com/wp-content/uploads/2010/06/cnn-logo-white-on-red.jpg"
-                  alt=""
-                />
+              
                 <p>${data.articles[j]?.source.name}</p>
               </div>
               <p class="on-the-side-title">
@@ -398,7 +392,7 @@ const getHTML = function (data, limit = 1000) {
               <span class="date-author-side"
                 >${when}· ${data.articles[j].author ?? ""}</i
               ></span>
-            </div>`;
+            </div></a>`;
       }
       i += 4;
     } else {
@@ -407,11 +401,7 @@ const getHTML = function (data, limit = 1000) {
           <div class="small-news">
             <div>
               <div class="logo">
-                <img
-                  class="image-side"
-                  src="https://www.logodesignlove.com/wp-content/uploads/2010/06/cnn-logo-white-on-red.jpg"
-                  alt=""
-                />
+             
                 <p>${data.articles[i]?.source.name}</p>
               </div>
               <h3 class="small-news-title">
@@ -445,7 +435,7 @@ const getNewsFromInput = async function (input) {
             Top stories <i class="fa-solid fa-angle-right"></i>
           </h1></div>`;
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=3ac5523d43eb420aa810389f8d45a190`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=c8e87f0ac96d4e349f62b3d71fe2d90a`
     );
 
     const data = await response.json();
@@ -548,7 +538,9 @@ const getNewsFromList = async function (clicked, callback = undefined) {
         </div>
       </div>
       <div class="first-container"></div>`;
-
+    document.querySelector(
+      ".first-container"
+    ).innerHTML = ` <i class="fa-solid fa-rotate-right"></i>`;
     document.querySelectorAll(".button-list").forEach((el) =>
       el.addEventListener("click", function (e) {
         let clicked;
@@ -578,7 +570,7 @@ const getNewsFromList = async function (clicked, callback = undefined) {
     const response = await fetch(
       `https://newsapi.org/v2/everything?q=${
         differentClicked ? differentClicked : clicked
-      }&apiKey=3ac5523d43eb420aa810389f8d45a190`
+      }&apiKey=c8e87f0ac96d4e349f62b3d71fe2d90a`
     );
     const data = await response.json();
 
@@ -606,18 +598,42 @@ const getNewsFromList = async function (clicked, callback = undefined) {
 const changeContainerHTML = async function (input, limit, type, side = "") {
   try {
     document.querySelector(".first-container").innerHTML = "";
+    document.querySelector(
+      ".first-container"
+    ).innerHTML = ` <i class="fa-solid fa-rotate-right"></i>`;
+    if (document.querySelector(".second-container")) {
+      document.querySelector(
+        ".second-container"
+      ).innerHTML = ` <i class="fa-solid fa-rotate-right"></i>`;
+    }
 
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=3ac5523d43eb420aa810389f8d45a190`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=c8e87f0ac96d4e349f62b3d71fe2d90a`
     );
     const newsData = await response.json();
+
+    if (
+      newsData.message &&
+      newsData?.message.startsWith("You have made too many")
+    )
+      throw new Error(`<div class="no-search-results"><div> <img src="final-logo.png"/></div>
+    <div>
+    <h1>You have reached the request limit!</h1> 
+      <p>Try searching up something a little later!</p></div></div>`);
+
+    if (!response.ok)
+      throw new Error(`<div class="no-search-results"><div> <img src="final-logo.png"/></div>
+    <div>
+    <h1>Oops! We were unable to find any news</h1> 
+      <p>Try searching up something else!</p></div>
+      </div>`);
 
     if (type === "first-container") getHTML(newsData, limit);
     if (type === "second-container") getSecondContainerHTML(newsData);
     if (type === "third-container") getThirdContainerHTML(newsData, side);
     if (type === "fourth-container") getFourthContainerHTML(newsData);
   } catch (err) {
-    console.error(err);
+    document.querySelector(".first-container").innerHTML = `${err.message}`;
   }
 };
 const getSecondContainerHTML = function (data) {
@@ -683,28 +699,39 @@ const getThirdContainerHTML = function (data, side) {
   }
 };
 const getFourthContainerHTML = function (data) {
-  const array = [3, 6];
+  const array = [9, 18];
+  let number = array[randomNumber(0, 1)];
+  console.log(number);
 
-  for (let i = 0; i < array[Math.floor(Math.random() * 2)]; i++) {
+  for (let i = 0; i < number; i) {
     document.querySelector(
       ".fourth-container-wrapper"
-    ).innerHTML += `      <div class="second-container">
-            <div class="right-side-card">
+    ).innerHTML += `      <div class="second-container" data-secondid="${i}">
+          </div>`;
+    for (let j = i; j < i + 3; j++) {
+      document.querySelector(`[data-secondid="${i}"]`).innerHTML += `
+              <div class="right-side-card">
             <div class="right-side-card-left">
-              <p class="logo">${data.articles[i].source.name}</p>
+              <p class="logo">${data.articles[j].source.name}</p>
               <h2 class="right-side-card-title">
-               ${data.articles[i].title}
+               ${data.articles[j].title}
               </h2>
-              <p class="date-author-side">${when} · ${data.articles[i].author}</p>
+              <p class="date-author-side">${when} · ${data.articles[j].author}</p>
             </div>
             <div class="right-side-card-right">
               <img
                 class="right-side-card-image"
-                src="${data.articles[i].urlToImage}"
+                src="${data.articles[j].urlToImage}"
                 alt=""
               />
             </div>
-          </div>
           </div>`;
+    }
+    i += 3;
   }
 };
+// checkIfLoggedIn();
+// if (Logged) {
+//   getHomeHTML();
+//   getWeather("Novi Pazar");
+// }
