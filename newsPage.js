@@ -101,307 +101,14 @@ const checkIfLoggedIn = function () {
       </div>
       <div class="first-second-container-wrapper">
         <div class="first-container">
-          <h1 class="first-container-title">
-            Top stories <i class="fa-solid fa-angle-right"></i>
-          </h1>
-          <div class="first-news small-news-container">
-            <div class="small-news">
-              <div>
-                <div class="logo">
-                  <img
-                    class="image-side"
-                    src="https://www.logodesignlove.com/wp-content/uploads/2010/06/cnn-logo-white-on-red.jpg"
-                    alt=""
-                  />
-                  <p>CNN</p>
-                </div>
-                <h3 class="small-news-title">
-                  Ask Ethan: What explains the Fibonacci sequence?
-                </h3>
-              </div>
-              <span class="date-author">10 hours ago · Ethan Siegel</span>
-            </div>
-            <div class="small-news-image">
-              <img
-                src="https://wallpapers.com/images/hd/yellow-tape-police-line-3vjcar7rba41lcvc.webp"
-                alt=""
-              />
-            </div>
-          </div>
-          <div class="second-news big-news">
-            <div class="main-news">
-              <img
-                class="main-news-image"
-                src="https://c.wallhere.com/photos/3d/0a/1920x1080_px_digital_art_fantasy_Art_landscape_Long_Hair_ryky_Trees_wind-1314651.jpg!d"
-                alt=""
-              />
-              <div class="logo">
-                <img
-                  class="image-side"
-                  src="https://www.logodesignlove.com/wp-content/uploads/2010/06/cnn-logo-white-on-red.jpg"
-                  alt=""
-                />
-                <p>CNN</p>
-              </div>
-              <h3 class="main-news-title">
-                Forget Ozempic - to get the body you want, just start dancing,
-                researchers say
-              </h3>
-              <span class="date-author">Yesterday · David Landsel</span>
-            </div>
-            <div class="on-the-side-news">
-              <div class="on-the-side-new">
-                <div class="logo">
-                  <img
-                    class="image-side"
-                    src="https://images.squarespace-cdn.com/content/v1/53410bafe4b065254d7107c5/1683946710562-IBCKD4ASI5DEDBN5MWWC/Fox_News_Channel_logo.jpg?format=300w"
-                    alt=""
-                  />
-                  <p>Fox News</p>
-                </div>
-                <p class="on-the-side-title">
-                  Weight loss technique that is as effective as it is enjoyable
-                  - and better than Ozempic
-                </p>
-                <span class="date-author-side">2 hours ago</span>
-              </div>
-              <div class="on-the-side-new">
-                <div class="logo">
-                  <img
-                    class="image-side"
-                    src="https://images.squarespace-cdn.com/content/v1/53410bafe4b065254d7107c5/1419671737125-3IXTTROQCXWH0R3EBPZT/NBC_News_2013_logo.png?format=300w"
-                    alt=""
-                  />
-                  <p>NBC News</p>
-                </div>
-                <p class="on-the-side-title">
-                  Shake Your Way To Skinny: Dancing Can Lead to Weight Loss
-                  Success
-                </p>
-                <span class="date-author-side">Yesterday</span>
-              </div>
-              <div class="on-the-side-new">
-                <div class="logo">
-                  <img
-                    class="image-side"
-                    src="https://www.logodesignlove.com/wp-content/uploads/2010/06/cnn-logo-white-on-red.jpg"
-                    alt=""
-                  />
-                  <p>CNN</p>
-                </div>
-                <p class="on-the-side-title">
-                  Dancing an effective way for people with obesity to lose
-                  weight, study finds
-                </p>
-                <span class="date-author-side">Yesterday</span>
-              </div>
-            </div>
-          </div>
-          <div class="third-news big-news">
-            <div class="main-news">
-              <img
-                class="main-news-image"
-                src="https://mcdn.wallpapersafari.com/medium/28/77/XoaefB.jpg"
-                alt=""
-              />
-              <div class="logo">
-                <img
-                  class="image-side"
-                  src="https://www.logodesignlove.com/wp-content/uploads/2010/06/cnn-logo-white-on-red.jpg"
-                  alt=""
-                />
-                <p>CNN</p>
-              </div>
-              <h3 class="main-news-title">
-                The Davos Consensus: Donald Trump Will Win Re-Election
-              </h3>
-              <span class="date-author"
-                >4hours ago · Michael de la Merced, Bernard W...</span
-              >
-            </div>
-            <div class="on-the-side-news">
-              <div class="on-the-side-new">
-                <div class="logo">
-                  <img
-                    class="image-side"
-                    src="https://www.logodesignlove.com/wp-content/uploads/2010/06/cnn-logo-white-on-red.jpg"
-                    alt=""
-                  />
-                  <p>CNN</p>
-                </div>
-                <p class="on-the-side-title">
-                  Trump building his power at home while global leaders dread
-                  his return
-                </p>
-                <span class="date-author-side"
-                  >12 hours ago · Stephen Collinson</span
-                >
-              </div>
-              <div class="on-the-side-new">
-                <div class="logo">
-                  <img
-                    class="image-side"
-                    src="https://www.logodesignlove.com/wp-content/uploads/2010/06/cnn-logo-white-on-red.jpg"
-                    alt=""
-                  />
-                  <p>CNN</p>
-                </div>
-                <p class="on-the-side-title">
-                  U.S. executives in Davos see a Trump victory in 2024, and no
-                  cause for concern
-                </p>
-                <span class="date-author-side"
-                  >Yesterday · Alex sherman & MacKenzie Sigalos</span
-                >
-              </div>
-              <div class="on-the-side-new">
-                <div class="logo">
-                  <img
-                    class="image-side"
-                    src="https://www.logodesignlove.com/wp-content/uploads/2010/06/cnn-logo-white-on-red.jpg"
-                    alt=""
-                  />
-                  <p>CNN</p>
-                </div>
-                <p class="on-the-side-title">
-                  Alex Soros says a Trump win is a done deal for the Davos elite
-                  - but they're always wrong
-                </p>
-                <span class="date-author-side">4 hours ago · Elliot Smith</span>
-              </div>
-            </div>
-          </div>
-          <div class="fourth-news big-news">
-            <div class="main-news">
-              <img
-                class="main-news-image"
-                src="https://hips.hearstapps.com/hmg-prod/images/former-u-s-president-donald-trump-speaks-to-reporters-news-photo-1680289458.jpg?crop=0.670xw:1.00xh;0.190xw,0&resize=1200:*"
-                alt=""
-              />
-              <div class="logo">
-                <img
-                  class="image-side"
-                  src="https://www.logodesignlove.com/wp-content/uploads/2010/06/cnn-logo-white-on-red.jpg"
-                  alt=""
-                />
-                <p>CNN</p>
-              </div>
-              <h3 class="main-news-title">
-                Dua Lipa Reacted To Those "Go Girl, Give Us Nothing Memes" And
-                It Sounds Like Her...
-              </h3>
-              <span class="date-author">2 days ago · Chelsea Stewart</span>
-            </div>
-            <div class="on-the-side-news">
-              <div class="on-the-side-new">
-                <div class="logo">
-                  <img
-                    class="image-side"
-                    src="https://www.logodesignlove.com/wp-content/uploads/2010/06/cnn-logo-white-on-red.jpg"
-                    alt=""
-                  />
-                  <p>CNN</p>
-                </div>
-                <p class="on-the-side-title">
-                  Dua Lipa hits back at jokes about her constantly being on
-                  holiday
-                </p>
-                <span class="date-author-side"
-                  >20 hours ago · Anagricel Duran</span
-                >
-              </div>
-              <div class="on-the-side-new">
-                <div class="logo">
-                  <img
-                    class="image-side"
-                    src="https://www.logodesignlove.com/wp-content/uploads/2010/06/cnn-logo-white-on-red.jpg"
-                    alt=""
-                  />
-                  <p>CNN</p>
-                </div>
-                <p class="on-the-side-title">
-                  Dua Lipa Reacted To Those "Go Girl, Give Us Nothing Memes" And
-                  It Sounds Like Her Feelings Were Hurt
-                </p>
-                <span class="date-author-side">2 days ago</span>
-              </div>
-              <div class="on-the-side-new">
-                <div class="logo">
-                  <img
-                    class="image-side"
-                    src="https://www.logodesignlove.com/wp-content/uploads/2010/06/cnn-logo-white-on-red.jpg"
-                    alt=""
-                  />
-                  <p>CNN</p>
-                </div>
-                <p class="on-the-side-title">
-                  Dua Lipa has seen all your silly memes
-                </p>
-                <span class="date-author-side"
-                  >3 days ago · Aura Heinrichs</span
-                >
-              </div>
-            </div>
-          </div>
         </div>
         <div class="second-container">
-          <div class="right-side-title">
+            <div class="right-side-title">
             <h1>Picks for you</h1>
             <p>?</p>
+           
           </div>
-          <div class="right-side-card">
-            <div class="right-side-card-left">
-              <p class="logo">CNN</p>
-              <h2 class="right-side-card-title">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Aspernatur, aut tenetur asperiores culpa voluptate ab.
-              </h2>
-              <p class="date-author-side">7 hours ago Jordan Hart</p>
-            </div>
-            <div class="right-side-card-right">
-              <img
-                class="right-side-card-image"
-                src="https://www.voicesofyouth.org/sites/voy/files/styles/full_width_image/public/images/2019-01/politics3.jpg?itok=aJe8Igdl"
-                alt=""
-              />
-            </div>
           </div>
-          <div class="right-side-card">
-            <div class="right-side-card-left">
-              <p class="logo">WWE</p>
-              <h2 class="right-side-card-title">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quia
-                consectetur corporis officia, at adipisci dolorem aut soluta
-                aperiam maxime doloribus?
-              </h2>
-              <p class="date-author-side">23 hours ago Chantz Martin</p>
-            </div>
-            <div class="right-side-card-right">
-              <img
-                class="right-side-card-image"
-                src="https://static.independent.co.uk/2024/01/18/09/Trump%20Haley%20and%20Desantis%20comp%20copy.jpg?quality=75&width=640&crop=3%3A2%2Csmart&auto=webp"
-                alt=""
-              />
-            </div>
-          </div>
-          <div class="right-side-card">
-            <div class="right-side-card-left">
-              <p class="logo">ABC News</p>
-              <h2 class="right-side-card-title">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut,
-                ad?
-              </h2>
-              <p class="date-author-side">15 hours ago</p>
-            </div>
-            <div class="right-side-card-right">
-              <img
-                class="right-side-card-image"
-                src="https://sciencetheory.net/wp-content/uploads/2021/01/politics.jpg"
-                alt=""
-              />
-            </div>
-          </div>
-        </div>
       </div>
       <div class="third-container">
         <h1 class="page-title">
@@ -409,111 +116,9 @@ const checkIfLoggedIn = function () {
         </h1>
         <p class="page-description">Recommended based on your interests</p>
         <div class="for-you-container">
-          <div class="for-you-left-side">
-            <div class="right-side-card">
-              <div class="right-side-card-left">
-                <p class="logo">CNN</p>
-                <h2 class="right-side-card-title">
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Aspernatur, aut tenetur asperiores culpa voluptate ab.
-                </h2>
-                <p class="date-author-side">7 hours ago Jordan Hart</p>
-              </div>
-              <div class="right-side-card-right">
-                <img
-                  class="right-side-card-image"
-                  src="https://www.voicesofyouth.org/sites/voy/files/styles/full_width_image/public/images/2019-01/politics3.jpg?itok=aJe8Igdl"
-                  alt=""
-                />
-              </div>
+            <div class="for-you-left-side">
             </div>
-            <div class="right-side-card">
-              <div class="right-side-card-left">
-                <p class="logo">CNN</p>
-                <h2 class="right-side-card-title">
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Aspernatur, aut tenetur asperiores culpa voluptate ab.
-                </h2>
-                <p class="date-author-side">7 hours ago Jordan Hart</p>
-              </div>
-              <div class="right-side-card-right">
-                <img
-                  class="right-side-card-image"
-                  src="https://www.voicesofyouth.org/sites/voy/files/styles/full_width_image/public/images/2019-01/politics3.jpg?itok=aJe8Igdl"
-                  alt=""
-                />
-              </div>
-            </div>
-            <div class="right-side-card">
-              <div class="right-side-card-left">
-                <p class="logo">CNN</p>
-                <h2 class="right-side-card-title">
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Aspernatur, aut tenetur asperiores culpa voluptate ab.
-                </h2>
-                <p class="date-author-side">7 hours ago Jordan Hart</p>
-              </div>
-              <div class="right-side-card-right">
-                <img
-                  class="right-side-card-image"
-                  src="https://www.voicesofyouth.org/sites/voy/files/styles/full_width_image/public/images/2019-01/politics3.jpg?itok=aJe8Igdl"
-                  alt=""
-                />
-              </div>
-            </div>
-          </div>
-          <div class="for-you-right-side">
-            <div class="right-side-card">
-              <div class="right-side-card-left">
-                <p class="logo">CNN</p>
-                <h2 class="right-side-card-title">
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Aspernatur, aut tenetur asperiores culpa voluptate ab.
-                </h2>
-                <p class="date-author-side">7 hours ago Jordan Hart</p>
-              </div>
-              <div class="right-side-card-right">
-                <img
-                  class="right-side-card-image"
-                  src="https://www.voicesofyouth.org/sites/voy/files/styles/full_width_image/public/images/2019-01/politics3.jpg?itok=aJe8Igdl"
-                  alt=""
-                />
-              </div>
-            </div>
-            <div class="right-side-card">
-              <div class="right-side-card-left">
-                <p class="logo">CNN</p>
-                <h2 class="right-side-card-title">
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Aspernatur, aut tenetur asperiores culpa voluptate ab.
-                </h2>
-                <p class="date-author-side">7 hours ago Jordan Hart</p>
-              </div>
-              <div class="right-side-card-right">
-                <img
-                  class="right-side-card-image"
-                  src="https://www.voicesofyouth.org/sites/voy/files/styles/full_width_image/public/images/2019-01/politics3.jpg?itok=aJe8Igdl"
-                  alt=""
-                />
-              </div>
-            </div>
-            <div class="right-side-card">
-              <div class="right-side-card-left">
-                <p class="logo">CNN</p>
-                <h2 class="right-side-card-title">
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Aspernatur, aut tenetur asperiores culpa voluptate ab.
-                </h2>
-                <p class="date-author-side">7 hours ago Jordan Hart</p>
-              </div>
-              <div class="right-side-card-right">
-                <img
-                  class="right-side-card-image"
-                  src="https://www.voicesofyouth.org/sites/voy/files/styles/full_width_image/public/images/2019-01/politics3.jpg?itok=aJe8Igdl"
-                  alt=""
-                />
-              </div>
-            </div>
+            <div class="for-you-right-side">
           </div>
         </div>
       </div>
@@ -521,354 +126,6 @@ const checkIfLoggedIn = function () {
         <h1 class="page-title">Your topics</h1>
         <p class="page-description">Recommended based on your interests</p>
         <div class="fourth-container-wrapper">
-          <div class="second-container">
-            <div class="right-side-title">
-              <h1>Picks for you</h1>
-              <p>?</p>
-            </div>
-            <div class="right-side-card">
-              <div class="right-side-card-left">
-                <p class="logo">CNN</p>
-                <h2 class="right-side-card-title">
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Aspernatur, aut tenetur asperiores culpa voluptate ab.
-                </h2>
-                <p class="date-author-side">7 hours ago Jordan Hart</p>
-              </div>
-              <div class="right-side-card-right">
-                <img
-                  class="right-side-card-image"
-                  src="https://www.voicesofyouth.org/sites/voy/files/styles/full_width_image/public/images/2019-01/politics3.jpg?itok=aJe8Igdl"
-                  alt=""
-                />
-              </div>
-            </div>
-            <div class="right-side-card">
-              <div class="right-side-card-left">
-                <p class="logo">WWE</p>
-                <h2 class="right-side-card-title">
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quia
-                  consectetur corporis officia, at adipisci dolorem aut soluta
-                  aperiam maxime doloribus?
-                </h2>
-                <p class="date-author-side">23 hours ago Chantz Martin</p>
-              </div>
-              <div class="right-side-card-right">
-                <img
-                  class="right-side-card-image"
-                  src="https://static.independent.co.uk/2024/01/18/09/Trump%20Haley%20and%20Desantis%20comp%20copy.jpg?quality=75&width=640&crop=3%3A2%2Csmart&auto=webp"
-                  alt=""
-                />
-              </div>
-            </div>
-            <div class="right-side-card">
-              <div class="right-side-card-left">
-                <p class="logo">ABC News</p>
-                <h2 class="right-side-card-title">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut,
-                  ad?
-                </h2>
-                <p class="date-author-side">15 hours ago</p>
-              </div>
-              <div class="right-side-card-right">
-                <img
-                  class="right-side-card-image"
-                  src="https://sciencetheory.net/wp-content/uploads/2021/01/politics.jpg"
-                  alt=""
-                />
-              </div>
-            </div>
-          </div>
-          <div class="second-container">
-            <div class="right-side-title">
-              <h1>Picks for you</h1>
-              <p>?</p>
-            </div>
-            <div class="right-side-card">
-              <div class="right-side-card-left">
-                <p class="logo">CNN</p>
-                <h2 class="right-side-card-title">
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Aspernatur, aut tenetur asperiores culpa voluptate ab.
-                </h2>
-                <p class="date-author-side">7 hours ago Jordan Hart</p>
-              </div>
-              <div class="right-side-card-right">
-                <img
-                  class="right-side-card-image"
-                  src="https://www.voicesofyouth.org/sites/voy/files/styles/full_width_image/public/images/2019-01/politics3.jpg?itok=aJe8Igdl"
-                  alt=""
-                />
-              </div>
-            </div>
-            <div class="right-side-card">
-              <div class="right-side-card-left">
-                <p class="logo">WWE</p>
-                <h2 class="right-side-card-title">
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quia
-                  consectetur corporis officia, at adipisci dolorem aut soluta
-                  aperiam maxime doloribus?
-                </h2>
-                <p class="date-author-side">23 hours ago Chantz Martin</p>
-              </div>
-              <div class="right-side-card-right">
-                <img
-                  class="right-side-card-image"
-                  src="https://static.independent.co.uk/2024/01/18/09/Trump%20Haley%20and%20Desantis%20comp%20copy.jpg?quality=75&width=640&crop=3%3A2%2Csmart&auto=webp"
-                  alt=""
-                />
-              </div>
-            </div>
-            <div class="right-side-card">
-              <div class="right-side-card-left">
-                <p class="logo">ABC News</p>
-                <h2 class="right-side-card-title">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut,
-                  ad?
-                </h2>
-                <p class="date-author-side">15 hours ago</p>
-              </div>
-              <div class="right-side-card-right">
-                <img
-                  class="right-side-card-image"
-                  src="https://sciencetheory.net/wp-content/uploads/2021/01/politics.jpg"
-                  alt=""
-                />
-              </div>
-            </div>
-          </div>
-          <div class="second-container">
-            <div class="right-side-title">
-              <h1>Picks for you</h1>
-              <p>?</p>
-            </div>
-            <div class="right-side-card">
-              <div class="right-side-card-left">
-                <p class="logo">CNN</p>
-                <h2 class="right-side-card-title">
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Aspernatur, aut tenetur asperiores culpa voluptate ab.
-                </h2>
-                <p class="date-author-side">7 hours ago Jordan Hart</p>
-              </div>
-              <div class="right-side-card-right">
-                <img
-                  class="right-side-card-image"
-                  src="https://www.voicesofyouth.org/sites/voy/files/styles/full_width_image/public/images/2019-01/politics3.jpg?itok=aJe8Igdl"
-                  alt=""
-                />
-              </div>
-            </div>
-            <div class="right-side-card">
-              <div class="right-side-card-left">
-                <p class="logo">WWE</p>
-                <h2 class="right-side-card-title">
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quia
-                  consectetur corporis officia, at adipisci dolorem aut soluta
-                  aperiam maxime doloribus?
-                </h2>
-                <p class="date-author-side">23 hours ago Chantz Martin</p>
-              </div>
-              <div class="right-side-card-right">
-                <img
-                  class="right-side-card-image"
-                  src="https://static.independent.co.uk/2024/01/18/09/Trump%20Haley%20and%20Desantis%20comp%20copy.jpg?quality=75&width=640&crop=3%3A2%2Csmart&auto=webp"
-                  alt=""
-                />
-              </div>
-            </div>
-            <div class="right-side-card">
-              <div class="right-side-card-left">
-                <p class="logo">ABC News</p>
-                <h2 class="right-side-card-title">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut,
-                  ad?
-                </h2>
-                <p class="date-author-side">15 hours ago</p>
-              </div>
-              <div class="right-side-card-right">
-                <img
-                  class="right-side-card-image"
-                  src="https://sciencetheory.net/wp-content/uploads/2021/01/politics.jpg"
-                  alt=""
-                />
-              </div>
-            </div>
-          </div>
-          <div class="second-container">
-            <div class="right-side-title">
-              <h1>Picks for you</h1>
-              <p>?</p>
-            </div>
-            <div class="right-side-card">
-              <div class="right-side-card-left">
-                <p class="logo">CNN</p>
-                <h2 class="right-side-card-title">
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Aspernatur, aut tenetur asperiores culpa voluptate ab.
-                </h2>
-                <p class="date-author-side">7 hours ago Jordan Hart</p>
-              </div>
-              <div class="right-side-card-right">
-                <img
-                  class="right-side-card-image"
-                  src="https://www.voicesofyouth.org/sites/voy/files/styles/full_width_image/public/images/2019-01/politics3.jpg?itok=aJe8Igdl"
-                  alt=""
-                />
-              </div>
-            </div>
-            <div class="right-side-card">
-              <div class="right-side-card-left">
-                <p class="logo">WWE</p>
-                <h2 class="right-side-card-title">
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quia
-                  consectetur corporis officia, at adipisci dolorem aut soluta
-                  aperiam maxime doloribus?
-                </h2>
-                <p class="date-author-side">23 hours ago Chantz Martin</p>
-              </div>
-              <div class="right-side-card-right">
-                <img
-                  class="right-side-card-image"
-                  src="https://static.independent.co.uk/2024/01/18/09/Trump%20Haley%20and%20Desantis%20comp%20copy.jpg?quality=75&width=640&crop=3%3A2%2Csmart&auto=webp"
-                  alt=""
-                />
-              </div>
-            </div>
-            <div class="right-side-card">
-              <div class="right-side-card-left">
-                <p class="logo">ABC News</p>
-                <h2 class="right-side-card-title">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut,
-                  ad?
-                </h2>
-                <p class="date-author-side">15 hours ago</p>
-              </div>
-              <div class="right-side-card-right">
-                <img
-                  class="right-side-card-image"
-                  src="https://sciencetheory.net/wp-content/uploads/2021/01/politics.jpg"
-                  alt=""
-                />
-              </div>
-            </div>
-          </div>
-          <div class="second-container">
-            <div class="right-side-title">
-              <h1>Picks for you</h1>
-              <p>?</p>
-            </div>
-            <div class="right-side-card">
-              <div class="right-side-card-left">
-                <p class="logo">CNN</p>
-                <h2 class="right-side-card-title">
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Aspernatur, aut tenetur asperiores culpa voluptate ab.
-                </h2>
-                <p class="date-author-side">7 hours ago Jordan Hart</p>
-              </div>
-              <div class="right-side-card-right">
-                <img
-                  class="right-side-card-image"
-                  src="https://www.voicesofyouth.org/sites/voy/files/styles/full_width_image/public/images/2019-01/politics3.jpg?itok=aJe8Igdl"
-                  alt=""
-                />
-              </div>
-            </div>
-            <div class="right-side-card">
-              <div class="right-side-card-left">
-                <p class="logo">WWE</p>
-                <h2 class="right-side-card-title">
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quia
-                  consectetur corporis officia, at adipisci dolorem aut soluta
-                  aperiam maxime doloribus?
-                </h2>
-                <p class="date-author-side">23 hours ago Chantz Martin</p>
-              </div>
-              <div class="right-side-card-right">
-                <img
-                  class="right-side-card-image"
-                  src="https://static.independent.co.uk/2024/01/18/09/Trump%20Haley%20and%20Desantis%20comp%20copy.jpg?quality=75&width=640&crop=3%3A2%2Csmart&auto=webp"
-                  alt=""
-                />
-              </div>
-            </div>
-            <div class="right-side-card">
-              <div class="right-side-card-left">
-                <p class="logo">ABC News</p>
-                <h2 class="right-side-card-title">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut,
-                  ad?
-                </h2>
-                <p class="date-author-side">15 hours ago</p>
-              </div>
-              <div class="right-side-card-right">
-                <img
-                  class="right-side-card-image"
-                  src="https://sciencetheory.net/wp-content/uploads/2021/01/politics.jpg"
-                  alt=""
-                />
-              </div>
-            </div>
-          </div>
-          <div class="second-container">
-            <div class="right-side-title">
-              <h1>Picks for you</h1>
-              <p>?</p>
-            </div>
-            <div class="right-side-card">
-              <div class="right-side-card-left">
-                <p class="logo">CNN</p>
-                <h2 class="right-side-card-title">
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Aspernatur, aut tenetur asperiores culpa voluptate ab.
-                </h2>
-                <p class="date-author-side">7 hours ago Jordan Hart</p>
-              </div>
-              <div class="right-side-card-right">
-                <img
-                  class="right-side-card-image"
-                  src="https://www.voicesofyouth.org/sites/voy/files/styles/full_width_image/public/images/2019-01/politics3.jpg?itok=aJe8Igdl"
-                  alt=""
-                />
-              </div>
-            </div>
-            <div class="right-side-card">
-              <div class="right-side-card-left">
-                <p class="logo">WWE</p>
-                <h2 class="right-side-card-title">
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quia
-                  consectetur corporis officia, at adipisci dolorem aut soluta
-                  aperiam maxime doloribus?
-                </h2>
-                <p class="date-author-side">23 hours ago Chantz Martin</p>
-              </div>
-              <div class="right-side-card-right">
-                <img
-                  class="right-side-card-image"
-                  src="https://static.independent.co.uk/2024/01/18/09/Trump%20Haley%20and%20Desantis%20comp%20copy.jpg?quality=75&width=640&crop=3%3A2%2Csmart&auto=webp"
-                  alt=""
-                />
-              </div>
-            </div>
-            <div class="right-side-card">
-              <div class="right-side-card-left">
-                <p class="logo">ABC News</p>
-                <h2 class="right-side-card-title">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut,
-                  ad?
-                </h2>
-                <p class="date-author-side">15 hours ago</p>
-              </div>
-              <div class="right-side-card-right">
-                <img
-                  class="right-side-card-image"
-                  src="https://sciencetheory.net/wp-content/uploads/2021/01/politics.jpg"
-                  alt=""
-                />
-              </div>
-            </div>
-          </div>
         </div>
       </div>
       <div class="fifth-container">
@@ -908,9 +165,13 @@ const checkIfLoggedIn = function () {
             "rotate(0deg)";
           input.value = "";
         });
+      changeContainerHTML("World", 19, "first-container");
+      changeContainerHTML("Gym", 3, "second-container");
+      changeContainerHTML("Love", 1000, "third-container", "left");
+      changeContainerHTML("Crypto", 1000, "third-container", "right");
+      changeContainerHTML("mind", 1000, "fourth-container");
     };
 
-    //----
     document.querySelector(".profile-picture-container").innerHTML = `  <img
                 class="profile-picture"
                 src="https://www.iconpacks.net/icons/2/free-user-icon-3297-thumb.png"
@@ -1069,8 +330,7 @@ const days = [
   "Friday",
   "Saturday",
 ];
-
-const getHTML = function (data) {
+const getHTML = function (data, limit = 1000) {
   for (let i = 0; i < data.articles.length; i) {
     date = new Date(`${data.articles[i].publishedAt}`);
     milliseconds = date.getTime();
@@ -1079,7 +339,8 @@ const getHTML = function (data) {
     else if (since < 2 * 86_400_000) when = "Yesterday";
     else if (since < 7 * 86_400_000) when = "Last week";
     else when = "While ago...";
-    // if (i === 19 || i === 20 || i === 21 || i === 21) break;
+    if (i === limit || i === limit + 1 || i === limit + 2 || i === limit + 3)
+      break;
 
     if (i + 4 > data.articles.length) break;
     if (data.articles[i].content === "[Removed]") {
@@ -1188,7 +449,8 @@ const getNewsFromInput = async function (input) {
     );
 
     const data = await response.json();
-    if (data.message.startsWith("You have made too many"))
+    console.log(data);
+    if (data.message && data?.message.startsWith("You have made too many"))
       throw new Error(`<div class="no-search-results"><div> <img src="final-logo.png"/></div>
     <div>
     <h1>You have reached the request limit!</h1> 
@@ -1206,7 +468,7 @@ const getNewsFromInput = async function (input) {
     document.querySelector(".first-container").innerHTML = `${err.message}`;
   }
 };
-const getNewsFromList = async function (clicked) {
+const getNewsFromList = async function (clicked, callback = undefined) {
   try {
     const Technology = [
       "Mobile",
@@ -1274,9 +536,12 @@ const getNewsFromList = async function (clicked) {
         <div class="page-top-submain-news-bottom">
        ${
          clicked !== "World" && clicked !== "Local" && clicked !== "U.S."
-           ? ` <button class="button-clicked">Latest</button>
+           ? ` <button class="button-clicked button-list">Latest</button>
           ${array
-            .map((el) => `<button class="button-unclicked">${el}</button>`)
+            .map(
+              (el) =>
+                `<button class="button-unclicked button-list">${el}</button>`
+            )
             .join("")}`
            : ""
        }
@@ -1284,9 +549,19 @@ const getNewsFromList = async function (clicked) {
       </div>
       <div class="first-container"></div>`;
 
+    document.querySelectorAll(".button-list").forEach((el) =>
+      el.addEventListener("click", function (e) {
+        let clicked;
+        if (e.target.textContent === "Latest")
+          clicked = document.querySelector(".page-title").textContent;
+        else clicked = e.target.textContent;
+        changeContainerHTML(`${clicked}`, 1000, "first-container");
+      })
+    );
+
     document.querySelector(".first-container").style.width = "82rem";
 
-    document.querySelectorAll(".button-unclicked").forEach((el) =>
+    document.querySelectorAll(".button-list").forEach((el) =>
       el.addEventListener("click", function (e) {
         document.querySelectorAll(".button-clicked").forEach((el) => {
           el.classList.remove("button-clicked");
@@ -1298,7 +573,7 @@ const getNewsFromList = async function (clicked) {
     );
     let differentClicked = undefined;
     if (clicked === "U.S.") differentClicked = "us";
-    if (clicked === "Local") differentClicked = "rs";
+    if (clicked === "Local") differentClicked = "serbia";
 
     const response = await fetch(
       `https://newsapi.org/v2/everything?q=${
@@ -1307,7 +582,7 @@ const getNewsFromList = async function (clicked) {
     );
     const data = await response.json();
 
-    if (data.message.startsWith("You have made too many"))
+    if (data.message && data?.message.startsWith("You have made too many"))
       throw new Error(`<div class="no-search-results"><div> <img src="final-logo.png"/></div>
     <div>
     <h1>You have reached the request limit!</h1> 
@@ -1326,5 +601,110 @@ const getNewsFromList = async function (clicked) {
     getHTML(data);
   } catch (err) {
     document.querySelector(".first-container").innerHTML = `${err.message}`;
+  }
+};
+const changeContainerHTML = async function (input, limit, type, side = "") {
+  try {
+    document.querySelector(".first-container").innerHTML = "";
+
+    const response = await fetch(
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=3ac5523d43eb420aa810389f8d45a190`
+    );
+    const newsData = await response.json();
+
+    if (type === "first-container") getHTML(newsData, limit);
+    if (type === "second-container") getSecondContainerHTML(newsData);
+    if (type === "third-container") getThirdContainerHTML(newsData, side);
+    if (type === "fourth-container") getFourthContainerHTML(newsData);
+  } catch (err) {
+    console.error(err);
+  }
+};
+const getSecondContainerHTML = function (data) {
+  const array = [2, 3, 4];
+
+  for (let i = 0; i < array[Math.floor(Math.random() * 2)]; i++) {
+    date = new Date(`${data.articles[i].publishedAt}`);
+    milliseconds = date.getTime();
+    since = new Date().getTime() - +milliseconds;
+    if (since < 86_400_000) when = `${since / 24} hours ago`;
+    else if (since < 2 * 86_400_000) when = "Yesterday";
+    else if (since < 7 * 86_400_000) when = "Last week";
+    else when = "While ago...";
+    document.querySelector(
+      ".second-container"
+    ).innerHTML += `     <div class="right-side-card">
+            <div class="right-side-card-left">
+              <p class="logo">${data.articles[i].source.name}</p>
+              <h2 class="right-side-card-title">
+               ${data.articles[i].title}
+              </h2>
+              <p class="date-author-side">${when} · ${data.articles[i].author}</p>
+            </div>
+            <div class="right-side-card-right">
+              <img
+                class="right-side-card-image"
+                src="${data.articles[i].urlToImage}"
+                alt=""
+              />
+            </div>
+          </div>`;
+  }
+};
+const getThirdContainerHTML = function (data, side) {
+  console.log(data);
+  for (let i = 0; i < 3; i++) {
+    date = new Date(`${data.articles[i].publishedAt}`);
+    milliseconds = date.getTime();
+    since = new Date().getTime() - +milliseconds;
+    if (since < 86_400_000) when = `${since / 24} hours ago`;
+    else if (since < 2 * 86_400_000) when = "Yesterday";
+    else if (since < 7 * 86_400_000) when = "Last week";
+    else when = "While ago...";
+
+    document.querySelector(
+      `.for-you-${side}-side`
+    ).innerHTML += `<div class="right-side-card">
+            <div class="right-side-card-left">
+              <p class="logo">${data.articles[i].source.name}</p>
+              <h2 class="right-side-card-title">
+               ${data.articles[i].title}
+              </h2>
+              <p class="date-author-side">${when} · ${data.articles[i].author}</p>
+            </div>
+            <div class="right-side-card-right">
+              <img
+                class="right-side-card-image"
+                src="${data.articles[i].urlToImage}"
+                alt=""
+              />
+            </div>
+          </div>`;
+  }
+};
+const getFourthContainerHTML = function (data) {
+  const array = [3, 6];
+
+  for (let i = 0; i < array[Math.floor(Math.random() * 2)]; i++) {
+    document.querySelector(
+      ".fourth-container-wrapper"
+    ).innerHTML += `      <div class="second-container">
+            <div class="right-side-card">
+            <div class="right-side-card-left">
+              <p class="logo">${data.articles[i].source.name}</p>
+              <h2 class="right-side-card-title">
+               ${data.articles[i].title}
+              </h2>
+              <p class="date-author-side">${when} · ${data.articles[i].author}</p>
+            </div>
+            <div class="right-side-card-right">
+              <img
+                class="right-side-card-image"
+                src="${data.articles[i].urlToImage}"
+                alt=""
+              />
+            </div>
+          </div>
+          </div>`;
   }
 };
