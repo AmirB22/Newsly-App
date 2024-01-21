@@ -12,6 +12,7 @@ body {
     rgba(73, 180, 58, 1) 0%,
     rgba(196, 252, 69, 1) 100%
   );
+  min-height: 100svh;
   height: auto;
   width: calc(100vw - (100vw - 100%));
   display: flex;
@@ -157,26 +158,43 @@ body {
 .second-list {
   padding-left: 3rem;
 }
-
 #main {
-  width: 55vw;
-  margin-top: 12rem;
+  min-height: calc(100svh - 16rem);
+  width: 60vw;
+  margin-top: 11rem;
   padding-bottom: 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .page-title {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
   font-weight: normal;
   font-size: 3rem;
+  margin-top: 3rem;
+}
+.page-title i {
+  font-size: 2.5rem;
 }
 .page-description {
   font-size: 1.5rem;
   color: rgb(0, 0, 0);
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   font-family: "Roboto", sans-serif;
 }
 .page-top {
   display: flex;
   justify-content: space-between;
+  height: 8rem;
   margin-bottom: 2rem;
+  align-items: center;
+  width: 100%;
+  padding: 1.5rem 0rem;
+}
+.page-top .page-title {
+  margin: 0px;
 }
 .page-top-right {
   display: flex;
@@ -189,6 +207,63 @@ body {
   color: black;
   font-size: 1.2rem;
   font-family: "Roboto", sans-serif;
+  height: 6rem;
+}
+.weather-search {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-wrap: nowrap;
+  width: 0rem;
+  overflow: hidden;
+  transition: all 1s;
+}
+.weather-search-active {
+  width: 30rem;
+}
+.weather-search-title {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.5rem;
+  text-align: center;
+}
+.weather-search-input {
+  border: none;
+  border-bottom: 1px solid lime;
+  padding: 0.5rem 1rem;
+}
+.weather-search-input-container {
+  display: flex;
+  align-items: center;
+}
+.weather-search-button {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid lime;
+  padding: 0.5rem 1rem;
+  position: relative;
+  left: 1rem;
+  cursor: pointer;
+}
+.weather-search-input:focus,
+.weather-left-button:focus {
+  outline: none;
+}
+.weather-left-button {
+  height: 50%;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.3rem;
+  position: relative;
+  right: 2rem;
+}
+.fa-chevron-left {
+  transition: transform 1s, background-color 0.3s;
+  padding: 0.5rem 0.7rem;
+  border-radius: 2rem;
+}
+.weather-left-button:hover .fa-chevron-left {
+  background-color: rgb(220, 220, 220);
 }
 .weather-temperature {
   font-size: 2rem;
@@ -207,7 +282,8 @@ body {
   justify-content: space-between;
 }
 .first-container {
-  width: 65%;
+  min-height: 50svh;
+  width: 45vw;
   background-color: white;
   padding: 1.5rem;
   color: black;
@@ -215,6 +291,18 @@ body {
   border-radius: 2rem;
   display: flex;
   flex-direction: column;
+}
+.first-container-title {
+  font-weight: normal;
+  width: 100%;
+  border-bottom: 1px solid rgb(220, 220, 220);
+  padding: 0.5rem 0rem 1rem 0rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.first-container-title i {
+  font-size: 1.8rem;
 }
 .second-container {
   width: 30%;
@@ -289,6 +377,7 @@ body {
   font-weight: bold;
   gap: 0.5rem;
   align-items: end;
+  padding: 0.5rem 0rem;
 }
 .small-news-title {
   font-size: 2rem;
@@ -319,7 +408,7 @@ body {
 .big-news {
   display: flex;
   width: 100%;
-  height: 25rem;
+  height: 30rem;
   padding: 1rem 0rem;
   border-bottom: 1px solid rgb(220, 220, 220);
   gap: 1.5rem;
@@ -337,7 +426,7 @@ body {
 .main-news-title {
   font-size: 1.8rem;
   font-weight: normal;
-  height: 25%;
+  height: 6.2rem;
   width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -364,6 +453,7 @@ body {
 .date-author-side {
   color: gray;
   font-size: 1.2rem;
+  padding: 0.5rem 0rem;
 }
 .image-side {
   width: 2rem;
@@ -389,10 +479,57 @@ body {
 .fourth-container-wrapper {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
   width: 100%;
-  row-gap: 2rem;
+  gap: 1.77rem;
 }
 .fourth-container-wrapper .second-container {
   width: 29.7%;
+}
+.page-top .page-description {
+  margin-bottom: 0px;
+}
+.list-icons {
+  border-radius: 5rem;
+  width: 6rem;
+  border: 2px solid white;
+}
+.Health {
+  background-color: rgb(110, 110, 248);
+}
+.Sports {
+  background-color: rgb(255, 136, 0);
+}
+.Entertainment {
+  background-color: rgb(124, 0, 162);
+}
+.Technology {
+  background-color: cyan;
+}
+.Business,
+.World {
+  background-color: lime;
+}
+.fifth-container {
+  width: 100%;
+}
+.no-search-results {
+  padding: 0rem 10rem;
+  height: 30rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: space-between;
+}
+.no-search-results img {
+  height: 10rem;
+}
+.no-search-results h1 {
+  font-size: 3.5rem;
+  font-weight: normal;
+}
+.no-search-results p {
+  font-size: 2rem;
+  font-weight: normal;
 }
