@@ -1,141 +1,66 @@
 let Logged = JSON.parse(localStorage.getItem("logged")) || false;
+let loggedInAs = JSON.parse(localStorage.getItem("loggedInAs")) || {};
+let userAccounts = JSON.parse(localStorage.getItem("accounts")) || [];
 
-if (!Logged) document.body.innerHTML = `<p>You are not logged in</p>`;
+const checkIfLoggedIn = function () {
+  if (!Logged && userAccounts.length !== 0) {
+    document.body.innerHTML = `<div class="not-logged-in-container"><img class="not-logged-image" src="inverted-logo.png"/><h1>You are not logged in</h1>
+<a href="./login-page.html#login">  <button class="not-logged-log-in">Log in </button></a></div>`;
+    document
+      .querySelector(".not-logged-log-in")
+      .addEventListener("mouseover", function (e) {
+        e.target.classList.add("not-logged-log-in-hovered");
+      });
+    document
+      .querySelector(".not-logged-log-in")
+      .addEventListener("mouseleave", function (e) {
+        e.target.classList.remove("not-logged-log-in-hovered");
+      });
+  } else if (!Logged && userAccounts.length === 0) {
+    document.body.innerHTML = `<div class="not-logged-in-container"><img class="not-logged-image" src="inverted-logo.png"/><h1>You don't have an account yet</h1>
+<a href="./login-page.html#signup">  <button class="not-logged-log-in">Create an account</button></a></div>`;
+    document
+      .querySelector(".not-logged-log-in")
+      .addEventListener("mouseover", function (e) {
+        e.target.classList.add("not-logged-log-in-hovered");
+      });
+    document
+      .querySelector(".not-logged-log-in")
+      .addEventListener("mouseleave", function (e) {
+        e.target.classList.remove("not-logged-log-in-hovered");
+      });
+  } else if (Logged) {
+    const getWeather = async function (city) {
+      try {
+        const response = await fetch(
+          `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=40af5230b1b9fa8b6a665dc853b4d7d7`
+        );
+        const weatherData = await response.json();
 
-let date;
-let milliseconds;
-let when;
-let since;
-const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
-const days = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-];
-
-const getHTML = function (data) {
-  for (let i = 0; i < data.articles.length; i) {
-    date = new Date(`${data.articles[i].publishedAt}`);
-    milliseconds = date.getTime();
-    since = new Date().getTime() - +milliseconds;
-    if (since < 86_400_000) when = `${since / 24 / 1000000} hours ago`;
-    else if (since < 2 * 86_400_000) when = "Yesterday";
-    else if (since < 7 * 86_400_000) when = "Last week";
-    else when = "While ago...";
-    // if (i === 19 || i === 20 || i === 21 || i === 21) break;
-
-    if (i + 4 > data.articles.length) break;
-    if (data.articles[i].content === "[Removed]") {
-      i++;
-      continue;
-    }
-
-    // if (i === 20 || i === 21 || i === 22 || i === 23) break;
-    if (data.articles[i].urlToImage) {
-      document.querySelector(
-        ".first-container"
-      ).innerHTML += `  <div class="second-news big-news">
-          <div class="main-news">
-            <img
-              class="main-news-image"
-              src="${data.articles[i].urlToImage}"
-              alt=""
-            />
-            <div class="logo">
-              <img
-                class="image-side"
-                src="https://www.logodesignlove.com/wp-content/uploads/2010/06/cnn-logo-white-on-red.jpg"
-                alt=""
-              />
-              <p>${data.articles[i].source.name}</p>
-            </div>
-            <h3 class="main-news-title">
-             ${data.articles[i].title}
-            </h3>
-            <span class="date-author">${when} · ${
-        data.articles[i]?.author ?? ""
-      }</span>
-          </div>
-          <div class="on-the-side-news" data-side="${i}">
-            </div>
-        </div>`;
-      for (let j = i + 1; j < i + 4; j++) {
-        console.log(i, j);
-
-        if (data.articles[j].content === "[Removed]") continue;
-
-        document.querySelector(`[data-side="${i}"]`).innerHTML += `
-            <div class="on-the-side-new">
-              <div class="logo">
-                <img
-                  class="image-side"
-                  src="https://www.logodesignlove.com/wp-content/uploads/2010/06/cnn-logo-white-on-red.jpg"
-                  alt=""
-                />
-                <p>${data.articles[j]?.source.name}</p>
-              </div>
-              <p class="on-the-side-title">
-                ${data.articles[j].title}
-              </p>
-              <span class="date-author-side"
-                >${when}· ${data.articles[j].author ?? ""}</i
-              ></span>
-            </div>`;
+        if (!response.ok)
+          throw new Error("Could not find the specified location.");
+        console.log(weatherData);
+        document.querySelector(
+          ".weather-link"
+        ).href = `https://weather.com/weather/today/l/${weatherData.coord.lat},${weatherData.coord.lon}?par=google`;
+        document.querySelector(
+          ".weather-location"
+        ).textContent = `${weatherData.name}`;
+        document.querySelector(".weather-temperature").textContent = `${(
+          weatherData.main.temp - 275.15
+        ).toFixed(1)} C°`;
+      } catch (err) {
+        console.error(err);
       }
-      i += 4;
-    } else {
-      document.querySelector(".first-container").innerHTML += `
-       <div class="first-news small-news-container">
-          <div class="small-news">
-            <div>
-              <div class="logo">
-                <img
-                  class="image-side"
-                  src="https://www.logodesignlove.com/wp-content/uploads/2010/06/cnn-logo-white-on-red.jpg"
-                  alt=""
-                />
-                <p>${data.articles[i]?.source.name}</p>
-              </div>
-              <h3 class="small-news-title">
-               ${data.articles[i].title}
-              </h3>
-            </div>
-            <span class="date-author">${when} · ${
-        data.articles[i].author ?? ""
-      }</span>
-          </div>
-          <div class="small-news-image">
-          </div>
-        </div>`;
-      i++;
-    }
-  }
-};
-const getHomeHTML = function () {
-  document.querySelector("#main").style.width = "60vw";
-  document.querySelector("#main").innerHTML = `  <div class="page-top">
+    };
+    const getHomeHTML = function () {
+      document.querySelector("#main").style.width = "120rem";
+      document.querySelector("#main").innerHTML = `  <div class="page-top">
         <div class="page-top-left">
           <h2 class="page-title">Your briefing</h2>
           <p class="page-description">${days[new Date().getDay()]}, ${
-    months[new Date().getMonth()]
-  } ${new Date().getDate()}</p>
+        months[new Date().getMonth()]
+      } ${new Date().getDate()}</p>
         </div>
         <div class="page-top-right">
           <div class="weather-search">
@@ -950,41 +875,302 @@ const getHomeHTML = function () {
         <h1 class="page-title">Fact check</h1>
         <p class="page-description">From independent sources</p>
       </div>`;
-  document
-    .querySelector(".weather-left-button")
-    .addEventListener("click", function () {
+      getWeather("Novi Pazar");
+
       document
-        .querySelector(".weather-search")
-        .classList.toggle("weather-search-active");
-      if (
+        .querySelector(".weather-left-button")
+        .addEventListener("click", function () {
+          document
+            .querySelector(".weather-search")
+            .classList.toggle("weather-search-active");
+          if (
+            document
+              .querySelector(".weather-search")
+              .classList.contains("weather-search-active")
+          )
+            document.querySelector(".fa-chevron-left").style.transform =
+              "rotate(180deg)";
+          else
+            document.querySelector(".fa-chevron-left").style.transform =
+              "rotate(0deg)";
+        });
+      document
+        .querySelector(".weather-search-input-container")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const input = document.querySelector(".weather-search-input");
+          if (!input.value) return;
+          getWeather(input.value);
+          document
+            .querySelector(".weather-search")
+            .classList.remove("weather-search-active");
+          document.querySelector(".fa-chevron-left").style.transform =
+            "rotate(0deg)";
+          input.value = "";
+        });
+    };
+
+    //----
+    document.querySelector(".profile-picture-container").innerHTML = `  <img
+                class="profile-picture"
+                src="https://www.iconpacks.net/icons/2/free-user-icon-3297-thumb.png"
+                alt="User's profile picture"
+              />
+              <div class="account-preview">
+                <div class="top-account-section">
+                  <img
+                    class="profile-picture"
+                    src="https://www.iconpacks.net/icons/2/free-user-icon-3297-thumb.png"
+                    alt="User's profile picture"
+                  />
+                  <h2>${loggedInAs.username}</h2>
+                </div>
+                <div class="mid-account-section">
+                  <p>Email: <span>${loggedInAs.email}</span></p>
+                  <p>Level: <span>0</span></p>
+                  <p>Joined: <span>${loggedInAs.joined}</span></p>
+                </div>
+                <div class="settings">
+                  <p>User settings</p>
+                  <p>Preferences</p>
+                  <p>Bookmarks</p>
+                </div>
+                <button class="log-out">Log out</button>
+              </div>`;
+
+    document.querySelector(".log-out").addEventListener("click", function () {
+      LoggedIn = false;
+      loggedInAs = {};
+      localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+      localStorage.setItem("logged", JSON.stringify(LoggedIn));
+      Logged = JSON.parse(localStorage.getItem("logged")) || false;
+      checkIfLoggedIn();
+    });
+    document
+      .querySelector(".weather-left-button")
+      .addEventListener("click", function () {
         document
           .querySelector(".weather-search")
-          .classList.contains("weather-search-active")
-      )
-        document.querySelector(".fa-chevron-left").style.transform =
-          "rotate(180deg)";
-      else
+          .classList.toggle("weather-search-active");
+        if (
+          document
+            .querySelector(".weather-search")
+            .classList.contains("weather-search-active")
+        )
+          document.querySelector(".fa-chevron-left").style.transform =
+            "rotate(180deg)";
+        else
+          document.querySelector(".fa-chevron-left").style.transform =
+            "rotate(0deg)";
+      });
+
+    document
+      .querySelector(".weather-search-input-container")
+      .addEventListener("submit", function (e) {
+        e.preventDefault();
+        const input = document.querySelector(".weather-search-input");
+        if (!input.value) return;
+        getWeather(input.value);
+        document
+          .querySelector(".weather-search")
+          .classList.remove("weather-search-active");
         document.querySelector(".fa-chevron-left").style.transform =
           "rotate(0deg)";
+        input.value = "";
+      });
+    document.querySelectorAll("li").forEach((el) => {
+      el.classList.add("list-unclicked");
+      el.addEventListener("click", function (e) {
+        document.querySelectorAll("li").forEach((el) => {
+          el.classList.add("list-unclicked");
+          el.classList.remove("list-clicked");
+        });
+        e.target.classList.remove("list-unclicked");
+        e.target.classList.add("list-clicked");
+
+        // document.querySelector(".page-title").textContent = e.target.textContent;
+        if (e.target.textContent === "Home") {
+          getHomeHTML();
+          return;
+        }
+        getNewsFromList(`${e.target.textContent}`);
+      });
     });
-  document
-    .querySelector(".weather-search-input-container")
-    .addEventListener("submit", function (e) {
-      e.preventDefault();
-      const input = document.querySelector(".weather-search-input");
-      if (!input.value) return;
-      getWeather(input.value);
-      document
-        .querySelector(".weather-search")
-        .classList.remove("weather-search-active");
-      document.querySelector(".fa-chevron-left").style.transform =
-        "rotate(0deg)";
-      input.value = "";
+    const search = document.querySelector(".search-input");
+    document
+      .querySelector(".search-container")
+      .addEventListener("submit", function (e) {
+        e.preventDefault();
+        getNewsFromInput(search.value);
+      });
+    const showProfilePreview = function () {
+      document.querySelector(".account-preview").style.height = "30rem";
+      document.querySelector(".account-preview").style.padding = "3rem 1rem";
+      document.querySelector(".account-preview").style.bottom = "-36rem";
+      document.querySelector(".account-preview").style.boxShadow =
+        "0px 10px 10px rgba(0, 0, 0, 0.3)";
+    };
+    const hideProfilePreview = function () {
+      document.querySelector(".account-preview").style.height = "0rem";
+      document.querySelector(".account-preview").style.padding = "0rem 1rem";
+      document.querySelector(".account-preview").style.bottom = "-0rem";
+      document.querySelector(".account-preview").style.boxShadow = "none";
+    };
+    const profilePicture = document.querySelector(".profile-picture");
+    profilePicture.addEventListener("click", showProfilePreview);
+
+    document.addEventListener("click", function (e) {
+      if (e.target.classList.contains("log-out")) return;
+      if (
+        e.target.closest(".account-preview") ||
+        e.target.closest(".profile-picture")
+      )
+        return;
+      else hideProfilePreview();
     });
+    document
+      .querySelector(".logo-container-title")
+      .addEventListener("click", (e) => {
+        document.querySelectorAll("li").forEach((el) => {
+          el.classList.replace("list-clicked", "list-unclicked");
+          if (el.textContent === "Home") el.classList.add("list-clicked");
+        });
+        getHomeHTML();
+      });
+    getWeather("Novi Pazar");
+  }
+};
+checkIfLoggedIn();
+
+let date;
+let milliseconds;
+let when;
+let since;
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+const days = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
+
+const getHTML = function (data) {
+  for (let i = 0; i < data.articles.length; i) {
+    date = new Date(`${data.articles[i].publishedAt}`);
+    milliseconds = date.getTime();
+    since = new Date().getTime() - +milliseconds;
+    if (since < 86_400_000) when = `${since / 24 / 1000000} hours ago`;
+    else if (since < 2 * 86_400_000) when = "Yesterday";
+    else if (since < 7 * 86_400_000) when = "Last week";
+    else when = "While ago...";
+    // if (i === 19 || i === 20 || i === 21 || i === 21) break;
+
+    if (i + 4 > data.articles.length) break;
+    if (data.articles[i].content === "[Removed]") {
+      i++;
+      continue;
+    }
+
+    // if (i === 20 || i === 21 || i === 22 || i === 23) break;
+    if (data.articles[i].urlToImage) {
+      document.querySelector(
+        ".first-container"
+      ).innerHTML += `  <div class="second-news big-news">
+          <div class="main-news">
+            <img
+              class="main-news-image"
+              src="${data.articles[i].urlToImage}"
+              alt=""
+            />
+            <div class="logo">
+              <img
+                class="image-side"
+                src="https://www.logodesignlove.com/wp-content/uploads/2010/06/cnn-logo-white-on-red.jpg"
+                alt=""
+              />
+              <p>${data.articles[i].source.name}</p>
+            </div>
+            <h3 class="main-news-title">
+             ${data.articles[i].title}
+            </h3>
+            <span class="date-author">${when} · ${
+        data.articles[i]?.author ?? ""
+      }</span>
+          </div>
+          <div class="on-the-side-news" data-side="${i}">
+            </div>
+        </div>`;
+      for (let j = i + 1; j < i + 4; j++) {
+        console.log(i, j);
+
+        if (data.articles[j].content === "[Removed]") continue;
+
+        document.querySelector(`[data-side="${i}"]`).innerHTML += `
+            <div class="on-the-side-new">
+              <div class="logo">
+                <img
+                  class="image-side"
+                  src="https://www.logodesignlove.com/wp-content/uploads/2010/06/cnn-logo-white-on-red.jpg"
+                  alt=""
+                />
+                <p>${data.articles[j]?.source.name}</p>
+              </div>
+              <p class="on-the-side-title">
+                ${data.articles[j].title}
+              </p>
+              <span class="date-author-side"
+                >${when}· ${data.articles[j].author ?? ""}</i
+              ></span>
+            </div>`;
+      }
+      i += 4;
+    } else {
+      document.querySelector(".first-container").innerHTML += `
+       <div class="first-news small-news-container">
+          <div class="small-news">
+            <div>
+              <div class="logo">
+                <img
+                  class="image-side"
+                  src="https://www.logodesignlove.com/wp-content/uploads/2010/06/cnn-logo-white-on-red.jpg"
+                  alt=""
+                />
+                <p>${data.articles[i]?.source.name}</p>
+              </div>
+              <h3 class="small-news-title">
+               ${data.articles[i].title}
+              </h3>
+            </div>
+            <span class="date-author">${when} · ${
+        data.articles[i].author ?? ""
+      }</span>
+          </div>
+          <div class="small-news-image">
+          </div>
+        </div>`;
+      i++;
+    }
+  }
 };
 const getNewsFromInput = async function (input) {
   // document.querySelector(".first-container").innerHTML = "";
-  document.querySelector("#main").style.width = "60vw";
+  document.querySelector("#main").style.width = "85rem";
   try {
     document.querySelector("#main").innerHTML = `
        <div class="page-top">
@@ -1022,19 +1208,102 @@ const getNewsFromInput = async function (input) {
 };
 const getNewsFromList = async function (clicked) {
   try {
-    document.querySelector("#main").style.width = "45vw";
+    const Technology = [
+      "Mobile",
+      "Gadgets",
+      "Internet",
+      "Virtual Reality",
+      "Artificial Intelligence",
+      "Computing",
+    ];
+    const Entertainment = [
+      "Movies",
+      "Music",
+      "TV",
+      "Books",
+      "Arts & design",
+      "Celebrities",
+    ];
+    const Sports = [
+      "NFL",
+      "NBA",
+      "MLB",
+      "NHL",
+      "NCAA Football",
+      "NCAA Basketball",
+      "Soccer",
+      "NASCAR",
+      "Golf",
+      "Tennis",
+      "WNBA",
+    ];
+    const Science = ["Environment", "Space", "Physics", "Genetics", "Wildfire"];
+    const Health = [
+      "Medication",
+      "Health care",
+      "Mental health",
+      "Nutrition",
+      "Fitness",
+    ];
+    const Business = [
+      "Economy",
+      "Markets",
+      "Jobs",
+      "Personal influence",
+      "Entrepreneurship",
+    ];
+    let array;
+    if (clicked === "Business") array = Business;
+    if (clicked === "Health") array = Health;
+    if (clicked === "Technology") array = Technology;
+    if (clicked === "Sports") array = Sports;
+    if (clicked === "Science") array = Science;
+    if (clicked === "Entertainment") array = Entertainment;
+    document.querySelector("#main").style.width = "85rem";
     document.querySelector("#main").innerHTML = `
-       <div class="page-top">
-        <div class="page-top-left">
-          <h2 class="page-title">${
-            clicked === "Local"
-              ? ""
-              : `<img class="${clicked} list-icons " src="${clicked}.jpg"/>`
-          }${clicked !== "Local" ? `${clicked}` : "Your local news"}</h2>
-        </div></div>
-  <div class='first-container'> </div>`;
+        <div class="page-top-submain-news">
+        <div class="page-top-submain-news-top">
+          <h2 class="page-title">
+           ${
+             clicked === "Local"
+               ? ""
+               : `<img class="${clicked} list-icons" src="${clicked}.jpg" />`
+           }${clicked === "Local" ? "Your local news" : `${clicked}`}
+          </h2>
+        </div>
+        <div class="page-top-submain-news-bottom">
+       ${
+         clicked !== "World" && clicked !== "Local" && clicked !== "U.S."
+           ? ` <button class="button-clicked">Latest</button>
+          ${array
+            .map((el) => `<button class="button-unclicked">${el}</button>`)
+            .join("")}`
+           : ""
+       }
+        </div>
+      </div>
+      <div class="first-container"></div>`;
+
+    document.querySelector(".first-container").style.width = "82rem";
+
+    document.querySelectorAll(".button-unclicked").forEach((el) =>
+      el.addEventListener("click", function (e) {
+        document.querySelectorAll(".button-clicked").forEach((el) => {
+          el.classList.remove("button-clicked");
+          el.classList.add("button-unclicked");
+        });
+        e.target.classList.add("button-clicked");
+        e.target.classList.remove("button-unclicked");
+      })
+    );
+    let differentClicked = undefined;
+    if (clicked === "U.S.") differentClicked = "us";
+    if (clicked === "Local") differentClicked = "rs";
+
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${clicked}&apiKey=3ac5523d43eb420aa810389f8d45a190`
+      `https://newsapi.org/v2/everything?q=${
+        differentClicked ? differentClicked : clicked
+      }&apiKey=3ac5523d43eb420aa810389f8d45a190`
     );
     const data = await response.json();
 
@@ -1059,84 +1328,3 @@ const getNewsFromList = async function (clicked) {
     document.querySelector(".first-container").innerHTML = `${err.message}`;
   }
 };
-const getWeather = async function (city) {
-  try {
-    const response = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=40af5230b1b9fa8b6a665dc853b4d7d7`
-    );
-    const weatherData = await response.json();
-
-    if (!response.ok) throw new Error("Could not find the specified location.");
-    console.log(weatherData);
-    document.querySelector(
-      ".weather-link"
-    ).href = `https://weather.com/weather/today/l/${weatherData.coord.lat},${weatherData.coord.lon}?par=google`;
-    document.querySelector(
-      ".weather-location"
-    ).textContent = `${weatherData.name}`;
-    document.querySelector(".weather-temperature").textContent = `${(
-      weatherData.main.temp - 275.15
-    ).toFixed(1)} C°`;
-  } catch (err) {
-    console.error(err);
-  }
-};
-const search = document.querySelector(".search-input");
-document
-  .querySelector(".search-container")
-  .addEventListener("submit", function (e) {
-    e.preventDefault();
-    getNewsFromInput(search.value);
-  });
-
-getWeather("los angeles");
-
-document
-  .querySelector(".weather-left-button")
-  .addEventListener("click", function () {
-    document
-      .querySelector(".weather-search")
-      .classList.toggle("weather-search-active");
-    if (
-      document
-        .querySelector(".weather-search")
-        .classList.contains("weather-search-active")
-    )
-      document.querySelector(".fa-chevron-left").style.transform =
-        "rotate(180deg)";
-    else
-      document.querySelector(".fa-chevron-left").style.transform =
-        "rotate(0deg)";
-  });
-
-document
-  .querySelector(".weather-search-input-container")
-  .addEventListener("submit", function (e) {
-    e.preventDefault();
-    const input = document.querySelector(".weather-search-input");
-    if (!input.value) return;
-    getWeather(input.value);
-    document
-      .querySelector(".weather-search")
-      .classList.remove("weather-search-active");
-    document.querySelector(".fa-chevron-left").style.transform = "rotate(0deg)";
-    input.value = "";
-  });
-document.querySelectorAll("li").forEach((el) => {
-  el.classList.add("list-unclicked");
-  el.addEventListener("click", function (e) {
-    document.querySelectorAll("li").forEach((el) => {
-      el.classList.add("list-unclicked");
-      el.classList.remove("list-clicked");
-    });
-    e.target.classList.remove("list-unclicked");
-    e.target.classList.add("list-clicked");
-
-    // document.querySelector(".page-title").textContent = e.target.textContent;
-    if (e.target.textContent === "Home") {
-      getHomeHTML();
-      return;
-    }
-    getNewsFromList(`${e.target.textContent}`);
-  });
-});

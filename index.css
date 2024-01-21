@@ -179,9 +179,6 @@ a.disabled:hover {
   font-weight: bold;
   font-size: 1.7rem;
 }
-.right-side-nav {
-  height: 100%;
-}
 .nav-button button {
   background: rgb(73, 180, 58);
   background: linear-gradient(

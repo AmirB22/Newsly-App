@@ -24,7 +24,6 @@ body {
   margin: 0px;
   padding: 0px;
 }
-
 .header {
   position: absolute;
   top: 0px;
@@ -32,6 +31,7 @@ body {
   right: 0px;
   background-color: white;
   height: 11rem;
+  padding: 0.5rem 0.5rem 0 0.5rem;
 }
 .nav {
   height: 100%;
@@ -54,6 +54,9 @@ body {
 }
 .logo-container img {
   height: 5.5rem;
+}
+.logo-container-title {
+  cursor: pointer;
 }
 .search-container {
   flex: 8;
@@ -97,6 +100,7 @@ body {
   flex: 1;
   display: flex;
   justify-content: end;
+  width: 100%;
 }
 .profile-picture-container img {
   height: 4rem;
@@ -160,8 +164,8 @@ body {
 }
 #main {
   min-height: calc(100svh - 16rem);
-  width: 60vw;
-  margin-top: 11rem;
+  width: 120rem;
+  margin-top: 11.5rem;
   padding-bottom: 5rem;
   display: flex;
   flex-direction: column;
@@ -187,8 +191,7 @@ body {
 .page-top {
   display: flex;
   justify-content: space-between;
-  height: 8rem;
-  margin-bottom: 2rem;
+  height: 7rem;
   align-items: center;
   width: 100%;
   padding: 1.5rem 0rem;
@@ -283,7 +286,7 @@ body {
 }
 .first-container {
   min-height: 50svh;
-  width: 45vw;
+  width: 75rem;
   background-color: white;
   padding: 1.5rem;
   color: black;
@@ -532,4 +535,171 @@ body {
 .no-search-results p {
   font-size: 2rem;
   font-weight: normal;
+}
+.page-top-submain-news {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.page-top-submain-news .page-title {
+  margin-top: 1rem;
+}
+.page-top-submain-news-bottom {
+  display: flex;
+  gap: 0.7rem;
+  align-items: center;
+  overflow: hidden;
+  box-shadow: inset -10px 0px 30px 0px transparent;
+}
+.page-top-submain-news-bottom button {
+  font-size: 1.5rem;
+  padding: 0.8rem 1.7rem;
+  text-wrap: nowrap;
+  border-radius: 1rem;
+  border: 1px solid lime;
+  cursor: pointer;
+  transform: all 0.5s;
+}
+.button-unclicked {
+  background-color: black;
+  color: white;
+}
+.button-clicked {
+  background-color: white;
+  color: black;
+}
+.button-clicked:focus,
+.button-unclicked:focus {
+  outline: none;
+}
+.profile-picture {
+  height: 5rem;
+  border-radius: 2.5rem;
+  cursor: pointer;
+  position: relative;
+}
+.account-preview {
+  position: relative;
+  height: 0rem;
+  width: 20rem;
+  padding: 0rem 0rem;
+  overflow: hidden;
+  position: absolute;
+  background-color: white;
+  bottom: 0rem;
+  right: 0rem;
+  display: flex;
+  flex-direction: column;
+  font-family: "Poppins" sans-serif;
+  gap: 1rem;
+  transition: all 0.5s;
+  color: black;
+  z-index: 10;
+}
+.mid-account-section {
+  width: 100%;
+  border-top: 1px solid lime;
+  padding: 1rem 0rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.account-preview p {
+  font-size: 1.2rem;
+}
+.account-preview span {
+  font-weight: normal;
+}
+.account-preview .profile-picture {
+  align-self: start;
+}
+.settings {
+  border-top: 1px solid lightgray;
+  display: flex;
+  flex-direction: column;
+}
+.settings p {
+  width: 50%;
+  display: inline;
+  padding: 0.5rem 0rem;
+}
+.settings p:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+.log-out {
+  background: rgb(73, 180, 58);
+  background: linear-gradient(
+    135deg,
+    rgba(73, 180, 58, 1) 0%,
+    rgba(196, 252, 69, 1) 100%
+  );
+  border: none;
+  width: 50%;
+  align-self: center;
+  color: white;
+  padding: 1rem;
+  border-radius: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+.right-side-nav {
+  height: 100%;
+}
+.not-logged-in-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  font-size: 2rem;
+}
+.not-logged-in-container h1 {
+  font-weight: normal;
+  color: black;
+}
+.not-logged-in-container img {
+  position: absolute;
+  height: 15rem;
+  top: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.not-logged-in-container a {
+  text-decoration: none;
+  padding: 1rem;
+  box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.2);
+}
+.not-logged-log-in {
+  font-weight: bold;
+  border: none;
+  font-size: 4rem;
+  padding: 0.5rem 0rem;
+  background-color: transparent;
+  color: white;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  justify-self: center;
+  align-items: center;
+  padding: 1rem;
+  box-shadow: inset 0px 0px 10px 10px rgba(0, 0, 0, 0.2);
+}
+.not-logged-log-in::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 0.2rem;
+  background-color: white;
+  bottom: 0.8rem;
+  transition: all 1s;
+}
+.not-logged-log-in-hovered::after {
+  width: 88%;
+}
+.not-logged-log-in:focus {
+  outline: none;
 }

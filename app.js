@@ -319,7 +319,6 @@ const showProfilePreview = function () {
   document.querySelector(".account-preview").style.boxShadow =
     "0px 10px 10px rgba(0, 0, 0, 0.3)";
 };
-let timeoutID;
 const hideProfilePreview = function () {
   document.querySelector(".account-preview").style.height = "0rem";
   document.querySelector(".account-preview").style.padding = "0rem 1rem";
@@ -327,7 +326,6 @@ const hideProfilePreview = function () {
   document.querySelector(".account-preview").style.boxShadow = "none";
 };
 const profilePicture = document.querySelector(".profile-picture");
-const accountPreview = document.querySelector(".account-preview");
 
 if (Logged) {
   profilePicture.addEventListener("click", showProfilePreview);
