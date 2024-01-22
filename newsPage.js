@@ -101,6 +101,9 @@ const getHomeHTML = function () {
       </div>
       <div class="first-second-container-wrapper">
         <div class="first-container">
+        <div>
+            <h1>Top stories <i class="fa-solid fa-angle-right"></i></h1>
+           </div>  
         </div>
         <div class="second-container">
             <div class="right-side-title">
@@ -420,7 +423,6 @@ const getHTML = function (data, limit = 1000) {
   }
 };
 const getNewsFromInput = async function (input) {
-  // document.querySelector(".first-container").innerHTML = "";
   document.querySelector("#main").style.width = "85rem";
   try {
     document.querySelector("#main").innerHTML = `
@@ -431,11 +433,9 @@ const getNewsFromInput = async function (input) {
       months[new Date().getMonth()]
     } ${new Date().getDate()}</p>
         </div></div>
-  <div class='first-container'>  <h1 class="first-container-title">
-            Top stories <i class="fa-solid fa-angle-right"></i>
-          </h1></div>`;
+  <div class='first-container'> `;
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=c8e87f0ac96d4e349f62b3d71fe2d90a`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=68871cc37a1d44c29372bb67cde857ea`
     );
 
     const data = await response.json();
@@ -570,7 +570,7 @@ const getNewsFromList = async function (clicked, callback = undefined) {
     const response = await fetch(
       `https://newsapi.org/v2/everything?q=${
         differentClicked ? differentClicked : clicked
-      }&apiKey=c8e87f0ac96d4e349f62b3d71fe2d90a`
+      }&apiKey=68871cc37a1d44c29372bb67cde857ea`
     );
     const data = await response.json();
 
@@ -597,18 +597,25 @@ const getNewsFromList = async function (clicked, callback = undefined) {
 };
 const changeContainerHTML = async function (input, limit, type, side = "") {
   try {
-    document.querySelector(".first-container").innerHTML = "";
     document.querySelector(
       ".first-container"
-    ).innerHTML = ` <i class="fa-solid fa-rotate-right"></i>`;
+    ).innerHTML += ` <i class="fa-solid fa-rotate-right"></i>`;
     if (document.querySelector(".second-container")) {
       document.querySelector(
         ".second-container"
+      ).innerHTML += ` <i class="fa-solid fa-rotate-right"></i>`;
+    }
+    if (document.querySelector(".for-you-container")) {
+      document.querySelector(
+        ".for-you-left-side"
+      ).innerHTML = ` <i class="fa-solid fa-rotate-right"></i>`;
+      document.querySelector(
+        ".for-you-right-side"
       ).innerHTML = ` <i class="fa-solid fa-rotate-right"></i>`;
     }
 
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=c8e87f0ac96d4e349f62b3d71fe2d90a`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=68871cc37a1d44c29372bb67cde857ea`
     );
     const newsData = await response.json();
 
@@ -649,7 +656,7 @@ const getSecondContainerHTML = function (data) {
     else when = "While ago...";
     document.querySelector(
       ".second-container"
-    ).innerHTML += `     <div class="right-side-card">
+    ).innerHTML += `   <a href="${data.articles[i].url}">  <div class="right-side-card">
             <div class="right-side-card-left">
               <p class="logo">${data.articles[i].source.name}</p>
               <h2 class="right-side-card-title">
@@ -664,7 +671,7 @@ const getSecondContainerHTML = function (data) {
                 alt=""
               />
             </div>
-          </div>`;
+          </div></a>`;
   }
 };
 const getThirdContainerHTML = function (data, side) {
@@ -680,7 +687,7 @@ const getThirdContainerHTML = function (data, side) {
 
     document.querySelector(
       `.for-you-${side}-side`
-    ).innerHTML += `<div class="right-side-card">
+    ).innerHTML += `<a href="${data.articles[i].url}"><div class="right-side-card">
             <div class="right-side-card-left">
               <p class="logo">${data.articles[i].source.name}</p>
               <h2 class="right-side-card-title">
@@ -695,7 +702,7 @@ const getThirdContainerHTML = function (data, side) {
                 alt=""
               />
             </div>
-          </div>`;
+          </div></a>`;
   }
 };
 const getFourthContainerHTML = function (data) {
@@ -710,7 +717,7 @@ const getFourthContainerHTML = function (data) {
           </div>`;
     for (let j = i; j < i + 3; j++) {
       document.querySelector(`[data-secondid="${i}"]`).innerHTML += `
-              <div class="right-side-card">
+             <a href="${data.articles[i].url}"> <div class="right-side-card">
             <div class="right-side-card-left">
               <p class="logo">${data.articles[j].source.name}</p>
               <h2 class="right-side-card-title">
@@ -725,13 +732,18 @@ const getFourthContainerHTML = function (data) {
                 alt=""
               />
             </div>
-          </div>`;
+          </div></a>`;
     }
     i += 3;
   }
 };
-// checkIfLoggedIn();
-// if (Logged) {
-//   getHomeHTML();
-//   getWeather("Novi Pazar");
-// }
+checkIfLoggedIn();
+if (Logged) {
+  getHomeHTML();
+  getWeather("Novi Pazar");
+}
+
+//TODO: FINISH MAIN PAGE FOOTER WITH 1 MORE CONTAINER, ADD A FOOTER TO EVERY PAGE, THEN
+
+//TODO: WORK ON IMPLEMENTING FOLLOWS, IF USER CLICKS ON FOLLOW, THE CATEGORY THAT HE FOLLOWED GETS ADDED TO
+//THEIR PROFILE AND WHEN THEY CLICK ON FOLLOWING THE CATEGORY APPEARS THERE.

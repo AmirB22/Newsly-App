@@ -378,7 +378,7 @@ body {
   position: relative;
 }
 .logo {
-  font-size: 1rem;
+  font-size: 1.2rem;
   display: flex;
   font-weight: bold;
   gap: 0.5rem;
@@ -490,6 +490,8 @@ body {
   background-color: white;
   border-radius: 2rem;
   padding: 1rem 0rem;
+  min-width: 120rem;
+  min-height: 30rem;
 }
 .for-you-container .right-side-card {
   padding: 1rem 1rem;
@@ -499,6 +501,8 @@ body {
 }
 .for-you-right-side,
 .for-you-left-side {
+  width: 50%;
+  position: relative;
   padding: 0rem 1rem;
 }
 .fourth-container-wrapper {
@@ -510,6 +514,17 @@ body {
 }
 .fourth-container-wrapper .second-container {
   width: 29.7%;
+  min-width: 29.7%;
+  min-height: 30rem;
+}
+.for-you-container a,
+.second-container a {
+  color: black;
+  text-decoration: none;
+}
+.second-container a:hover .right-side-card-title,
+.for-you-container a:hover .right-side-card-title {
+  text-decoration: underline;
 }
 .page-top .page-description {
   margin-bottom: 0px;
