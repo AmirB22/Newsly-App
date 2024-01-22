@@ -184,7 +184,7 @@ body {
 }
 .page-description {
   font-size: 1.5rem;
-  color: rgb(0, 0, 0);
+  color: black;
   margin-bottom: 2rem;
   font-family: "Roboto", sans-serif;
 }
@@ -296,6 +296,10 @@ body {
   display: flex;
   flex-direction: column;
 }
+.first-container h1:first-child {
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgb(220, 220, 220);
+}
 .first-container-title {
   font-weight: normal;
   width: 100%;
@@ -339,12 +343,12 @@ body {
 .right-side-card {
   padding: 1rem 0rem;
   display: flex;
-  border-bottom: 1px solid rgb(220, 220, 220);
   position: relative;
   font-family: "Roboto", sans-serif;
+  border-bottom: 1px solid rgb(220, 220, 220);
 }
-.right-side-card:last-child {
-  border-bottom: none;
+.fourth-container-link:last-child .right-side-card {
+  border-bottom: 0px;
 }
 .right-side-card-left {
   flex: 8;
@@ -485,19 +489,14 @@ body {
   object-fit: scale-down;
 }
 .for-you-container {
-  color: black;
   display: flex;
   background-color: white;
   border-radius: 2rem;
   padding: 1rem 0rem;
   min-width: 120rem;
+}
+.third-container .for-you-container {
   min-height: 30rem;
-}
-.for-you-container .right-side-card {
-  padding: 1rem 1rem;
-}
-.for-you-left-side {
-  border-right: 1px solid rgb(220, 220, 220);
 }
 .for-you-right-side,
 .for-you-left-side {
@@ -515,7 +514,7 @@ body {
 .fourth-container-wrapper .second-container {
   width: 29.7%;
   min-width: 29.7%;
-  min-height: 30rem;
+  min-height: 33rem;
 }
 .for-you-container a,
 .second-container a {
@@ -756,4 +755,44 @@ body {
   100% {
     transform: rotate(360deg);
   }
+}
+.fifth-container .for-you-container {
+  min-height: 37rem;
+}
+.fifth-container .for-you-left-side,
+.fifth-container .for-you-right-side {
+  display: flex;
+  flex-direction: column;
+}
+.for-you-right-side a,
+.for-you-left-side a {
+  position: relative;
+  height: 50%;
+}
+.for-you-right-side a:last-child,
+.for-you-left-side a:last-child {
+  border: none;
+}
+.for-you-right-link .right-side-card,
+.for-you-left-link .right-side-card {
+  height: 100%;
+  padding-bottom: 0px;
+}
+.for-you-right-link .date-author,
+.for-you-left-link .date-author {
+  bottom: 2rem;
+}
+
+.for-you-container .for-you-right-side a:last-child .right-side-card,
+.for-you-container .for-you-left-side a:last-child .right-side-card {
+  border: none;
+}
+.second-container a:last-child .right-side-card {
+  border: none;
+}
+.first-container .second-news:last-child {
+  border: none;
+}
+.sixth-container .for-you-container {
+  min-height: 27rem;
 }

@@ -54,6 +54,28 @@ const getWeather = async function (city) {
   }
 };
 const getHomeHTML = function () {
+  const firstContainerCategories = [
+    "America",
+    "Space",
+    "World",
+    "Iphone",
+    "Gaming",
+  ];
+  const secondContainerCategories = [
+    "Gym",
+    "Biceps",
+    "Crypto",
+    "Money",
+    "Virgin",
+  ];
+  const thirdContainerCategoriesLeft = ["Palestine", "Israel"];
+  const thirdContainerCategoriesRight = ["War", "Ukraine"];
+  const fourthContainerCategories = ["Movie", "Batman", "Flower", "Nature"];
+  const fifthContainerCategoriesLeft = ["Fact", "Fact check"];
+  const fifthContainerCategoriesRight = ["Corrected", "Mistake"];
+  const sixthContainerCategoriesLeft = ["Story", "Rizz", "Joke"];
+  const sixthContainerCategoriesRight = ["Hookup", "Tinder", "Africa"];
+
   document.querySelector("#main").style.width = "120rem";
   document.querySelector("#main").innerHTML = `  <div class="page-top">
         <div class="page-top-left">
@@ -134,6 +156,21 @@ const getHomeHTML = function () {
       <div class="fifth-container">
         <h1 class="page-title">Fact check</h1>
         <p class="page-description">From independent sources</p>
+          <div class="for-you-container">
+            <div class="for-you-left-side" data-foryouleft="2">
+            </div>
+            <div class="for-you-right-side" data-foryouright="2">
+          </div>
+        </div>
+        <div class="sixth-container">
+        <h1 class="page-title">Beyond the front page</h1>
+        <p class="page-description">Notable stories and conversation starters</p>
+          <div class="for-you-container">
+            <div class="for-you-left-side" data-foryouleft="3">
+            </div>
+            <div class="for-you-right-side" data-foryouright="3">
+          </div>
+        </div>
       </div>`;
   getWeather("Novi Pazar");
 
@@ -168,11 +205,58 @@ const getHomeHTML = function () {
         "rotate(0deg)";
       input.value = "";
     });
-  changeContainerHTML("World", 19, "first-container");
-  changeContainerHTML("Gym", 3, "second-container");
-  changeContainerHTML("Love", 1000, "third-container", "left");
-  changeContainerHTML("Crypto", 1000, "third-container", "right");
-  changeContainerHTML("mind", 1000, "fourth-container");
+
+  changeContainerHTML(
+    firstContainerCategories[randomNumber(0, 4)],
+    19,
+    "first-container"
+  );
+  changeContainerHTML(
+    secondContainerCategories[randomNumber(0, 4)],
+    3,
+    "second-container"
+  );
+  changeContainerHTML(
+    thirdContainerCategoriesLeft[randomNumber(0, 1)],
+    1000,
+    "third-container",
+    "left"
+  );
+  changeContainerHTML(
+    thirdContainerCategoriesRight[randomNumber(0, 1)],
+    1000,
+    "third-container",
+    "right"
+  );
+  changeContainerHTML(
+    fourthContainerCategories[randomNumber(0, 3)],
+    1000,
+    "fourth-container"
+  );
+  changeContainerHTML(
+    fifthContainerCategoriesLeft[randomNumber(0, 2)],
+    1000,
+    "fifth-container",
+    "left"
+  );
+  changeContainerHTML(
+    fifthContainerCategoriesLeft[randomNumber(0, 2)],
+    1000,
+    "fifth-container",
+    "right"
+  );
+  changeContainerHTML(
+    fifthContainerCategoriesRight[randomNumber(0, 2)],
+    1000,
+    "sixth-container",
+    "left"
+  );
+  changeContainerHTML(
+    sixthContainerCategoriesRight[randomNumber(0, 2)],
+    1000,
+    "sixth-container",
+    "right"
+  );
 };
 let date;
 let milliseconds;
@@ -435,7 +519,7 @@ const getNewsFromInput = async function (input) {
         </div></div>
   <div class='first-container'> `;
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=68871cc37a1d44c29372bb67cde857ea`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=3ac5523d43eb420aa810389f8d45a190`
     );
 
     const data = await response.json();
@@ -451,14 +535,13 @@ const getNewsFromInput = async function (input) {
     <h1>Oops! We were unable to find any news</h1> 
       <p>Try searching up something else!</p></div>
       </div>`);
-    const mainData = data.articles;
 
     getHTML(data);
   } catch (err) {
     document.querySelector(".first-container").innerHTML = `${err.message}`;
   }
 };
-const getNewsFromList = async function (clicked, callback = undefined) {
+const getNewsFromList = async function (clicked) {
   try {
     const Technology = [
       "Mobile",
@@ -570,7 +653,7 @@ const getNewsFromList = async function (clicked, callback = undefined) {
     const response = await fetch(
       `https://newsapi.org/v2/everything?q=${
         differentClicked ? differentClicked : clicked
-      }&apiKey=68871cc37a1d44c29372bb67cde857ea`
+      }&apiKey=3ac5523d43eb420aa810389f8d45a190`
     );
     const data = await response.json();
 
@@ -588,7 +671,6 @@ const getNewsFromList = async function (clicked, callback = undefined) {
       </div>`);
 
     console.log(data);
-    const mainData = data.articles;
 
     getHTML(data);
   } catch (err) {
@@ -606,16 +688,20 @@ const changeContainerHTML = async function (input, limit, type, side = "") {
       ).innerHTML += ` <i class="fa-solid fa-rotate-right"></i>`;
     }
     if (document.querySelector(".for-you-container")) {
-      document.querySelector(
-        ".for-you-left-side"
-      ).innerHTML = ` <i class="fa-solid fa-rotate-right"></i>`;
-      document.querySelector(
-        ".for-you-right-side"
-      ).innerHTML = ` <i class="fa-solid fa-rotate-right"></i>`;
+      document
+        .querySelectorAll(".for-you-left-side")
+        .forEach(
+          (el) => (el.innerHTML = ` <i class="fa-solid fa-rotate-right"></i>`)
+        );
+      document
+        .querySelectorAll(".for-you-right-side")
+        .forEach(
+          (el) => (el.innerHTML = ` <i class="fa-solid fa-rotate-right"></i>`)
+        );
     }
 
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=68871cc37a1d44c29372bb67cde857ea`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=3ac5523d43eb420aa810389f8d45a190`
     );
     const newsData = await response.json();
 
@@ -639,6 +725,8 @@ const changeContainerHTML = async function (input, limit, type, side = "") {
     if (type === "second-container") getSecondContainerHTML(newsData);
     if (type === "third-container") getThirdContainerHTML(newsData, side);
     if (type === "fourth-container") getFourthContainerHTML(newsData);
+    if (type === "fifth-container") getFifthContainerHTML(newsData, side);
+    if (type === "sixth-container") getSixthContainerHTML(newsData, side);
   } catch (err) {
     document.querySelector(".first-container").innerHTML = `${err.message}`;
   }
@@ -654,15 +742,17 @@ const getSecondContainerHTML = function (data) {
     else if (since < 2 * 86_400_000) when = "Yesterday";
     else if (since < 7 * 86_400_000) when = "Last week";
     else when = "While ago...";
-    document.querySelector(
-      ".second-container"
-    ).innerHTML += `   <a href="${data.articles[i].url}">  <div class="right-side-card">
+    document.querySelector(".second-container").innerHTML += `   <a href="${
+      data.articles[i].url
+    }">  <div class="right-side-card">
             <div class="right-side-card-left">
               <p class="logo">${data.articles[i].source.name}</p>
               <h2 class="right-side-card-title">
                ${data.articles[i].title}
               </h2>
-              <p class="date-author-side">${when} · ${data.articles[i].author}</p>
+              <p class="date-author-side">${when} · ${
+      data.articles[i].author ?? ""
+    }</p>
             </div>
             <div class="right-side-card-right">
               <img
@@ -685,15 +775,17 @@ const getThirdContainerHTML = function (data, side) {
     else if (since < 7 * 86_400_000) when = "Last week";
     else when = "While ago...";
 
-    document.querySelector(
-      `.for-you-${side}-side`
-    ).innerHTML += `<a href="${data.articles[i].url}"><div class="right-side-card">
+    document.querySelector(`.for-you-${side}-side`).innerHTML += `<a href="${
+      data.articles[i].url
+    }"><div class="right-side-card">
             <div class="right-side-card-left">
               <p class="logo">${data.articles[i].source.name}</p>
               <h2 class="right-side-card-title">
                ${data.articles[i].title}
               </h2>
-              <p class="date-author-side">${when} · ${data.articles[i].author}</p>
+              <p class="date-author-side">${when} · ${
+      data.articles[i].author ?? ""
+    }</p>
             </div>
             <div class="right-side-card-right">
               <img
@@ -717,13 +809,17 @@ const getFourthContainerHTML = function (data) {
           </div>`;
     for (let j = i; j < i + 3; j++) {
       document.querySelector(`[data-secondid="${i}"]`).innerHTML += `
-             <a href="${data.articles[i].url}"> <div class="right-side-card">
+             <a class="fourth-container-link" href="${
+               data.articles[i].url
+             }"> <div class="right-side-card">
             <div class="right-side-card-left">
               <p class="logo">${data.articles[j].source.name}</p>
               <h2 class="right-side-card-title">
                ${data.articles[j].title}
               </h2>
-              <p class="date-author-side">${when} · ${data.articles[j].author}</p>
+              <p class="date-author-side">${when} · ${
+        data.articles[j].author ?? ""
+      }</p>
             </div>
             <div class="right-side-card-right">
               <img
@@ -735,6 +831,89 @@ const getFourthContainerHTML = function (data) {
           </div></a>`;
     }
     i += 3;
+  }
+};
+const getFifthContainerHTML = function (data, side) {
+  let i;
+  side === "right" ? (i = 2) : (i = 0);
+  let k = i + 2;
+  for (i; i < k; i++) {
+    date = new Date(`${data.articles[i].publishedAt}`);
+    milliseconds = date.getTime();
+    since = new Date().getTime() - +milliseconds;
+    if (since < 86_400_000) when = `${since / 24} hours ago`;
+    else if (since < 2 * 86_400_000) when = "Yesterday";
+    else if (since < 7 * 86_400_000) when = "Last week";
+    else when = "While ago...";
+
+    document.querySelector(
+      `[data-foryou${side}="2"]`
+    ).innerHTML += `<a class="for-you-${side}-link" href="${
+      data.articles[i].url
+    }"><div class="right-side-card">
+            <div class="right-side-card-left">
+              <p class="logo">${data.articles[i].source.name}</p>
+              <h2 class="right-side-card-title">
+               ${data.articles[i].title}
+              </h2>
+              <p class="date-author">${when} · ${
+      data.articles[i].author ?? ""
+    }</p>
+            </div>
+          ${
+            data.articles[i].urlToImage
+              ? `  <div class="right-side-card-right">
+              <img
+                class="right-side-card-image"
+                src="${data.articles[i].urlToImage}"
+                alt=""
+              />
+            </div>`
+              : ""
+          }
+          </div></a>`;
+  }
+};
+const getSixthContainerHTML = function (data, side) {
+  console.log(data);
+  let i;
+  side === "right" ? (i = 2) : (i = 0);
+  let k = i + 2;
+  for (i; i < k; i++) {
+    date = new Date(`${data.articles[i].publishedAt}`);
+    milliseconds = date.getTime();
+    since = new Date().getTime() - +milliseconds;
+    if (since < 86_400_000) when = `${since / 24} hours ago`;
+    else if (since < 2 * 86_400_000) when = "Yesterday";
+    else if (since < 7 * 86_400_000) when = "Last week";
+    else when = "While ago...";
+
+    document.querySelector(
+      `[data-foryou${side}="3"]`
+    ).innerHTML += `<a class="for-you-${side}-link" href="${
+      data.articles[i].url
+    }"><div class="right-side-card">
+            <div class="right-side-card-left">
+              <p class="logo">${data.articles[i].source.name}</p>
+              <h2 class="right-side-card-title">
+               ${data.articles[i].title}
+              </h2>
+              <p class="date-author">${when} · ${
+      data.articles[i].author ?? ""
+    }</p>
+            </div>
+          ${
+            data.articles[i].urlToImage
+              ? `  <div class="right-side-card-right">
+              <img
+                class="right-side-card-image"
+                src="${data.articles[i].urlToImage}"
+                alt=""
+              />
+            </div>`
+              : ""
+          }
+          </div></a>`;
   }
 };
 checkIfLoggedIn();
