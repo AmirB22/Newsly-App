@@ -164,7 +164,7 @@ body {
 }
 #main {
   min-height: calc(100svh - 16rem);
-  width: 120rem;
+  width: 100rem;
   margin-top: 11.5rem;
   padding-bottom: 5rem;
   display: flex;
@@ -503,6 +503,7 @@ body {
   width: 50%;
   position: relative;
   padding: 0rem 1rem;
+  border-right: 1px solid rgb(220, 220, 220);
 }
 .fourth-container-wrapper {
   display: flex;
@@ -510,6 +511,7 @@ body {
   justify-content: center;
   width: 100%;
   gap: 1.77rem;
+  position: relative;
 }
 .fourth-container-wrapper .second-container {
   width: 29.7%;
@@ -795,4 +797,7 @@ body {
 }
 .sixth-container .for-you-container {
   min-height: 27rem;
+}
+.button-fourth-container {
+  cursor: pointer;
 }

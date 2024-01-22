@@ -39,7 +39,6 @@ const getWeather = async function (city) {
     const weatherData = await response.json();
 
     if (!response.ok) throw new Error("Could not find the specified location.");
-    console.log(weatherData);
     document.querySelector(
       ".weather-link"
     ).href = `https://weather.com/weather/today/l/${weatherData.coord.lat},${weatherData.coord.lon}?par=google`;
@@ -208,7 +207,7 @@ const getHomeHTML = function () {
 
   changeContainerHTML(
     firstContainerCategories[randomNumber(0, 4)],
-    19,
+    15,
     "first-container"
   );
   changeContainerHTML(
@@ -228,11 +227,7 @@ const getHomeHTML = function () {
     "third-container",
     "right"
   );
-  changeContainerHTML(
-    fourthContainerCategories[randomNumber(0, 3)],
-    1000,
-    "fourth-container"
-  );
+  getFourthContainerHTML();
   changeContainerHTML(
     fifthContainerCategoriesLeft[randomNumber(0, 2)],
     1000,
@@ -246,7 +241,7 @@ const getHomeHTML = function () {
     "right"
   );
   changeContainerHTML(
-    fifthContainerCategoriesRight[randomNumber(0, 2)],
+    sixthContainerCategoriesLeft[randomNumber(0, 2)],
     1000,
     "sixth-container",
     "left"
@@ -461,8 +456,6 @@ const getHTML = function (data, limit = 1000) {
             </div>
         </div>`;
       for (let j = i + 1; j < i + 4; j++) {
-        console.log(i, j);
-
         if (data.articles[j].content === "[Removed]") continue;
 
         document.querySelector(`[data-side="${i}"]`).innerHTML += `
@@ -519,11 +512,10 @@ const getNewsFromInput = async function (input) {
         </div></div>
   <div class='first-container'> `;
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=3ac5523d43eb420aa810389f8d45a190`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=68871cc37a1d44c29372bb67cde857ea`
     );
 
     const data = await response.json();
-    console.log(data);
     if (data.message && data?.message.startsWith("You have made too many"))
       throw new Error(`<div class="no-search-results"><div> <img src="final-logo.png"/></div>
     <div>
@@ -594,6 +586,13 @@ const getNewsFromList = async function (clicked) {
     if (clicked === "Sports") array = Sports;
     if (clicked === "Science") array = Science;
     if (clicked === "Entertainment") array = Entertainment;
+
+    document.querySelectorAll(".list-clicked").forEach((el) => {
+      el.classList.remove("list-clicked");
+    });
+    document.querySelectorAll(".list-unclicked").forEach((el) => {
+      if (el.textContent === clicked) el.classList.add("list-clicked");
+    });
     document.querySelector("#main").style.width = "85rem";
     document.querySelector("#main").innerHTML = `
         <div class="page-top-submain-news">
@@ -653,7 +652,7 @@ const getNewsFromList = async function (clicked) {
     const response = await fetch(
       `https://newsapi.org/v2/everything?q=${
         differentClicked ? differentClicked : clicked
-      }&apiKey=3ac5523d43eb420aa810389f8d45a190`
+      }&apiKey=68871cc37a1d44c29372bb67cde857ea`
     );
     const data = await response.json();
 
@@ -669,8 +668,6 @@ const getNewsFromList = async function (clicked) {
     <h1>Oops! We were unable to find any news</h1> 
       <p>Try searching up something else!</p></div>
       </div>`);
-
-    console.log(data);
 
     getHTML(data);
   } catch (err) {
@@ -701,7 +698,7 @@ const changeContainerHTML = async function (input, limit, type, side = "") {
     }
 
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=3ac5523d43eb420aa810389f8d45a190`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=68871cc37a1d44c29372bb67cde857ea`
     );
     const newsData = await response.json();
 
@@ -724,7 +721,6 @@ const changeContainerHTML = async function (input, limit, type, side = "") {
     if (type === "first-container") getHTML(newsData, limit);
     if (type === "second-container") getSecondContainerHTML(newsData);
     if (type === "third-container") getThirdContainerHTML(newsData, side);
-    if (type === "fourth-container") getFourthContainerHTML(newsData);
     if (type === "fifth-container") getFifthContainerHTML(newsData, side);
     if (type === "sixth-container") getSixthContainerHTML(newsData, side);
   } catch (err) {
@@ -765,7 +761,6 @@ const getSecondContainerHTML = function (data) {
   }
 };
 const getThirdContainerHTML = function (data, side) {
-  console.log(data);
   for (let i = 0; i < 3; i++) {
     date = new Date(`${data.articles[i].publishedAt}`);
     milliseconds = date.getTime();
@@ -797,18 +792,40 @@ const getThirdContainerHTML = function (data, side) {
           </div></a>`;
   }
 };
-const getFourthContainerHTML = function (data) {
-  const array = [9, 18];
-  let number = array[randomNumber(0, 1)];
-  console.log(number);
+const getFourthContainerHTML = async function () {
+  try {
+    const array = [9, 18];
+    let number = array[randomNumber(0, 1)];
+    const Categories = [
+      "Business",
+      "Science",
+      "Technology",
+      "World",
+      "Health",
+      "Sport",
+    ];
+    let k = 0;
+    for (let i = 0; i < number; i) {
+      const response = await fetch(
+        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=68871cc37a1d44c29372bb67cde857ea`
+      );
+      const data = await response.json();
 
-  for (let i = 0; i < number; i) {
-    document.querySelector(
-      ".fourth-container-wrapper"
-    ).innerHTML += `      <div class="second-container" data-secondid="${i}">
+      if (data.message && data?.message.startsWith("You have made too many"))
+        throw error;
+      if (!response.ok) throw error;
+
+      document.querySelector(
+        ".fourth-container-wrapper"
+      ).innerHTML += `      <div class="second-container fourth" data-secondid="${Categories[k]}">
+  <div>
+            <h1 class="button-fourth-container">${Categories[k]} <i class="fa-solid fa-angle-right"></i></h1>
+           </div>  
           </div>`;
-    for (let j = i; j < i + 3; j++) {
-      document.querySelector(`[data-secondid="${i}"]`).innerHTML += `
+      for (let j = i; j < i + 3; j++) {
+        document.querySelector(
+          `[data-secondid="${Categories[k]}"]`
+        ).innerHTML += `
              <a class="fourth-container-link" href="${
                data.articles[i].url
              }"> <div class="right-side-card">
@@ -818,8 +835,8 @@ const getFourthContainerHTML = function (data) {
                ${data.articles[j].title}
               </h2>
               <p class="date-author-side">${when} · ${
-        data.articles[j].author ?? ""
-      }</p>
+          data.articles[j].author ?? ""
+        }</p>
             </div>
             <div class="right-side-card-right">
               <img
@@ -829,8 +846,18 @@ const getFourthContainerHTML = function (data) {
               />
             </div>
           </div></a>`;
+      }
+      i += 3;
+      k++;
     }
-    i += 3;
+
+    document.querySelectorAll(".button-fourth-container").forEach((el) =>
+      el.addEventListener("click", function (e) {
+        getNewsFromList(`${e.target.textContent.trim()}`);
+      })
+    );
+  } catch (err) {
+    throw err;
   }
 };
 const getFifthContainerHTML = function (data, side) {
@@ -875,7 +902,6 @@ const getFifthContainerHTML = function (data, side) {
   }
 };
 const getSixthContainerHTML = function (data, side) {
-  console.log(data);
   let i;
   side === "right" ? (i = 2) : (i = 0);
   let k = i + 2;
