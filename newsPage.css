@@ -548,6 +548,7 @@ body {
 .Technology {
   background-color: cyan;
 }
+.Science,
 .Business,
 .World {
   background-color: lime;
@@ -837,8 +838,143 @@ body {
   border: none;
 }
 .followings {
-  font-size: 3rem;
   color: black;
   display: flex;
-  gap: 5rem;
+  font-size: 1.8rem;
+  flex-direction: column;
+  align-items: center;
+}
+.following-container {
+  margin-top: 1rem;
+  background-color: white;
+  width: 106rem;
+  border-radius: 1.5rem;
+  padding: 2rem;
+  padding-bottom: 4rem;
+}
+.following-container h1 {
+  font-size: 1.8rem;
+  font-weight: normal;
+  padding: 1rem;
+  width: 100%;
+  border-bottom: 1px solid rgb(180, 180, 180);
+}
+.following-buttons {
+  width: 110rem;
+  border-bottom: 1px solid rgb(180, 180, 180);
+  margin: 2rem 0rem;
+}
+.following-buttons button {
+  background-color: transparent;
+  padding: 1rem;
+  border: none;
+  font-weight: bold;
+  font-size: 1.8rem;
+  cursor: pointer;
+  transition: background-color 0.1s;
+}
+.following-buttons button:active {
+  background-color: white;
+}
+.following-categories-container,
+.following-local-container,
+.following-sources-container {
+  width: 100%;
+  border: 1px solid rgb(180, 180, 180);
+  border-radius: 1rem;
+  margin: 3rem;
+  height: 25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 3rem;
+  overflow: hidden;
+}
+.following-categories-container img,
+.following-local-container img,
+.following-sources-container img {
+  width: 15rem;
+}
+.following-categories-container p,
+.following-local-container p,
+.following-sources-container p {
+  font-size: 1.5rem;
+  font-family: "Roboto", sans-serif;
+  width: 40%;
+  text-align: center;
+}
+.followed-categories {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 5.5rem;
+  row-gap: 3.3rem;
+  margin: 3rem;
+}
+.followed-category {
+  width: 27rem;
+  display: flex;
+  padding: 1.5rem;
+  align-items: center;
+  gap: 1.5rem;
+  justify-content: space-between;
+  font-size: 1.3rem;
+  border-radius: 0.7rem;
+  border: 1px solid rgb(144, 144, 144);
+  padding-right: 2rem;
+}
+.followed-category-title {
+  margin-left: -10rem;
+}
+.followed-category img {
+  width: 6.5rem;
+  border-radius: 0.7rem;
+}
+.fa-ellipsis-vertical {
+  padding: 1.5rem 2rem;
+  background-color: rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  border-radius: 10rem;
+  margin: -1.5rem -2rem;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.fa-ellipsis-vertical:hover {
+  box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.3);
+}
+.manage-followed-container {
+  position: absolute;
+  font-family: "Roboto", sans-serif;
+  background-color: white;
+  height: 0rem;
+  width: 25rem;
+  bottom: 0rem;
+  left: 0px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0rem 0rem;
+  font-size: 1.5rem;
+  z-index: 2;
+  overflow: hidden;
+  transition: all 0.2s;
+}
+.manage-followed-container p {
+  display: flex;
+  gap: 2rem;
+  padding: 1rem 2rem;
+  text-wrap: nowrap;
+}
+.manage-followed-container p:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.manage-followed-container-top {
+  padding: 1rem 0rem;
+}
+.manage-followed-container-bottom {
+  border-top: 1px solid rgb(144, 144, 144);
+  padding: 1rem 0rem;
 }

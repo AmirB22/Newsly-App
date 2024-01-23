@@ -385,12 +385,8 @@ document.querySelectorAll("li").forEach((el) => {
       return;
     }
     if (e.target.textContent === "Following") {
-      document.querySelector("#main").innerHTML = ` <div class="following-page">
-        <div class="followings"></div>
-      </div>`;
-      document.querySelector(".followings").innerHTML = loggedInAs?.following
-        .map((el) => `<p>${el}</p>`)
-        .join("");
+      getFollowingContainerHTML();
+      return;
     }
 
     if (e.target.textContent === "For you") return;
@@ -1018,11 +1014,129 @@ const getSixthContainerHTML = function (data, side) {
           </div></a>`;
   }
 };
+const getFollowingContainerHTML = function () {
+  document.querySelector("#main").innerHTML = ` <div class="following-buttons">
+        <button>Topics & sources</button>
+        <button>Saved searches</button>
+        <button>Saved stories</button>
+      </div>
+      <div class="following-container">
+        <div class="following-page">
+          <div class="followings category-following-page">
+            <h1>Topics</h1>
+            <!-- <div class="followed-categories">
+              <div class="followed-category">
+                <img class="World following-icon" src="World.jpg" alt="" />
+                <p>World</p>
+              </div>
+            </div> -->
+            <div class="following-categories-container">
+              <img src="no-following.jpg" alt="" />
+              <p>
+                When you follow a topic it will appear here. You'll also see
+                more related stories in the For You feed.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="following-page">
+          <div class="followings local-following-page">
+            <h1>Local</h1>
+            <div class="following-local-container">
+              <img src="no-local.jpg" alt="" />
+              <p>When you follow a location it will appear here.</p>
+            </div>
+          </div>
+        </div>
+        <div class="following-page">
+          <div class="followings sources-following-page">
+            <h1>Sources</h1>
+            <div class="following-sources-container">
+              <img src="no-sources.jpg" alt="" />
+              <p>
+                When you follow a source it will appear here. You'll also see
+                more stories from that source in the For You feed.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>`;
+
+  if (loggedInAs.following && loggedInAs.following.length !== 0) {
+    document.querySelector(
+      ".category-following-page"
+    ).innerHTML = `<h1>Topics</h1>    <div class="followed-categories">
+            </div>`;
+
+    document.querySelector(".followed-categories").innerHTML +=
+      loggedInAs.following
+        .map(
+          (el) => ` 
+    <div class="followed-category">
+      <img class="${el} following-icon" src="${el}.jpg" alt="" />
+      <p class="followed-category-title">${el}</p>
+      <i class="fa-solid fa-ellipsis-vertical">
+        <div class="manage-followed-container">
+          <div class="manage-followed-container-top">
+            <p><i class="fa-solid fa-arrow-up"></i> Move to top</p>
+            <p><i class="fa-solid fa-chevron-up"></i> Move toward top</p>
+            <p><i class="fa-solid fa-chevron-down"></i> Move toward bottom</p>
+            <p><i class="fa-solid fa-arrow-down"></i> Move to bottom</p>
+          </div>
+          <div class="manage-followed-container-bottom">
+            <p><i class="fa-solid fa-trash"></i> Remove from library</p>
+          </div>
+        </div>
+      </i>
+    </div>`
+        )
+        .join("");
+
+    document.querySelectorAll(".fa-ellipsis-vertical").forEach((el) =>
+      el.addEventListener("click", function () {
+        document
+          .querySelectorAll(".manage-followed-container")
+          .forEach((el) => {
+            el.style.height = "0rem";
+            el.style.bottom = "0rem";
+            el.style.padding = "0rem 0rem";
+            el.style.boxShadow = "none";
+          });
+        el.firstElementChild.style.height = "18rem";
+        el.firstElementChild.style.bottom = "-22rem";
+        el.firstElementChild.style.padding = "2rem 0rem";
+        el.firstElementChild.style.boxShadow =
+          "0px 0px 10px 5px rgba(0, 0, 0, 0.2)";
+        document.addEventListener("click", function (e) {
+          if (e.target.closest(".fa-ellipsis-vertical")) return;
+          document
+            .querySelectorAll(".manage-followed-container")
+            .forEach((el) => {
+              el.style.height = "0rem";
+              el.style.bottom = "0rem";
+              el.style.padding = "0rem 0rem";
+              el.style.boxShadow = "none";
+            });
+        });
+      })
+    );
+  } else if (!loggedInAs.following || loggedInAs.following.length === 0) {
+    document.querySelector(
+      ".category-following-page"
+    ).innerHTML = `<h1>Topics</h1>    <div class="following-categories-container">
+              <img src="no-following.jpg" alt="" />
+              <p>
+                When you follow a topic it will appear here. You'll also see
+                more related stories in the For You feed.
+              </p>
+            </div>`;
+  }
+};
 checkIfLoggedIn();
-// if (Logged) {
-//   getHomeHTML();
-//   getWeather("Novi Pazar");
-// }
+if (Logged) {
+  getHomeHTML();
+  getWeather("Novi Pazar");
+}
 
 //TODO: FINISH MAIN PAGE FOOTER WITH 1 MORE CONTAINER, ADD A FOOTER TO EVERY PAGE, THEN
 
