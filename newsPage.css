@@ -913,6 +913,7 @@ body {
   margin: 3rem;
 }
 .followed-category {
+  cursor: pointer;
   width: 27rem;
   display: flex;
   padding: 1.5rem;
@@ -933,7 +934,7 @@ body {
 }
 .fa-ellipsis-vertical {
   padding: 1.5rem 2rem;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.06);
   cursor: pointer;
   border-radius: 10rem;
   margin: -1.5rem -2rem;

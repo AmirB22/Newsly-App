@@ -632,9 +632,13 @@ const getNewsFromList = async function (clicked) {
                : `<img class="${clicked} list-icons" src="${clicked}.jpg" />`
            }${clicked === "Local" ? "Your local news" : `${clicked}`}
           </h2>
-          <button class="list-follow not-following">
+          ${
+            clicked === "Local"
+              ? ""
+              : `<button class="list-follow not-following">
             <i class="fa-regular fa-star"></i> Follow
-          </button>
+          </button>`
+          }
         </div>
         <div class="page-top-submain-news-bottom">
        ${
@@ -651,7 +655,11 @@ const getNewsFromList = async function (clicked) {
         </div>
       </div>
       <div class="first-container"></div>`;
-    if (loggedInAs.following && loggedInAs.following.includes(`${clicked}`)) {
+    if (
+      clicked !== "Local" &&
+      loggedInAs.following &&
+      loggedInAs.following.includes(`${clicked}`)
+    ) {
       document.querySelector(
         ".list-follow"
       ).innerHTML = ` <i class="fa-solid fa-star"></i> Following`;
@@ -659,60 +667,76 @@ const getNewsFromList = async function (clicked) {
         .querySelector(".list-follow")
         .classList.replace("not-following", "following");
     }
-    document
-      .querySelector(".list-follow")
-      .addEventListener("click", function (e) {
-        console.log();
-        if (
-          document.querySelector(".fa-star").classList.contains("fa-regular")
-        ) {
-          document.querySelector(
-            ".list-follow"
-          ).innerHTML = ` <i class="fa-solid fa-star"></i> Following`;
-          document
-            .querySelector(".list-follow")
-            .classList.replace("not-following", "following");
-          loggedInAs.following
-            ? loggedInAs.following.push(`${clicked}`)
-            : (loggedInAs.following = [`${clicked}`]);
-          document.querySelector(".list-follow").style.backgroundColor =
-            "rgba(0, 0, 255, 0.5)";
-          localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
-          loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
-          console.log(loggedInAs);
-        } else if (
-          document.querySelector(".fa-star").classList.contains("fa-solid")
-        ) {
-          document.querySelector(
-            ".list-follow"
-          ).innerHTML = ` <i class="fa-regular fa-star"></i> Follow`;
-          document
-            .querySelector(".list-follow")
-            .classList.replace("following", "not-following");
-          loggedInAs.following.splice(
-            loggedInAs.following.indexOf(`${clicked}`),
-            1
-          );
-          document.querySelector(".list-follow").style.backgroundColor =
-            "rgba(0, 0, 0, 0.5)";
-          localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
-          loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
-        }
-      });
+    if (clicked !== "Local") {
+      document
+        .querySelector(".list-follow")
+        .addEventListener("click", function (e) {
+          console.log();
+          if (
+            document.querySelector(".fa-star").classList.contains("fa-regular")
+          ) {
+            document.querySelector(
+              ".list-follow"
+            ).innerHTML = ` <i class="fa-solid fa-star"></i> Following`;
+            document
+              .querySelector(".list-follow")
+              .classList.replace("not-following", "following");
+            loggedInAs.following
+              ? loggedInAs.following.push(`${clicked}`)
+              : (loggedInAs.following = [`${clicked}`]);
+            document.querySelector(".list-follow").style.backgroundColor =
+              "rgba(0, 0, 255, 0.5)";
 
-    document.querySelector(
-      ".first-container"
-    ).innerHTML = ` <i class="fa-solid fa-rotate-right"></i>`;
-    document.querySelectorAll(".button-list").forEach((el) =>
-      el.addEventListener("click", function (e) {
-        let clicked;
-        if (e.target.textContent === "Latest")
-          clicked = document.querySelector(".page-title").textContent;
-        else clicked = e.target.textContent;
-        changeContainerHTML(`${clicked}`, 1000, "first-container");
-      })
-    );
+            localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+            loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
+            userAccounts.forEach((el) => {
+              if (loggedInAs.username === el.username) {
+                el.following = loggedInAs.following;
+              }
+            });
 
+            localStorage.setItem("accounts", JSON.stringify(userAccounts));
+          } else if (
+            document.querySelector(".fa-star").classList.contains("fa-solid")
+          ) {
+            document.querySelector(
+              ".list-follow"
+            ).innerHTML = ` <i class="fa-regular fa-star"></i> Follow`;
+            document
+              .querySelector(".list-follow")
+              .classList.replace("following", "not-following");
+            loggedInAs.following.splice(
+              loggedInAs.following.indexOf(`${clicked}`),
+              1
+            );
+            document.querySelector(".list-follow").style.backgroundColor =
+              "rgba(0, 0, 0, 0.5)";
+            localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+            loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
+            userAccounts.forEach((el) => {
+              if (loggedInAs.username === el.username) {
+                el.following = loggedInAs.following;
+              }
+            });
+
+            localStorage.setItem("accounts", JSON.stringify(userAccounts));
+          }
+        });
+    }
+    if (clicked !== "Local") {
+      document.querySelector(
+        ".first-container"
+      ).innerHTML = ` <i class="fa-solid fa-rotate-right"></i>`;
+      document.querySelectorAll(".button-list").forEach((el) =>
+        el.addEventListener("click", function (e) {
+          let clicked;
+          if (e.target.textContent === "Latest")
+            clicked = document.querySelector(".page-title").textContent;
+          else clicked = e.target.textContent;
+          changeContainerHTML(`${clicked}`, 1000, "first-container");
+        })
+      );
+    }
     document.querySelector(".first-container").style.width = "82rem";
 
     document.querySelectorAll(".button-list").forEach((el) =>
@@ -943,7 +967,7 @@ const getFifthContainerHTML = function (data, side) {
     if (since < 86_400_000) when = `${since / 24} hours ago`;
     else if (since < 2 * 86_400_000) when = "Yesterday";
     else if (since < 7 * 86_400_000) when = "Last week";
-    else when = "While ago...";
+    else when = "A week ago";
 
     document.querySelector(
       `[data-foryou${side}="2"]`
@@ -1014,6 +1038,74 @@ const getSixthContainerHTML = function (data, side) {
           </div></a>`;
   }
 };
+const hideManageFollowing = function (e) {
+  if (e.target.closest(".fa-ellipsis-vertical")) {
+    return;
+  }
+
+  document.querySelectorAll(".manage-followed-container").forEach((el) => {
+    el.style.height = "0rem";
+    el.style.bottom = "0rem";
+    el.style.padding = "0rem 0rem";
+    el.style.boxShadow = "none";
+    el.style.zIndex = "1";
+  });
+  document.removeEventListener("click", hideManageFollowing);
+};
+const getFollowingCart = function (el) {
+  if (el === loggedInAs.following[0])
+    return ` <div class="followed-category">
+      <img class="${el} following-icon" src="${el}.jpg" alt="" />
+      <p class="followed-category-title">${el}</p>
+      <i class="fa-solid fa-ellipsis-vertical">
+        <div class="manage-followed-container">
+          <div class="manage-followed-container-top">
+            <p class="move-toward-bottom-following-category"><i class="fa-solid fa-chevron-down"></i> Move toward bottom</p>
+            <p class="move-bottom-following-category"><i class="fa-solid fa-arrow-down"></i> Move to bottom</p>
+          </div>
+          <div class="manage-followed-container-bottom">
+            <p class="remove-following-category"><i class="fa-solid fa-trash"></i> Remove from library</p>
+          </div>
+        </div>
+      </i>
+    </div>`;
+  else if (el === loggedInAs.following[loggedInAs.following.length - 1])
+    return `
+    <div class="followed-category">
+      <img class="${el} following-icon" src="${el}.jpg" alt="" />
+      <p class="followed-category-title">${el}</p>
+      <i class="fa-solid fa-ellipsis-vertical">
+        <div class="manage-followed-container">
+          <div class="manage-followed-container-top">
+            <p class="move-top-following-category"><i class="fa-solid fa-arrow-up"></i> Move to top</p>
+            <p class="move-toward-top-following-category"><i class="fa-solid fa-chevron-up"></i> Move toward top</p>
+          </div>
+          <div class="manage-followed-container-bottom">
+            <p class="remove-following-category"><i class="fa-solid fa-trash"></i> Remove from library</p>
+          </div>
+        </div>
+      </i>
+    </div>
+  `;
+  else
+    return ` <div class="followed-category">
+      <img class="${el} following-icon" src="${el}.jpg" alt="" />
+      <p class="followed-category-title">${el}</p>
+      <i class="fa-solid fa-ellipsis-vertical">
+        <div class="manage-followed-container">
+          <div class="manage-followed-container-top">
+            <p class="move-top-following-category"><i class="fa-solid fa-arrow-up"></i> Move to top</p>
+            <p class="move-toward-top-following-category"><i class="fa-solid fa-chevron-up"></i> Move toward top</p>
+            <p class="move-toward-bottom-following-category"><i class="fa-solid fa-chevron-down"></i> Move toward bottom</p>
+            <p class="move-bottom-following-category"><i class="fa-solid fa-arrow-down"></i> Move to bottom</p>
+          </div>
+          <div class="manage-followed-container-bottom">
+            <p class="remove-following-category"><i class="fa-solid fa-trash"></i> Remove from library</p>
+          </div>
+        </div>
+      </i>
+    </div>`;
+};
 const getFollowingContainerHTML = function () {
   document.querySelector("#main").innerHTML = ` <div class="following-buttons">
         <button>Topics & sources</button>
@@ -1061,39 +1153,44 @@ const getFollowingContainerHTML = function () {
           </div>
         </div>
       </div>`;
-
   if (loggedInAs.following && loggedInAs.following.length !== 0) {
     document.querySelector(
       ".category-following-page"
     ).innerHTML = `<h1>Topics</h1>    <div class="followed-categories">
             </div>`;
-
     document.querySelector(".followed-categories").innerHTML +=
-      loggedInAs.following
-        .map(
-          (el) => ` 
-    <div class="followed-category">
-      <img class="${el} following-icon" src="${el}.jpg" alt="" />
-      <p class="followed-category-title">${el}</p>
-      <i class="fa-solid fa-ellipsis-vertical">
-        <div class="manage-followed-container">
-          <div class="manage-followed-container-top">
-            <p><i class="fa-solid fa-arrow-up"></i> Move to top</p>
-            <p><i class="fa-solid fa-chevron-up"></i> Move toward top</p>
-            <p><i class="fa-solid fa-chevron-down"></i> Move toward bottom</p>
-            <p><i class="fa-solid fa-arrow-down"></i> Move to bottom</p>
-          </div>
-          <div class="manage-followed-container-bottom">
-            <p><i class="fa-solid fa-trash"></i> Remove from library</p>
-          </div>
-        </div>
-      </i>
-    </div>`
-        )
-        .join("");
+      loggedInAs.following.map((el) => ` ${getFollowingCart(el)}`).join("");
 
-    document.querySelectorAll(".fa-ellipsis-vertical").forEach((el) =>
-      el.addEventListener("click", function () {
+    document.querySelectorAll(".followed-category").forEach((el) => {
+      el.addEventListener("click", function (e) {
+        if (e.target.closest(".fa-ellipsis-vertical")) return;
+        getNewsFromList(
+          `${
+            e.target
+              .closest(".followed-category")
+              .querySelector(".followed-category-title").textContent
+          }`
+        );
+      });
+    });
+    document.querySelectorAll(".fa-ellipsis-vertical").forEach((el) => {
+      el.addEventListener("click", function (e) {
+        if (e.target.closest(".manage-followed-container")) return;
+
+        if (
+          el
+            .closest(".followed-category")
+            .querySelector(".manage-followed-container").style.height ===
+          "18rem"
+        ) {
+          el.firstElementChild.style.height = "0rem";
+          el.firstElementChild.style.bottom = "0rem";
+          el.firstElementChild.style.padding = "0rem 0rem";
+          el.firstElementChild.style.boxShadow = "none";
+          el.firstElementChild.style.zIndex = "1";
+          document.removeEventListener("click", hideManageFollowing);
+          return;
+        }
         document
           .querySelectorAll(".manage-followed-container")
           .forEach((el) => {
@@ -1101,25 +1198,41 @@ const getFollowingContainerHTML = function () {
             el.style.bottom = "0rem";
             el.style.padding = "0rem 0rem";
             el.style.boxShadow = "none";
+            el.style.zIndex = "1";
           });
         el.firstElementChild.style.height = "18rem";
         el.firstElementChild.style.bottom = "-22rem";
         el.firstElementChild.style.padding = "2rem 0rem";
         el.firstElementChild.style.boxShadow =
           "0px 0px 10px 5px rgba(0, 0, 0, 0.2)";
-        document.addEventListener("click", function (e) {
-          if (e.target.closest(".fa-ellipsis-vertical")) return;
-          document
-            .querySelectorAll(".manage-followed-container")
-            .forEach((el) => {
-              el.style.height = "0rem";
-              el.style.bottom = "0rem";
-              el.style.padding = "0rem 0rem";
-              el.style.boxShadow = "none";
-            });
+        el.firstElementChild.style.zIndex = "2";
+        document.addEventListener("click", hideManageFollowing);
+      });
+    });
+    document.querySelectorAll(".remove-following-category").forEach((el) => {
+      el.addEventListener("click", function (e) {
+        let category = e.target
+          .closest(".followed-category")
+          .querySelector(".followed-category-title").textContent;
+
+        loggedInAs.following.splice(
+          loggedInAs.following.indexOf(`${category}`),
+          1
+        );
+
+        e.target.closest(".followed-category").remove();
+        localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+        loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
+        userAccounts.forEach((el) => {
+          if (loggedInAs.username === el.username) {
+            el.following = loggedInAs.following;
+          }
         });
-      })
-    );
+
+        localStorage.setItem("accounts", JSON.stringify(userAccounts));
+        getFollowingContainerHTML();
+      });
+    });
   } else if (!loggedInAs.following || loggedInAs.following.length === 0) {
     document.querySelector(
       ".category-following-page"
