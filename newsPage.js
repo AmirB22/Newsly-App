@@ -330,7 +330,7 @@ document.querySelector(".profile-picture-container").innerHTML = `  <img
               </div>`;
 
 document.querySelector(".log-out").addEventListener("click", function () {
-  LoggedIn = false;
+  let LoggedIn = false;
   loggedInAs = {};
   localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
   localStorage.setItem("logged", JSON.stringify(LoggedIn));
@@ -384,11 +384,16 @@ document.querySelectorAll("li").forEach((el) => {
       getHomeHTML();
       return;
     }
-    if (
-      e.target.textContent === "For you" ||
-      e.target.textContent === "Following"
-    )
-      return;
+    if (e.target.textContent === "Following") {
+      document.querySelector("#main").innerHTML = ` <div class="following-page">
+        <div class="followings"></div>
+      </div>`;
+      document.querySelector(".followings").innerHTML = loggedInAs?.following
+        .map((el) => `<p>${el}</p>`)
+        .join("");
+    }
+
+    if (e.target.textContent === "For you") return;
     getNewsFromList(`${e.target.textContent}`);
   });
 });
@@ -650,7 +655,7 @@ const getNewsFromList = async function (clicked) {
         </div>
       </div>
       <div class="first-container"></div>`;
-    if (loggedInAs.following.includes(`${clicked}`)) {
+    if (loggedInAs.following && loggedInAs.following.includes(`${clicked}`)) {
       document.querySelector(
         ".list-follow"
       ).innerHTML = ` <i class="fa-solid fa-star"></i> Following`;
@@ -1014,10 +1019,10 @@ const getSixthContainerHTML = function (data, side) {
   }
 };
 checkIfLoggedIn();
-if (Logged) {
-  getHomeHTML();
-  getWeather("Novi Pazar");
-}
+// if (Logged) {
+//   getHomeHTML();
+//   getWeather("Novi Pazar");
+// }
 
 //TODO: FINISH MAIN PAGE FOOTER WITH 1 MORE CONTAINER, ADD A FOOTER TO EVERY PAGE, THEN
 

@@ -836,3 +836,9 @@ body {
   color: white;
   border: none;
 }
+.followings {
+  font-size: 3rem;
+  color: black;
+  display: flex;
+  gap: 5rem;
+}
