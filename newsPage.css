@@ -18,6 +18,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   color: white;
 }
 * {
@@ -580,9 +581,12 @@ body {
   width: 100%;
   justify-content: space-between;
   gap: 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 .page-top-submain-news .page-title {
+  margin-top: 0rem;
+}
+.page-top-submain-news {
   margin-top: 1rem;
 }
 .page-top-submain-news-bottom {
@@ -800,4 +804,35 @@ body {
 }
 .button-fourth-container {
   cursor: pointer;
+}
+.page-top-submain-news-top {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+.page-top-submain-news-top button {
+  font-family: "Poppins", sans-serif;
+  gap: 1rem;
+  display: flex;
+  align-items: center;
+  border-radius: 5rem;
+  cursor: pointer;
+  margin-right: 6rem;
+}
+.page-top-submain-news-top button:focus {
+  outline: none;
+}
+
+.not-following {
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 0.9rem 1.5rem;
+  border: 1px solid white;
+  color: white;
+}
+.following {
+  background-color: rgba(0, 0, 255, 0.5);
+  padding: 0.9rem 1.5rem;
+  color: white;
+  border: none;
 }

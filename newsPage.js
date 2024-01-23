@@ -1,6 +1,14 @@
 let Logged = JSON.parse(localStorage.getItem("logged")) || false;
 let loggedInAs = JSON.parse(localStorage.getItem("loggedInAs")) || {};
 let userAccounts = JSON.parse(localStorage.getItem("accounts")) || [];
+const CategoriesOriginal = [
+  "Business",
+  "Science",
+  "Technology",
+  "World",
+  "Health",
+  "Sports",
+];
 
 const checkIfLoggedIn = function () {
   if (!Logged && userAccounts.length !== 0) {
@@ -31,13 +39,28 @@ const checkIfLoggedIn = function () {
       });
   }
 };
+function shuffle(array) {
+  let currentIndex = array.length,
+    randomIndex;
+
+  while (currentIndex > 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex],
+      array[currentIndex],
+    ];
+  }
+
+  return array;
+}
 const getWeather = async function (city) {
   try {
     const response = await fetch(
       `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=40af5230b1b9fa8b6a665dc853b4d7d7`
     );
     const weatherData = await response.json();
-
     if (!response.ok) throw new Error("Could not find the specified location.");
     document.querySelector(
       ".weather-link"
@@ -69,7 +92,6 @@ const getHomeHTML = function () {
   ];
   const thirdContainerCategoriesLeft = ["Palestine", "Israel"];
   const thirdContainerCategoriesRight = ["War", "Ukraine"];
-  const fourthContainerCategories = ["Movie", "Batman", "Flower", "Nature"];
   const fifthContainerCategoriesLeft = ["Fact", "Fact check"];
   const fifthContainerCategoriesRight = ["Corrected", "Mistake"];
   const sixthContainerCategoriesLeft = ["Story", "Rizz", "Joke"];
@@ -235,7 +257,7 @@ const getHomeHTML = function () {
     "left"
   );
   changeContainerHTML(
-    fifthContainerCategoriesLeft[randomNumber(0, 2)],
+    fifthContainerCategoriesRight[randomNumber(0, 2)],
     1000,
     "fifth-container",
     "right"
@@ -348,6 +370,7 @@ document
   });
 document.querySelectorAll("li").forEach((el) => {
   el.classList.add("list-unclicked");
+  el.classList.add("list-button-list");
   el.addEventListener("click", function (e) {
     document.querySelectorAll("li").forEach((el) => {
       el.classList.add("list-unclicked");
@@ -361,6 +384,11 @@ document.querySelectorAll("li").forEach((el) => {
       getHomeHTML();
       return;
     }
+    if (
+      e.target.textContent === "For you" ||
+      e.target.textContent === "Following"
+    )
+      return;
     getNewsFromList(`${e.target.textContent}`);
   });
 });
@@ -512,7 +540,7 @@ const getNewsFromInput = async function (input) {
         </div></div>
   <div class='first-container'> `;
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=68871cc37a1d44c29372bb67cde857ea`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=2d6589d0bc654243b752f4b8882ad809`
     );
 
     const data = await response.json();
@@ -587,16 +615,15 @@ const getNewsFromList = async function (clicked) {
     if (clicked === "Science") array = Science;
     if (clicked === "Entertainment") array = Entertainment;
 
-    document.querySelectorAll(".list-clicked").forEach((el) => {
+    document.querySelectorAll(".list-button-list").forEach((el) => {
       el.classList.remove("list-clicked");
+      if (el.textContent.trim() === clicked) el.classList.add("list-clicked");
     });
-    document.querySelectorAll(".list-unclicked").forEach((el) => {
-      if (el.textContent === clicked) el.classList.add("list-clicked");
-    });
+
     document.querySelector("#main").style.width = "85rem";
     document.querySelector("#main").innerHTML = `
         <div class="page-top-submain-news">
-        <div class="page-top-submain-news-top">
+       <div class="page-top-submain-news-top">
           <h2 class="page-title">
            ${
              clicked === "Local"
@@ -604,6 +631,9 @@ const getNewsFromList = async function (clicked) {
                : `<img class="${clicked} list-icons" src="${clicked}.jpg" />`
            }${clicked === "Local" ? "Your local news" : `${clicked}`}
           </h2>
+          <button class="list-follow not-following">
+            <i class="fa-regular fa-star"></i> Follow
+          </button>
         </div>
         <div class="page-top-submain-news-bottom">
        ${
@@ -620,6 +650,55 @@ const getNewsFromList = async function (clicked) {
         </div>
       </div>
       <div class="first-container"></div>`;
+    if (loggedInAs.following.includes(`${clicked}`)) {
+      document.querySelector(
+        ".list-follow"
+      ).innerHTML = ` <i class="fa-solid fa-star"></i> Following`;
+      document
+        .querySelector(".list-follow")
+        .classList.replace("not-following", "following");
+    }
+    document
+      .querySelector(".list-follow")
+      .addEventListener("click", function (e) {
+        console.log();
+        if (
+          document.querySelector(".fa-star").classList.contains("fa-regular")
+        ) {
+          document.querySelector(
+            ".list-follow"
+          ).innerHTML = ` <i class="fa-solid fa-star"></i> Following`;
+          document
+            .querySelector(".list-follow")
+            .classList.replace("not-following", "following");
+          loggedInAs.following
+            ? loggedInAs.following.push(`${clicked}`)
+            : (loggedInAs.following = [`${clicked}`]);
+          document.querySelector(".list-follow").style.backgroundColor =
+            "rgba(0, 0, 255, 0.5)";
+          localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+          loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
+          console.log(loggedInAs);
+        } else if (
+          document.querySelector(".fa-star").classList.contains("fa-solid")
+        ) {
+          document.querySelector(
+            ".list-follow"
+          ).innerHTML = ` <i class="fa-regular fa-star"></i> Follow`;
+          document
+            .querySelector(".list-follow")
+            .classList.replace("following", "not-following");
+          loggedInAs.following.splice(
+            loggedInAs.following.indexOf(`${clicked}`),
+            1
+          );
+          document.querySelector(".list-follow").style.backgroundColor =
+            "rgba(0, 0, 0, 0.5)";
+          localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+          loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
+        }
+      });
+
     document.querySelector(
       ".first-container"
     ).innerHTML = ` <i class="fa-solid fa-rotate-right"></i>`;
@@ -652,7 +731,7 @@ const getNewsFromList = async function (clicked) {
     const response = await fetch(
       `https://newsapi.org/v2/everything?q=${
         differentClicked ? differentClicked : clicked
-      }&apiKey=68871cc37a1d44c29372bb67cde857ea`
+      }&apiKey=2d6589d0bc654243b752f4b8882ad809`
     );
     const data = await response.json();
 
@@ -698,7 +777,7 @@ const changeContainerHTML = async function (input, limit, type, side = "") {
     }
 
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=68871cc37a1d44c29372bb67cde857ea`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=2d6589d0bc654243b752f4b8882ad809`
     );
     const newsData = await response.json();
 
@@ -796,24 +875,16 @@ const getFourthContainerHTML = async function () {
   try {
     const array = [9, 18];
     let number = array[randomNumber(0, 1)];
-    const Categories = [
-      "Business",
-      "Science",
-      "Technology",
-      "World",
-      "Health",
-      "Sport",
-    ];
+    let Categories = shuffle(CategoriesOriginal);
+    console.log(Categories);
     let k = 0;
     for (let i = 0; i < number; i) {
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=68871cc37a1d44c29372bb67cde857ea`
+        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=2d6589d0bc654243b752f4b8882ad809`
       );
       const data = await response.json();
 
-      if (data.message && data?.message.startsWith("You have made too many"))
-        throw error;
-      if (!response.ok) throw error;
+      if (!response.ok) throw new Error();
 
       document.querySelector(
         ".fourth-container-wrapper"
@@ -857,7 +928,7 @@ const getFourthContainerHTML = async function () {
       })
     );
   } catch (err) {
-    throw err;
+    console.error(err);
   }
 };
 const getFifthContainerHTML = function (data, side) {
