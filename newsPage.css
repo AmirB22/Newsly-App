@@ -812,7 +812,7 @@ body {
   justify-content: space-between;
   align-items: center;
 }
-.page-top-submain-news-top button {
+.list-follow {
   font-family: "Poppins", sans-serif;
   gap: 1rem;
   display: flex;
@@ -850,7 +850,7 @@ body {
   width: 106rem;
   border-radius: 1.5rem;
   padding: 2rem;
-  padding-bottom: 4rem;
+  padding-bottom: 8rem;
 }
 .following-container h1 {
   font-size: 1.8rem;
@@ -875,6 +875,7 @@ body {
 }
 .following-buttons button:active {
   background-color: white;
+  color: black;
 }
 .following-categories-container,
 .following-local-container,
@@ -882,7 +883,6 @@ body {
   width: 100%;
   border: 1px solid rgb(180, 180, 180);
   border-radius: 1rem;
-  margin: 3rem;
   height: 25rem;
   display: flex;
   justify-content: center;
@@ -961,21 +961,27 @@ body {
   font-size: 1.5rem;
   z-index: 2;
   overflow: hidden;
-  transition: all 0.2s;
+  transition: all 0.5s;
+  cursor: default;
 }
+
 .manage-followed-container p {
   display: flex;
   gap: 2rem;
   padding: 1rem 2rem;
   text-wrap: nowrap;
+  cursor: pointer;
 }
 .manage-followed-container p:hover {
   background-color: rgba(0, 0, 0, 0.2);
 }
 .manage-followed-container-top {
+  border-bottom: 1px solid rgb(144, 144, 144);
   padding: 1rem 0rem;
 }
 .manage-followed-container-bottom {
-  border-top: 1px solid rgb(144, 144, 144);
   padding: 1rem 0rem;
+}
+.following-main-buttons:hover {
+  color: white;
 }

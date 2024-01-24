@@ -385,7 +385,7 @@ document.querySelectorAll("li").forEach((el) => {
       return;
     }
     if (e.target.textContent === "Following") {
-      getFollowingContainerHTML();
+      firstPageOfFollowing();
       return;
     }
 
@@ -439,6 +439,9 @@ const randomNumber = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
 const getHTML = function (data, limit = 1000) {
+  document.querySelector(
+    ".first-container"
+  ).innerHTML = ` <i class="fa-solid fa-rotate-right"></i>`;
   document.querySelectorAll(".fa-rotate-right").forEach((el) => el.remove());
   for (let i = 0; i < data.articles.length; i) {
     date = new Date(`${data.articles[i].publishedAt}`);
@@ -538,13 +541,83 @@ const getNewsFromInput = async function (input) {
           <p class="page-description">${days[new Date().getDay()]}, ${
       months[new Date().getMonth()]
     } ${new Date().getDate()}</p>
-        </div></div>
+        </div>
+        <button class="list-follow not-following">
+            <i class="fa-regular fa-star"></i> Follow
+          </button>
+      </div>
   <div class='first-container'> `;
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=2d6589d0bc654243b752f4b8882ad809`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=a`
     );
 
     const data = await response.json();
+
+    if (
+      loggedInAs.followedSearches &&
+      loggedInAs.followedSearches.includes(`${input}`)
+    ) {
+      document.querySelector(
+        ".list-follow"
+      ).innerHTML = ` <i class="fa-solid fa-star"></i> Following`;
+      document
+        .querySelector(".list-follow")
+        .classList.replace("not-following", "following");
+    }
+    document
+      .querySelector(".list-follow")
+      .addEventListener("click", function (e) {
+        if (
+          document.querySelector(".fa-star").classList.contains("fa-regular")
+        ) {
+          document.querySelector(
+            ".list-follow"
+          ).innerHTML = ` <i class="fa-solid fa-star"></i> Following`;
+          document
+            .querySelector(".list-follow")
+            .classList.replace("not-following", "following");
+          loggedInAs.followedSearches
+            ? loggedInAs.followedSearches.push(`${input}`)
+            : (loggedInAs.followedSearches = [`${input}`]);
+          document.querySelector(".list-follow").style.backgroundColor =
+            "rgba(0, 0, 255, 0.5)";
+
+          localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+          loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
+          userAccounts.forEach((el) => {
+            if (loggedInAs.username === el.username) {
+              el.followedSearches = loggedInAs.followedSearches;
+            }
+          });
+
+          localStorage.setItem("accounts", JSON.stringify(userAccounts));
+        } else if (
+          document.querySelector(".fa-star").classList.contains("fa-solid")
+        ) {
+          document.querySelector(
+            ".list-follow"
+          ).innerHTML = ` <i class="fa-regular fa-star"></i> Follow`;
+          document
+            .querySelector(".list-follow")
+            .classList.replace("following", "not-following");
+          loggedInAs.followedSearches.splice(
+            loggedInAs.followedSearches.indexOf(`${input}`),
+            1
+          );
+          document.querySelector(".list-follow").style.backgroundColor =
+            "rgba(0, 0, 0, 0.5)";
+          localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+          loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
+          userAccounts.forEach((el) => {
+            if (loggedInAs.username === el.username) {
+              el.following = loggedInAs.followedSearches;
+            }
+          });
+
+          localStorage.setItem("accounts", JSON.stringify(userAccounts));
+        }
+      });
+
     if (data.message && data?.message.startsWith("You have made too many"))
       throw new Error(`<div class="no-search-results"><div> <img src="final-logo.png"/></div>
     <div>
@@ -756,7 +829,7 @@ const getNewsFromList = async function (clicked) {
     const response = await fetch(
       `https://newsapi.org/v2/everything?q=${
         differentClicked ? differentClicked : clicked
-      }&apiKey=2d6589d0bc654243b752f4b8882ad809`
+      }&apiKey=a`
     );
     const data = await response.json();
 
@@ -802,7 +875,7 @@ const changeContainerHTML = async function (input, limit, type, side = "") {
     }
 
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=2d6589d0bc654243b752f4b8882ad809`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=a`
     );
     const newsData = await response.json();
 
@@ -905,7 +978,7 @@ const getFourthContainerHTML = async function () {
     let k = 0;
     for (let i = 0; i < number; i) {
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=2d6589d0bc654243b752f4b8882ad809`
+        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=a`
       );
       const data = await response.json();
 
@@ -1053,7 +1126,19 @@ const hideManageFollowing = function (e) {
   document.removeEventListener("click", hideManageFollowing);
 };
 const getFollowingCart = function (el) {
-  if (el === loggedInAs.following[0])
+  if (loggedInAs.following.length === 1) {
+    return `<div class="followed-category">
+      <img class="${el} following-icon" src="${el}.jpg" alt="" />
+      <p class="followed-category-title">${el}</p>
+      <i class="fa-solid fa-ellipsis-vertical">
+        <div class="manage-followed-container">
+          <div class="manage-followed-container-bottom">
+            <p class="remove-following-category"><i class="fa-solid fa-trash"></i> Remove from library</p>
+          </div>
+        </div>
+      </i>
+    </div>`;
+  } else if (el === loggedInAs.following[0])
     return ` <div class="followed-category">
       <img class="${el} following-icon" src="${el}.jpg" alt="" />
       <p class="followed-category-title">${el}</p>
@@ -1087,7 +1172,10 @@ const getFollowingCart = function (el) {
       </i>
     </div>
   `;
-  else
+  else if (
+    el !== loggedInAs.following[loggedInAs.following.length - 1] &&
+    el !== loggedInAs.following[0]
+  )
     return ` <div class="followed-category">
       <img class="${el} following-icon" src="${el}.jpg" alt="" />
       <p class="followed-category-title">${el}</p>
@@ -1106,11 +1194,65 @@ const getFollowingCart = function (el) {
       </i>
     </div>`;
 };
-const getFollowingContainerHTML = function () {
+const getHeightForManageContainers = function (el) {
+  if (
+    !el.querySelector(".move-top-following-category") &&
+    !el.querySelector(".move-bottom-following-category")
+  ) {
+    return 4.4;
+  } else if (
+    !el.querySelector(".move-top-following-category") ||
+    !el.querySelector(".move-bottom-following-category")
+  ) {
+    return 15.4;
+  } else return 21.4;
+};
+const lastToFirst = function (el, array) {
+  let index;
+
+  array.forEach((elem, i) => {
+    if (el === elem) index = i;
+  });
+  array.unshift(array[index]);
+  array.splice(index + 1, 1);
+};
+const firstToLast = function (el, array) {
+  let index;
+
+  array.forEach((elem, i) => {
+    if (el === elem) index = i;
+  });
+
+  console.log(index);
+
+  array.push(array[index]);
+  array.splice(index, 1);
+};
+const moveDownByOne = function (el, array) {
+  let index;
+
+  array.forEach((elem, i) => {
+    if (el === elem) index = i;
+  });
+  let temp = array[index];
+  array[index] = array[index + 1];
+  array[index + 1] = temp;
+};
+const moveUpByOne = function (el, array) {
+  let index;
+
+  array.forEach((elem, i) => {
+    if (el === elem) index = i;
+  });
+  let temp = array[index];
+  array[index] = array[index - 1];
+  array[index - 1] = temp;
+};
+const firstPageOfFollowing = function () {
   document.querySelector("#main").innerHTML = ` <div class="following-buttons">
-        <button>Topics & sources</button>
-        <button>Saved searches</button>
-        <button>Saved stories</button>
+        <button class="following-main-buttons">Topics & sources</button>
+        <button class="following-main-buttons">Saved searches</button>
+        <button class="following-main-buttons">Saved stories</button>
       </div>
       <div class="following-container">
         <div class="following-page">
@@ -1159,7 +1301,7 @@ const getFollowingContainerHTML = function () {
     ).innerHTML = `<h1>Topics</h1>    <div class="followed-categories">
             </div>`;
     document.querySelector(".followed-categories").innerHTML +=
-      loggedInAs.following.map((el) => ` ${getFollowingCart(el)}`).join("");
+      loggedInAs.following.map((el) => `${getFollowingCart(el)}`).join("");
 
     document.querySelectorAll(".followed-category").forEach((el) => {
       el.addEventListener("click", function (e) {
@@ -1200,15 +1342,105 @@ const getFollowingContainerHTML = function () {
             el.style.boxShadow = "none";
             el.style.zIndex = "1";
           });
-        el.firstElementChild.style.height = "18rem";
-        el.firstElementChild.style.bottom = "-22rem";
-        el.firstElementChild.style.padding = "2rem 0rem";
+
+        el.firstElementChild.style.height = `${getHeightForManageContainers(
+          el
+        )}rem`;
+        el.firstElementChild.style.bottom = `-${
+          getHeightForManageContainers(el) + 2
+        }rem`;
+        el.firstElementChild.style.padding = "1rem 0rem";
         el.firstElementChild.style.boxShadow =
           "0px 0px 10px 5px rgba(0, 0, 0, 0.2)";
         el.firstElementChild.style.zIndex = "2";
+        console.log(el.firstElementChild.offsetHeight);
+
         document.addEventListener("click", hideManageFollowing);
       });
     });
+    document
+      .querySelectorAll(".move-bottom-following-category")
+      .forEach((el) => {
+        el.addEventListener("click", function () {
+          firstToLast(
+            el
+              .closest(".followed-category")
+              .querySelector(".followed-category-title").textContent,
+            loggedInAs.following
+          );
+          firstPageOfFollowing();
+
+          localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+          loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
+          userAccounts.forEach((el) => {
+            if (loggedInAs.username === el.username) {
+              el.following = loggedInAs.following;
+            }
+            localStorage.setItem("accounts", JSON.stringify(userAccounts));
+          });
+        });
+      });
+    document.querySelectorAll(".move-top-following-category").forEach((el) => {
+      el.addEventListener("click", function () {
+        lastToFirst(
+          el
+            .closest(".followed-category")
+            .querySelector(".followed-category-title").textContent,
+          loggedInAs.following
+        );
+        firstPageOfFollowing();
+        localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+        loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
+        userAccounts.forEach((el) => {
+          if (loggedInAs.username === el.username) {
+            el.following = loggedInAs.following;
+          }
+          localStorage.setItem("accounts", JSON.stringify(userAccounts));
+        });
+      });
+    });
+    document
+      .querySelectorAll(".move-toward-top-following-category")
+      .forEach((el) => {
+        el.addEventListener("click", function () {
+          moveUpByOne(
+            el
+              .closest(".followed-category")
+              .querySelector(".followed-category-title").textContent,
+            loggedInAs.following
+          );
+          firstPageOfFollowing();
+          localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+          loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
+          userAccounts.forEach((el) => {
+            if (loggedInAs.username === el.username) {
+              el.following = loggedInAs.following;
+            }
+            localStorage.setItem("accounts", JSON.stringify(userAccounts));
+          });
+        });
+      });
+    document
+      .querySelectorAll(".move-toward-bottom-following-category")
+      .forEach((el) => {
+        el.addEventListener("click", function () {
+          moveDownByOne(
+            el
+              .closest(".followed-category")
+              .querySelector(".followed-category-title").textContent,
+            loggedInAs.following
+          );
+          firstPageOfFollowing();
+          localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+          loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
+          userAccounts.forEach((el) => {
+            if (loggedInAs.username === el.username) {
+              el.following = loggedInAs.following;
+            }
+            localStorage.setItem("accounts", JSON.stringify(userAccounts));
+          });
+        });
+      });
     document.querySelectorAll(".remove-following-category").forEach((el) => {
       el.addEventListener("click", function (e) {
         let category = e.target
@@ -1230,7 +1462,7 @@ const getFollowingContainerHTML = function () {
         });
 
         localStorage.setItem("accounts", JSON.stringify(userAccounts));
-        getFollowingContainerHTML();
+        firstPageOfFollowing();
       });
     });
   } else if (!loggedInAs.following || loggedInAs.following.length === 0) {
@@ -1244,7 +1476,65 @@ const getFollowingContainerHTML = function () {
               </p>
             </div>`;
   }
+  getFollowingContainerHTML();
 };
+const secondPageOfFollowing = function () {
+  document.querySelector("#main").innerHTML = `<div class="following-buttons">
+        <button class="following-main-buttons">Topics & sources</button>
+        <button class="following-main-buttons">Saved searches</button>
+        <button class="following-main-buttons">Saved stories</button>
+      </div>
+      <div class="following-container">
+        <div class="following-page">
+          <div class="followings category-following-page">
+            <div class="following-categories-container">
+              <img src="no-searches.jpg" alt="" />
+              <p>
+               Your saved searches will appear here.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>`;
+  getFollowingContainerHTML();
+};
+const thirdPageOfFollowing = function () {
+  document.querySelector("#main").innerHTML = `<div class="following-buttons">
+        <button class="following-main-buttons">Topics & sources</button>
+        <button class="following-main-buttons">Saved searches</button>
+        <button class="following-main-buttons">Saved stories</button>
+      </div>
+      <div class="following-container">
+        <div class="following-page">
+          <div class="followings category-following-page">
+            <div class="following-categories-container">
+              <img src="no-stories.jpg" alt="" />
+              <p>
+               Your saved stories will appear here.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>`;
+  getFollowingContainerHTML();
+};
+const getFollowingContainerHTML = function () {
+  document.querySelectorAll(".following-main-buttons").forEach((el) =>
+    el.addEventListener("click", function (e) {
+      if (e.target.textContent.trim() === "Topics & sources") {
+        console.log("a", e.target.textContent);
+        firstPageOfFollowing();
+      }
+      if (e.target.textContent.trim() === "Saved searches") {
+        secondPageOfFollowing();
+      }
+      if (e.target.textContent.trim() === "Saved stories") {
+        thirdPageOfFollowing();
+      }
+    })
+  );
+};
+
 checkIfLoggedIn();
 if (Logged) {
   getHomeHTML();
