@@ -548,8 +548,9 @@ const getNewsFromInput = async function (input) {
       </div>
   <div class='first-container'> `;
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=a`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=68871cc37a1d44c29372bb67cde857ea`
     );
+    console.log("input", response);
 
     const data = await response.json();
 
@@ -829,8 +830,10 @@ const getNewsFromList = async function (clicked) {
     const response = await fetch(
       `https://newsapi.org/v2/everything?q=${
         differentClicked ? differentClicked : clicked
-      }&apiKey=a`
+      }&apiKey=68871cc37a1d44c29372bb67cde857ea`
     );
+    console.log("list", response);
+
     const data = await response.json();
 
     if (data.message && data?.message.startsWith("You have made too many"))
@@ -875,9 +878,11 @@ const changeContainerHTML = async function (input, limit, type, side = "") {
     }
 
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=a`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=68871cc37a1d44c29372bb67cde857ea`
     );
     const newsData = await response.json();
+
+    console.log("container", response);
 
     if (
       newsData.message &&
@@ -978,9 +983,11 @@ const getFourthContainerHTML = async function () {
     let k = 0;
     for (let i = 0; i < number; i) {
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=a`
+        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=68871cc37a1d44c29372bb67cde857ea`
       );
       const data = await response.json();
+
+      console.log("fourth", response);
 
       if (!response.ok) throw new Error();
 
