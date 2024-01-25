@@ -165,7 +165,7 @@ body {
 }
 #main {
   min-height: calc(100svh - 16rem);
-  width: 100rem;
+  width: 110rem;
   margin-top: 11.5rem;
   padding-bottom: 5rem;
   display: flex;
@@ -180,7 +180,7 @@ body {
   font-size: 3rem;
   margin-top: 3rem;
 }
-.page-title i {
+.page-tit1e i {
   font-size: 2.5rem;
 }
 .page-description {
@@ -286,9 +286,9 @@ body {
   justify-content: space-between;
 }
 .first-container {
+  width: 75rem;
   position: relative;
   min-height: 50svh;
-  width: 75rem;
   background-color: white;
   padding: 1.5rem;
   color: black;
@@ -316,8 +316,8 @@ body {
 .second-container {
   position: relative;
   width: 30%;
+  min-height: 10rem;
   background-color: white;
-  min-height: 20rem;
   height: 100%;
   border-radius: 2rem;
   padding: 1.5rem;
@@ -517,7 +517,6 @@ body {
 .fourth-container-wrapper .second-container {
   width: 29.7%;
   min-width: 29.7%;
-  min-height: 33rem;
 }
 .for-you-container a,
 .second-container a {
@@ -844,6 +843,9 @@ body {
   flex-direction: column;
   align-items: center;
 }
+.followings h1 {
+  margin-bottom: 2rem;
+}
 .following-container {
   margin-top: 1rem;
   background-color: white;
@@ -896,6 +898,43 @@ body {
 .following-sources-container img {
   width: 15rem;
 }
+.followed-category .lts-icon,
+.followed-location .lts-icon,
+.followed-search .lts-icon,
+.followed-source .lts-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  font-size: 3rem;
+  padding: 2rem 2rem;
+  border-radius: 1rem;
+  border: 1px solid black;
+  cursor: pointer;
+  position: relative;
+}
+.followed-category .lts-icon::before,
+.followed-location .lts-icon::before,
+.followed-search .lts-icon::before,
+.followed-source.lts-icon::before {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.followed-category .fa-magnifying-glass {
+  font-size: 4.3rem;
+  padding: 1rem;
+}
+.favorite-searches-title {
+  width: 40%;
+  max-height: 6rem;
+  overflow: hidden;
+  margin-left: -8rem;
+}
+.favorite-location-title,
+.favorite-sources-title {
+  width: 40%;
+  margin-left: -3rem;
+}
 .following-categories-container p,
 .following-local-container p,
 .following-sources-container p {
@@ -904,17 +943,24 @@ body {
   width: 40%;
   text-align: center;
 }
-.followed-categories {
+.followed-categories,
+.followed-sources,
+.followed-locations,
+.followed-searches {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
   gap: 5.5rem;
   row-gap: 3.3rem;
-  margin: 3rem;
+  margin: 1rem;
 }
-.followed-category {
+.followed-category,
+.followed-location,
+.followed-search,
+.followed-source {
   cursor: pointer;
   width: 27rem;
+  min-height: 6rem;
   display: flex;
   padding: 1.5rem;
   align-items: center;
@@ -932,7 +978,10 @@ body {
   width: 6.5rem;
   border-radius: 0.7rem;
 }
-.fa-ellipsis-vertical {
+.location-vertical-dots,
+.topic-vertical-dots,
+.search-vertical-dots,
+.source-vertical-dots {
   padding: 1.5rem 2rem;
   background-color: rgba(0, 0, 0, 0.06);
   cursor: pointer;
@@ -943,7 +992,10 @@ body {
   justify-content: center;
   align-items: center;
 }
-.fa-ellipsis-vertical:hover {
+.topic-vertical-dots:hover,
+.location-vertical-dots:hover,
+.search-vertical-dots:hover,
+.source-vertical-dots:hover {
   box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.3);
 }
 .manage-followed-container {
@@ -964,7 +1016,6 @@ body {
   transition: all 0.5s;
   cursor: default;
 }
-
 .manage-followed-container p {
   display: flex;
   gap: 2rem;
@@ -984,4 +1035,59 @@ body {
 }
 .following-main-buttons:hover {
   color: white;
+}
+.lts-wrapper-container {
+  margin-top: 4rem;
+  width: 100%;
+  gap: 3rem;
+  display: flex;
+  color: black;
+}
+.lts-container-first {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 1.5rem;
+  width: 70%;
+}
+.lts-container-second {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 1.5rem;
+  width: 30%;
+  font-size: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 2rem;
+}
+.lts-container {
+  display: flex;
+  width: 100%;
+  gap: 1rem;
+  height: 5rem;
+}
+.lts-container .lts-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  font-size: 3rem;
+  padding: 1rem 1rem;
+  border-radius: 10rem;
+  border: 1px solid black;
+  cursor: pointer;
+  position: relative;
+}
+.lts-container .lts-icon::before {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.for-you-title {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+.for-you-title .page-title {
+  margin-top: 1.5rem;
 }

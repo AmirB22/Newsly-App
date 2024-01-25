@@ -1,3 +1,5 @@
+import { arrayOfCities, arrayOfTopics, arrayOfSources } from "./data.js";
+
 let Logged = JSON.parse(localStorage.getItem("logged")) || false;
 let loggedInAs = JSON.parse(localStorage.getItem("loggedInAs")) || {};
 let userAccounts = JSON.parse(localStorage.getItem("accounts")) || [];
@@ -9,7 +11,6 @@ const CategoriesOriginal = [
   "Health",
   "Sports",
 ];
-
 const checkIfLoggedIn = function () {
   if (!Logged && userAccounts.length !== 0) {
     document.body.innerHTML = `<div class="not-logged-in-container"><img class="not-logged-image" src="inverted-logo.png"/><h1>You are not logged in</h1>
@@ -337,37 +338,37 @@ document.querySelector(".log-out").addEventListener("click", function () {
   Logged = JSON.parse(localStorage.getItem("logged")) || false;
   checkIfLoggedIn();
 });
-document
-  .querySelector(".weather-left-button")
-  .addEventListener("click", function () {
-    document
-      .querySelector(".weather-search")
-      .classList.toggle("weather-search-active");
-    if (
-      document
-        .querySelector(".weather-search")
-        .classList.contains("weather-search-active")
-    )
-      document.querySelector(".fa-chevron-left").style.transform =
-        "rotate(180deg)";
-    else
-      document.querySelector(".fa-chevron-left").style.transform =
-        "rotate(0deg)";
-  });
+// document
+//   .querySelector(".weather-left-button")
+//   .addEventListener("click", function () {
+//     document
+//       .querySelector(".weather-search")
+//       .classList.toggle("weather-search-active");
+//     if (
+//       document
+//         .querySelector(".weather-search")
+//         .classList.contains("weather-search-active")
+//     )
+//       document.querySelector(".fa-chevron-left").style.transform =
+//         "rotate(180deg)";
+//     else
+//       document.querySelector(".fa-chevron-left").style.transform =
+//         "rotate(0deg)";
+//   });
 
-document
-  .querySelector(".weather-search-input-container")
-  .addEventListener("submit", function (e) {
-    e.preventDefault();
-    const input = document.querySelector(".weather-search-input");
-    if (!input.value) return;
-    getWeather(input.value);
-    document
-      .querySelector(".weather-search")
-      .classList.remove("weather-search-active");
-    document.querySelector(".fa-chevron-left").style.transform = "rotate(0deg)";
-    input.value = "";
-  });
+// document
+//   .querySelector(".weather-search-input-container")
+//   .addEventListener("submit", function (e) {
+//     e.preventDefault();
+//     const input = document.querySelector(".weather-search-input");
+//     if (!input.value) return;
+//     getWeather(input.value);
+//     document
+//       .querySelector(".weather-search")
+//       .classList.remove("weather-search-active");
+//     document.querySelector(".fa-chevron-left").style.transform = "rotate(0deg)";
+//     input.value = "";
+//   });
 document.querySelectorAll("li").forEach((el) => {
   el.classList.add("list-unclicked");
   el.classList.add("list-button-list");
@@ -389,7 +390,10 @@ document.querySelectorAll("li").forEach((el) => {
       return;
     }
 
-    if (e.target.textContent === "For you") return;
+    if (e.target.textContent === "For you") {
+      getForYouContainerHTML();
+      return;
+    }
     getNewsFromList(`${e.target.textContent}`);
   });
 });
@@ -434,7 +438,6 @@ document
     });
     getHomeHTML();
   });
-
 const randomNumber = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
@@ -532,23 +535,388 @@ const getHTML = function (data, limit = 1000) {
   }
 };
 const getNewsFromInput = async function (input) {
-  document.querySelector("#main").style.width = "85rem";
+  document.querySelector("#main").style.width = "110rem";
+  document
+    .querySelectorAll(".list-button-list")
+    .forEach((el) => el.classList.replace("list-clicked", "list-unclicked"));
   try {
-    document.querySelector("#main").innerHTML = `
-       <div class="page-top">
-        <div class="page-top-left">
-          <h2 class="page-title">Searched for: "${input}"</h2>
-          <p class="page-description">${days[new Date().getDay()]}, ${
-      months[new Date().getMonth()]
-    } ${new Date().getDate()}</p>
-        </div>
-        <button class="list-follow not-following">
+    console.log(input);
+    if (
+      input.toLowerCase() === "business" ||
+      input.toLowerCase() === "world" ||
+      input.toLowerCase() === "entertainment" ||
+      input.toLowerCase() === "science" ||
+      input.toLowerCase() === "health" ||
+      input.toLowerCase() === "sports" ||
+      input.toLowerCase() === "technology" ||
+      input.toLowerCase() === "u.s."
+    ) {
+      getNewsFromList(`${input[0].toUpperCase() + input.slice(1)}`);
+      return;
+    }
+    let city, topic, source;
+    if (
+      input.length >= 3 &&
+      arrayOfCities.some((el) =>
+        el.toLowerCase().startsWith(`${input.toLowerCase()}`)
+      )
+    ) {
+      arrayOfCities.forEach((el) => {
+        if (el.toLowerCase().startsWith(`${input.toLowerCase()}`)) {
+          city = el;
+          return;
+        }
+      });
+      document.querySelector("#main").innerHTML = `
+          <div class="first-second-container-wrapper lts-wrapper-container">
+        <div class="first-container lts-container-first"></div>
+        <div class="second-container lts-container-second">
+          <div class="lts-container">
+            <i class="fa-solid fa-location-dot lts-icon"></i>
+            <div class="lts-info-container">
+              <h2>${city}</h2>
+              <p>Location</p>
+            </div>
+          </div>
+          <button class="list-follow not-following">
             <i class="fa-regular fa-star"></i> Follow
           </button>
-      </div>
-  <div class='first-container'> `;
+        </div>
+      </div> `;
+      const response = await fetch(
+        `https://newsapi.org/v2/everything?q=${city}&apiKey=c8e87f0ac96d4e349f62b3d71fe2d90a`
+      );
+      console.log("input", response);
+
+      const data = await response.json();
+
+      if (
+        loggedInAs.followedLocation &&
+        loggedInAs.followedLocation.includes(`${city}`)
+      ) {
+        document.querySelector(
+          ".list-follow"
+        ).innerHTML = ` <i class="fa-solid fa-star"></i> Following`;
+        document
+          .querySelector(".list-follow")
+          .classList.replace("not-following", "following");
+      }
+      document
+        .querySelector(".list-follow")
+        .addEventListener("click", function (e) {
+          if (
+            document.querySelector(".fa-star").classList.contains("fa-regular")
+          ) {
+            document.querySelector(
+              ".list-follow"
+            ).innerHTML = ` <i class="fa-solid fa-star"></i> Following`;
+            document
+              .querySelector(".list-follow")
+              .classList.replace("not-following", "following");
+            loggedInAs.followedLocation
+              ? loggedInAs.followedLocation.push(`${city}`)
+              : (loggedInAs.followedLocation = [`${city}`]);
+            document.querySelector(".list-follow").style.backgroundColor =
+              "rgba(0, 0, 255, 0.5)";
+
+            localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+            loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
+            userAccounts.forEach((el) => {
+              if (loggedInAs.username === el.username) {
+                el.followedLocation = loggedInAs.followedLocation;
+              }
+            });
+
+            localStorage.setItem("accounts", JSON.stringify(userAccounts));
+          } else if (
+            document.querySelector(".fa-star").classList.contains("fa-solid")
+          ) {
+            document.querySelector(
+              ".list-follow"
+            ).innerHTML = ` <i class="fa-regular fa-star"></i> Follow`;
+            document
+              .querySelector(".list-follow")
+              .classList.replace("following", "not-following");
+            loggedInAs.followedLocation.splice(
+              loggedInAs.followedLocation.indexOf(`${city}`),
+              1
+            );
+            document.querySelector(".list-follow").style.backgroundColor =
+              "rgba(0, 0, 0, 0.5)";
+            localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+            loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
+            userAccounts.forEach((el) => {
+              if (loggedInAs.username === el.username) {
+                el.followedLocation = loggedInAs.followedLocation;
+              }
+            });
+
+            localStorage.setItem("accounts", JSON.stringify(userAccounts));
+          }
+        });
+
+      if (data.message && data?.message.startsWith("You have made too many"))
+        throw new Error(`<div class="no-search-results"><div> <img src="final-logo.png"/></div>
+    <div>
+    <h1>You have reached the request limit!</h1> 
+      <p>Try searching up something a little later!</p></div></div>`);
+      if (!response.ok)
+        throw new Error(`<div class="no-search-results"><div> <img src="final-logo.png"/></div>
+    <div>
+    <h1>Oops! We were unable to find any news</h1> 
+      <p>Try searching up something else!</p></div>
+      </div>`);
+
+      getHTML(data);
+      return;
+    }
+    if (
+      input.length >= 1 &&
+      arrayOfSources.some((el) =>
+        el.toLowerCase().startsWith(`${input.toLowerCase()}`)
+      )
+    ) {
+      arrayOfSources.forEach((el) => {
+        if (el.toLowerCase().startsWith(`${input.toLowerCase()}`)) {
+          source = el;
+          return;
+        }
+      });
+      document.querySelector("#main").innerHTML = `
+        <div class="first-second-container-wrapper lts-wrapper-container">
+        <div class="first-container lts-container-first"></div>
+        <div class="second-container lts-container-second">
+          <div class="lts-container">
+            <i class="fa-solid fa-hashtag lts-icon"></i>
+            <div class="lts-info-container">
+              <h2>${source}</h2>
+              <p>Source</p>
+            </div>
+          </div>
+          <button class="list-follow not-following">
+            <i class="fa-regular fa-star"></i> Follow
+          </button>
+        </div>
+      </div> `;
+      const response = await fetch(
+        `
+https://newsapi.org/v2/everything?domains=${source}&apiKey=c8e87f0ac96d4e349f62b3d71fe2d90a`
+      );
+      console.log("input", response);
+
+      const data = await response.json();
+
+      if (
+        loggedInAs.followedSources &&
+        loggedInAs.followedSources.includes(`${source}`)
+      ) {
+        document.querySelector(
+          ".list-follow"
+        ).innerHTML = ` <i class="fa-solid fa-star"></i> Following`;
+        document
+          .querySelector(".list-follow")
+          .classList.replace("not-following", "following");
+      }
+      document
+        .querySelector(".list-follow")
+        .addEventListener("click", function (e) {
+          if (
+            document.querySelector(".fa-star").classList.contains("fa-regular")
+          ) {
+            document.querySelector(
+              ".list-follow"
+            ).innerHTML = ` <i class="fa-solid fa-star"></i> Following`;
+            document
+              .querySelector(".list-follow")
+              .classList.replace("not-following", "following");
+            loggedInAs.followedSources
+              ? loggedInAs.followedSources.push(`${source}`)
+              : (loggedInAs.followedSources = [`${source}`]);
+            document.querySelector(".list-follow").style.backgroundColor =
+              "rgba(0, 0, 255, 0.5)";
+
+            localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+            loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
+            userAccounts.forEach((el) => {
+              if (loggedInAs.username === el.username) {
+                el.followedSources = loggedInAs.followedSources;
+              }
+            });
+
+            localStorage.setItem("accounts", JSON.stringify(userAccounts));
+          } else if (
+            document.querySelector(".fa-star").classList.contains("fa-solid")
+          ) {
+            document.querySelector(
+              ".list-follow"
+            ).innerHTML = ` <i class="fa-regular fa-star"></i> Follow`;
+            document
+              .querySelector(".list-follow")
+              .classList.replace("following", "not-following");
+            loggedInAs.followedSources.splice(
+              loggedInAs.followedSources.indexOf(`${source}`),
+              1
+            );
+            document.querySelector(".list-follow").style.backgroundColor =
+              "rgba(0, 0, 0, 0.5)";
+            localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+            loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
+            userAccounts.forEach((el) => {
+              if (loggedInAs.username === el.username) {
+                el.followedSources = loggedInAs.followedSources;
+              }
+            });
+
+            localStorage.setItem("accounts", JSON.stringify(userAccounts));
+          }
+        });
+
+      if (data.message && data?.message.startsWith("You have made too many"))
+        throw new Error(`<div class="no-search-results"><div> <img src="final-logo.png"/></div>
+    <div>
+    <h1>You have reached the request limit!</h1> 
+      <p>Try searching up something a little later!</p></div></div>`);
+      if (!response.ok)
+        throw new Error(`<div class="no-search-results"><div> <img src="final-logo.png"/></div>
+    <div>
+    <h1>Oops! We were unable to find any news</h1> 
+      <p>Try searching up something else!</p></div>
+      </div>`);
+
+      getHTML(data);
+      return;
+    }
+    if (
+      input.length >= 1 &&
+      arrayOfTopics.some((el) =>
+        el.toLowerCase().startsWith(`${input.toLowerCase()}`)
+      )
+    ) {
+      arrayOfTopics.forEach((el) => {
+        if (el.toLowerCase().startsWith(`${input.toLowerCase()}`)) {
+          topic = el;
+          return;
+        }
+      });
+      document.querySelector("#main").innerHTML = `
+        <div class="first-second-container-wrapper lts-wrapper-container">
+        <div class="first-container lts-container-first"></div>
+        <div class="second-container lts-container-second">
+          <div class="lts-container">
+            <i class="fa-solid fa-comments lts-icon"></i>
+            <div class="lts-info-container">
+              <h2>${topic}</h2>
+              <p>Topic</p>
+            </div>
+          </div>
+          <button class="list-follow not-following">
+            <i class="fa-regular fa-star"></i> Follow
+          </button>
+        </div>
+      </div> `;
+      const response = await fetch(
+        `https://newsapi.org/v2/everything?q=${topic}&apiKey=c8e87f0ac96d4e349f62b3d71fe2d90a`
+      );
+      console.log("input", response);
+
+      const data = await response.json();
+
+      if (loggedInAs.following && loggedInAs.following.includes(`${topic}`)) {
+        document.querySelector(
+          ".list-follow"
+        ).innerHTML = ` <i class="fa-solid fa-star"></i> Following`;
+        document
+          .querySelector(".list-follow")
+          .classList.replace("not-following", "following");
+      }
+      document
+        .querySelector(".list-follow")
+        .addEventListener("click", function (e) {
+          if (
+            document.querySelector(".fa-star").classList.contains("fa-regular")
+          ) {
+            document.querySelector(
+              ".list-follow"
+            ).innerHTML = ` <i class="fa-solid fa-star"></i> Following`;
+            document
+              .querySelector(".list-follow")
+              .classList.replace("not-following", "following");
+            loggedInAs.following
+              ? loggedInAs.following.push(`${topic}`)
+              : (loggedInAs.following = [`${topic}`]);
+            document.querySelector(".list-follow").style.backgroundColor =
+              "rgba(0, 0, 255, 0.5)";
+
+            localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+            loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
+            userAccounts.forEach((el) => {
+              if (loggedInAs.username === el.username) {
+                el.following = loggedInAs.following;
+              }
+            });
+
+            localStorage.setItem("accounts", JSON.stringify(userAccounts));
+          } else if (
+            document.querySelector(".fa-star").classList.contains("fa-solid")
+          ) {
+            document.querySelector(
+              ".list-follow"
+            ).innerHTML = ` <i class="fa-regular fa-star"></i> Follow`;
+            document
+              .querySelector(".list-follow")
+              .classList.replace("following", "not-following");
+            loggedInAs.following.splice(
+              loggedInAs.following.indexOf(`${topic}`),
+              1
+            );
+            document.querySelector(".list-follow").style.backgroundColor =
+              "rgba(0, 0, 0, 0.5)";
+            localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+            loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
+            userAccounts.forEach((el) => {
+              if (loggedInAs.username === el.username) {
+                el.following = loggedInAs.following;
+              }
+            });
+
+            localStorage.setItem("accounts", JSON.stringify(userAccounts));
+          }
+        });
+
+      if (data.message && data?.message.startsWith("You have made too many"))
+        throw new Error(`<div class="no-search-results"><div> <img src="final-logo.png"/></div>
+    <div>
+    <h1>You have reached the request limit!</h1> 
+      <p>Try searching up something a little later!</p></div></div>`);
+      if (!response.ok)
+        throw new Error(`<div class="no-search-results"><div> <img src="final-logo.png"/></div>
+    <div>
+    <h1>Oops! We were unable to find any news</h1> 
+      <p>Try searching up something else!</p></div>
+      </div>`);
+
+      getHTML(data);
+      return;
+    }
+
+    document.querySelector("#main").innerHTML = `
+      <div class="first-second-container-wrapper lts-wrapper-container">
+        <div class="first-container lts-container-first"></div>
+        <div class="second-container lts-container-second">
+          <div class="lts-container">
+            <i class="fa-solid fa-magnifying-glass lts-icon"></i>
+            <div class="lts-info-container">
+              <h2>${input}</h2>
+              <p>Search</p>
+            </div>
+          </div>
+          <button class="list-follow not-following">
+            <i class="fa-regular fa-star"></i> Follow
+          </button>
+        </div>
+      </div> `;
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=68871cc37a1d44c29372bb67cde857ea`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=c8e87f0ac96d4e349f62b3d71fe2d90a`
     );
     console.log("input", response);
 
@@ -611,7 +979,7 @@ const getNewsFromInput = async function (input) {
           loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
           userAccounts.forEach((el) => {
             if (loggedInAs.username === el.username) {
-              el.following = loggedInAs.followedSearches;
+              el.followedSearches = loggedInAs.followedSearches;
             }
           });
 
@@ -716,7 +1084,10 @@ const getNewsFromList = async function (clicked) {
         </div>
         <div class="page-top-submain-news-bottom">
        ${
-         clicked !== "World" && clicked !== "Local" && clicked !== "U.S."
+         clicked !== "World" &&
+         clicked !== "Local" &&
+         clicked !== "U.S." &&
+         clicked !== "U.s."
            ? ` <button class="button-clicked button-list">Latest</button>
           ${array
             .map(
@@ -745,7 +1116,6 @@ const getNewsFromList = async function (clicked) {
       document
         .querySelector(".list-follow")
         .addEventListener("click", function (e) {
-          console.log();
           if (
             document.querySelector(".fa-star").classList.contains("fa-regular")
           ) {
@@ -830,7 +1200,7 @@ const getNewsFromList = async function (clicked) {
     const response = await fetch(
       `https://newsapi.org/v2/everything?q=${
         differentClicked ? differentClicked : clicked
-      }&apiKey=68871cc37a1d44c29372bb67cde857ea`
+      }&apiKey=c8e87f0ac96d4e349f62b3d71fe2d90a`
     );
     console.log("list", response);
 
@@ -851,7 +1221,7 @@ const getNewsFromList = async function (clicked) {
 
     getHTML(data);
   } catch (err) {
-    document.querySelector(".first-container").innerHTML = `${err.message}`;
+    console.error(err);
   }
 };
 const changeContainerHTML = async function (input, limit, type, side = "") {
@@ -878,7 +1248,7 @@ const changeContainerHTML = async function (input, limit, type, side = "") {
     }
 
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=68871cc37a1d44c29372bb67cde857ea`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=c8e87f0ac96d4e349f62b3d71fe2d90a`
     );
     const newsData = await response.json();
 
@@ -979,11 +1349,10 @@ const getFourthContainerHTML = async function () {
     const array = [9, 18];
     let number = array[randomNumber(0, 1)];
     let Categories = shuffle(CategoriesOriginal);
-    console.log(Categories);
     let k = 0;
     for (let i = 0; i < number; i) {
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=68871cc37a1d44c29372bb67cde857ea`
+        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=c8e87f0ac96d4e349f62b3d71fe2d90a`
       );
       const data = await response.json();
 
@@ -1133,11 +1502,24 @@ const hideManageFollowing = function (e) {
   document.removeEventListener("click", hideManageFollowing);
 };
 const getFollowingCart = function (el) {
+  let image;
+  if (
+    el !== "Business" &&
+    el !== "World" &&
+    el !== "Entertainment" &&
+    el !== "Science" &&
+    el !== "Health" &&
+    el !== "Sports" &&
+    el !== "Technology" &&
+    el !== "U.S."
+  )
+    image = `<i class="fa-solid fa-comments lts-icon"></i>`;
+  else image = `<img class="${el} following-icon" src="${el}.jpg" alt="" />`;
   if (loggedInAs.following.length === 1) {
     return `<div class="followed-category">
-      <img class="${el} following-icon" src="${el}.jpg" alt="" />
-      <p class="followed-category-title">${el}</p>
-      <i class="fa-solid fa-ellipsis-vertical">
+${image}
+    <p class="followed-category-title">${el}</p>
+      <i class="fa-solid fa-ellipsis-vertical topic-vertical-dots">
         <div class="manage-followed-container">
           <div class="manage-followed-container-bottom">
             <p class="remove-following-category"><i class="fa-solid fa-trash"></i> Remove from library</p>
@@ -1147,9 +1529,10 @@ const getFollowingCart = function (el) {
     </div>`;
   } else if (el === loggedInAs.following[0])
     return ` <div class="followed-category">
-      <img class="${el} following-icon" src="${el}.jpg" alt="" />
+${image}
+
       <p class="followed-category-title">${el}</p>
-      <i class="fa-solid fa-ellipsis-vertical">
+      <i class="fa-solid fa-ellipsis-vertical topic-vertical-dots">
         <div class="manage-followed-container">
           <div class="manage-followed-container-top">
             <p class="move-toward-bottom-following-category"><i class="fa-solid fa-chevron-down"></i> Move toward bottom</p>
@@ -1162,11 +1545,11 @@ const getFollowingCart = function (el) {
       </i>
     </div>`;
   else if (el === loggedInAs.following[loggedInAs.following.length - 1])
-    return `
-    <div class="followed-category">
-      <img class="${el} following-icon" src="${el}.jpg" alt="" />
+    return `<div class="followed-category">
+  ${image}
+
       <p class="followed-category-title">${el}</p>
-      <i class="fa-solid fa-ellipsis-vertical">
+      <i class="fa-solid fa-ellipsis-vertical topic-vertical-dots">
         <div class="manage-followed-container">
           <div class="manage-followed-container-top">
             <p class="move-top-following-category"><i class="fa-solid fa-arrow-up"></i> Move to top</p>
@@ -1184,9 +1567,9 @@ const getFollowingCart = function (el) {
     el !== loggedInAs.following[0]
   )
     return ` <div class="followed-category">
-      <img class="${el} following-icon" src="${el}.jpg" alt="" />
+   ${image}
       <p class="followed-category-title">${el}</p>
-      <i class="fa-solid fa-ellipsis-vertical">
+      <i class="fa-solid fa-ellipsis-vertical topic-vertical-dots">
         <div class="manage-followed-container">
           <div class="manage-followed-container-top">
             <p class="move-top-following-category"><i class="fa-solid fa-arrow-up"></i> Move to top</p>
@@ -1201,15 +1584,88 @@ const getFollowingCart = function (el) {
       </i>
     </div>`;
 };
-const getHeightForManageContainers = function (el) {
+const getSearchesCart = function (el, type, element) {
+  let icon;
+  if (type === "search")
+    icon = `<i class="fa-solid fa-magnifying-glass lts-icon"></i>`;
+  if (type === "location")
+    icon = `<i class="fa-solid fa-location-dot lts-icon"></i>`;
+  if (type === "source") icon = `<i class="fa-solid fa-hashtag lts-icon"></i>`;
+
+  if (element.length === 1) {
+    return `<div class="followed-${type} favorite-${type}">
+${icon}
+      <p class=" favorite-${type}-title">${el}</p>
+      <i class="fa-solid fa-ellipsis-vertical ${type}-vertical-dots">
+        <div class="manage-followed-container">
+          <div class="manage-followed-container-bottom">
+            <p class="remove-following-${type}"><i class="fa-solid fa-trash"></i> Remove from library</p>
+          </div>
+        </div>
+      </i>
+    </div>`;
+  } else if (el === element[0])
+    return ` <div class="followed-${type} favorite-${type}">
+${icon}
+      <p class=" favorite-${type}-title">${el}</p>
+      <i class="fa-solid fa-ellipsis-vertical ${type}-vertical-dots">
+        <div class="manage-followed-container">
+          <div class="manage-followed-container-top">
+            <p class="move-toward-bottom-following-${type}"><i class="fa-solid fa-chevron-down"></i> Move toward bottom</p>
+            <p class="move-bottom-following-${type}"><i class="fa-solid fa-arrow-down"></i> Move to bottom</p>
+          </div>
+          <div class="manage-followed-container-bottom">
+            <p class="remove-following-${type}"><i class="fa-solid fa-trash"></i> Remove from library</p>
+          </div>
+        </div>
+      </i>
+    </div>`;
+  else if (el === element[element.length - 1])
+    return `
+    <div class="followed-${type} favorite-${type}">
+${icon}
+      <p class=" favorite-${type}-title">${el}</p>
+      <i class="fa-solid fa-ellipsis-vertical ${type}-vertical-dots">
+        <div class="manage-followed-container">
+          <div class="manage-followed-container-top">
+            <p class="move-top-following-${type}"><i class="fa-solid fa-arrow-up"></i> Move to top</p>
+            <p class="move-toward-top-following-${type}"><i class="fa-solid fa-chevron-up"></i> Move toward top</p>
+          </div>
+          <div class="manage-followed-container-bottom">
+            <p class="remove-following-${type}"><i class="fa-solid fa-trash"></i> Remove from library</p>
+          </div>
+        </div>
+      </i>
+    </div>
+  `;
+  else if (el !== element[element.length - 1] && el !== element[0])
+    return ` <div class="followed-${type} favorite-${type}">
+  ${icon}
+      <p class=" favorite-${type}-title">${el}</p>
+      <i class="fa-solid fa-ellipsis-vertical ${type}-vertical-dots">
+        <div class="manage-followed-container">
+          <div class="manage-followed-container-top">
+            <p class="move-top-following-${type}"><i class="fa-solid fa-arrow-up"></i> Move to top</p>
+            <p class="move-toward-top-following-${type}"><i class="fa-solid fa-chevron-up"></i> Move toward top</p>
+            <p class="move-toward-bottom-following-${type}"><i class="fa-solid fa-chevron-down"></i> Move toward bottom</p>
+            <p class="move-bottom-following-${type}"><i class="fa-solid fa-arrow-down"></i> Move to bottom</p>
+          </div>
+          <div class="manage-followed-container-bottom">
+            <p class="remove-following-${type}"><i class="fa-solid fa-trash"></i> Remove from library</p>
+          </div>
+        </div>
+      </i>
+    </div>`;
+};
+const getHeightForManageContainers = function (el, type) {
   if (
-    !el.querySelector(".move-top-following-category") &&
-    !el.querySelector(".move-bottom-following-category")
+    !el.querySelector(`.move-top-following-${type}`) &&
+    !el.querySelector(`.move-bottom-following-${type}`)
   ) {
     return 4.4;
   } else if (
-    !el.querySelector(".move-top-following-category") ||
-    !el.querySelector(".move-bottom-following-category")
+    !el.querySelector(`.move-top-following-${type}`) ||
+    !el.querySelector(`.move-bottom-following-${type}`)
   ) {
     return 15.4;
   } else return 21.4;
@@ -1229,8 +1685,6 @@ const firstToLast = function (el, array) {
   array.forEach((elem, i) => {
     if (el === elem) index = i;
   });
-
-  console.log(index);
 
   array.push(array[index]);
   array.splice(index, 1);
@@ -1265,12 +1719,6 @@ const firstPageOfFollowing = function () {
         <div class="following-page">
           <div class="followings category-following-page">
             <h1>Topics</h1>
-            <!-- <div class="followed-categories">
-              <div class="followed-category">
-                <img class="World following-icon" src="World.jpg" alt="" />
-                <p>World</p>
-              </div>
-            </div> -->
             <div class="following-categories-container">
               <img src="no-following.jpg" alt="" />
               <p>
@@ -1312,17 +1760,62 @@ const firstPageOfFollowing = function () {
 
     document.querySelectorAll(".followed-category").forEach((el) => {
       el.addEventListener("click", function (e) {
-        if (e.target.closest(".fa-ellipsis-vertical")) return;
-        getNewsFromList(
-          `${
-            e.target
-              .closest(".followed-category")
-              .querySelector(".followed-category-title").textContent
-          }`
-        );
+        if (e.target.closest(".topic-vertical-dots")) return;
+        if (
+          e.target
+            .closest(".followed-category")
+            .querySelector(".followed-category-title").textContent !==
+            "World" &&
+          e.target
+            .closest(".followed-category")
+            .querySelector(".followed-category-title").textContent !==
+            "Science" &&
+          e.target
+            .closest(".followed-category")
+            .querySelector(".followed-category-title").textContent !==
+            "Entertainment" &&
+          e.target
+            .closest(".followed-category")
+            .querySelector(".followed-category-title").textContent !==
+            "Sports" &&
+          e.target
+            .closest(".followed-category")
+            .querySelector(".followed-category-title").textContent !==
+            "Technology" &&
+          e.target
+            .closest(".followed-category")
+            .querySelector(".followed-category-title").textContent !== "U.S." &&
+          e.target
+            .closest(".followed-category")
+            .querySelector(".followed-category-title").textContent !==
+            "Local" &&
+          e.target
+            .closest(".followed-category")
+            .querySelector(".followed-category-title").textContent !==
+            "Health" &&
+          e.target
+            .closest(".followed-category")
+            .querySelector(".followed-category-title").textContent !==
+            "Business"
+        )
+          getNewsFromInput(
+            `${
+              e.target
+                .closest(".followed-category")
+                .querySelector(".followed-category-title").textContent
+            }`
+          );
+        else
+          getNewsFromList(
+            `${
+              e.target
+                .closest(".followed-category")
+                .querySelector(".followed-category-title").textContent
+            }`
+          );
       });
     });
-    document.querySelectorAll(".fa-ellipsis-vertical").forEach((el) => {
+    document.querySelectorAll(".topic-vertical-dots").forEach((el) => {
       el.addEventListener("click", function (e) {
         if (e.target.closest(".manage-followed-container")) return;
 
@@ -1351,16 +1844,16 @@ const firstPageOfFollowing = function () {
           });
 
         el.firstElementChild.style.height = `${getHeightForManageContainers(
-          el
+          el,
+          "category"
         )}rem`;
         el.firstElementChild.style.bottom = `-${
-          getHeightForManageContainers(el) + 2
+          getHeightForManageContainers(el, "category") + 2
         }rem`;
         el.firstElementChild.style.padding = "1rem 0rem";
         el.firstElementChild.style.boxShadow =
           "0px 0px 10px 5px rgba(0, 0, 0, 0.2)";
         el.firstElementChild.style.zIndex = "2";
-        console.log(el.firstElementChild.offsetHeight);
 
         document.addEventListener("click", hideManageFollowing);
       });
@@ -1483,6 +1976,380 @@ const firstPageOfFollowing = function () {
               </p>
             </div>`;
   }
+  //----------------------------
+  if (loggedInAs.followedLocation && loggedInAs.followedLocation.length !== 0) {
+    document.querySelector(
+      ".local-following-page"
+    ).innerHTML = `<h1>Local</h1>    <div class="followed-locations">
+            </div>`;
+    document.querySelector(".followed-locations").innerHTML +=
+      loggedInAs.followedLocation
+        .map(
+          (el) =>
+            `${getSearchesCart(el, "location", loggedInAs.followedLocation)}`
+        )
+        .join("");
+
+    document.querySelectorAll(".followed-location").forEach((el) => {
+      el.addEventListener("click", function (e) {
+        if (e.target.closest(".location-vertical-dots")) return;
+        getNewsFromInput(
+          `${
+            e.target
+              .closest(".followed-location")
+              .querySelector(".favorite-location-title").textContent
+          }`
+        );
+      });
+    });
+    document.querySelectorAll(".location-vertical-dots").forEach((el) => {
+      el.addEventListener("click", function (e) {
+        if (e.target.closest(".manage-followed-container")) return;
+
+        if (
+          el
+            .closest(".followed-location")
+            .querySelector(".manage-followed-container").style.height ===
+          "18rem"
+        ) {
+          el.firstElementChild.style.height = "0rem";
+          el.firstElementChild.style.bottom = "0rem";
+          el.firstElementChild.style.padding = "0rem 0rem";
+          el.firstElementChild.style.boxShadow = "none";
+          el.firstElementChild.style.zIndex = "1";
+          document.removeEventListener("click", hideManageFollowing);
+          return;
+        }
+        document
+          .querySelectorAll(".manage-followed-container")
+          .forEach((el) => {
+            el.style.height = "0rem";
+            el.style.bottom = "0rem";
+            el.style.padding = "0rem 0rem";
+            el.style.boxShadow = "none";
+            el.style.zIndex = "1";
+          });
+
+        el.firstElementChild.style.height = `${getHeightForManageContainers(
+          el,
+          "location"
+        )}rem`;
+        el.firstElementChild.style.bottom = `-${
+          getHeightForManageContainers(el, "location") + 2
+        }rem`;
+        el.firstElementChild.style.padding = "1rem 0rem";
+        el.firstElementChild.style.boxShadow =
+          "0px 0px 10px 5px rgba(0, 0, 0, 0.2)";
+        el.firstElementChild.style.zIndex = "2";
+
+        document.addEventListener("click", hideManageFollowing);
+      });
+    });
+    document
+      .querySelectorAll(".move-bottom-following-location")
+      .forEach((el) => {
+        el.addEventListener("click", function () {
+          firstToLast(
+            el
+              .closest(".followed-location")
+              .querySelector(".favorite-location-title").textContent,
+            loggedInAs.followedLocation
+          );
+          firstPageOfFollowing();
+
+          localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+          loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
+          userAccounts.forEach((el) => {
+            if (loggedInAs.username === el.username) {
+              el.followedLocation = loggedInAs.followedLocation;
+            }
+            localStorage.setItem("accounts", JSON.stringify(userAccounts));
+          });
+        });
+      });
+    document.querySelectorAll(".move-top-following-location").forEach((el) => {
+      el.addEventListener("click", function () {
+        lastToFirst(
+          el
+            .closest(".followed-location")
+            .querySelector(".favorite-location-title").textContent,
+          loggedInAs.followedLocation
+        );
+        firstPageOfFollowing();
+        localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+        loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
+        userAccounts.forEach((el) => {
+          if (loggedInAs.username === el.username) {
+            el.followedLocation = loggedInAs.followedLocation;
+          }
+          localStorage.setItem("accounts", JSON.stringify(userAccounts));
+        });
+      });
+    });
+    document
+      .querySelectorAll(".move-toward-top-following-location")
+      .forEach((el) => {
+        el.addEventListener("click", function () {
+          moveUpByOne(
+            el
+              .closest(".followed-location")
+              .querySelector(".favorite-location-title").textContent,
+            loggedInAs.followedLocation
+          );
+          firstPageOfFollowing();
+          localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+          loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
+          userAccounts.forEach((el) => {
+            if (loggedInAs.username === el.username) {
+              el.followedLocation = loggedInAs.followedLocation;
+            }
+            localStorage.setItem("accounts", JSON.stringify(userAccounts));
+          });
+        });
+      });
+    document
+      .querySelectorAll(".move-toward-bottom-following-location")
+      .forEach((el) => {
+        el.addEventListener("click", function () {
+          moveDownByOne(
+            el
+              .closest(".followed-location")
+              .querySelector(".favorite-location-title").textContent,
+            loggedInAs.followedLocation
+          );
+          firstPageOfFollowing();
+          localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+          loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
+          userAccounts.forEach((el) => {
+            if (loggedInAs.username === el.username) {
+              el.followedLocation = loggedInAs.followedLocation;
+            }
+            localStorage.setItem("accounts", JSON.stringify(userAccounts));
+          });
+        });
+      });
+    document.querySelectorAll(".remove-following-location").forEach((el) => {
+      el.addEventListener("click", function (e) {
+        let location = e.target
+          .closest(".followed-location")
+          .querySelector(".favorite-location-title").textContent;
+
+        loggedInAs.followedLocation.splice(
+          loggedInAs.followedLocation.indexOf(`${location}`),
+          1
+        );
+
+        e.target.closest(".followed-location").remove();
+        localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+        loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
+        userAccounts.forEach((el) => {
+          if (loggedInAs.username === el.username) {
+            el.followedLocation = loggedInAs.followedLocation;
+          }
+        });
+
+        localStorage.setItem("accounts", JSON.stringify(userAccounts));
+        firstPageOfFollowing();
+      });
+    });
+  } else if (
+    !loggedInAs.followedLocation ||
+    loggedInAs.followedLocation.length === 0
+  ) {
+    document.querySelector(".local-following-page").innerHTML = `  
+            <h1>Local</h1>
+            <div class="following-local-container">
+              <img src="no-local.jpg" alt="" />
+              <p>When you follow a location it will appear here.</p>
+            </div>`;
+  }
+  //-----------------------------
+  if (loggedInAs.followedSources && loggedInAs.followedSources.length !== 0) {
+    document.querySelector(
+      ".sources-following-page"
+    ).innerHTML = `<h1>Sources</h1>    <div class="followed-sources">
+            </div>`;
+    document.querySelector(".followed-sources").innerHTML +=
+      loggedInAs.followedSources
+        .map(
+          (el) => `${getSearchesCart(el, "source", loggedInAs.followedSources)}`
+        )
+        .join("");
+
+    document.querySelectorAll(".followed-source").forEach((el) => {
+      el.addEventListener("click", function (e) {
+        if (e.target.closest(".source-vertical-dots")) return;
+        getNewsFromInput(
+          `${
+            e.target
+              .closest(".followed-source")
+              .querySelector(".favorite-source-title").textContent
+          }`
+        );
+      });
+    });
+    document.querySelectorAll(".source-vertical-dots").forEach((el) => {
+      el.addEventListener("click", function (e) {
+        if (e.target.closest(".manage-followed-container")) return;
+
+        if (
+          el
+            .closest(".followed-source")
+            .querySelector(".manage-followed-container").style.height ===
+          "18rem"
+        ) {
+          el.firstElementChild.style.height = "0rem";
+          el.firstElementChild.style.bottom = "0rem";
+          el.firstElementChild.style.padding = "0rem 0rem";
+          el.firstElementChild.style.boxShadow = "none";
+          el.firstElementChild.style.zIndex = "1";
+          document.removeEventListener("click", hideManageFollowing);
+          return;
+        }
+        document
+          .querySelectorAll(".manage-followed-container")
+          .forEach((el) => {
+            el.style.height = "0rem";
+            el.style.bottom = "0rem";
+            el.style.padding = "0rem 0rem";
+            el.style.boxShadow = "none";
+            el.style.zIndex = "1";
+          });
+
+        el.firstElementChild.style.height = `${getHeightForManageContainers(
+          el,
+          "source"
+        )}rem`;
+        el.firstElementChild.style.bottom = `-${
+          getHeightForManageContainers(el, "source") + 2
+        }rem`;
+        el.firstElementChild.style.padding = "1rem 0rem";
+        el.firstElementChild.style.boxShadow =
+          "0px 0px 10px 5px rgba(0, 0, 0, 0.2)";
+        el.firstElementChild.style.zIndex = "2";
+
+        document.addEventListener("click", hideManageFollowing);
+      });
+    });
+    document.querySelectorAll(".move-bottom-following-source").forEach((el) => {
+      el.addEventListener("click", function () {
+        firstToLast(
+          el.closest(".followed-source").querySelector(".favorite-source-title")
+            .textContent,
+          loggedInAs.followedSources
+        );
+        firstPageOfFollowing();
+
+        localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+        loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
+        userAccounts.forEach((el) => {
+          if (loggedInAs.username === el.username) {
+            el.followedSources = loggedInAs.followedSources;
+          }
+          localStorage.setItem("accounts", JSON.stringify(userAccounts));
+        });
+      });
+    });
+    document.querySelectorAll(".move-top-following-source").forEach((el) => {
+      el.addEventListener("click", function () {
+        lastToFirst(
+          el.closest(".followed-source").querySelector(".favorite-source-title")
+            .textContent,
+          loggedInAs.followedSources
+        );
+        firstPageOfFollowing();
+        localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+        loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
+        userAccounts.forEach((el) => {
+          if (loggedInAs.username === el.username) {
+            el.followedSources = loggedInAs.followedSources;
+          }
+          localStorage.setItem("accounts", JSON.stringify(userAccounts));
+        });
+      });
+    });
+    document
+      .querySelectorAll(".move-toward-top-following-source")
+      .forEach((el) => {
+        el.addEventListener("click", function () {
+          moveUpByOne(
+            el
+              .closest(".followed-source")
+              .querySelector(".favorite-source-title").textContent,
+            loggedInAs.followedSources
+          );
+          firstPageOfFollowing();
+          localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+          loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
+          userAccounts.forEach((el) => {
+            if (loggedInAs.username === el.username) {
+              el.followedSources = loggedInAs.followedSources;
+            }
+            localStorage.setItem("accounts", JSON.stringify(userAccounts));
+          });
+        });
+      });
+    document
+      .querySelectorAll(".move-toward-bottom-following-source")
+      .forEach((el) => {
+        el.addEventListener("click", function () {
+          moveDownByOne(
+            el
+              .closest(".followed-source")
+              .querySelector(".favorite-source-title").textContent,
+            loggedInAs.followedSources
+          );
+          firstPageOfFollowing();
+          localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+          loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
+          userAccounts.forEach((el) => {
+            if (loggedInAs.username === el.username) {
+              el.followedSources = loggedInAs.followedSources;
+            }
+            localStorage.setItem("accounts", JSON.stringify(userAccounts));
+          });
+        });
+      });
+    document.querySelectorAll(".remove-following-source").forEach((el) => {
+      el.addEventListener("click", function (e) {
+        let sources = e.target
+          .closest(".followed-source")
+          .querySelector(".favorite-source-title").textContent;
+
+        loggedInAs.followedSources.splice(
+          loggedInAs.followedSources.indexOf(`${sources}`),
+          1
+        );
+
+        e.target.closest(".followed-source").remove();
+        localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+        loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
+        userAccounts.forEach((el) => {
+          if (loggedInAs.username === el.username) {
+            el.followedSources = loggedInAs.followedSources;
+          }
+        });
+
+        localStorage.setItem("accounts", JSON.stringify(userAccounts));
+        firstPageOfFollowing();
+      });
+    });
+  } else if (
+    !loggedInAs.followedSources ||
+    loggedInAs.followedSources.length === 0
+  ) {
+    document.querySelector(
+      ".sources-following-page"
+    ).innerHTML = ` <h1>Sources</h1>
+            <div class="following-sources-container">
+              <img src="no-sources.jpg" alt="" />
+              <p>
+                When you follow a source it will appear here. You'll also see
+                more stories from that source in the For You feed.
+              </p>
+            </div>`;
+  }
+
   getFollowingContainerHTML();
 };
 const secondPageOfFollowing = function () {
@@ -1503,6 +2370,194 @@ const secondPageOfFollowing = function () {
           </div>
         </div>
       </div>`;
+
+  if (loggedInAs.followedSearches && loggedInAs.followedSearches.length !== 0) {
+    document.querySelector(
+      ".category-following-page"
+    ).innerHTML = `<div class="followed-searches">
+            </div>`;
+    document.querySelector(".followed-searches").innerHTML +=
+      loggedInAs.followedSearches
+        .map(
+          (el) =>
+            `${getSearchesCart(el, "search", loggedInAs.followedSearches)}`
+        )
+        .join("");
+
+    document.querySelectorAll(".followed-search").forEach((el) => {
+      el.addEventListener("click", function (e) {
+        if (e.target.closest(".search-vertical-dots")) return;
+        getNewsFromInput(
+          `${
+            e.target
+              .closest(".followed-search")
+              .querySelector(".favorite-search-title").textContent
+          }`
+        );
+      });
+    });
+    document.querySelectorAll(".search-vertical-dots").forEach((el) => {
+      el.addEventListener("click", function (e) {
+        if (e.target.closest(".manage-followed-container")) return;
+
+        if (
+          el
+            .closest(".followed-search")
+            .querySelector(".manage-followed-container").style.height ===
+          "18rem"
+        ) {
+          el.firstElementChild.style.height = "0rem";
+          el.firstElementChild.style.bottom = "0rem";
+          el.firstElementChild.style.padding = "0rem 0rem";
+          el.firstElementChild.style.boxShadow = "none";
+          el.firstElementChild.style.zIndex = "1";
+          document.removeEventListener("click", hideManageFollowing);
+          return;
+        }
+        document
+          .querySelectorAll(".manage-followed-container")
+          .forEach((el) => {
+            el.style.height = "0rem";
+            el.style.bottom = "0rem";
+            el.style.padding = "0rem 0rem";
+            el.style.boxShadow = "none";
+            el.style.zIndex = "1";
+          });
+
+        el.firstElementChild.style.height = `${getHeightForManageContainers(
+          el,
+          "search"
+        )}rem`;
+        el.firstElementChild.style.bottom = `-${
+          getHeightForManageContainers(el, "search") + 2
+        }rem`;
+        el.firstElementChild.style.padding = "1rem 0rem";
+        el.firstElementChild.style.boxShadow =
+          "0px 0px 10px 5px rgba(0, 0, 0, 0.2)";
+        el.firstElementChild.style.zIndex = "2";
+
+        document.addEventListener("click", hideManageFollowing);
+      });
+    });
+    document
+      .querySelectorAll(".move-bottom-following-category")
+      .forEach((el) => {
+        el.addEventListener("click", function () {
+          firstToLast(
+            el
+              .closest(".followed-search")
+              .querySelector(".favorite-search-title").textContent,
+            loggedInAs.followedSearches
+          );
+          secondPageOfFollowing();
+
+          localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+          loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
+          userAccounts.forEach((el) => {
+            if (loggedInAs.username === el.username) {
+              el.followedSearches = loggedInAs.followedSearches;
+            }
+            localStorage.setItem("accounts", JSON.stringify(userAccounts));
+          });
+        });
+      });
+    document.querySelectorAll(".move-top-following-search").forEach((el) => {
+      el.addEventListener("click", function () {
+        lastToFirst(
+          el.closest(".followed-search").querySelector(".favorite-search-title")
+            .textContent,
+          loggedInAs.followedSearches
+        );
+        secondPageOfFollowing();
+        localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+        loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
+        userAccounts.forEach((el) => {
+          if (loggedInAs.username === el.username) {
+            el.followedSearches = loggedInAs.followedSearches;
+          }
+          localStorage.setItem("accounts", JSON.stringify(userAccounts));
+        });
+      });
+    });
+    document
+      .querySelectorAll(".move-toward-top-following-search")
+      .forEach((el) => {
+        el.addEventListener("click", function () {
+          moveUpByOne(
+            el
+              .closest(".followed-search")
+              .querySelector(".favorite-search-title").textContent,
+            loggedInAs.followedSearches
+          );
+          secondPageOfFollowing();
+          localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+          loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
+          userAccounts.forEach((el) => {
+            if (loggedInAs.username === el.username) {
+              el.followedSearches = loggedInAs.followedSearches;
+            }
+            localStorage.setItem("accounts", JSON.stringify(userAccounts));
+          });
+        });
+      });
+    document
+      .querySelectorAll(".move-toward-bottom-following-search")
+      .forEach((el) => {
+        el.addEventListener("click", function () {
+          moveDownByOne(
+            el
+              .closest(".followed-search")
+              .querySelector(".favorite-search-title").textContent,
+            loggedInAs.followedSearches
+          );
+          secondPageOfFollowing();
+          localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+          loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
+          userAccounts.forEach((el) => {
+            if (loggedInAs.username === el.username) {
+              el.followedSearches = loggedInAs.followedSearches;
+            }
+            localStorage.setItem("accounts", JSON.stringify(userAccounts));
+          });
+        });
+      });
+    document.querySelectorAll(".remove-following-search").forEach((el) => {
+      el.addEventListener("click", function (e) {
+        let category = e.target
+          .closest(".followed-search")
+          .querySelector(".favorite-search-title").textContent;
+
+        loggedInAs.followedSearches.splice(
+          loggedInAs.followedSearches.indexOf(`${category}`),
+          1
+        );
+
+        e.target.closest(".followed-search").remove();
+        localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+        loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
+        userAccounts.forEach((el) => {
+          if (loggedInAs.username === el.username) {
+            el.followedSearches = loggedInAs.followedSearches;
+          }
+        });
+
+        localStorage.setItem("accounts", JSON.stringify(userAccounts));
+        secondPageOfFollowing();
+      });
+    });
+  } else if (
+    !loggedInAs.followedSearches ||
+    loggedInAs.followedSearches.length === 0
+  ) {
+    document.querySelector(
+      ".category-following-page"
+    ).innerHTML = `<div class="following-categories-container">
+              <img src="no-searches.jpg" alt="" />
+              <p>
+               Your saved searches will appear here.
+              </p>
+            </div>`;
+  }
   getFollowingContainerHTML();
 };
 const thirdPageOfFollowing = function () {
@@ -1529,7 +2584,6 @@ const getFollowingContainerHTML = function () {
   document.querySelectorAll(".following-main-buttons").forEach((el) =>
     el.addEventListener("click", function (e) {
       if (e.target.textContent.trim() === "Topics & sources") {
-        console.log("a", e.target.textContent);
         firstPageOfFollowing();
       }
       if (e.target.textContent.trim() === "Saved searches") {
@@ -1541,12 +2595,22 @@ const getFollowingContainerHTML = function () {
     })
   );
 };
+const getForYouContainerHTML = function () {
+  document.querySelector("#main").style.width = "85rem";
+  document.querySelector(
+    "#main"
+  ).innerHTML = `        <div class="for-you-title">
+        <h2 class="page-title">For you</h2>
+        <p class="page-description">Recommended based on your interests</p>
+      </div>
+      <div class="first-container"></div>`;
+};
 
 checkIfLoggedIn();
-if (Logged) {
-  getHomeHTML();
-  getWeather("Novi Pazar");
-}
+// if (Logged) {
+//   getHomeHTML();
+//   getWeather("Novi Pazar");
+// }
 
 //TODO: FINISH MAIN PAGE FOOTER WITH 1 MORE CONTAINER, ADD A FOOTER TO EVERY PAGE, THEN
 

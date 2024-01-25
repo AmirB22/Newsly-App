@@ -6,7 +6,7 @@
     <link rel="icon" type="image/x-icon" href="./final-logo.png" />
     <title>Newsly App | News</title>
     <link rel="stylesheet" href="newsPage.css" />
-    <script defer src="newsPage.js"></script>
+    <script type="module" defer src="newsPage.js"></script>
   </head>
   <body>
     <header class="header">
@@ -52,51 +52,13 @@
       </nav>
     </header>
     <div id="main">
-      <div class="page-top">
-        <div class="page-top-left">
-          <h2 class="page-title">Your briefing</h2>
-          <p class="page-description">Saturday, January 20</p>
-        </div>
-        <div class="page-top-right">
-          <div class="weather-search">
-            <p class="weather-search-title">Look up weather somewhere else</p>
-            <form class="weather-search-input-container">
-              <button class="weather-search-button">
-                <i class="fa-solid fa-magnifying-glass"></i>
-              </button>
-              <input
-                class="weather-search-input"
-                type="text"
-                placeholder="City / Country / Location"
-                name=""
-                id=""
-              />
-            </form>
-          </div>
-          <button class="weather-left-button">
-            <i class="fa-solid fa-chevron-left"></i>
-          </button>
-          <div>
-            <img
-              class="weather-image"
-              src="https://static.vecteezy.com/system/resources/previews/012/494/174/original/sun-icon-in-bright-yellow-color-with-transparent-background-png.png"
-              alt=""
-            />
-          </div>
-          <div>
-            <p class="weather-location">Novi Pazar</p>
-            <h2 class="weather-temperature">-5C</h2>
-            <a
-              href="https://news.url.google.com/url?sa=j&url=https%3A%2F%2Fwww.weather.com%2Fwx%2Ftoday%2F%3Flat%3D43.14%26lon%3D20.52%26locale%3Den_US%26par%3Dgoogle&uct=1705710948&usg=qrKFzyNByx7NGcC-M30hdgVyZ8Q.&opi=116942117"
-              class="weather-link"
-              >More on weather.com</a
-            >
-          </div>
-        </div>
+      <div class="for-you-title">
+        <h2 class="page-title">For you</h2>
+        <p class="page-description">Recommended based on your interests</p>
       </div>
+      <div class="first-container"></div>
     </div>
 
- 
     <script
       src="https://kit.fontawesome.com/504433244e.js"
       crossorigin="anonymous"
