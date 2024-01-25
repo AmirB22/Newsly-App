@@ -11,6 +11,24 @@ const CategoriesOriginal = [
   "Health",
   "Sports",
 ];
+const images = {
+  World:
+    "https://lh3.ggpht.com/MMoPETUaDbUB1bO3KAi3cKQ_lzssju3VEp9ZPauGIamgSniMr4nV2SVkVvG-rKUJSLQJP84q7EA=s56-rw-p",
+  Health:
+    "https://lh3.ggpht.com/r4EKXwEo49BFQUa3OVZ8FC3j6teq_hUrmGcO4fI8BqoBgWSVJyu6D-vvXs9wGO7e_BKMbeqo4dk=s56-rw-p",
+  Science:
+    "https://lh3.ggpht.com/fJKuBX6iUFA_nPU2_2bIXcrTf3osSPhgBCL0sGqR2pZo-P6uZpiSmHW098W4I-CQHmsxZBd4=s56-rw-p",
+  Sports:
+    "https://lh3.ggpht.com/fJKuBX6iUFA_nPU2_2bIXcrTf3osSPhgBCL0sGqR2pZo-P6uZpiSmHW098W4I-CQHmsxZBd4=s56-rw-p",
+  Entertainment:
+    "https://lh3.ggpht.com/M-7V3aFj1BEw9EYBVHdLFmjCerci3j2MvsB43zu6-9iu-znG_WuOYrz5urJlStV5n59mW0WY5Q=s56-rw-p",
+  Technology:
+    "https://lh3.ggpht.com/0JsT7seg_L1MnpCuWZvJ6CJCHpkCawqEMdOr8Iw_NWjNUyTqWZJZNDbfa6kUGg-q1KN4FiUPaw=s56-rw-p",
+  Business:
+    "https://lh3.ggpht.com/A0UiqrMFOJnh5R_g7xhIrslGxotNEcyK5V15p5yJkUlrXMBGqGw3TkU0x06Yb0Q-72QXK9N9=s56-rw-p",
+  "U.S.":
+    "https://lh3.googleusercontent.com/proxy/4bKny4MdGPqmBQJQCme5SXcs3Idk0T26DpoDaDToXQmJpHssPJYZK-nnUigTPdUyxHjkh_zd22dsimWdR4wpWHj2fUTTzMMtHow650KJwvKo7Bq1lfLb8EICSOcPOFnnEGY9wbJXyhQXtK8oPIREwNYe3Ya3DbHkJhpoZMoxnKo8UHw=s56-rw-p",
+};
 const checkIfLoggedIn = function () {
   if (!Logged && userAccounts.length !== 0) {
     document.body.innerHTML = `<div class="not-logged-in-container"><img class="not-logged-image" src="inverted-logo.png"/><h1>You are not logged in</h1>
@@ -513,6 +531,7 @@ const getHTML = function (data, limit = 1000) {
     } else {
       document.querySelector(".first-container").innerHTML += `
        <div class="first-news small-news-container">
+       <a href="${data.articles[i].url}">
           <div class="small-news">
             <div>
               <div class="logo">
@@ -528,7 +547,7 @@ const getHTML = function (data, limit = 1000) {
       }</span>
           </div>
           <div class="small-news-image">
-          </div>
+          </div></a>
         </div>`;
       i++;
     }
@@ -1071,7 +1090,7 @@ const getNewsFromList = async function (clicked) {
            ${
              clicked === "Local"
                ? ""
-               : `<img class="${clicked} list-icons" src="${clicked}.jpg" />`
+               : `<img class="${clicked} list-icons" src="${images[clicked]}" />`
            }${clicked === "Local" ? "Your local news" : `${clicked}`}
           </h2>
           ${
@@ -1221,7 +1240,7 @@ const getNewsFromList = async function (clicked) {
 
     getHTML(data);
   } catch (err) {
-    console.error(err);
+    document.querySelector(".first-container").innerHTML = `${err.message}`;
   }
 };
 const changeContainerHTML = async function (input, limit, type, side = "") {
@@ -1720,7 +1739,7 @@ const firstPageOfFollowing = function () {
           <div class="followings category-following-page">
             <h1>Topics</h1>
             <div class="following-categories-container">
-              <img src="no-following.jpg" alt="" />
+              <img src="https://lh3.googleusercontent.com/nuos3uRehQ6gjGOJeBVvbTBnKGRpFBNScAyr9f3Z9CEpd_Loi1zB39poSX9QbdIjTNevSt2o=rw" alt="" />
               <p>
                 When you follow a topic it will appear here. You'll also see
                 more related stories in the For You feed.
@@ -1732,7 +1751,7 @@ const firstPageOfFollowing = function () {
           <div class="followings local-following-page">
             <h1>Local</h1>
             <div class="following-local-container">
-              <img src="no-local.jpg" alt="" />
+              <img src="https://lh3.googleusercontent.com/SOCn77ylz-ppK_80GxYfcNeHebloX7Vx9IvKbGzL6Aken01llMjZYjKoPTsvSTkGkBc1rwL2=rw" alt="" />
               <p>When you follow a location it will appear here.</p>
             </div>
           </div>
@@ -1741,7 +1760,7 @@ const firstPageOfFollowing = function () {
           <div class="followings sources-following-page">
             <h1>Sources</h1>
             <div class="following-sources-container">
-              <img src="no-sources.jpg" alt="" />
+              <img src="https://lh3.googleusercontent.com/tFGfZ19wiRAvJsi5LeFL42_k_gV7bXV6dj3aKnatkcPRWKpu2fHUp367Awcdd7JceiE_bzBc=rw" alt="" />
               <p>
                 When you follow a source it will appear here. You'll also see
                 more stories from that source in the For You feed.
@@ -1969,7 +1988,7 @@ const firstPageOfFollowing = function () {
     document.querySelector(
       ".category-following-page"
     ).innerHTML = `<h1>Topics</h1>    <div class="following-categories-container">
-              <img src="no-following.jpg" alt="" />
+              <img src="https://lh3.googleusercontent.com/nuos3uRehQ6gjGOJeBVvbTBnKGRpFBNScAyr9f3Z9CEpd_Loi1zB39poSX9QbdIjTNevSt2o=rw" alt="" />
               <p>
                 When you follow a topic it will appear here. You'll also see
                 more related stories in the For You feed.
@@ -2159,7 +2178,7 @@ const firstPageOfFollowing = function () {
     document.querySelector(".local-following-page").innerHTML = `  
             <h1>Local</h1>
             <div class="following-local-container">
-              <img src="no-local.jpg" alt="" />
+              <img src="https://lh3.googleusercontent.com/SOCn77ylz-ppK_80GxYfcNeHebloX7Vx9IvKbGzL6Aken01llMjZYjKoPTsvSTkGkBc1rwL2=rw" alt="" />
               <p>When you follow a location it will appear here.</p>
             </div>`;
   }
@@ -2342,7 +2361,7 @@ const firstPageOfFollowing = function () {
       ".sources-following-page"
     ).innerHTML = ` <h1>Sources</h1>
             <div class="following-sources-container">
-              <img src="no-sources.jpg" alt="" />
+              <img src="https://lh3.googleusercontent.com/tFGfZ19wiRAvJsi5LeFL42_k_gV7bXV6dj3aKnatkcPRWKpu2fHUp367Awcdd7JceiE_bzBc=rw" alt="" />
               <p>
                 When you follow a source it will appear here. You'll also see
                 more stories from that source in the For You feed.
@@ -2362,7 +2381,7 @@ const secondPageOfFollowing = function () {
         <div class="following-page">
           <div class="followings category-following-page">
             <div class="following-categories-container">
-              <img src="no-searches.jpg" alt="" />
+              <img src="https://lh3.googleusercontent.com/o_tai07eFNo8w2jfrZY_vh2Mv3DnrgXM1Ven6HBYn4vFxe949KwJgvAhYdq2Hmr4C_5jUbkkn84=rw" alt="" />
               <p>
                Your saved searches will appear here.
               </p>
@@ -2552,7 +2571,7 @@ const secondPageOfFollowing = function () {
     document.querySelector(
       ".category-following-page"
     ).innerHTML = `<div class="following-categories-container">
-              <img src="no-searches.jpg" alt="" />
+              <img src="https://lh3.googleusercontent.com/o_tai07eFNo8w2jfrZY_vh2Mv3DnrgXM1Ven6HBYn4vFxe949KwJgvAhYdq2Hmr4C_5jUbkkn84=rw" alt="" />
               <p>
                Your saved searches will appear here.
               </p>
@@ -2570,7 +2589,7 @@ const thirdPageOfFollowing = function () {
         <div class="following-page">
           <div class="followings category-following-page">
             <div class="following-categories-container">
-              <img src="no-stories.jpg" alt="" />
+              <img src="https://lh3.googleusercontent.com/7Iv4pkYA_hqsvlyo6XNy3UU0tUYgBR9rGrDHekm8-6cHO14jbUrOu8dCU86to2kzYoRVHJn0Ow=rw" alt="" />
               <p>
                Your saved stories will appear here.
               </p>

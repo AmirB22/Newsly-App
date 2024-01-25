@@ -381,6 +381,7 @@ body {
 }
 .small-news {
   position: relative;
+  height: 100%;
 }
 .logo {
   font-size: 1.2rem;
@@ -1090,4 +1091,11 @@ body {
 }
 .for-you-title .page-title {
   margin-top: 1.5rem;
+}
+.small-news-container a {
+  color: black;
+  text-decoration: none;
+}
+.small-news-container:hover .small-news-title {
+  text-decoration: underline;
 }
