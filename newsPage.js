@@ -1533,7 +1533,8 @@ const getFollowingCart = function (el) {
     el !== "U.S."
   )
     image = `<i class="fa-solid fa-comments lts-icon"></i>`;
-  else image = `<img class="${el} following-icon" src="${el}.jpg" alt="" />`;
+  else
+    image = `<img class="${el} following-icon" src="${images[el]}" alt="" />`;
   if (loggedInAs.following.length === 1) {
     return `<div class="followed-category">
 ${image}
@@ -1836,13 +1837,13 @@ const firstPageOfFollowing = function () {
     });
     document.querySelectorAll(".topic-vertical-dots").forEach((el) => {
       el.addEventListener("click", function (e) {
+        console.log(123);
         if (e.target.closest(".manage-followed-container")) return;
 
         if (
           el
             .closest(".followed-category")
-            .querySelector(".manage-followed-container").style.height ===
-          "18rem"
+            .querySelector(".manage-followed-container").style.height > "0"
         ) {
           el.firstElementChild.style.height = "0rem";
           el.firstElementChild.style.bottom = "0rem";
@@ -2631,7 +2632,4 @@ checkIfLoggedIn();
 //   getWeather("Novi Pazar");
 // }
 
-//TODO: FINISH MAIN PAGE FOOTER WITH 1 MORE CONTAINER, ADD A FOOTER TO EVERY PAGE, THEN
-
-//TODO: WORK ON IMPLEMENTING FOLLOWS, IF USER CLICKS ON FOLLOW, THE CATEGORY THAT HE FOLLOWED GETS ADDED TO
-//THEIR PROFILE AND WHEN THEY CLICK ON FOLLOWING THE CATEGORY APPEARS THERE.
+//TODO: FINISH FORYOU PAGE, REDO SEARCH PAGE AND ADD THINGS THAT I MISSED
