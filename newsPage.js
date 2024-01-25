@@ -609,7 +609,7 @@ const getNewsFromInput = async function (input) {
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${city}&apiKey=68871cc37a1d44c29372bb67cde857ea`
+        `https://newsapi.org/v2/everything?q=${city}&apiKey=f661035e088d485abbe69494cd363c15`
       );
       console.log("input", response);
 
@@ -692,7 +692,29 @@ const getNewsFromInput = async function (input) {
       <p>Try searching up something else!</p></div>
       </div>`);
 
-      getHTML(data, 1000, "2");
+      document.querySelector(`[data-first-container="2"]`).innerHTML =
+        data.articles.map((el) => {
+          ` <div class="first-news small-news-container">
+       <a href="${el.url}">
+          <div class="small-news">
+            <div>
+              <div class="logo">
+             
+                <p>${el?.source.name}</p>
+              </div>
+              <h3 class="small-news-title">
+               ${el.title}
+              </h3>
+            </div>
+            <span class="date-author">${el.publishedAt.slice(0, 8)} · ${
+            el.author ?? ""
+          }</span>
+          </div>
+          <div class="small-news-image">
+          </div></a>
+        </div>`;
+        });
+
       return;
     }
     if (
@@ -725,7 +747,7 @@ const getNewsFromInput = async function (input) {
       </div> `;
       const response = await fetch(
         `
-https://newsapi.org/v2/everything?domains=${source}&apiKey=68871cc37a1d44c29372bb67cde857ea`
+https://newsapi.org/v2/everything?domains=${source}&apiKey=f661035e088d485abbe69494cd363c15`
       );
       console.log("input", response);
 
@@ -808,7 +830,28 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=68871cc37a1d44c29372b
       <p>Try searching up something else!</p></div>
       </div>`);
 
-      getHTML(data, 1000, "7");
+      document.querySelector(`[data-first-container="7"]`).innerHTML =
+        data.articles.map((el) => {
+          ` <div class="first-news small-news-container">
+       <a href="${el.url}">
+          <div class="small-news">
+            <div>
+              <div class="logo">
+             
+                <p>${el?.source.name}</p>
+              </div>
+              <h3 class="small-news-title">
+               ${el.title}
+              </h3>
+            </div>
+            <span class="date-author">${el.publishedAt.slice(0, 8)} · ${
+            el.author ?? ""
+          }</span>
+          </div>
+          <div class="small-news-image">
+          </div></a>
+        </div>`;
+        });
       return;
     }
     if (
@@ -840,7 +883,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=68871cc37a1d44c29372b
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${topic}&apiKey=68871cc37a1d44c29372bb67cde857ea`
+        `https://newsapi.org/v2/everything?q=${topic}&apiKey=f661035e088d485abbe69494cd363c15`
       );
       console.log("input", response);
 
@@ -920,7 +963,28 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=68871cc37a1d44c29372b
       <p>Try searching up something else!</p></div>
       </div>`);
 
-      getHTML(data, 1000, "6");
+      document.querySelector(`[data-first-container="6"]`).innerHTML =
+        data.articles.map((el) => {
+          ` <div class="first-news small-news-container">
+       <a href="${el.url}">
+          <div class="small-news">
+            <div>
+              <div class="logo">
+             
+                <p>${el?.source.name}</p>
+              </div>
+              <h3 class="small-news-title">
+               ${el.title}
+              </h3>
+            </div>
+            <span class="date-author">${el.publishedAt.slice(0, 8)} · ${
+            el.author ?? ""
+          }</span>
+          </div>
+          <div class="small-news-image">
+          </div></a>
+        </div>`;
+        });
       return;
     }
 
@@ -941,7 +1005,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=68871cc37a1d44c29372b
         </div>
       </div> `;
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=68871cc37a1d44c29372bb67cde857ea`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=f661035e088d485abbe69494cd363c15`
     );
     console.log("input", response);
 
@@ -1225,7 +1289,7 @@ const getNewsFromList = async function (clicked) {
     const response = await fetch(
       `https://newsapi.org/v2/everything?q=${
         differentClicked ? differentClicked : clicked
-      }&apiKey=68871cc37a1d44c29372bb67cde857ea`
+      }&apiKey=f661035e088d485abbe69494cd363c15`
     );
     console.log("list", response);
 
@@ -1280,7 +1344,7 @@ const changeContainerHTML = async function (
     }
 
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=68871cc37a1d44c29372bb67cde857ea`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=f661035e088d485abbe69494cd363c15`
     );
     const newsData = await response.json();
 
@@ -1386,7 +1450,7 @@ const getFourthContainerHTML = async function () {
     let k = 0;
     for (let i = 0; i < number; i) {
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=68871cc37a1d44c29372bb67cde857ea`
+        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=f661035e088d485abbe69494cd363c15`
       );
       const data = await response.json();
 
@@ -2634,29 +2698,28 @@ const getForYouContainerHTML = async function () {
   document.querySelector("#main").style.width = "85rem";
   document.querySelector("#main").style.gap = "3rem";
 
+  document.querySelector(
+    "#main"
+  ).innerHTML = `        <div class="for-you-title">
+        <h2 class="page-title">For you</h2>
+        <p class="page-description">Recommended based on your interests</p>
+      </div>
+      <div class="first-container" data-first-container="10"></div>
+      `;
+
   if (
     loggedInAs.following.length === 0 &&
     loggedInAs.followedLocation.length === 0 &&
     loggedInAs.followedSources.length === 0
   ) {
-    for (let i = 0; i < 20; i++) {
-      document.querySelector(
-        "#main"
-      ).innerHTML = `        <div class="for-you-title">
-        <h2 class="page-title">For you</h2>
-        <p class="page-description">Recommended based on your interests</p>
-      </div>
-      <div class="first-container" data-first-container="${i + 10}"></div>
-      `;
-
-      const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${
-          arrayOfTopics[randomNumber(0, arrayOfTopics.length - 1)]
-        }&apiKey=68871cc37a1d44c29372bb67cde857ea`
-      );
-      const data = await response.json();
+    for (let i = 0; i < 5; i++) {
       console.log(data);
-      getHTML(data, 20, `${i + 10}`);
+      changeContainerHTML(
+        arrayOfTopics[i],
+        20,
+        "first-container",
+        ""`${i + 10}`
+      );
 
       if (data.length === 0 || !response.ok) getForYouContainerHTML();
       document.querySelector(
@@ -2670,7 +2733,7 @@ const getForYouContainerHTML = async function () {
         </div>`;
 
       changeContainerHTML(
-        arrayOfCities[randomNumber(0, arrayOfCities.length - 1)],
+        arrayOfCities[i],
 
         1000,
         "sixth-container",
@@ -2678,11 +2741,47 @@ const getForYouContainerHTML = async function () {
         `${i + 5}`
       );
       changeContainerHTML(
-        arrayOfCities[randomNumber(0, arrayOfCities.length - 1)],
+        arrayOfCities[i + 5],
         1000,
         "sixth-container",
         "right",
         `${i + 5}`
+      );
+      document.querySelector(
+        "#main"
+      ).innerHTML += ` <div class="first-container" data-first-container="${
+        i + 50
+      }"></div>`;
+      changeContainerHTML(
+        arrayOfTopics[i + 5],
+        20,
+        "first-container",
+        "",
+        `${i + 50}`
+      );
+      document.querySelector(
+        "#main"
+      ).innerHTML += ` <div class="sixth-container">
+          <div class="for-you-container">
+            <div class="for-you-left-side" data-foryouleft="${i + 100}">
+            </div>
+            <div class="for-you-right-side" data-foryouright="${i + 100}">
+          </div>
+        </div>`;
+
+      changeContainerHTML(
+        arrayOfSources[i],
+        1000,
+        "sixth-container",
+        "left",
+        `${i + 100}`
+      );
+      changeContainerHTML(
+        arrayOfSources[i + 5],
+        1000,
+        "sixth-container",
+        "right",
+        `${i + 100}`
       );
     }
   }
