@@ -342,6 +342,7 @@ body {
   cursor: pointer;
 }
 .right-side-card {
+  flex: 5;
   padding: 1rem 0rem;
   display: flex;
   position: relative;
@@ -495,13 +496,16 @@ body {
   background-color: white;
   border-radius: 2rem;
   padding: 1rem 0rem;
-  min-width: 120rem;
+  min-width: 100%;
 }
 .third-container .for-you-container {
   min-height: 30rem;
+  min-width: 120rem;
 }
 .for-you-right-side,
 .for-you-left-side {
+  display: flex;
+  flex-direction: column;
   width: 50%;
   position: relative;
   padding: 0rem 1rem;

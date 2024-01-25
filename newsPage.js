@@ -249,7 +249,11 @@ const getHomeHTML = function () {
   changeContainerHTML(
     firstContainerCategories[randomNumber(0, 4)],
     15,
-    "first-container"
+    "first-container",
+    "",
+    "",
+    "",
+    "1"
   );
   changeContainerHTML(
     secondContainerCategories[randomNumber(0, 4)],
@@ -285,13 +289,15 @@ const getHomeHTML = function () {
     sixthContainerCategoriesLeft[randomNumber(0, 2)],
     1000,
     "sixth-container",
-    "left"
+    "left",
+    "3"
   );
   changeContainerHTML(
     sixthContainerCategoriesRight[randomNumber(0, 2)],
     1000,
     "sixth-container",
-    "right"
+    "right",
+    "3"
   );
 };
 let date;
@@ -459,7 +465,7 @@ document
 const randomNumber = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
-const getHTML = function (data, limit = 1000) {
+const getHTML = function (data, limit = 1000, number) {
   document.querySelector(
     ".first-container"
   ).innerHTML = ` <i class="fa-solid fa-rotate-right"></i>`;
@@ -484,7 +490,7 @@ const getHTML = function (data, limit = 1000) {
     // if (i === 20 || i === 21 || i === 22 || i === 23) break;
     if (data.articles[i].urlToImage) {
       document.querySelector(
-        ".first-container"
+        `[data-first-container="${number}"`
       ).innerHTML += `  <div class="second-news big-news">
       <a class="main-news-link" href="${
         data.articles[i].url
@@ -588,7 +594,7 @@ const getNewsFromInput = async function (input) {
       });
       document.querySelector("#main").innerHTML = `
           <div class="first-second-container-wrapper lts-wrapper-container">
-        <div class="first-container lts-container-first"></div>
+        <div class="first-container lts-container-first" data-first-container="2"></div>
         <div class="second-container lts-container-second">
           <div class="lts-container">
             <i class="fa-solid fa-location-dot lts-icon"></i>
@@ -603,7 +609,7 @@ const getNewsFromInput = async function (input) {
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${city}&apiKey=c8e87f0ac96d4e349f62b3d71fe2d90a`
+        `https://newsapi.org/v2/everything?q=${city}&apiKey=68871cc37a1d44c29372bb67cde857ea`
       );
       console.log("input", response);
 
@@ -686,7 +692,7 @@ const getNewsFromInput = async function (input) {
       <p>Try searching up something else!</p></div>
       </div>`);
 
-      getHTML(data);
+      getHTML(data, 1000, "2");
       return;
     }
     if (
@@ -703,7 +709,7 @@ const getNewsFromInput = async function (input) {
       });
       document.querySelector("#main").innerHTML = `
         <div class="first-second-container-wrapper lts-wrapper-container">
-        <div class="first-container lts-container-first"></div>
+        <div class="first-container lts-container-first" data-first-container="7"></div>
         <div class="second-container lts-container-second">
           <div class="lts-container">
             <i class="fa-solid fa-hashtag lts-icon"></i>
@@ -719,7 +725,7 @@ const getNewsFromInput = async function (input) {
       </div> `;
       const response = await fetch(
         `
-https://newsapi.org/v2/everything?domains=${source}&apiKey=c8e87f0ac96d4e349f62b3d71fe2d90a`
+https://newsapi.org/v2/everything?domains=${source}&apiKey=68871cc37a1d44c29372bb67cde857ea`
       );
       console.log("input", response);
 
@@ -802,7 +808,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=c8e87f0ac96d4e349f62b
       <p>Try searching up something else!</p></div>
       </div>`);
 
-      getHTML(data);
+      getHTML(data, 1000, "7");
       return;
     }
     if (
@@ -819,7 +825,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=c8e87f0ac96d4e349f62b
       });
       document.querySelector("#main").innerHTML = `
         <div class="first-second-container-wrapper lts-wrapper-container">
-        <div class="first-container lts-container-first"></div>
+        <div class="first-container lts-container-first" data-first-container="6"></div>
         <div class="second-container lts-container-second">
           <div class="lts-container">
             <i class="fa-solid fa-comments lts-icon"></i>
@@ -834,7 +840,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=c8e87f0ac96d4e349f62b
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${topic}&apiKey=c8e87f0ac96d4e349f62b3d71fe2d90a`
+        `https://newsapi.org/v2/everything?q=${topic}&apiKey=68871cc37a1d44c29372bb67cde857ea`
       );
       console.log("input", response);
 
@@ -914,13 +920,13 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=c8e87f0ac96d4e349f62b
       <p>Try searching up something else!</p></div>
       </div>`);
 
-      getHTML(data);
+      getHTML(data, 1000, "6");
       return;
     }
 
     document.querySelector("#main").innerHTML = `
       <div class="first-second-container-wrapper lts-wrapper-container">
-        <div class="first-container lts-container-first"></div>
+        <div class="first-container lts-container-first" data-first-container="5"></div>
         <div class="second-container lts-container-second">
           <div class="lts-container">
             <i class="fa-solid fa-magnifying-glass lts-icon"></i>
@@ -935,7 +941,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=c8e87f0ac96d4e349f62b
         </div>
       </div> `;
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=c8e87f0ac96d4e349f62b3d71fe2d90a`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=68871cc37a1d44c29372bb67cde857ea`
     );
     console.log("input", response);
 
@@ -1018,7 +1024,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=c8e87f0ac96d4e349f62b
       <p>Try searching up something else!</p></div>
       </div>`);
 
-    getHTML(data);
+    getHTML(data, 1000, "5");
   } catch (err) {
     document.querySelector(".first-container").innerHTML = `${err.message}`;
   }
@@ -1118,7 +1124,7 @@ const getNewsFromList = async function (clicked) {
        }
         </div>
       </div>
-      <div class="first-container"></div>`;
+      <div class="first-container" data-first-container="4"></div>`;
     if (
       clicked !== "Local" &&
       loggedInAs.following &&
@@ -1219,7 +1225,7 @@ const getNewsFromList = async function (clicked) {
     const response = await fetch(
       `https://newsapi.org/v2/everything?q=${
         differentClicked ? differentClicked : clicked
-      }&apiKey=c8e87f0ac96d4e349f62b3d71fe2d90a`
+      }&apiKey=68871cc37a1d44c29372bb67cde857ea`
     );
     console.log("list", response);
 
@@ -1238,12 +1244,19 @@ const getNewsFromList = async function (clicked) {
       <p>Try searching up something else!</p></div>
       </div>`);
 
-    getHTML(data);
+    getHTML(data, 1000, "4");
   } catch (err) {
     document.querySelector(".first-container").innerHTML = `${err.message}`;
   }
 };
-const changeContainerHTML = async function (input, limit, type, side = "") {
+const changeContainerHTML = async function (
+  input,
+  limit,
+  type,
+  side = "",
+  dataNum,
+  number
+) {
   try {
     document.querySelector(
       ".first-container"
@@ -1267,7 +1280,7 @@ const changeContainerHTML = async function (input, limit, type, side = "") {
     }
 
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=c8e87f0ac96d4e349f62b3d71fe2d90a`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=68871cc37a1d44c29372bb67cde857ea`
     );
     const newsData = await response.json();
 
@@ -1289,13 +1302,15 @@ const changeContainerHTML = async function (input, limit, type, side = "") {
       <p>Try searching up something else!</p></div>
       </div>`);
 
-    if (type === "first-container") getHTML(newsData, limit);
+    if (type === "first-container") getHTML(newsData, limit, number);
     if (type === "second-container") getSecondContainerHTML(newsData);
     if (type === "third-container") getThirdContainerHTML(newsData, side);
     if (type === "fifth-container") getFifthContainerHTML(newsData, side);
-    if (type === "sixth-container") getSixthContainerHTML(newsData, side);
+    if (type === "sixth-container")
+      getSixthContainerHTML(newsData, side, dataNum);
   } catch (err) {
-    document.querySelector(".first-container").innerHTML = `${err.message}`;
+    // document.querySelector(".first-container").innerHTML = `${err.message}`;
+    console.error(err);
   }
 };
 const getSecondContainerHTML = function (data) {
@@ -1371,7 +1386,7 @@ const getFourthContainerHTML = async function () {
     let k = 0;
     for (let i = 0; i < number; i) {
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=c8e87f0ac96d4e349f62b3d71fe2d90a`
+        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=68871cc37a1d44c29372bb67cde857ea`
       );
       const data = await response.json();
 
@@ -1465,7 +1480,7 @@ const getFifthContainerHTML = function (data, side) {
           </div></a>`;
   }
 };
-const getSixthContainerHTML = function (data, side) {
+const getSixthContainerHTML = function (data, side, dataNum) {
   let i;
   side === "right" ? (i = 2) : (i = 0);
   let k = i + 2;
@@ -1479,7 +1494,7 @@ const getSixthContainerHTML = function (data, side) {
     else when = "While ago...";
 
     document.querySelector(
-      `[data-foryou${side}="3"]`
+      `[data-foryou${side}="${dataNum}"]`
     ).innerHTML += `<a class="for-you-${side}-link" href="${
       data.articles[i].url
     }"><div class="right-side-card">
@@ -2615,21 +2630,72 @@ const getFollowingContainerHTML = function () {
     })
   );
 };
-const getForYouContainerHTML = function () {
+const getForYouContainerHTML = async function () {
   document.querySelector("#main").style.width = "85rem";
-  document.querySelector(
-    "#main"
-  ).innerHTML = `        <div class="for-you-title">
+  document.querySelector("#main").style.gap = "3rem";
+
+  if (
+    loggedInAs.following.length === 0 &&
+    loggedInAs.followedLocation.length === 0 &&
+    loggedInAs.followedSources.length === 0
+  ) {
+    for (let i = 0; i < 20; i++) {
+      document.querySelector(
+        "#main"
+      ).innerHTML = `        <div class="for-you-title">
         <h2 class="page-title">For you</h2>
         <p class="page-description">Recommended based on your interests</p>
       </div>
-      <div class="first-container"></div>`;
+      <div class="first-container" data-first-container="${i + 10}"></div>
+      `;
+
+      const response = await fetch(
+        `https://newsapi.org/v2/everything?q=${
+          arrayOfTopics[randomNumber(0, arrayOfTopics.length - 1)]
+        }&apiKey=68871cc37a1d44c29372bb67cde857ea`
+      );
+      const data = await response.json();
+      console.log(data);
+      getHTML(data, 20, `${i + 10}`);
+
+      if (data.length === 0 || !response.ok) getForYouContainerHTML();
+      document.querySelector(
+        "#main"
+      ).innerHTML += ` <div class="sixth-container">
+          <div class="for-you-container">
+            <div class="for-you-left-side" data-foryouleft="${i + 5}">
+            </div>
+            <div class="for-you-right-side" data-foryouright="${i + 5}">
+          </div>
+        </div>`;
+
+      changeContainerHTML(
+        arrayOfCities[randomNumber(0, arrayOfCities.length - 1)],
+
+        1000,
+        "sixth-container",
+        "left",
+        `${i + 5}`
+      );
+      changeContainerHTML(
+        arrayOfCities[randomNumber(0, arrayOfCities.length - 1)],
+        1000,
+        "sixth-container",
+        "right",
+        `${i + 5}`
+      );
+    }
+  }
+  document.querySelector(".first-container").style.width = "calc(100% - 3rem)";
+  document.querySelector(".sixth-container").style.width = "100%";
+  document.querySelectorAll(".fa-rotate-right").forEach((el) => el.remove());
 };
 
 checkIfLoggedIn();
-// if (Logged) {
-//   getHomeHTML();
-//   getWeather("Novi Pazar");
-// }
+if (Logged) {
+  getForYouContainerHTML();
+  // getHomeHTML();
+  // getWeather("Novi Pazar");
+}
 
 //TODO: FINISH FORYOU PAGE, REDO SEARCH PAGE AND ADD THINGS THAT I MISSED
