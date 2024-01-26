@@ -25,6 +25,7 @@ body {
   margin: 0px;
   padding: 0px;
 }
+
 .header {
   position: absolute;
   top: 0px;
@@ -383,6 +384,7 @@ body {
 .small-news {
   position: relative;
   height: 100%;
+  flex: 7;
 }
 .logo {
   font-size: 1.2rem;
@@ -394,6 +396,8 @@ body {
 }
 .small-news-title {
   font-size: 2rem;
+  max-height: 5rem;
+  overflow: hidden;
   font-weight: normal;
   flex: 8;
 }
@@ -409,6 +413,10 @@ body {
   overflow: hidden;
   white-space: nowrap;
 }
+.small-news-link {
+  color: black;
+  text-decoration: none;
+}
 .small-news-image {
   display: flex;
   justify-content: end;
@@ -416,6 +424,7 @@ body {
 }
 .small-news-image img {
   height: 100%;
+  width: 100%;
   border-radius: 1rem;
 }
 .big-news {
@@ -486,6 +495,8 @@ body {
   color: gray;
   font-size: 1.2rem;
   padding: 0.5rem 0rem;
+  height: 1rem;
+  overflow: hidden;
 }
 .image-side {
   width: 2rem;
@@ -500,13 +511,13 @@ body {
 }
 .third-container .for-you-container {
   min-height: 30rem;
-  min-width: 120rem;
+  min-width: 110rem;
 }
 .for-you-right-side,
 .for-you-left-side {
   display: flex;
   flex-direction: column;
-  width: 50%;
+  width: 100%;
   position: relative;
   padding: 0rem 1rem;
   border-right: 1px solid rgb(220, 220, 220);
@@ -516,7 +527,7 @@ body {
   flex-wrap: wrap;
   justify-content: center;
   width: 100%;
-  gap: 1.77rem;
+  gap: 1.4rem;
   position: relative;
 }
 .fourth-container-wrapper .second-container {
@@ -1013,19 +1024,27 @@ body {
   position: absolute;
   font-family: "Roboto", sans-serif;
   background-color: white;
-  height: 0rem;
   width: 25rem;
-  bottom: 0rem;
   left: 0px;
   display: flex;
   justify-content: center;
   flex-direction: column;
-  padding: 0rem 0rem;
   font-size: 1.5rem;
-  z-index: 2;
   overflow: hidden;
   transition: all 0.5s;
   cursor: default;
+}
+.container-showing {
+  padding: 1rem 0rem;
+  z-index: 2;
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.2);
+}
+.container-not-showing {
+  box-shadow: none;
+  padding: 0rem 0rem;
+  z-index: 1;
+  height: 0rem;
+  bottom: 0rem;
 }
 .manage-followed-container p {
   display: flex;
@@ -1108,4 +1127,7 @@ body {
 }
 .small-news-container:hover .small-news-title {
   text-decoration: underline;
+}
+.hidden {
+  display: none;
 }

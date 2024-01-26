@@ -4133,3 +4133,8 @@ export const arrayOfSources = [
   "the-sun.co.uk",
   "politico.com",
 ];
+export const API_KEYS = [
+  "0c03528ace51442f96101b00eff81423",
+  "96c6940892c54f1aa95824cf4c5cbfb4",
+  "c0d3302a55d84e5daaa58f8b9c7ac416",
+];

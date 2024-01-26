@@ -95,6 +95,8 @@ const getWeather = async function (city) {
   }
 };
 const getHomeHTML = function () {
+  document.querySelector("#main").style.width = "110rem";
+  document.querySelector("#main").style.gap = "0rem";
   const firstContainerCategories = [
     "America",
     "Space",
@@ -116,7 +118,6 @@ const getHomeHTML = function () {
   const sixthContainerCategoriesLeft = ["Story", "Rizz", "Joke"];
   const sixthContainerCategoriesRight = ["Hookup", "Tinder", "Africa"];
 
-  document.querySelector("#main").style.width = "120rem";
   document.querySelector("#main").innerHTML = `  <div class="page-top">
         <div class="page-top-left">
           <h2 class="page-title">Your briefing</h2>
@@ -162,7 +163,7 @@ const getHomeHTML = function () {
         </div>
       </div>
       <div class="first-second-container-wrapper">
-        <div class="first-container">
+        <div class="first-container" data-first-container="1">
         <div>
             <h1>Top stories <i class="fa-solid fa-angle-right"></i></h1>
            </div>  
@@ -250,8 +251,6 @@ const getHomeHTML = function () {
     firstContainerCategories[randomNumber(0, 4)],
     15,
     "first-container",
-    "",
-    "",
     "",
     "1"
   );
@@ -362,37 +361,37 @@ document.querySelector(".log-out").addEventListener("click", function () {
   Logged = JSON.parse(localStorage.getItem("logged")) || false;
   checkIfLoggedIn();
 });
-// document
-//   .querySelector(".weather-left-button")
-//   .addEventListener("click", function () {
-//     document
-//       .querySelector(".weather-search")
-//       .classList.toggle("weather-search-active");
-//     if (
-//       document
-//         .querySelector(".weather-search")
-//         .classList.contains("weather-search-active")
-//     )
-//       document.querySelector(".fa-chevron-left").style.transform =
-//         "rotate(180deg)";
-//     else
-//       document.querySelector(".fa-chevron-left").style.transform =
-//         "rotate(0deg)";
-//   });
+document
+  .querySelector(".weather-left-button")
+  .addEventListener("click", function () {
+    document
+      .querySelector(".weather-search")
+      .classList.toggle("weather-search-active");
+    if (
+      document
+        .querySelector(".weather-search")
+        .classList.contains("weather-search-active")
+    )
+      document.querySelector(".fa-chevron-left").style.transform =
+        "rotate(180deg)";
+    else
+      document.querySelector(".fa-chevron-left").style.transform =
+        "rotate(0deg)";
+  });
 
-// document
-//   .querySelector(".weather-search-input-container")
-//   .addEventListener("submit", function (e) {
-//     e.preventDefault();
-//     const input = document.querySelector(".weather-search-input");
-//     if (!input.value) return;
-//     getWeather(input.value);
-//     document
-//       .querySelector(".weather-search")
-//       .classList.remove("weather-search-active");
-//     document.querySelector(".fa-chevron-left").style.transform = "rotate(0deg)";
-//     input.value = "";
-//   });
+document
+  .querySelector(".weather-search-input-container")
+  .addEventListener("submit", function (e) {
+    e.preventDefault();
+    const input = document.querySelector(".weather-search-input");
+    if (!input.value) return;
+    getWeather(input.value);
+    document
+      .querySelector(".weather-search")
+      .classList.remove("weather-search-active");
+    document.querySelector(".fa-chevron-left").style.transform = "rotate(0deg)";
+    input.value = "";
+  });
 document.querySelectorAll("li").forEach((el) => {
   el.classList.add("list-unclicked");
   el.classList.add("list-button-list");
@@ -465,7 +464,7 @@ document
 const randomNumber = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
-const getHTML = function (data, limit = 1000, number) {
+const getHTML = function (data, limit = 1000, dataNum) {
   document.querySelector(
     ".first-container"
   ).innerHTML = ` <i class="fa-solid fa-rotate-right"></i>`;
@@ -490,7 +489,7 @@ const getHTML = function (data, limit = 1000, number) {
     // if (i === 20 || i === 21 || i === 22 || i === 23) break;
     if (data.articles[i].urlToImage) {
       document.querySelector(
-        `[data-first-container="${number}"`
+        `[data-first-container="${dataNum}"`
       ).innerHTML += `  <div class="second-news big-news">
       <a class="main-news-link" href="${
         data.articles[i].url
@@ -511,13 +510,13 @@ const getHTML = function (data, limit = 1000, number) {
         data.articles[i]?.author ?? ""
       }</span>
           </div> </a>
-          <div class="on-the-side-news" data-side="${i}">
+          <div class="on-the-side-news" data-side="${dataNum + i}">
             </div>
         </div>`;
       for (let j = i + 1; j < i + 4; j++) {
         if (data.articles[j].content === "[Removed]") continue;
 
-        document.querySelector(`[data-side="${i}"]`).innerHTML += `
+        document.querySelector(`[data-side="${dataNum + i}"]`).innerHTML += `
             <a class="on-the-side-news-link" href="${
               data.articles[j].url
             }"><div class="on-the-side-new">
@@ -535,7 +534,9 @@ const getHTML = function (data, limit = 1000, number) {
       }
       i += 4;
     } else {
-      document.querySelector(".first-container").innerHTML += `
+      document.querySelector(
+        `[data-first-container="${dataNum}"`
+      ).innerHTML += `
        <div class="first-news small-news-container">
        <a href="${data.articles[i].url}">
           <div class="small-news">
@@ -561,6 +562,7 @@ const getHTML = function (data, limit = 1000, number) {
 };
 const getNewsFromInput = async function (input) {
   document.querySelector("#main").style.width = "110rem";
+  document.querySelector("#main").style.gap = "0rem";
   document
     .querySelectorAll(".list-button-list")
     .forEach((el) => el.classList.replace("list-clicked", "list-unclicked"));
@@ -609,7 +611,7 @@ const getNewsFromInput = async function (input) {
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${city}&apiKey=f661035e088d485abbe69494cd363c15`
+        `https://newsapi.org/v2/everything?q=${city}&apiKey=c0d3302a55d84e5daaa58f8b9c7ac416`
       );
       console.log("input", response);
 
@@ -693,9 +695,11 @@ const getNewsFromInput = async function (input) {
       </div>`);
 
       document.querySelector(`[data-first-container="2"]`).innerHTML =
-        data.articles.map((el) => {
-          ` <div class="first-news small-news-container">
-       <a href="${el.url}">
+        data.articles
+          .map(
+            (el) => `<a class="small-news-link" href="${
+              el.url
+            }">  <div class="first-news small-news-container">
           <div class="small-news">
             <div>
               <div class="logo">
@@ -706,14 +710,16 @@ const getNewsFromInput = async function (input) {
                ${el.title}
               </h3>
             </div>
-            <span class="date-author">${el.publishedAt.slice(0, 8)} · ${
-            el.author ?? ""
-          }</span>
+            <span class="date-author">${
+              el.publishedAt.slice(5, 10) + "-" + el.publishedAt.slice(2, 4)
+            } · ${el.author ?? ""}</span>
           </div>
           <div class="small-news-image">
-          </div></a>
-        </div>`;
-        });
+          ${el.urlToImage ? `<img src="${el.urlToImage}"/>` : ""}
+          </div>
+        </div></a>`
+          )
+          .join("");
 
       return;
     }
@@ -747,7 +753,7 @@ const getNewsFromInput = async function (input) {
       </div> `;
       const response = await fetch(
         `
-https://newsapi.org/v2/everything?domains=${source}&apiKey=f661035e088d485abbe69494cd363c15`
+https://newsapi.org/v2/everything?domains=${source}&apiKey=c0d3302a55d84e5daaa58f8b9c7ac416`
       );
       console.log("input", response);
 
@@ -831,27 +837,31 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=f661035e088d485abbe69
       </div>`);
 
       document.querySelector(`[data-first-container="7"]`).innerHTML =
-        data.articles.map((el) => {
-          ` <div class="first-news small-news-container">
-       <a href="${el.url}">
+        data.articles
+          .map(
+            (el) =>
+              ` <a class="small-news-link" href="${
+                el.url
+              }">  <div class="first-news small-news-container">
           <div class="small-news">
             <div>
               <div class="logo">
-             
                 <p>${el?.source.name}</p>
               </div>
               <h3 class="small-news-title">
                ${el.title}
               </h3>
             </div>
-            <span class="date-author">${el.publishedAt.slice(0, 8)} · ${
-            el.author ?? ""
-          }</span>
+            <span class="date-author">${
+              el.publishedAt.slice(5, 10) + "-" + el.publishedAt.slice(2, 4)
+            } · ${el.author ?? ""}</span>
           </div>
           <div class="small-news-image">
-          </div></a>
-        </div>`;
-        });
+          ${el.urlToImage ? `<img src="${el.urlToImage}"/>` : ""}
+          </div>
+        </div></a>`
+          )
+          .join("");
       return;
     }
     if (
@@ -883,7 +893,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=f661035e088d485abbe69
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${topic}&apiKey=f661035e088d485abbe69494cd363c15`
+        `https://newsapi.org/v2/everything?q=${topic}&apiKey=c0d3302a55d84e5daaa58f8b9c7ac416`
       );
       console.log("input", response);
 
@@ -963,10 +973,16 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=f661035e088d485abbe69
       <p>Try searching up something else!</p></div>
       </div>`);
 
+      console.log(data.articles);
+
       document.querySelector(`[data-first-container="6"]`).innerHTML =
-        data.articles.map((el) => {
-          ` <div class="first-news small-news-container">
-       <a href="${el.url}">
+        data.articles
+          .map(
+            (el) =>
+              ` 
+        <a class="small-news-link" href="${
+          el.url
+        }">  <div class="first-news small-news-container">
           <div class="small-news">
             <div>
               <div class="logo">
@@ -977,14 +993,16 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=f661035e088d485abbe69
                ${el.title}
               </h3>
             </div>
-            <span class="date-author">${el.publishedAt.slice(0, 8)} · ${
-            el.author ?? ""
-          }</span>
+            <span class="date-author">${
+              el.publishedAt.slice(5, 10) + "-" + el.publishedAt.slice(2, 4)
+            } · ${el.author ?? ""}</span>
           </div>
           <div class="small-news-image">
-          </div></a>
-        </div>`;
-        });
+          ${el.urlToImage ? `<img src="${el.urlToImage}"/>` : ""}
+          </div>
+        </div></a>`
+          )
+          .join("");
       return;
     }
 
@@ -1005,7 +1023,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=f661035e088d485abbe69
         </div>
       </div> `;
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=f661035e088d485abbe69494cd363c15`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=c0d3302a55d84e5daaa58f8b9c7ac416`
     );
     console.log("input", response);
 
@@ -1153,6 +1171,8 @@ const getNewsFromList = async function (clicked) {
     });
 
     document.querySelector("#main").style.width = "85rem";
+    document.querySelector("#main").style.gap = "0rem";
+
     document.querySelector("#main").innerHTML = `
         <div class="page-top-submain-news">
        <div class="page-top-submain-news-top">
@@ -1289,7 +1309,7 @@ const getNewsFromList = async function (clicked) {
     const response = await fetch(
       `https://newsapi.org/v2/everything?q=${
         differentClicked ? differentClicked : clicked
-      }&apiKey=f661035e088d485abbe69494cd363c15`
+      }&apiKey=c0d3302a55d84e5daaa58f8b9c7ac416`
     );
     console.log("list", response);
 
@@ -1344,7 +1364,7 @@ const changeContainerHTML = async function (
     }
 
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=f661035e088d485abbe69494cd363c15`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=c0d3302a55d84e5daaa58f8b9c7ac416`
     );
     const newsData = await response.json();
 
@@ -1366,7 +1386,7 @@ const changeContainerHTML = async function (
       <p>Try searching up something else!</p></div>
       </div>`);
 
-    if (type === "first-container") getHTML(newsData, limit, number);
+    if (type === "first-container") getHTML(newsData, limit, dataNum);
     if (type === "second-container") getSecondContainerHTML(newsData);
     if (type === "third-container") getThirdContainerHTML(newsData, side);
     if (type === "fifth-container") getFifthContainerHTML(newsData, side);
@@ -1450,7 +1470,7 @@ const getFourthContainerHTML = async function () {
     let k = 0;
     for (let i = 0; i < number; i) {
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=f661035e088d485abbe69494cd363c15`
+        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=c0d3302a55d84e5daaa58f8b9c7ac416`
       );
       const data = await response.json();
 
@@ -1619,7 +1639,7 @@ const getFollowingCart = function (el) {
 ${image}
     <p class="followed-category-title">${el}</p>
       <i class="fa-solid fa-ellipsis-vertical topic-vertical-dots">
-        <div class="manage-followed-container">
+        <div class="manage-followed-container container-not-showing">
           <div class="manage-followed-container-bottom">
             <p class="remove-following-category"><i class="fa-solid fa-trash"></i> Remove from library</p>
           </div>
@@ -1632,7 +1652,7 @@ ${image}
 
       <p class="followed-category-title">${el}</p>
       <i class="fa-solid fa-ellipsis-vertical topic-vertical-dots">
-        <div class="manage-followed-container">
+        <div class="manage-followed-container container-not-showing">
           <div class="manage-followed-container-top">
             <p class="move-toward-bottom-following-category"><i class="fa-solid fa-chevron-down"></i> Move toward bottom</p>
             <p class="move-bottom-following-category"><i class="fa-solid fa-arrow-down"></i> Move to bottom</p>
@@ -1649,7 +1669,7 @@ ${image}
 
       <p class="followed-category-title">${el}</p>
       <i class="fa-solid fa-ellipsis-vertical topic-vertical-dots">
-        <div class="manage-followed-container">
+        <div class="manage-followed-container container-not-showing">
           <div class="manage-followed-container-top">
             <p class="move-top-following-category"><i class="fa-solid fa-arrow-up"></i> Move to top</p>
             <p class="move-toward-top-following-category"><i class="fa-solid fa-chevron-up"></i> Move toward top</p>
@@ -1669,7 +1689,7 @@ ${image}
    ${image}
       <p class="followed-category-title">${el}</p>
       <i class="fa-solid fa-ellipsis-vertical topic-vertical-dots">
-        <div class="manage-followed-container">
+        <div class="manage-followed-container container-not-showing">
           <div class="manage-followed-container-top">
             <p class="move-top-following-category"><i class="fa-solid fa-arrow-up"></i> Move to top</p>
             <p class="move-toward-top-following-category"><i class="fa-solid fa-chevron-up"></i> Move toward top</p>
@@ -1696,7 +1716,7 @@ const getSearchesCart = function (el, type, element) {
 ${icon}
       <p class=" favorite-${type}-title">${el}</p>
       <i class="fa-solid fa-ellipsis-vertical ${type}-vertical-dots">
-        <div class="manage-followed-container">
+        <div class="manage-followed-container container-not-showing">
           <div class="manage-followed-container-bottom">
             <p class="remove-following-${type}"><i class="fa-solid fa-trash"></i> Remove from library</p>
           </div>
@@ -1708,7 +1728,7 @@ ${icon}
 ${icon}
       <p class=" favorite-${type}-title">${el}</p>
       <i class="fa-solid fa-ellipsis-vertical ${type}-vertical-dots">
-        <div class="manage-followed-container">
+        <div class="manage-followed-container container-not-showing">
           <div class="manage-followed-container-top">
             <p class="move-toward-bottom-following-${type}"><i class="fa-solid fa-chevron-down"></i> Move toward bottom</p>
             <p class="move-bottom-following-${type}"><i class="fa-solid fa-arrow-down"></i> Move to bottom</p>
@@ -1725,7 +1745,7 @@ ${icon}
 ${icon}
       <p class=" favorite-${type}-title">${el}</p>
       <i class="fa-solid fa-ellipsis-vertical ${type}-vertical-dots">
-        <div class="manage-followed-container">
+        <div class="manage-followed-container container-not-showing">
           <div class="manage-followed-container-top">
             <p class="move-top-following-${type}"><i class="fa-solid fa-arrow-up"></i> Move to top</p>
             <p class="move-toward-top-following-${type}"><i class="fa-solid fa-chevron-up"></i> Move toward top</p>
@@ -1742,7 +1762,7 @@ ${icon}
   ${icon}
       <p class=" favorite-${type}-title">${el}</p>
       <i class="fa-solid fa-ellipsis-vertical ${type}-vertical-dots">
-        <div class="manage-followed-container">
+        <div class="manage-followed-container container-not-showing">
           <div class="manage-followed-container-top">
             <p class="move-top-following-${type}"><i class="fa-solid fa-arrow-up"></i> Move to top</p>
             <p class="move-toward-top-following-${type}"><i class="fa-solid fa-chevron-up"></i> Move toward top</p>
@@ -1809,6 +1829,9 @@ const moveUpByOne = function (el, array) {
   array[index - 1] = temp;
 };
 const firstPageOfFollowing = function () {
+  document.querySelector("#main").style.width = "110rem";
+  document.querySelector("#main").style.gap = "0rem";
+
   document.querySelector("#main").innerHTML = ` <div class="following-buttons">
         <button class="following-main-buttons">Topics & sources</button>
         <button class="following-main-buttons">Saved searches</button>
@@ -1916,30 +1939,34 @@ const firstPageOfFollowing = function () {
     });
     document.querySelectorAll(".topic-vertical-dots").forEach((el) => {
       el.addEventListener("click", function (e) {
-        console.log(123);
         if (e.target.closest(".manage-followed-container")) return;
 
         if (
           el
             .closest(".followed-category")
-            .querySelector(".manage-followed-container").style.height > "0"
+            .querySelector(".manage-followed-container")
+            .classList.contains("container-showing")
         ) {
+          el.closest(".followed-category")
+            .querySelector(".manage-followed-container")
+            .classList.replace("container-showing", "container-not-showing");
+
           el.firstElementChild.style.height = "0rem";
           el.firstElementChild.style.bottom = "0rem";
           el.firstElementChild.style.padding = "0rem 0rem";
           el.firstElementChild.style.boxShadow = "none";
-          el.firstElementChild.style.zIndex = "1";
+
           document.removeEventListener("click", hideManageFollowing);
           return;
         }
         document
           .querySelectorAll(".manage-followed-container")
           .forEach((el) => {
+            el.classList.replace("container-showing", "container-not-showing");
             el.style.height = "0rem";
             el.style.bottom = "0rem";
             el.style.padding = "0rem 0rem";
             el.style.boxShadow = "none";
-            el.style.zIndex = "1";
           });
 
         el.firstElementChild.style.height = `${getHeightForManageContainers(
@@ -1952,7 +1979,10 @@ const firstPageOfFollowing = function () {
         el.firstElementChild.style.padding = "1rem 0rem";
         el.firstElementChild.style.boxShadow =
           "0px 0px 10px 5px rgba(0, 0, 0, 0.2)";
-        el.firstElementChild.style.zIndex = "2";
+        el.firstElementChild.classList.replace(
+          "container-not-showing",
+          "container-showing"
+        );
 
         document.addEventListener("click", hideManageFollowing);
       });
@@ -2108,25 +2138,29 @@ const firstPageOfFollowing = function () {
         if (
           el
             .closest(".followed-location")
-            .querySelector(".manage-followed-container").style.height ===
-          "18rem"
+            .querySelector(".manage-followed-container")
+            .classList.contains("container-showing")
         ) {
+          el.closest(".followed-location")
+            .querySelector(".manage-followed-container")
+            .classList.replace("container-showing", "container-not-showing");
+
           el.firstElementChild.style.height = "0rem";
           el.firstElementChild.style.bottom = "0rem";
           el.firstElementChild.style.padding = "0rem 0rem";
           el.firstElementChild.style.boxShadow = "none";
-          el.firstElementChild.style.zIndex = "1";
+
           document.removeEventListener("click", hideManageFollowing);
           return;
         }
         document
           .querySelectorAll(".manage-followed-container")
           .forEach((el) => {
+            el.classList.replace("container-showing", "container-not-showing");
             el.style.height = "0rem";
             el.style.bottom = "0rem";
             el.style.padding = "0rem 0rem";
             el.style.boxShadow = "none";
-            el.style.zIndex = "1";
           });
 
         el.firstElementChild.style.height = `${getHeightForManageContainers(
@@ -2139,7 +2173,10 @@ const firstPageOfFollowing = function () {
         el.firstElementChild.style.padding = "1rem 0rem";
         el.firstElementChild.style.boxShadow =
           "0px 0px 10px 5px rgba(0, 0, 0, 0.2)";
-        el.firstElementChild.style.zIndex = "2";
+        el.firstElementChild.classList.replace(
+          "container-not-showing",
+          "container-showing"
+        );
 
         document.addEventListener("click", hideManageFollowing);
       });
@@ -2294,25 +2331,29 @@ const firstPageOfFollowing = function () {
         if (
           el
             .closest(".followed-source")
-            .querySelector(".manage-followed-container").style.height ===
-          "18rem"
+            .querySelector(".manage-followed-container")
+            .classList.contains("container-showing")
         ) {
+          el.closest(".followed-source")
+            .querySelector(".manage-followed-container")
+            .classList.replace("container-showing", "container-not-showing");
+
           el.firstElementChild.style.height = "0rem";
           el.firstElementChild.style.bottom = "0rem";
           el.firstElementChild.style.padding = "0rem 0rem";
           el.firstElementChild.style.boxShadow = "none";
-          el.firstElementChild.style.zIndex = "1";
+
           document.removeEventListener("click", hideManageFollowing);
           return;
         }
         document
           .querySelectorAll(".manage-followed-container")
           .forEach((el) => {
+            el.classList.replace("container-showing", "container-not-showing");
             el.style.height = "0rem";
             el.style.bottom = "0rem";
             el.style.padding = "0rem 0rem";
             el.style.boxShadow = "none";
-            el.style.zIndex = "1";
           });
 
         el.firstElementChild.style.height = `${getHeightForManageContainers(
@@ -2325,7 +2366,10 @@ const firstPageOfFollowing = function () {
         el.firstElementChild.style.padding = "1rem 0rem";
         el.firstElementChild.style.boxShadow =
           "0px 0px 10px 5px rgba(0, 0, 0, 0.2)";
-        el.firstElementChild.style.zIndex = "2";
+        el.firstElementChild.classList.replace(
+          "container-not-showing",
+          "container-showing"
+        );
 
         document.addEventListener("click", hideManageFollowing);
       });
@@ -2502,25 +2546,29 @@ const secondPageOfFollowing = function () {
         if (
           el
             .closest(".followed-search")
-            .querySelector(".manage-followed-container").style.height ===
-          "18rem"
+            .querySelector(".manage-followed-container")
+            .classList.contains("container-showing")
         ) {
+          el.closest(".followed-search")
+            .querySelector(".manage-followed-container")
+            .classList.replace("container-showing", "container-not-showing");
+
           el.firstElementChild.style.height = "0rem";
           el.firstElementChild.style.bottom = "0rem";
           el.firstElementChild.style.padding = "0rem 0rem";
           el.firstElementChild.style.boxShadow = "none";
-          el.firstElementChild.style.zIndex = "1";
+
           document.removeEventListener("click", hideManageFollowing);
           return;
         }
         document
           .querySelectorAll(".manage-followed-container")
           .forEach((el) => {
+            el.classList.replace("container-showing", "container-not-showing");
             el.style.height = "0rem";
             el.style.bottom = "0rem";
             el.style.padding = "0rem 0rem";
             el.style.boxShadow = "none";
-            el.style.zIndex = "1";
           });
 
         el.firstElementChild.style.height = `${getHeightForManageContainers(
@@ -2533,33 +2581,33 @@ const secondPageOfFollowing = function () {
         el.firstElementChild.style.padding = "1rem 0rem";
         el.firstElementChild.style.boxShadow =
           "0px 0px 10px 5px rgba(0, 0, 0, 0.2)";
-        el.firstElementChild.style.zIndex = "2";
+        el.firstElementChild.classList.replace(
+          "container-not-showing",
+          "container-showing"
+        );
 
         document.addEventListener("click", hideManageFollowing);
       });
     });
-    document
-      .querySelectorAll(".move-bottom-following-category")
-      .forEach((el) => {
-        el.addEventListener("click", function () {
-          firstToLast(
-            el
-              .closest(".followed-search")
-              .querySelector(".favorite-search-title").textContent,
-            loggedInAs.followedSearches
-          );
-          secondPageOfFollowing();
+    document.querySelectorAll(".move-bottom-following-search").forEach((el) => {
+      el.addEventListener("click", function () {
+        firstToLast(
+          el.closest(".followed-search").querySelector(".favorite-search-title")
+            .textContent,
+          loggedInAs.followedSearches
+        );
+        secondPageOfFollowing();
 
-          localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
-          loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
-          userAccounts.forEach((el) => {
-            if (loggedInAs.username === el.username) {
-              el.followedSearches = loggedInAs.followedSearches;
-            }
-            localStorage.setItem("accounts", JSON.stringify(userAccounts));
-          });
+        localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+        loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
+        userAccounts.forEach((el) => {
+          if (loggedInAs.username === el.username) {
+            el.followedSearches = loggedInAs.followedSearches;
+          }
+          localStorage.setItem("accounts", JSON.stringify(userAccounts));
         });
       });
+    });
     document.querySelectorAll(".move-top-following-search").forEach((el) => {
       el.addEventListener("click", function () {
         lastToFirst(
@@ -2704,24 +2752,11 @@ const getForYouContainerHTML = async function () {
         <h2 class="page-title">For you</h2>
         <p class="page-description">Recommended based on your interests</p>
       </div>
-      <div class="first-container" data-first-container="10"></div>
-      `;
+     <div class="hidden">
+      <div class="first-container" data-first-container="1000"> </div></div>`;
 
-  if (
-    loggedInAs.following.length === 0 &&
-    loggedInAs.followedLocation.length === 0 &&
-    loggedInAs.followedSources.length === 0
-  ) {
+  {
     for (let i = 0; i < 5; i++) {
-      console.log(data);
-      changeContainerHTML(
-        arrayOfTopics[i],
-        20,
-        "first-container",
-        ""`${i + 10}`
-      );
-
-      if (data.length === 0 || !response.ok) getForYouContainerHTML();
       document.querySelector(
         "#main"
       ).innerHTML += ` <div class="sixth-container">
@@ -2733,15 +2768,26 @@ const getForYouContainerHTML = async function () {
         </div>`;
 
       changeContainerHTML(
-        arrayOfCities[i],
-
+        `${
+          loggedInAs.followedLocation
+            ? loggedInAs.followedLocation[i]
+              ? loggedInAs.followedLocation[i]
+              : arrayOfCities[i]
+            : arrayOfCities[i + 5]
+        }`,
         1000,
         "sixth-container",
         "left",
         `${i + 5}`
       );
       changeContainerHTML(
-        arrayOfCities[i + 5],
+        `${
+          loggedInAs.followedLocation
+            ? loggedInAs.followedLocation[i + 5]
+              ? loggedInAs.followedLocation[i + 5]
+              : arrayOfCities[i + 5]
+            : arrayOfCities[i + 10]
+        }`,
         1000,
         "sixth-container",
         "right",
@@ -2753,7 +2799,13 @@ const getForYouContainerHTML = async function () {
         i + 50
       }"></div>`;
       changeContainerHTML(
-        arrayOfTopics[i + 5],
+        `${
+          loggedInAs.following
+            ? loggedInAs.following[i]
+              ? loggedInAs.following[i]
+              : arrayOfTopics[i]
+            : arrayOfTopics[i + 5]
+        }`,
         20,
         "first-container",
         "",
@@ -2770,14 +2822,26 @@ const getForYouContainerHTML = async function () {
         </div>`;
 
       changeContainerHTML(
-        arrayOfSources[i],
+        `${
+          loggedInAs.followedSources
+            ? loggedInAs.followedSources[i]
+              ? loggedInAs.followedSources[i]
+              : arrayOfSources[i]
+            : arrayOfSources[i + 5]
+        }`,
         1000,
         "sixth-container",
         "left",
         `${i + 100}`
       );
       changeContainerHTML(
-        arrayOfSources[i + 5],
+        `${
+          loggedInAs.followedSources
+            ? loggedInAs.followedSources[i + 5]
+              ? loggedInAs.followedSources[i + 5]
+              : arrayOfSources[i + 5]
+            : arrayOfSources[i + 10]
+        }`,
         1000,
         "sixth-container",
         "right",
@@ -2785,16 +2849,19 @@ const getForYouContainerHTML = async function () {
       );
     }
   }
-  document.querySelector(".first-container").style.width = "calc(100% - 3rem)";
-  document.querySelector(".sixth-container").style.width = "100%";
+  document
+    .querySelectorAll(".first-container")
+    .forEach((el) => (el.style.width = "calc(100% - 3rem)"));
+  document
+    .querySelectorAll(".sixth-container")
+    .forEach((el) => (elstyle.width = "100%"));
   document.querySelectorAll(".fa-rotate-right").forEach((el) => el.remove());
 };
 
 checkIfLoggedIn();
 if (Logged) {
-  getForYouContainerHTML();
-  // getHomeHTML();
-  // getWeather("Novi Pazar");
+  getHomeHTML();
+  getWeather("Novi Pazar");
 }
 
 //TODO: FINISH FORYOU PAGE, REDO SEARCH PAGE AND ADD THINGS THAT I MISSED
