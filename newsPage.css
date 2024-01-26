@@ -817,6 +817,7 @@ body {
 }
 .sixth-container .for-you-container {
   min-height: 27rem;
+  min-width: 85rem;
 }
 .button-fourth-container {
   cursor: pointer;

@@ -611,7 +611,7 @@ const getNewsFromInput = async function (input) {
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${city}&apiKey=c0d3302a55d84e5daaa58f8b9c7ac416`
+        `https://newsapi.org/v2/everything?q=${city}&apiKey=c41068f9f9fc4d1f97c5c017fa8819ef`
       );
       console.log("input", response);
 
@@ -753,7 +753,7 @@ const getNewsFromInput = async function (input) {
       </div> `;
       const response = await fetch(
         `
-https://newsapi.org/v2/everything?domains=${source}&apiKey=c0d3302a55d84e5daaa58f8b9c7ac416`
+https://newsapi.org/v2/everything?domains=${source}&apiKey=c41068f9f9fc4d1f97c5c017fa8819ef`
       );
       console.log("input", response);
 
@@ -893,7 +893,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=c0d3302a55d84e5daaa58
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${topic}&apiKey=c0d3302a55d84e5daaa58f8b9c7ac416`
+        `https://newsapi.org/v2/everything?q=${topic}&apiKey=c41068f9f9fc4d1f97c5c017fa8819ef`
       );
       console.log("input", response);
 
@@ -1023,7 +1023,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=c0d3302a55d84e5daaa58
         </div>
       </div> `;
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=c0d3302a55d84e5daaa58f8b9c7ac416`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=c41068f9f9fc4d1f97c5c017fa8819ef`
     );
     console.log("input", response);
 
@@ -1286,7 +1286,7 @@ const getNewsFromList = async function (clicked) {
           if (e.target.textContent === "Latest")
             clicked = document.querySelector(".page-title").textContent;
           else clicked = e.target.textContent;
-          changeContainerHTML(`${clicked}`, 1000, "first-container");
+          changeContainerHTML(`${clicked}`, 1000, "first-container", "", "4");
         })
       );
     }
@@ -1309,7 +1309,7 @@ const getNewsFromList = async function (clicked) {
     const response = await fetch(
       `https://newsapi.org/v2/everything?q=${
         differentClicked ? differentClicked : clicked
-      }&apiKey=c0d3302a55d84e5daaa58f8b9c7ac416`
+      }&apiKey=c41068f9f9fc4d1f97c5c017fa8819ef`
     );
     console.log("list", response);
 
@@ -1364,7 +1364,7 @@ const changeContainerHTML = async function (
     }
 
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=c0d3302a55d84e5daaa58f8b9c7ac416`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=c41068f9f9fc4d1f97c5c017fa8819ef`
     );
     const newsData = await response.json();
 
@@ -1470,7 +1470,7 @@ const getFourthContainerHTML = async function () {
     let k = 0;
     for (let i = 0; i < number; i) {
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=c0d3302a55d84e5daaa58f8b9c7ac416`
+        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=c41068f9f9fc4d1f97c5c017fa8819ef`
       );
       const data = await response.json();
 
@@ -2864,4 +2864,4 @@ if (Logged) {
   getWeather("Novi Pazar");
 }
 
-//TODO: FINISH FORYOU PAGE, REDO SEARCH PAGE AND ADD THINGS THAT I MISSED
+//TODO: ADD BOOKMARKING NEWS
