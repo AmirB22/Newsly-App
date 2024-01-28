@@ -360,65 +360,65 @@ document.querySelector(".log-out").addEventListener("click", function () {
   Logged = JSON.parse(localStorage.getItem("logged")) || false;
   checkIfLoggedIn();
 });
-// document
-//   .querySelector(".weather-left-button")
-//   .addEventListener("click", function () {
-//     document
-//       .querySelector(".weather-search")
-//       .classList.toggle("weather-search-active");
-//     if (
-//       document
-//         .querySelector(".weather-search")
-//         .classList.contains("weather-search-active")
-//     )
-//       document.querySelector(".fa-chevron-left").style.transform =
-//         "rotate(180deg)";
-//     else
-//       document.querySelector(".fa-chevron-left").style.transform =
-//         "rotate(0deg)";
-//   });
+document
+  .querySelector(".weather-left-button")
+  .addEventListener("click", function () {
+    document
+      .querySelector(".weather-search")
+      .classList.toggle("weather-search-active");
+    if (
+      document
+        .querySelector(".weather-search")
+        .classList.contains("weather-search-active")
+    )
+      document.querySelector(".fa-chevron-left").style.transform =
+        "rotate(180deg)";
+    else
+      document.querySelector(".fa-chevron-left").style.transform =
+        "rotate(0deg)";
+  });
 
-// document
-//   .querySelector(".weather-search-input-container")
-//   .addEventListener("submit", function (e) {
-//     e.preventDefault();
-//     const input = document.querySelector(".weather-search-input");
-//     if (!input.value) return;
-//     getWeather(input.value);
-//     document
-//       .querySelector(".weather-search")
-//       .classList.remove("weather-search-active");
-//     document.querySelector(".fa-chevron-left").style.transform = "rotate(0deg)";
-//     input.value = "";
-//   });
-// document.querySelectorAll("li").forEach((el) => {
-//   el.classList.add("list-unclicked");
-//   el.classList.add("list-button-list");
-//   el.addEventListener("click", function (e) {
-//     document.querySelectorAll("li").forEach((el) => {
-//       el.classList.add("list-unclicked");
-//       el.classList.remove("list-clicked");
-//     });
-//     e.target.classList.remove("list-unclicked");
-//     e.target.classList.add("list-clicked");
+document
+  .querySelector(".weather-search-input-container")
+  .addEventListener("submit", function (e) {
+    e.preventDefault();
+    const input = document.querySelector(".weather-search-input");
+    if (!input.value) return;
+    getWeather(input.value);
+    document
+      .querySelector(".weather-search")
+      .classList.remove("weather-search-active");
+    document.querySelector(".fa-chevron-left").style.transform = "rotate(0deg)";
+    input.value = "";
+  });
+document.querySelectorAll("li").forEach((el) => {
+  el.classList.add("list-unclicked");
+  el.classList.add("list-button-list");
+  el.addEventListener("click", function (e) {
+    document.querySelectorAll("li").forEach((el) => {
+      el.classList.add("list-unclicked");
+      el.classList.remove("list-clicked");
+    });
+    e.target.classList.remove("list-unclicked");
+    e.target.classList.add("list-clicked");
 
-//     // document.querySelector(".page-title").textContent = e.target.textContent;
-//     if (e.target.textContent === "Home") {
-//       getHomeHTML();
-//       return;
-//     }
-//     if (e.target.textContent === "Following") {
-//       firstPageOfFollowing();
-//       return;
-//     }
+    // document.querySelector(".page-title").textContent = e.target.textContent;
+    if (e.target.textContent === "Home") {
+      getHomeHTML();
+      return;
+    }
+    if (e.target.textContent === "Following") {
+      firstPageOfFollowing();
+      return;
+    }
 
-//     if (e.target.textContent === "For you") {
-//       getForYouContainerHTML();
-//       return;
-//     }
-//     getNewsFromList(`${e.target.textContent}`);
-//   });
-// });
+    if (e.target.textContent === "For you") {
+      getForYouContainerHTML();
+      return;
+    }
+    getNewsFromList(`${e.target.textContent}`);
+  });
+});
 const search = document.querySelector(".search-input");
 document
   .querySelector(".search-container")
@@ -558,7 +558,10 @@ const getHTML = function (data, limit = 1000, dataNum) {
       i++;
     }
   }
-  if (document.querySelector(`.page-title`).textContent === "Your briefing") {
+  if (
+    document.querySelector(`.page-title`) &&
+    document.querySelector(".page-title").textContent === "Your briefing"
+  ) {
     document.querySelector(`[data-first-container="1"]`).insertAdjacentHTML(
       "afterbegin",
       `        <div class="home-page-stories">
@@ -568,80 +571,251 @@ const getHTML = function (data, limit = 1000, dataNum) {
     document
       .querySelector(".home-page-stories")
       .addEventListener("click", function () {
-        getHeadlinesFromCountries("us");
+        getHeadlinesFromCountries("us", "United States");
       });
   }
 };
-const getHeadlinesFromCountries = async function (country) {
+const getHeadlinesFromCountries = async function (country, countryName) {
   document.querySelector("#main").style.width = "85rem";
   document.querySelector("#main").style.gap = "0rem";
 
   const response = await fetch(
-    `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=0c03528ace51442f96101b00eff81423`
+    `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
   );
   const countryData = await response.json();
   console.log(countryData);
   document.querySelector("#main").innerHTML = `
-   <div class="dropdown-main">
-              <div class="dropdown">
-                <p value="ae">United Arab Emirates</p>
-                <p value="ar">Argentina</p>
-                <p value="at">Austria</p>
-                <p value="au">Australia</p>
-                <p value="be">Belgium</p>
-                <p value="bg">Bulgaria</p>
-                <p value="ca">Canada</p>
-                <p value="ch">Ch</p>
-                <p value="cn">China</p>
-                <p value="co">Colombia</p>
-                <p value="cu">Cuba</p>
-                <p value="cz">Czech Republic</p>
-                <p value="de">Germany</p>
-                <p value="eg">England</p>
-                <p value="fr">France</p>
-                <p value="gb">United Kingdom</p>
-                <p value="gr">Greece</p>
-                <p value="hk">Hong Kong</p>
-                <p value="hu">Hungary</p>
-                <p value="id">Indonesia</p>
-                <p value="ie">Ireland</p>
-                <p value="il">Israel</p>
-                <p value="in">India</p>
-                <p value="it">Italy</p>
-                <p value="ja">Japan</p>
-                <p value="kr">Korea</p>
-                <p value="lt">Lithuania</p>
-                <p value="lv">Litvania</p>
-                <p value="ma">Morocco</p>
-                <p value="mx">Mexico</p>
-                <p value="my">Malaysia</p>
-                <p value="ng">Nigeria</p>
-                <p value="nl">Netherlands</p>
-                <p value="no">Norway</p>
-                <p value="nz">New Zealand</p>
-                <p value="ph">Philippines</p>
-                <p value="pl">Poland</p>
-                <p value="pt">Portugal</p>
-                <p value="ro">Romania</p>
-                <p value="rs">Serbia</p>
-                <p value="ru">Russia</p>
-                <p value="sa">Saudi Arabia</p>
-                <p value="se">Sweden</p>
-                <p value="sg">Singapore</p>
-                <p value="si">Slovenia</p>
-                <p value="sk">Slovakia</p>
-                <p value="th">Thailand</p>
-                <p value="tr">Turkey</p>
-                <p value="tw">Taiwan</p>
-                <p value="ua">Ukraine</p>
-                <p value="us">United States</p>
-                <p value="ve">Venezuela</p>
-                <p value="za">Zambia</p>
+      <div class="page-top-submain-news">
+        <div class="page-top-submain-news-top">
+          <h2 class="page-title">
+            <img
+              class="list-icons Headlines"
+              src="https://lh3.ggpht.com/16hfpPK4nois_ekV4s4PRXYinW3MN_5EnUNq0sdaMvkfVECIVrMa44HBUVxSWyRB4CjtDlDYvg=s56-rw-p"
+            />Headlines
+
+    <div class="dropdown-main">
+              <div class="option-wrapper-holder">
+                  <h3>${countryName} <i class="fa-solid fa-angle-right"></i></h3>
+                </div>
+              <div class="dropdown dropdown-inactive">
+                <div class="option-wrapper">
+                  <h3>United Arab Emirates</h3>
+                  <p>ae</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Argentina</h3>
+                  <p>ar</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Austria</h3>
+                  <p>at</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Australia</h3>
+                  <p>au</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Belgium</h3>
+                  <p>be</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Bulgaria</h3>
+                  <p>bg</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Canada</h3>
+                  <p>ca</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>China</h3>
+                  <p>cn</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Colombia</h3>
+                  <p>co</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Czech Republic</h3>
+                  <p>cz</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Germany</h3>
+                  <p>de</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>England</h3>
+                  <p>en</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>France</h3>
+                  <p>fr</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>United Kingdom</h3>
+                  <p>gb</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Greece</h3>
+                  <p>gr</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Hong Kong</h3>
+                  <p>hk</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Hungary</h3>
+                  <p>hu</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Indonesia</h3>
+                  <p>id</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Ireland</h3>
+                  <p>ie</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Israel</h3>
+                  <p>ie</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>India</h3>
+                  <p>id</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Italy</h3>
+                  <p>it</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Japan</h3>
+                  <p>ja</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Korea</h3>
+                  <p>kr</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Lithuania</h3>
+                  <p>lt</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Latvia</h3>
+                  <p>lv</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Morocco</h3>
+                  <p>ma</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Mexico</h3>
+                  <p>mx</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Latvia</h3>
+                  <p>lv</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Malaysia</h3>
+                  <p>my</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Nigeria</h3>
+                  <p>ng</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Netherlands</h3>
+                  <p>nl</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Norway</h3>
+                  <p>no</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>New Zealand</h3>
+                  <p>nz</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Philippines</h3>
+                  <p>ph</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Poland</h3>
+                  <p>pl</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Portugal</h3>
+                  <p>pt</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Romania</h3>
+                  <p>ro</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Serbia</h3>
+                  <p>rs</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Russia</h3>
+                  <p>ru</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Saudi Arabia</h3>
+                  <p>sa</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Sweden</h3>
+                  <p>se</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Singapore</h3>
+                  <p>sg</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Slovenia</h3>
+                  <p>si</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Slovakia</h3>
+                  <p>si</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Thailand</h3>
+                  <p>th</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Turkey</h3>
+                  <p>tr</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Taiwan</h3>
+                  <p>tw</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Ukraine</h3>
+                  <p>ua</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>United States</h3>
+                  <p>us</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Venezuela</h3>
+                  <p>ve</p>
+                </div>
+                <div class="option-wrapper">
+                  <h3>Zambia</h3>
+                  <p>za</p>
+                </div>
               </div>
             </div>
+          </h2>
+          <button class="list-follow following">
+            <i class="fa-solid fa-star" aria-hidden="true"></i> Following
+          </button>
+        </div>
+      </div>
       <div class="first-container" data-first-container="9"></div>`;
   document.querySelector(".first-container").style.width = "82rem";
-  document.querySelector("#dropdown").placeholder = country;
 
   getHTML(countryData, 1000, "9");
 
@@ -705,14 +879,50 @@ const getHeadlinesFromCountries = async function (country) {
       }
     });
 
-  const dropdown = document.getElementById("dropdown");
+  let showOptionsTimeoutID, hideOptionsTimeoutID;
 
-  dropdown.addEventListener("change", function () {
-    let selectedIndex = dropdown.selectedIndex;
-    let selectedValue = dropdown.options[selectedIndex].value;
-    selectedValue.selected = true;
-    getHeadlinesFromCountries(selectedValue);
-  });
+  document
+    .querySelector(".dropdown-main")
+    .addEventListener("click", function () {
+      console.log(this.lastElementChild);
+      if (this.lastElementChild.classList.contains("dropdown-active")) {
+        this.lastElementChild.classList.replace(
+          "dropdown-active",
+          "dropdown-inactive"
+        );
+        this.lastElementChild.style.height = "5.4rem";
+        this.lastElementChild.style.overflowY = "hidden";
+        this.lastElementChild.style.boxShadow = "none";
+        hideOptionsTimeoutID = setTimeout(() => {
+          clearTimeout(showOptionsTimeoutID);
+          this.lastElementChild.style.width = "0rem";
+          this.lastElementChild.style.right = "0rem";
+        }, 500);
+
+        return;
+      }
+      this.lastElementChild.classList.replace(
+        "dropdown-inactive",
+        "dropdown-active"
+      );
+      this.lastElementChild.style.width = "20rem";
+      this.lastElementChild.style.right = "-20rem";
+      this.lastElementChild.style.boxShadow =
+        "10px 5px 10px rgba(0, 0, 0, 0.2)";
+      showOptionsTimeoutID = setTimeout(() => {
+        clearTimeout(hideOptionsTimeoutID);
+        this.lastElementChild.style.height = "54.1rem";
+        this.lastElementChild.style.overflowY = "scroll";
+      }, 1000);
+    });
+  document.querySelectorAll(".option-wrapper").forEach((el) =>
+    el.addEventListener("click", function () {
+      getHeadlinesFromCountries(
+        `${this.lastElementChild.textContent}`,
+        `${this.firstElementChild.textContent}`
+      );
+    })
+  );
 };
 const getNewsFromInput = async function (input) {
   document.querySelector("#main").style.width = "110rem";
@@ -765,7 +975,7 @@ const getNewsFromInput = async function (input) {
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${city}&apiKey=0c03528ace51442f96101b00eff81423`
+        `https://newsapi.org/v2/everything?q=${city}&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
       );
       console.log("input", response);
 
@@ -907,7 +1117,7 @@ const getNewsFromInput = async function (input) {
       </div> `;
       const response = await fetch(
         `
-https://newsapi.org/v2/everything?domains=${source}&apiKey=0c03528ace51442f96101b00eff81423`
+https://newsapi.org/v2/everything?domains=${source}&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
       );
       console.log("input", response);
 
@@ -1047,7 +1257,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=0c03528ace51442f96101
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${topic}&apiKey=0c03528ace51442f96101b00eff81423`
+        `https://newsapi.org/v2/everything?q=${topic}&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
       );
       console.log("input", response);
 
@@ -1177,7 +1387,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=0c03528ace51442f96101
         </div>
       </div> `;
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=0c03528ace51442f96101b00eff81423`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
     );
     console.log("input", response);
 
@@ -1489,7 +1699,7 @@ const getNewsFromList = async function (clicked) {
     const response = await fetch(
       `https://newsapi.org/v2/everything?q=${
         differentClicked ? differentClicked : clicked
-      }&apiKey=0c03528ace51442f96101b00eff81423`
+      }&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
     );
     console.log("list", response);
 
@@ -1544,7 +1754,7 @@ const changeContainerHTML = async function (
     }
 
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=0c03528ace51442f96101b00eff81423`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
     );
     const newsData = await response.json();
 
@@ -1650,7 +1860,7 @@ const getFourthContainerHTML = async function () {
     let k = 0;
     for (let i = 0; i < number; i) {
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=0c03528ace51442f96101b00eff81423`
+        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
       );
       const data = await response.json();
 
@@ -3043,10 +3253,9 @@ const getForYouContainerHTML = async function () {
 };
 
 checkIfLoggedIn();
-// if (Logged) {
-//   getHeadlinesFromCountries("us");
-//   // getHomeHTML();
-//   getWeather("Novi Pazar");
-// }
+if (Logged) {
+  getHomeHTML();
+  getWeather("Novi Pazar");
+}
 
-//TODO: ADD BOOKMARKING NEWS
+//TODO: ADD BOOKMARKING NEWS.
