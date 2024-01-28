@@ -28,6 +28,8 @@ const images = {
     "https://lh3.ggpht.com/A0UiqrMFOJnh5R_g7xhIrslGxotNEcyK5V15p5yJkUlrXMBGqGw3TkU0x06Yb0Q-72QXK9N9=s56-rw-p",
   "U.S.":
     "https://lh3.googleusercontent.com/proxy/4bKny4MdGPqmBQJQCme5SXcs3Idk0T26DpoDaDToXQmJpHssPJYZK-nnUigTPdUyxHjkh_zd22dsimWdR4wpWHj2fUTTzMMtHow650KJwvKo7Bq1lfLb8EICSOcPOFnnEGY9wbJXyhQXtK8oPIREwNYe3Ya3DbHkJhpoZMoxnKo8UHw=s56-rw-p",
+  Headlines:
+    "https://lh3.ggpht.com/16hfpPK4nois_ekV4s4PRXYinW3MN_5EnUNq0sdaMvkfVECIVrMa44HBUVxSWyRB4CjtDlDYvg=s56-rw-p",
 };
 const checkIfLoggedIn = function () {
   if (!Logged && userAccounts.length !== 0) {
@@ -164,9 +166,6 @@ const getHomeHTML = function () {
       </div>
       <div class="first-second-container-wrapper">
         <div class="first-container" data-first-container="1">
-        <div>
-            <h1>Top stories <i class="fa-solid fa-angle-right"></i></h1>
-           </div>  
         </div>
         <div class="second-container">
             <div class="right-side-title">
@@ -361,65 +360,65 @@ document.querySelector(".log-out").addEventListener("click", function () {
   Logged = JSON.parse(localStorage.getItem("logged")) || false;
   checkIfLoggedIn();
 });
-document
-  .querySelector(".weather-left-button")
-  .addEventListener("click", function () {
-    document
-      .querySelector(".weather-search")
-      .classList.toggle("weather-search-active");
-    if (
-      document
-        .querySelector(".weather-search")
-        .classList.contains("weather-search-active")
-    )
-      document.querySelector(".fa-chevron-left").style.transform =
-        "rotate(180deg)";
-    else
-      document.querySelector(".fa-chevron-left").style.transform =
-        "rotate(0deg)";
-  });
+// document
+//   .querySelector(".weather-left-button")
+//   .addEventListener("click", function () {
+//     document
+//       .querySelector(".weather-search")
+//       .classList.toggle("weather-search-active");
+//     if (
+//       document
+//         .querySelector(".weather-search")
+//         .classList.contains("weather-search-active")
+//     )
+//       document.querySelector(".fa-chevron-left").style.transform =
+//         "rotate(180deg)";
+//     else
+//       document.querySelector(".fa-chevron-left").style.transform =
+//         "rotate(0deg)";
+//   });
 
-document
-  .querySelector(".weather-search-input-container")
-  .addEventListener("submit", function (e) {
-    e.preventDefault();
-    const input = document.querySelector(".weather-search-input");
-    if (!input.value) return;
-    getWeather(input.value);
-    document
-      .querySelector(".weather-search")
-      .classList.remove("weather-search-active");
-    document.querySelector(".fa-chevron-left").style.transform = "rotate(0deg)";
-    input.value = "";
-  });
-document.querySelectorAll("li").forEach((el) => {
-  el.classList.add("list-unclicked");
-  el.classList.add("list-button-list");
-  el.addEventListener("click", function (e) {
-    document.querySelectorAll("li").forEach((el) => {
-      el.classList.add("list-unclicked");
-      el.classList.remove("list-clicked");
-    });
-    e.target.classList.remove("list-unclicked");
-    e.target.classList.add("list-clicked");
+// document
+//   .querySelector(".weather-search-input-container")
+//   .addEventListener("submit", function (e) {
+//     e.preventDefault();
+//     const input = document.querySelector(".weather-search-input");
+//     if (!input.value) return;
+//     getWeather(input.value);
+//     document
+//       .querySelector(".weather-search")
+//       .classList.remove("weather-search-active");
+//     document.querySelector(".fa-chevron-left").style.transform = "rotate(0deg)";
+//     input.value = "";
+//   });
+// document.querySelectorAll("li").forEach((el) => {
+//   el.classList.add("list-unclicked");
+//   el.classList.add("list-button-list");
+//   el.addEventListener("click", function (e) {
+//     document.querySelectorAll("li").forEach((el) => {
+//       el.classList.add("list-unclicked");
+//       el.classList.remove("list-clicked");
+//     });
+//     e.target.classList.remove("list-unclicked");
+//     e.target.classList.add("list-clicked");
 
-    // document.querySelector(".page-title").textContent = e.target.textContent;
-    if (e.target.textContent === "Home") {
-      getHomeHTML();
-      return;
-    }
-    if (e.target.textContent === "Following") {
-      firstPageOfFollowing();
-      return;
-    }
+//     // document.querySelector(".page-title").textContent = e.target.textContent;
+//     if (e.target.textContent === "Home") {
+//       getHomeHTML();
+//       return;
+//     }
+//     if (e.target.textContent === "Following") {
+//       firstPageOfFollowing();
+//       return;
+//     }
 
-    if (e.target.textContent === "For you") {
-      getForYouContainerHTML();
-      return;
-    }
-    getNewsFromList(`${e.target.textContent}`);
-  });
-});
+//     if (e.target.textContent === "For you") {
+//       getForYouContainerHTML();
+//       return;
+//     }
+//     getNewsFromList(`${e.target.textContent}`);
+//   });
+// });
 const search = document.querySelector(".search-input");
 document
   .querySelector(".search-container")
@@ -489,7 +488,7 @@ const getHTML = function (data, limit = 1000, dataNum) {
     // if (i === 20 || i === 21 || i === 22 || i === 23) break;
     if (data.articles[i].urlToImage) {
       document.querySelector(
-        `[data-first-container="${dataNum}"`
+        `[data-first-container="${dataNum}"]`
       ).innerHTML += `  <div class="second-news big-news">
       <a class="main-news-link" href="${
         data.articles[i].url
@@ -535,7 +534,7 @@ const getHTML = function (data, limit = 1000, dataNum) {
       i += 4;
     } else {
       document.querySelector(
-        `[data-first-container="${dataNum}"`
+        `[data-first-container="${dataNum}"]`
       ).innerHTML += `
        <div class="first-news small-news-container">
        <a href="${data.articles[i].url}">
@@ -559,6 +558,161 @@ const getHTML = function (data, limit = 1000, dataNum) {
       i++;
     }
   }
+  if (document.querySelector(`.page-title`).textContent === "Your briefing") {
+    document.querySelector(`[data-first-container="1"]`).insertAdjacentHTML(
+      "afterbegin",
+      `        <div class="home-page-stories">
+            <h1>Top stories <i class="fa-solid fa-angle-right"></i></h1>
+           </div>  `
+    );
+    document
+      .querySelector(".home-page-stories")
+      .addEventListener("click", function () {
+        getHeadlinesFromCountries("us");
+      });
+  }
+};
+const getHeadlinesFromCountries = async function (country) {
+  document.querySelector("#main").style.width = "85rem";
+  document.querySelector("#main").style.gap = "0rem";
+
+  const response = await fetch(
+    `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=0c03528ace51442f96101b00eff81423`
+  );
+  const countryData = await response.json();
+  console.log(countryData);
+  document.querySelector("#main").innerHTML = `
+   <div class="dropdown-main">
+              <div class="dropdown">
+                <p value="ae">United Arab Emirates</p>
+                <p value="ar">Argentina</p>
+                <p value="at">Austria</p>
+                <p value="au">Australia</p>
+                <p value="be">Belgium</p>
+                <p value="bg">Bulgaria</p>
+                <p value="ca">Canada</p>
+                <p value="ch">Ch</p>
+                <p value="cn">China</p>
+                <p value="co">Colombia</p>
+                <p value="cu">Cuba</p>
+                <p value="cz">Czech Republic</p>
+                <p value="de">Germany</p>
+                <p value="eg">England</p>
+                <p value="fr">France</p>
+                <p value="gb">United Kingdom</p>
+                <p value="gr">Greece</p>
+                <p value="hk">Hong Kong</p>
+                <p value="hu">Hungary</p>
+                <p value="id">Indonesia</p>
+                <p value="ie">Ireland</p>
+                <p value="il">Israel</p>
+                <p value="in">India</p>
+                <p value="it">Italy</p>
+                <p value="ja">Japan</p>
+                <p value="kr">Korea</p>
+                <p value="lt">Lithuania</p>
+                <p value="lv">Litvania</p>
+                <p value="ma">Morocco</p>
+                <p value="mx">Mexico</p>
+                <p value="my">Malaysia</p>
+                <p value="ng">Nigeria</p>
+                <p value="nl">Netherlands</p>
+                <p value="no">Norway</p>
+                <p value="nz">New Zealand</p>
+                <p value="ph">Philippines</p>
+                <p value="pl">Poland</p>
+                <p value="pt">Portugal</p>
+                <p value="ro">Romania</p>
+                <p value="rs">Serbia</p>
+                <p value="ru">Russia</p>
+                <p value="sa">Saudi Arabia</p>
+                <p value="se">Sweden</p>
+                <p value="sg">Singapore</p>
+                <p value="si">Slovenia</p>
+                <p value="sk">Slovakia</p>
+                <p value="th">Thailand</p>
+                <p value="tr">Turkey</p>
+                <p value="tw">Taiwan</p>
+                <p value="ua">Ukraine</p>
+                <p value="us">United States</p>
+                <p value="ve">Venezuela</p>
+                <p value="za">Zambia</p>
+              </div>
+            </div>
+      <div class="first-container" data-first-container="9"></div>`;
+  document.querySelector(".first-container").style.width = "82rem";
+  document.querySelector("#dropdown").placeholder = country;
+
+  getHTML(countryData, 1000, "9");
+
+  if (loggedInAs.following && loggedInAs.following.includes("Headlines")) {
+    document.querySelector(
+      ".list-follow"
+    ).innerHTML = ` <i class="fa-solid fa-star"></i> Following`;
+    document
+      .querySelector(".list-follow")
+      .classList.replace("not-following", "following");
+  }
+  document
+    .querySelector(".list-follow")
+    .addEventListener("click", function (e) {
+      if (document.querySelector(".fa-star").classList.contains("fa-regular")) {
+        document.querySelector(
+          ".list-follow"
+        ).innerHTML = ` <i class="fa-solid fa-star"></i> Following`;
+        document
+          .querySelector(".list-follow")
+          .classList.replace("not-following", "following");
+        loggedInAs.following
+          ? loggedInAs.following.push("Headlines")
+          : (loggedInAs.following = ["Headlines"]);
+        document.querySelector(".list-follow").style.backgroundColor =
+          "rgba(0, 0, 255, 0.5)";
+
+        localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+        loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
+        userAccounts.forEach((el) => {
+          if (loggedInAs.username === el.username) {
+            el.following = loggedInAs.following;
+          }
+        });
+
+        localStorage.setItem("accounts", JSON.stringify(userAccounts));
+      } else if (
+        document.querySelector(".fa-star").classList.contains("fa-solid")
+      ) {
+        document.querySelector(
+          ".list-follow"
+        ).innerHTML = ` <i class="fa-regular fa-star"></i> Follow`;
+        document
+          .querySelector(".list-follow")
+          .classList.replace("following", "not-following");
+        loggedInAs.following.splice(
+          loggedInAs.following.indexOf("Headlines"),
+          1
+        );
+        document.querySelector(".list-follow").style.backgroundColor =
+          "rgba(0, 0, 0, 0.5)";
+        localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+        loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
+        userAccounts.forEach((el) => {
+          if (loggedInAs.username === el.username) {
+            el.following = loggedInAs.following;
+          }
+        });
+
+        localStorage.setItem("accounts", JSON.stringify(userAccounts));
+      }
+    });
+
+  const dropdown = document.getElementById("dropdown");
+
+  dropdown.addEventListener("change", function () {
+    let selectedIndex = dropdown.selectedIndex;
+    let selectedValue = dropdown.options[selectedIndex].value;
+    selectedValue.selected = true;
+    getHeadlinesFromCountries(selectedValue);
+  });
 };
 const getNewsFromInput = async function (input) {
   document.querySelector("#main").style.width = "110rem";
@@ -611,7 +765,7 @@ const getNewsFromInput = async function (input) {
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${city}&apiKey=c41068f9f9fc4d1f97c5c017fa8819ef`
+        `https://newsapi.org/v2/everything?q=${city}&apiKey=0c03528ace51442f96101b00eff81423`
       );
       console.log("input", response);
 
@@ -753,7 +907,7 @@ const getNewsFromInput = async function (input) {
       </div> `;
       const response = await fetch(
         `
-https://newsapi.org/v2/everything?domains=${source}&apiKey=c41068f9f9fc4d1f97c5c017fa8819ef`
+https://newsapi.org/v2/everything?domains=${source}&apiKey=0c03528ace51442f96101b00eff81423`
       );
       console.log("input", response);
 
@@ -893,7 +1047,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=c41068f9f9fc4d1f97c5c
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${topic}&apiKey=c41068f9f9fc4d1f97c5c017fa8819ef`
+        `https://newsapi.org/v2/everything?q=${topic}&apiKey=0c03528ace51442f96101b00eff81423`
       );
       console.log("input", response);
 
@@ -1023,7 +1177,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=c41068f9f9fc4d1f97c5c
         </div>
       </div> `;
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=c41068f9f9fc4d1f97c5c017fa8819ef`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=0c03528ace51442f96101b00eff81423`
     );
     console.log("input", response);
 
@@ -1106,7 +1260,33 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=c41068f9f9fc4d1f97c5c
       <p>Try searching up something else!</p></div>
       </div>`);
 
-    getHTML(data, 1000, "5");
+    document.querySelector(`[data-first-container="5"]`).innerHTML =
+      data.articles
+        .map(
+          (el) =>
+            ` <a class="small-news-link" href="${
+              el.url
+            }">  <div class="first-news small-news-container">
+          <div class="small-news">
+            <div>
+              <div class="logo">
+                <p>${el?.source.name}</p>
+              </div>
+              <h3 class="small-news-title">
+               ${el.title}
+              </h3>
+            </div>
+            <span class="date-author">${
+              el.publishedAt.slice(5, 10) + "-" + el.publishedAt.slice(2, 4)
+            } · ${el.author ?? ""}</span>
+          </div>
+          <div class="small-news-image">
+          ${el.urlToImage ? `<img src="${el.urlToImage}"/>` : ""}
+          </div>
+        </div></a>`
+        )
+        .join("");
+    return;
   } catch (err) {
     document.querySelector(".first-container").innerHTML = `${err.message}`;
   }
@@ -1309,7 +1489,7 @@ const getNewsFromList = async function (clicked) {
     const response = await fetch(
       `https://newsapi.org/v2/everything?q=${
         differentClicked ? differentClicked : clicked
-      }&apiKey=c41068f9f9fc4d1f97c5c017fa8819ef`
+      }&apiKey=0c03528ace51442f96101b00eff81423`
     );
     console.log("list", response);
 
@@ -1364,7 +1544,7 @@ const changeContainerHTML = async function (
     }
 
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=c41068f9f9fc4d1f97c5c017fa8819ef`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=0c03528ace51442f96101b00eff81423`
     );
     const newsData = await response.json();
 
@@ -1470,7 +1650,7 @@ const getFourthContainerHTML = async function () {
     let k = 0;
     for (let i = 0; i < number; i) {
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=c41068f9f9fc4d1f97c5c017fa8819ef`
+        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=0c03528ace51442f96101b00eff81423`
       );
       const data = await response.json();
 
@@ -1629,7 +1809,8 @@ const getFollowingCart = function (el) {
     el !== "Health" &&
     el !== "Sports" &&
     el !== "Technology" &&
-    el !== "U.S."
+    el !== "U.S." &&
+    el !== "Headlines"
   )
     image = `<i class="fa-solid fa-comments lts-icon"></i>`;
   else
@@ -1831,7 +2012,6 @@ const moveUpByOne = function (el, array) {
 const firstPageOfFollowing = function () {
   document.querySelector("#main").style.width = "110rem";
   document.querySelector("#main").style.gap = "0rem";
-
   document.querySelector("#main").innerHTML = ` <div class="following-buttons">
         <button class="following-main-buttons">Topics & sources</button>
         <button class="following-main-buttons">Saved searches</button>
@@ -1918,7 +2098,11 @@ const firstPageOfFollowing = function () {
           e.target
             .closest(".followed-category")
             .querySelector(".followed-category-title").textContent !==
-            "Business"
+            "Business" &&
+          e.target
+            .closest(".followed-category")
+            .querySelector(".followed-category-title").textContent !==
+            "Headlines"
         )
           getNewsFromInput(
             `${
@@ -2859,9 +3043,10 @@ const getForYouContainerHTML = async function () {
 };
 
 checkIfLoggedIn();
-if (Logged) {
-  getHomeHTML();
-  getWeather("Novi Pazar");
-}
+// if (Logged) {
+//   getHeadlinesFromCountries("us");
+//   // getHomeHTML();
+//   getWeather("Novi Pazar");
+// }
 
 //TODO: ADD BOOKMARKING NEWS

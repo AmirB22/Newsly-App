@@ -560,7 +560,8 @@ body {
 .Entertainment {
   background-color: rgb(124, 0, 162);
 }
-.Technology {
+.Technology,
+.Headlines {
   background-color: cyan;
 }
 .Science,
@@ -1131,4 +1132,36 @@ body {
 }
 .hidden {
   display: none;
+}
+.home-page-stories {
+  cursor: pointer;
+}
+
+.dropdown-main {
+  width: 20rem;
+  font-size: 1.5rem;
+  background-color: white;
+  color: black;
+  margin: 5rem;
+  cursor: pointer;
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+.dropdown {
+  position: absolute;
+  overflow: hidden;
+  bottom: -223.6rem;
+  right: -100%;
+  background-color: white;
+  width: 100%;
+  z-index: 1;
+}
+.dropdown p {
+  width: 100%;
+  padding: 1rem 1rem;
+}
+.dropdown p:hover {
+  background-color: gray;
 }
