@@ -618,7 +618,7 @@ body {
   padding: 0.8rem 1.7rem;
   text-wrap: nowrap;
   border-radius: 1rem;
-  border: 1px solid lime;
+  border: 1px solid white;
   cursor: pointer;
   transform: all 0.5s;
 }

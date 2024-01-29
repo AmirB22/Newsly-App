@@ -3,6 +3,7 @@ import { arrayOfCities, arrayOfTopics, arrayOfSources } from "./data.js";
 let Logged = JSON.parse(localStorage.getItem("logged")) || false;
 let loggedInAs = JSON.parse(localStorage.getItem("loggedInAs")) || {};
 let userAccounts = JSON.parse(localStorage.getItem("accounts")) || [];
+
 const CategoriesOriginal = [
   "Business",
   "Science",
@@ -456,7 +457,8 @@ document
   .addEventListener("click", (e) => {
     document.querySelectorAll("li").forEach((el) => {
       el.classList.replace("list-clicked", "list-unclicked");
-      if (el.textContent === "Home") el.classList.add("list-clicked");
+      if (el.textContent === "Home")
+        el.classList.replace("list-unclicked", "list-clicked");
     });
     getHomeHTML();
   });
@@ -576,11 +578,14 @@ const getHTML = function (data, limit = 1000, dataNum) {
   }
 };
 const getHeadlinesFromCountries = async function (country, countryName) {
+  document
+    .querySelectorAll(".list-button-list")
+    .forEach((el) => el.classList.replace("list-clicked", "list-unclicked"));
   document.querySelector("#main").style.width = "85rem";
   document.querySelector("#main").style.gap = "0rem";
 
   const response = await fetch(
-    `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
+    `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=2759f5c9ecb742659e7b1ef9dcee2e9b`
   );
   const countryData = await response.json();
   console.log(countryData);
@@ -595,7 +600,7 @@ const getHeadlinesFromCountries = async function (country, countryName) {
 
     <div class="dropdown-main">
               <div class="option-wrapper-holder">
-                  <h3>${countryName} <i class="fa-solid fa-angle-right"></i></h3>
+                  <h3 class="country-news">${countryName} <i class="fa-solid fa-angle-right"></i></h3>
                 </div>
               <div class="dropdown dropdown-inactive">
                 <div class="option-wrapper">
@@ -809,8 +814,8 @@ const getHeadlinesFromCountries = async function (country, countryName) {
               </div>
             </div>
           </h2>
-          <button class="list-follow following">
-            <i class="fa-solid fa-star" aria-hidden="true"></i> Following
+          <button class="list-follow not-following">
+            <i class="fa-regular fa-star" aria-hidden="true"></i> Follow
           </button>
         </div>
       </div>
@@ -819,13 +824,28 @@ const getHeadlinesFromCountries = async function (country, countryName) {
 
   getHTML(countryData, 1000, "9");
 
-  if (loggedInAs.following && loggedInAs.following.includes("Headlines")) {
+  console.log(country, countryName);
+  console.log(
+    `Headlines in ${document
+      .querySelector(".country-news")
+      .textContent.trim()} (${country.trim()})`
+  );
+
+  if (
+    loggedInAs.following &&
+    loggedInAs.following.includes(
+      `Headlines in ${document
+        .querySelector(".country-news")
+        .textContent.trim()} (${country.trim()})`
+    )
+  ) {
     document.querySelector(
       ".list-follow"
     ).innerHTML = ` <i class="fa-solid fa-star"></i> Following`;
     document
       .querySelector(".list-follow")
       .classList.replace("not-following", "following");
+    console.log("following");
   }
   document
     .querySelector(".list-follow")
@@ -838,8 +858,14 @@ const getHeadlinesFromCountries = async function (country, countryName) {
           .querySelector(".list-follow")
           .classList.replace("not-following", "following");
         loggedInAs.following
-          ? loggedInAs.following.push("Headlines")
-          : (loggedInAs.following = ["Headlines"]);
+          ? loggedInAs.following.push(
+              `Headlines in ${document
+                .querySelector(".country-news")
+                .textContent.trim()} (${country.trim()})`
+            )
+          : (loggedInAs.following = `Headlines in ${document
+              .querySelector(".country-news")
+              .textContent.trim()} (${country.trim()})`);
         document.querySelector(".list-follow").style.backgroundColor =
           "rgba(0, 0, 255, 0.5)";
 
@@ -862,7 +888,11 @@ const getHeadlinesFromCountries = async function (country, countryName) {
           .querySelector(".list-follow")
           .classList.replace("following", "not-following");
         loggedInAs.following.splice(
-          loggedInAs.following.indexOf("Headlines"),
+          loggedInAs.following.indexOf(
+            `Headlines in ${
+              document.querySelector(".country-news").textContent
+            } (${country})`
+          ),
           1
         );
         document.querySelector(".list-follow").style.backgroundColor =
@@ -975,7 +1005,7 @@ const getNewsFromInput = async function (input) {
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${city}&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
+        `https://newsapi.org/v2/everything?q=${city}&apiKey=2759f5c9ecb742659e7b1ef9dcee2e9b`
       );
       console.log("input", response);
 
@@ -1117,7 +1147,7 @@ const getNewsFromInput = async function (input) {
       </div> `;
       const response = await fetch(
         `
-https://newsapi.org/v2/everything?domains=${source}&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
+https://newsapi.org/v2/everything?domains=${source}&apiKey=2759f5c9ecb742659e7b1ef9dcee2e9b`
       );
       console.log("input", response);
 
@@ -1257,7 +1287,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=6c4f0ed57a334072a74c6
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${topic}&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
+        `https://newsapi.org/v2/everything?q=${topic}&apiKey=2759f5c9ecb742659e7b1ef9dcee2e9b`
       );
       console.log("input", response);
 
@@ -1387,7 +1417,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=6c4f0ed57a334072a74c6
         </div>
       </div> `;
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=2759f5c9ecb742659e7b1ef9dcee2e9b`
     );
     console.log("input", response);
 
@@ -1503,6 +1533,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=6c4f0ed57a334072a74c6
 };
 const getNewsFromList = async function (clicked) {
   try {
+    const Local = loggedInAs.followedLocation;
     const Technology = [
       "Mobile",
       "Gadgets",
@@ -1548,6 +1579,7 @@ const getNewsFromList = async function (clicked) {
       "Entrepreneurship",
     ];
     let array;
+    if (clicked === "Local") array = Local;
     if (clicked === "Business") array = Business;
     if (clicked === "Health") array = Health;
     if (clicked === "Technology") array = Technology;
@@ -1584,21 +1616,26 @@ const getNewsFromList = async function (clicked) {
         <div class="page-top-submain-news-bottom">
        ${
          clicked !== "World" &&
-         clicked !== "Local" &&
          clicked !== "U.S." &&
-         clicked !== "U.s."
-           ? ` <button class="button-clicked button-list">Latest</button>
-          ${array
-            .map(
-              (el) =>
-                `<button class="button-unclicked button-list">${el}</button>`
-            )
-            .join("")}`
+         clicked !== "U.s." &&
+         clicked !== "Local"
+           ? `<button class="button-clicked button-list">Latest</button>`
            : ""
        }
+         ${
+           clicked !== "World" && clicked !== "U.S" && clicked !== "U.s"
+             ? array
+                 .map(
+                   (el) =>
+                     `<button class="button-unclicked button-list">${el}</button>`
+                 )
+                 .join("")
+             : ""
+         }
         </div>
       </div>
       <div class="first-container" data-first-container="4"></div>`;
+
     if (
       clicked !== "Local" &&
       loggedInAs.following &&
@@ -1699,7 +1736,7 @@ const getNewsFromList = async function (clicked) {
     const response = await fetch(
       `https://newsapi.org/v2/everything?q=${
         differentClicked ? differentClicked : clicked
-      }&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
+      }&apiKey=2759f5c9ecb742659e7b1ef9dcee2e9b`
     );
     console.log("list", response);
 
@@ -1728,8 +1765,7 @@ const changeContainerHTML = async function (
   limit,
   type,
   side = "",
-  dataNum,
-  number
+  dataNum
 ) {
   try {
     document.querySelector(
@@ -1754,7 +1790,7 @@ const changeContainerHTML = async function (
     }
 
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=2759f5c9ecb742659e7b1ef9dcee2e9b`
     );
     const newsData = await response.json();
 
@@ -1860,7 +1896,7 @@ const getFourthContainerHTML = async function () {
     let k = 0;
     for (let i = 0; i < number; i) {
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
+        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=2759f5c9ecb742659e7b1ef9dcee2e9b`
       );
       const data = await response.json();
 
@@ -2011,7 +2047,10 @@ const hideManageFollowing = function (e) {
 };
 const getFollowingCart = function (el) {
   let image;
-  if (
+  console.log(el.startsWith("Headlines"));
+  if (el.startsWith("Headlines")) {
+    image = `<img class="${el} following-icon" src="${images["Headlines"]}" alt="" />`;
+  } else if (
     el !== "Business" &&
     el !== "World" &&
     el !== "Entertainment" &&
@@ -2019,8 +2058,7 @@ const getFollowingCart = function (el) {
     el !== "Health" &&
     el !== "Sports" &&
     el !== "Technology" &&
-    el !== "U.S." &&
-    el !== "Headlines"
+    el !== "U.S."
   )
     image = `<i class="fa-solid fa-comments lts-icon"></i>`;
   else
@@ -2274,6 +2312,22 @@ const firstPageOfFollowing = function () {
       el.addEventListener("click", function (e) {
         if (e.target.closest(".topic-vertical-dots")) return;
         if (
+          e.target
+            .closest(".followed-category")
+            .querySelector(".followed-category-title")
+            .textContent.startsWith("Headlines")
+        ) {
+          getHeadlinesFromCountries(
+            `${e.target
+              .closest(".followed-category")
+              .querySelector(".followed-category-title")
+              .textContent.slice(-3, -1)}`,
+            `${e.target
+              .closest(".followed-category")
+              .querySelector(".followed-category-title")
+              .textContent.slice(13, -4)}`
+          );
+        } else if (
           e.target
             .closest(".followed-category")
             .querySelector(".followed-category-title").textContent !==
@@ -3192,11 +3246,14 @@ const getForYouContainerHTML = async function () {
       ).innerHTML += ` <div class="first-container" data-first-container="${
         i + 50
       }"></div>`;
+      console.log(loggedInAs.following[i].slice(13, -5));
       changeContainerHTML(
         `${
           loggedInAs.following
             ? loggedInAs.following[i]
-              ? loggedInAs.following[i]
+              ? loggedInAs.following[i].startsWith("Headlines")
+                ? loggedInAs.following[i].slice(13, -5)
+                : loggedInAs.following[i]
               : arrayOfTopics[i]
             : arrayOfTopics[i + 5]
         }`,
