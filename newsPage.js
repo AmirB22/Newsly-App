@@ -585,7 +585,7 @@ const getHeadlinesFromCountries = async function (country, countryName) {
   document.querySelector("#main").style.gap = "0rem";
 
   const response = await fetch(
-    `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=2759f5c9ecb742659e7b1ef9dcee2e9b`
+    `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=f7c85d75d58744e8b68038cb6f4968d3`
   );
   const countryData = await response.json();
   console.log(countryData);
@@ -1005,7 +1005,7 @@ const getNewsFromInput = async function (input) {
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${city}&apiKey=2759f5c9ecb742659e7b1ef9dcee2e9b`
+        `https://newsapi.org/v2/everything?q=${city}&apiKey=f7c85d75d58744e8b68038cb6f4968d3`
       );
       console.log("input", response);
 
@@ -1147,7 +1147,7 @@ const getNewsFromInput = async function (input) {
       </div> `;
       const response = await fetch(
         `
-https://newsapi.org/v2/everything?domains=${source}&apiKey=2759f5c9ecb742659e7b1ef9dcee2e9b`
+https://newsapi.org/v2/everything?domains=${source}&apiKey=f7c85d75d58744e8b68038cb6f4968d3`
       );
       console.log("input", response);
 
@@ -1287,7 +1287,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=2759f5c9ecb742659e7b1
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${topic}&apiKey=2759f5c9ecb742659e7b1ef9dcee2e9b`
+        `https://newsapi.org/v2/everything?q=${topic}&apiKey=f7c85d75d58744e8b68038cb6f4968d3`
       );
       console.log("input", response);
 
@@ -1417,7 +1417,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=2759f5c9ecb742659e7b1
         </div>
       </div> `;
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=2759f5c9ecb742659e7b1ef9dcee2e9b`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=f7c85d75d58744e8b68038cb6f4968d3`
     );
     console.log("input", response);
 
@@ -1621,9 +1621,14 @@ const getNewsFromList = async function (clicked) {
          clicked !== "Local"
            ? `<button class="button-clicked button-list">Latest</button>`
            : ""
-       }
+       } 
+          ${
+            clicked === "Local"
+              ? `<button class="button-clicked button-list">Serbia</button>`
+              : ""
+          }
          ${
-           clicked !== "World" && clicked !== "U.S" && clicked !== "U.s"
+           clicked !== "World" && clicked !== "U.S." && clicked !== "U.s."
              ? array
                  .map(
                    (el) =>
@@ -1703,20 +1708,19 @@ const getNewsFromList = async function (clicked) {
           }
         });
     }
-    if (clicked !== "Local") {
-      document.querySelector(
-        ".first-container"
-      ).innerHTML = ` <i class="fa-solid fa-rotate-right"></i>`;
-      document.querySelectorAll(".button-list").forEach((el) =>
-        el.addEventListener("click", function (e) {
-          let clicked;
-          if (e.target.textContent === "Latest")
-            clicked = document.querySelector(".page-title").textContent;
-          else clicked = e.target.textContent;
-          changeContainerHTML(`${clicked}`, 1000, "first-container", "", "4");
-        })
-      );
-    }
+    document.querySelector(
+      ".first-container"
+    ).innerHTML = ` <i class="fa-solid fa-rotate-right"></i>`;
+    document.querySelectorAll(".button-list").forEach((el) =>
+      el.addEventListener("click", function (e) {
+        let clicked;
+        if (e.target.textContent === "Latest")
+          clicked = document.querySelector(".page-title").textContent;
+        else clicked = e.target.textContent;
+        changeContainerHTML(`${clicked}`, 1000, "first-container", "", "4");
+        console.log(123);
+      })
+    );
     document.querySelector(".first-container").style.width = "82rem";
 
     document.querySelectorAll(".button-list").forEach((el) =>
@@ -1736,7 +1740,7 @@ const getNewsFromList = async function (clicked) {
     const response = await fetch(
       `https://newsapi.org/v2/everything?q=${
         differentClicked ? differentClicked : clicked
-      }&apiKey=2759f5c9ecb742659e7b1ef9dcee2e9b`
+      }&apiKey=f7c85d75d58744e8b68038cb6f4968d3`
     );
     console.log("list", response);
 
@@ -1790,7 +1794,7 @@ const changeContainerHTML = async function (
     }
 
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=2759f5c9ecb742659e7b1ef9dcee2e9b`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=f7c85d75d58744e8b68038cb6f4968d3`
     );
     const newsData = await response.json();
 
@@ -1896,7 +1900,7 @@ const getFourthContainerHTML = async function () {
     let k = 0;
     for (let i = 0; i < number; i) {
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=2759f5c9ecb742659e7b1ef9dcee2e9b`
+        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=f7c85d75d58744e8b68038cb6f4968d3`
       );
       const data = await response.json();
 
