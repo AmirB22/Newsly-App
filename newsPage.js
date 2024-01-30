@@ -585,7 +585,7 @@ const getHeadlinesFromCountries = async function (country, countryName) {
   document.querySelector("#main").style.gap = "0rem";
 
   const response = await fetch(
-    `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=f7c85d75d58744e8b68038cb6f4968d3`
+    `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=2d63388910ab47ebb8ba7b5f922b092e`
   );
   const countryData = await response.json();
   console.log(countryData);
@@ -1005,7 +1005,7 @@ const getNewsFromInput = async function (input) {
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${city}&apiKey=f7c85d75d58744e8b68038cb6f4968d3`
+        `https://newsapi.org/v2/everything?q=${city}&apiKey=2d63388910ab47ebb8ba7b5f922b092e`
       );
       console.log("input", response);
 
@@ -1147,7 +1147,7 @@ const getNewsFromInput = async function (input) {
       </div> `;
       const response = await fetch(
         `
-https://newsapi.org/v2/everything?domains=${source}&apiKey=f7c85d75d58744e8b68038cb6f4968d3`
+https://newsapi.org/v2/everything?domains=${source}&apiKey=2d63388910ab47ebb8ba7b5f922b092e`
       );
       console.log("input", response);
 
@@ -1287,7 +1287,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=f7c85d75d58744e8b6803
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${topic}&apiKey=f7c85d75d58744e8b68038cb6f4968d3`
+        `https://newsapi.org/v2/everything?q=${topic}&apiKey=2d63388910ab47ebb8ba7b5f922b092e`
       );
       console.log("input", response);
 
@@ -1417,7 +1417,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=f7c85d75d58744e8b6803
         </div>
       </div> `;
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=f7c85d75d58744e8b68038cb6f4968d3`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=2d63388910ab47ebb8ba7b5f922b092e`
     );
     console.log("input", response);
 
@@ -1623,12 +1623,26 @@ const getNewsFromList = async function (clicked) {
            : ""
        } 
           ${
-            clicked === "Local"
+            clicked === "Local" && loggedInAs.followedLocation.length === 0
               ? `<button class="button-clicked button-list">Serbia</button>`
               : ""
           }
+          ${
+            clicked === "Local"
+              ? array
+                  .map((el, i) =>
+                    i === 0
+                      ? `<button class="button-clicked button-list">  <i class="fa-solid fa-house local-icon"></i> ${el}</button>`
+                      : `<button class="button-unclicked button-list">${el}</button>`
+                  )
+                  .join("")
+              : ""
+          }
          ${
-           clicked !== "World" && clicked !== "U.S." && clicked !== "U.s."
+           clicked !== "World" &&
+           clicked !== "U.S." &&
+           clicked !== "U.s." &&
+           clicked !== "Local"
              ? array
                  .map(
                    (el) =>
@@ -1735,12 +1749,12 @@ const getNewsFromList = async function (clicked) {
     );
     let differentClicked = undefined;
     if (clicked === "U.S.") differentClicked = "us";
-    if (clicked === "Local") differentClicked = "serbia";
+    if (clicked === "Local") differentClicked = loggedInAs.followedLocation[0];
 
     const response = await fetch(
       `https://newsapi.org/v2/everything?q=${
         differentClicked ? differentClicked : clicked
-      }&apiKey=f7c85d75d58744e8b68038cb6f4968d3`
+      }&apiKey=2d63388910ab47ebb8ba7b5f922b092e`
     );
     console.log("list", response);
 
@@ -1794,7 +1808,7 @@ const changeContainerHTML = async function (
     }
 
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=f7c85d75d58744e8b68038cb6f4968d3`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=2d63388910ab47ebb8ba7b5f922b092e`
     );
     const newsData = await response.json();
 
@@ -1900,7 +1914,7 @@ const getFourthContainerHTML = async function () {
     let k = 0;
     for (let i = 0; i < number; i) {
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=f7c85d75d58744e8b68038cb6f4968d3`
+        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=2d63388910ab47ebb8ba7b5f922b092e`
       );
       const data = await response.json();
 
@@ -2136,6 +2150,31 @@ ${image}
       </i>
     </div>`;
 };
+const getManageLocalCart = function (el) {
+  if (el === loggedInAs.followedLocation[0])
+    return ` <div class="followed-location favorite-location primary-location-main">
+<i class="fa-solid fa-location-dot lts-icon"></i>
+      <p class=" favorite-location-title">${el}</p>
+      <i class="fa-solid fa-house primary-location"></i>
+      <i class="fa-solid fa-ellipsis-vertical location-vertical-dots">
+        <div class="manage-followed-container container-not-showing">
+            <p class="remove-following-location"><i class="fa-solid fa-trash"></i> Remove from library</p>
+        </div>
+      </i>
+    </div>`;
+  else {
+    return ` <div class="followed-location favorite-location">
+  <i class="fa-solid fa-location-dot lts-icon"></i>
+        <p class=" favorite-location-title">${el}</p>
+        <i class="fa-solid fa-ellipsis-vertical location-vertical-dots">
+          <div class="manage-followed-container container-not-showing">
+            <p class="set-as-primary"><i class="fa-solid fa-location-dot"></i>Set as primary</p>
+              <p class="remove-following-location"><i class="fa-solid fa-trash"></i> Remove from library</p>
+          </div>
+        </i>
+      </div>`;
+  }
+};
 const getSearchesCart = function (el, type, element) {
   let icon;
   if (type === "search")
@@ -2210,17 +2249,25 @@ ${icon}
     </div>`;
 };
 const getHeightForManageContainers = function (el, type) {
+  console.log(el.closest(".followed-location"));
   if (
+    el.closest(".followed-location") &&
+    !el
+      .closest(".followed-location")
+      .classList.contains("primary-location-main")
+  )
+    return 8.4;
+  else if (
     !el.querySelector(`.move-top-following-${type}`) &&
     !el.querySelector(`.move-bottom-following-${type}`)
-  ) {
+  )
     return 4.4;
-  } else if (
+  else if (
     !el.querySelector(`.move-top-following-${type}`) ||
     !el.querySelector(`.move-bottom-following-${type}`)
-  ) {
-    return 15.4;
-  } else return 21.4;
+  )
+    return 14.4;
+  else return 21.4;
 };
 const lastToFirst = function (el, array) {
   let index;
@@ -2261,6 +2308,196 @@ const moveUpByOne = function (el, array) {
   array[index] = array[index - 1];
   array[index - 1] = temp;
 };
+const getManageLocalHTML = function () {
+  if (loggedInAs.followedLocation && loggedInAs.followedLocation.length > 0) {
+    loggedInAs.primaryLocation = loggedInAs.followedLocation[0];
+    localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+    localStorage.setItem("accounts", JSON.stringify(userAccounts));
+  }
+  document.querySelector("#main").style.width = "72rem";
+  document.querySelector("#main").innerHTML = `<div class="location-page-main">
+        <h1 class="location-page-title">
+          <i class="fa-solid fa-arrow-left"></i> Manage local news
+        </h1>
+        <div class="location-page-input-container">
+          <button class="location-page-button">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+          <input
+            class="location-page-input"
+            type="text"
+            placeholder="Enter city or zip code"
+            name=""
+            id=""
+          />
+        </div>
+      <div class="location-page-wrapper">
+        <h2 class="location-page-subtitle">Your local news</h2>
+        <div class="location-page-following">
+          <img
+            src="https://lh3.googleusercontent.com/SOCn77ylz-ppK_80GxYfcNeHebloX7Vx9IvKbGzL6Aken01llMjZYjKoPTsvSTkGkBc1rwL2=rw"
+            alt=""
+          />
+          <p>See local news you care about by adding locations</p>
+        </div>
+      </div>
+        <div class="location-page-suggested-title">
+          <h2>Suggested for you</h2>
+          <div class="location-page-suggested-container">
+            <div class="location-page-suggested-left">
+              <img
+                src="https://plus.unsplash.com/premium_photo-1661926694528-a833cc729d54?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bW91bnRhaW4lMjB3YXRlcnxlbnwwfHwwfHx8MA%3D%3D"
+                alt=""
+              />
+            </div>
+            <div class="location-page-suggested-right">
+              <p>Serbia</p>
+              <i class="fa-regular fa-star add-suggested"></i>
+            </div>
+          </div>
+        </div>
+      </div>`;
+
+  if (
+    !loggedInAs.followedLocation ||
+    loggedInAs.followedLocation.length === 0
+  ) {
+    document.querySelector(".location-page-wrapper").innerHTML = `
+          <h2 class="location-page-subtitle">Your local news</h2>
+        <div class="location-page-following">
+          <img
+            src="https://lh3.googleusercontent.com/SOCn77ylz-ppK_80GxYfcNeHebloX7Vx9IvKbGzL6Aken01llMjZYjKoPTsvSTkGkBc1rwL2=rw"
+            alt=""
+          />
+          <p>See local news you care about by adding locations</p>
+        </div>`;
+  } else {
+    document.querySelector(
+      ".location-page-wrapper"
+    ).innerHTML = `  <h2 class="location-page-subtitle">Your local news</h2>
+    <div class="location-page-cards"></div>`;
+    document.querySelector(
+      ".location-page-cards"
+    ).innerHTML += `${loggedInAs.followedLocation
+      .map((el) => getManageLocalCart(el))
+      .join("")}`;
+    document.querySelectorAll(".set-as-primary").forEach((el) => {
+      el.addEventListener("click", function () {
+        lastToFirst(
+          el
+            .closest(".followed-location")
+            .querySelector(".favorite-location-title").textContent,
+          loggedInAs.followedLocation
+        );
+        getManageLocalHTML();
+        localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+        loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
+        userAccounts.forEach((el) => {
+          if (loggedInAs.username === el.username) {
+            el.followedLocation = loggedInAs.followedLocation;
+          }
+          localStorage.setItem("accounts", JSON.stringify(userAccounts));
+        });
+      });
+    });
+
+    document
+      .querySelector(".location-page-input")
+      .addEventListener("keyup", function () {
+        arrayOfCities.forEach((el) => {
+          if (this.value && el.startsWith(`${this.value}`)) console.log(el);
+        });
+      });
+
+    if (loggedInAs.followedLocation.includes("Serbia")) {
+      document.querySelector(".location-page-suggested-title").innerHTML = "";
+    } else {
+      document
+        .querySelector(".add-suggested")
+        .addEventListener("click", function () {
+          loggedInAs.followedLocation.unshift(
+            `${this.parentElement.textContent.trim()}`
+          );
+          getManageLocalHTML();
+        });
+    }
+
+    document.querySelectorAll(".location-vertical-dots").forEach((el) =>
+      el.addEventListener("click", function (e) {
+        if (e.target.closest(".manage-followed-container")) return;
+
+        if (
+          el
+            .closest(".followed-location")
+            .querySelector(".manage-followed-container")
+            .classList.contains("container-showing")
+        ) {
+          el.closest(".followed-location")
+            .querySelector(".manage-followed-container")
+            .classList.replace("container-showing", "container-not-showing");
+
+          el.firstElementChild.style.height = "0rem";
+          el.firstElementChild.style.bottom = "0rem";
+          el.firstElementChild.style.padding = "0rem 0rem";
+          el.firstElementChild.style.boxShadow = "none";
+
+          document.removeEventListener("click", hideManageFollowing);
+          return;
+        }
+        document
+          .querySelectorAll(".manage-followed-container")
+          .forEach((el) => {
+            el.classList.replace("container-showing", "container-not-showing");
+            el.style.height = "0rem";
+            el.style.bottom = "0rem";
+            el.style.padding = "0rem 0rem";
+            el.style.boxShadow = "none";
+          });
+
+        el.firstElementChild.style.height = `${getHeightForManageContainers(
+          el,
+          "location"
+        )}rem`;
+        el.firstElementChild.style.bottom = `-${
+          getHeightForManageContainers(el, "location") + 2
+        }rem`;
+        el.firstElementChild.style.padding = "1rem 0rem";
+        el.firstElementChild.style.boxShadow =
+          "0px 0px 10px 5px rgba(0, 0, 0, 0.2)";
+        el.firstElementChild.classList.replace(
+          "container-not-showing",
+          "container-showing"
+        );
+
+        document.addEventListener("click", hideManageFollowing);
+      })
+    );
+    document.querySelectorAll(".remove-following-location").forEach((el) => {
+      el.addEventListener("click", function (e) {
+        let location = e.target
+          .closest(".followed-location")
+          .querySelector(".favorite-location-title").textContent;
+
+        loggedInAs.followedLocation.splice(
+          loggedInAs.followedLocation.indexOf(`${location}`),
+          1
+        );
+
+        e.target.closest(".followed-location").remove();
+        localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+        loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
+        userAccounts.forEach((el) => {
+          if (loggedInAs.username === el.username) {
+            el.followedLocation = loggedInAs.followedLocation;
+          }
+        });
+
+        localStorage.setItem("accounts", JSON.stringify(userAccounts));
+        getManageLocalHTML();
+      });
+    });
+  }
+};
 const firstPageOfFollowing = function () {
   document.querySelector("#main").style.width = "110rem";
   document.querySelector("#main").style.gap = "0rem";
@@ -2284,7 +2521,10 @@ const firstPageOfFollowing = function () {
         </div>
         <div class="following-page">
           <div class="followings local-following-page">
-            <h1>Local</h1>
+             <div class="local-following-title">
+              <h1>Local</h1>
+              <p class="manage-local">Manage local news</p>
+            </div>
             <div class="following-local-container">
               <img src="https://lh3.googleusercontent.com/SOCn77ylz-ppK_80GxYfcNeHebloX7Vx9IvKbGzL6Aken01llMjZYjKoPTsvSTkGkBc1rwL2=rw" alt="" />
               <p>When you follow a location it will appear here.</p>
@@ -2304,6 +2544,9 @@ const firstPageOfFollowing = function () {
           </div>
         </div>
       </div>`;
+  document
+    .querySelector(".manage-local")
+    .addEventListener("click", getManageLocalHTML);
   if (loggedInAs.following && loggedInAs.following.length !== 0) {
     document.querySelector(
       ".category-following-page"
@@ -2561,8 +2804,14 @@ const firstPageOfFollowing = function () {
   if (loggedInAs.followedLocation && loggedInAs.followedLocation.length !== 0) {
     document.querySelector(
       ".local-following-page"
-    ).innerHTML = `<h1>Local</h1>    <div class="followed-locations">
+    ).innerHTML = `  <div class="local-following-title">
+              <h1>Local</h1>
+              <p class="manage-local">Manage local news</p>
+            </div>   <div class="followed-locations">
             </div>`;
+    document
+      .querySelector(".manage-local")
+      .addEventListener("click", getManageLocalHTML);
     document.querySelector(".followed-locations").innerHTML +=
       loggedInAs.followedLocation
         .map(
@@ -2745,11 +2994,17 @@ const firstPageOfFollowing = function () {
     loggedInAs.followedLocation.length === 0
   ) {
     document.querySelector(".local-following-page").innerHTML = `  
-            <h1>Local</h1>
+              <div class="local-following-title">
+              <h1>Local</h1>
+              <p class="manage-local">Manage local news</p>
+            </div>
             <div class="following-local-container">
               <img src="https://lh3.googleusercontent.com/SOCn77ylz-ppK_80GxYfcNeHebloX7Vx9IvKbGzL6Aken01llMjZYjKoPTsvSTkGkBc1rwL2=rw" alt="" />
               <p>When you follow a location it will appear here.</p>
             </div>`;
+    document
+      .querySelector(".manage-local")
+      .addEventListener("click", getManageLocalHTML);
   }
   //-----------------------------
   if (loggedInAs.followedSources && loggedInAs.followedSources.length !== 0) {

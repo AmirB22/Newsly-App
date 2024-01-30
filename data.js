@@ -1,5 +1,6 @@
 export const arrayOfCities = [
   "a",
+  "Serbia",
   "coruña",
   "aachen",
   "aarhus",

@@ -871,6 +871,7 @@ body {
   border-radius: 1.5rem;
   padding: 2rem;
   padding-bottom: 8rem;
+  font-family: "Roboto", sans-serif;
 }
 .following-container h1 {
   font-size: 1.8rem;
@@ -929,6 +930,23 @@ body {
   cursor: pointer;
   position: relative;
 }
+.local-following-title {
+  display: flex;
+  width: 100%;
+  text-wrap: nowrap;
+  border-bottom: 1px solid rgb(144, 144, 144);
+  margin-bottom: 2rem;
+  align-items: center;
+}
+.local-following-title h1 {
+  margin: 0px;
+  border: none;
+}
+.local-following-title p {
+  color: rgb(91, 91, 246);
+  font-size: 1.3rem;
+  cursor: pointer;
+}
 .followed-category .lts-icon::before,
 .followed-location .lts-icon::before,
 .followed-search .lts-icon::before,
@@ -952,6 +970,7 @@ body {
 .favorite-sources-title {
   width: 40%;
   margin-left: -3rem;
+  position: relative;
 }
 .following-categories-container p,
 .following-local-container p,
@@ -976,6 +995,7 @@ body {
 .followed-location,
 .followed-search,
 .followed-source {
+  position: relative;
   cursor: pointer;
   width: 27rem;
   min-height: 6rem;
@@ -1206,4 +1226,160 @@ body {
 
 .dropdown::-webkit-scrollbar-thumb {
   background-color: lime;
+}
+.location-page-main {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  text-align: start;
+  width: 100%;
+  font-family: "Roboto", sans-serif;
+  margin-top: 2rem;
+  gap: 3.5rem;
+}
+.location-page-title {
+  font-size: 3rem;
+  width: 100%;
+  font-weight: normal;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-left: 3rem;
+}
+.location-page-title i {
+  font-size: 2.5rem;
+}
+.location-page-input-container {
+  width: 100%;
+  display: flex;
+  height: 4rem;
+}
+.location-page-input {
+  width: 100%;
+  border: 0px;
+  border-radius: 0rem 5rem 5rem 0rem;
+  padding: 1rem;
+  background-color: transparent;
+  border: 1px solid white;
+  border-left: none;
+}
+.location-page-button {
+  width: 5%;
+  border: 0px;
+  border-radius: 5rem 0rem 0rem 5rem;
+  background-color: white;
+  cursor: pointer;
+  padding: 1rem 2rem;
+  font-size: 1.5rem;
+  background-color: transparent;
+  border: 1px solid white;
+  border-right: none;
+}
+.location-page-input:focus {
+  outline: none;
+  background-color: white;
+  color: black;
+}
+.location-page-subtitle {
+  width: 100%;
+  font-size: 1.7rem;
+  font-weight: normal;
+}
+.location-page-following {
+  width: 100%;
+  height: 24rem;
+  border-radius: 1rem;
+  border: 1px solid white;
+  display: grid;
+  place-items: center;
+}
+.location-page-following img {
+  width: 14rem;
+}
+.location-page-following p {
+  font-size: 1.5rem;
+}
+.location-page-suggested-title {
+  width: 100%;
+  font-size: 1.1rem;
+}
+.location-page-suggested-title h2 {
+  font-weight: normal;
+}
+.location-page-suggested-container {
+  width: 30rem;
+  height: 7rem;
+  background-color: white;
+  margin: 3.5rem 0rem;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  font-size: 1.3rem;
+}
+.location-page-suggested-left {
+  height: 100%;
+  width: 25%;
+}
+.location-page-suggested-left img {
+  height: 100%;
+  width: 100%;
+  border-radius: 0.5rem;
+  object-fit: cover;
+}
+.location-page-suggested-right {
+  color: black;
+  width: 75%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem;
+}
+.location-page-suggested-right i {
+  padding: 1.5rem;
+  background-color: rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  border-radius: 10rem;
+  margin: -1.5rem;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.location-page-suggested-right i:hover {
+  box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.3);
+}
+.location-page-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+.location-page-cards {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  align-items: center;
+  gap: 3rem;
+  justify-content: space-between;
+}
+.location-page-cards .followed-location {
+  background-color: white;
+  color: black;
+  width: 30rem;
+  height: 7rem;
+}
+.primary-location {
+  position: absolute;
+  left: 6rem;
+  bottom: 2.3rem;
+}
+.local-icon {
+  font-size: 1.3rem;
+}
+.button-list {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
