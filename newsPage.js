@@ -585,7 +585,7 @@ const getHeadlinesFromCountries = async function (country, countryName) {
   document.querySelector("#main").style.gap = "0rem";
 
   const response = await fetch(
-    `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=2d63388910ab47ebb8ba7b5f922b092e`
+    `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
   );
   const countryData = await response.json();
   console.log(countryData);
@@ -1005,7 +1005,7 @@ const getNewsFromInput = async function (input) {
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${city}&apiKey=2d63388910ab47ebb8ba7b5f922b092e`
+        `https://newsapi.org/v2/everything?q=${city}&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
       );
       console.log("input", response);
 
@@ -1147,7 +1147,7 @@ const getNewsFromInput = async function (input) {
       </div> `;
       const response = await fetch(
         `
-https://newsapi.org/v2/everything?domains=${source}&apiKey=2d63388910ab47ebb8ba7b5f922b092e`
+https://newsapi.org/v2/everything?domains=${source}&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
       );
       console.log("input", response);
 
@@ -1287,7 +1287,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=2d63388910ab47ebb8ba7
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${topic}&apiKey=2d63388910ab47ebb8ba7b5f922b092e`
+        `https://newsapi.org/v2/everything?q=${topic}&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
       );
       console.log("input", response);
 
@@ -1417,7 +1417,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=2d63388910ab47ebb8ba7
         </div>
       </div> `;
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=2d63388910ab47ebb8ba7b5f922b092e`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
     );
     console.log("input", response);
 
@@ -1629,13 +1629,29 @@ const getNewsFromList = async function (clicked) {
           }
           ${
             clicked === "Local"
-              ? array
-                  .map((el, i) =>
-                    i === 0
-                      ? `<button class="button-clicked button-list">  <i class="fa-solid fa-house local-icon"></i> ${el}</button>`
-                      : `<button class="button-unclicked button-list">${el}</button>`
-                  )
-                  .join("")
+              ? loggedInAs.followedLocation.includes("Serbia")
+                ? array
+                    .map((el, i) =>
+                      i === 0
+                        ? `<button class="button-clicked button-list">  <i class="fa-solid fa-house local-icon"></i> ${el}</button>`
+                        : i === array.length - 1
+                        ? `<button class="button-unclicked button-list">${el}</button>  <div class="special-button-end"><button class="button-unclicked button-list"><i class="fa-solid fa-sliders"></i></button></div>`
+                        : `<button class="button-unclicked button-list">${el}</button> `
+                    )
+                    .join("")
+                : array
+                    .map((el, i) =>
+                      i === array.length - 1
+                        ? `<button class="button-unclicked button-list">${el}</button>
+                      <div class="special-button">
+                      <button class="button-unclicked button-list">Serbia</button></div>
+                      <div class="special-button-end"><button class="button-unclicked button-list"><i class="fa-solid fa-sliders"></i></button></div>
+                      `
+                        : i === 0
+                        ? `<button class="button-clicked button-list">  <i class="fa-solid fa-house local-icon"></i> ${el}</button>`
+                        : `<button class="button-unclicked button-list">${el}</button>`
+                    )
+                    .join("")
               : ""
           }
          ${
@@ -1654,6 +1670,11 @@ const getNewsFromList = async function (clicked) {
         </div>
       </div>
       <div class="first-container" data-first-container="4"></div>`;
+    if (clicked === "Local") {
+      document
+        .querySelector(".special-button-end")
+        .addEventListener("click", getManageLocalHTML);
+    }
 
     if (
       clicked !== "Local" &&
@@ -1754,7 +1775,7 @@ const getNewsFromList = async function (clicked) {
     const response = await fetch(
       `https://newsapi.org/v2/everything?q=${
         differentClicked ? differentClicked : clicked
-      }&apiKey=2d63388910ab47ebb8ba7b5f922b092e`
+      }&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
     );
     console.log("list", response);
 
@@ -1808,7 +1829,7 @@ const changeContainerHTML = async function (
     }
 
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=2d63388910ab47ebb8ba7b5f922b092e`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
     );
     const newsData = await response.json();
 
@@ -1914,7 +1935,7 @@ const getFourthContainerHTML = async function () {
     let k = 0;
     for (let i = 0; i < number; i) {
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=2d63388910ab47ebb8ba7b5f922b092e`
+        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
       );
       const data = await response.json();
 
@@ -2152,7 +2173,7 @@ ${image}
 };
 const getManageLocalCart = function (el) {
   if (el === loggedInAs.followedLocation[0])
-    return ` <div class="followed-location favorite-location primary-location-main">
+    return ` <div class="followed-location-main favorite-location primary-location-main">
 <i class="fa-solid fa-location-dot lts-icon"></i>
       <p class=" favorite-location-title">${el}</p>
       <i class="fa-solid fa-house primary-location"></i>
@@ -2163,7 +2184,7 @@ const getManageLocalCart = function (el) {
       </i>
     </div>`;
   else {
-    return ` <div class="followed-location favorite-location">
+    return ` <div class="followed-location-main favorite-location">
   <i class="fa-solid fa-location-dot lts-icon"></i>
         <p class=" favorite-location-title">${el}</p>
         <i class="fa-solid fa-ellipsis-vertical location-vertical-dots">
@@ -2251,9 +2272,9 @@ ${icon}
 const getHeightForManageContainers = function (el, type) {
   console.log(el.closest(".followed-location"));
   if (
-    el.closest(".followed-location") &&
+    el.closest(".followed-location-main") &&
     !el
-      .closest(".followed-location")
+      .closest(".followed-location-main")
       .classList.contains("primary-location-main")
   )
     return 8.4;
@@ -2309,6 +2330,13 @@ const moveUpByOne = function (el, array) {
   array[index - 1] = temp;
 };
 const getManageLocalHTML = function () {
+  document.querySelectorAll(".list-button-list").forEach((el) => {
+    el.classList.replace("list-clicked", "list-unclicked");
+    if (el.textContent.trim() === "Local") {
+      el.classList.replace("list-unclicked", "list-clicked");
+      return;
+    }
+  });
   if (loggedInAs.followedLocation && loggedInAs.followedLocation.length > 0) {
     loggedInAs.primaryLocation = loggedInAs.followedLocation[0];
     localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
@@ -2317,7 +2345,7 @@ const getManageLocalHTML = function () {
   document.querySelector("#main").style.width = "72rem";
   document.querySelector("#main").innerHTML = `<div class="location-page-main">
         <h1 class="location-page-title">
-          <i class="fa-solid fa-arrow-left"></i> Manage local news
+          <i class="fa-solid fa-arrow-left go-back-suggested"></i> Manage local news
         </h1>
         <div class="location-page-input-container">
           <button class="location-page-button">
@@ -2330,6 +2358,8 @@ const getManageLocalHTML = function () {
             name=""
             id=""
           />
+          <div class="suggestions hidden">
+          <p class="no-suggestions">No suggestions</p></div>
         </div>
       <div class="location-page-wrapper">
         <h2 class="location-page-subtitle">Your local news</h2>
@@ -2357,6 +2387,9 @@ const getManageLocalHTML = function () {
           </div>
         </div>
       </div>`;
+  document
+    .querySelector(".go-back-suggested")
+    .addEventListener("click", firstPageOfFollowing);
 
   if (
     !loggedInAs.followedLocation ||
@@ -2385,7 +2418,7 @@ const getManageLocalHTML = function () {
       el.addEventListener("click", function () {
         lastToFirst(
           el
-            .closest(".followed-location")
+            .closest(".followed-location-main")
             .querySelector(".favorite-location-title").textContent,
           loggedInAs.followedLocation
         );
@@ -2404,11 +2437,102 @@ const getManageLocalHTML = function () {
     document
       .querySelector(".location-page-input")
       .addEventListener("keyup", function () {
-        arrayOfCities.forEach((el) => {
-          if (this.value && el.startsWith(`${this.value}`)) console.log(el);
-        });
+        if (!this.value) {
+          document.querySelector(
+            ".suggestions"
+          ).innerHTML = `<p class="no-suggestions">No suggestions</p>`;
+          return;
+        }
+        if (
+          (document.querySelector(".suggestions").innerHTML =
+            arrayOfCities.filter((el) =>
+              el.toLowerCase().startsWith(`${this.value.toLowerCase()}`)
+            ).length !== 0)
+        ) {
+          document.querySelector(".suggestions").innerHTML = arrayOfCities
+            .filter((el) =>
+              el.toLowerCase().startsWith(`${this.value.toLowerCase()}`)
+            )
+            .map((el) => {
+              if (loggedInAs.followedLocation.includes(`${el}`)) {
+                return `
+            <div class="suggestion">
+              <div class="suggestion-left">
+                <i class="fa-solid fa-location-dot"></i>
+                <p class="suggestion-location-name">${el}</p>
+              </div>
+              <i class="fa-solid fa-star"></i>
+            </div>`;
+              } else
+                return `
+            <div class="suggestion">
+              <div class="suggestion-left">
+                <i class="fa-solid fa-location-dot"></i>
+                <p class="suggestion-location-name">${el}</p>
+              </div>
+              <i class="fa-regular fa-star"></i>
+            </div>`;
+            })
+            .join("");
+        } else {
+          document.querySelector(
+            ".suggestions"
+          ).innerHTML = `<p class="no-suggestions">No suggestions</p>`;
+        }
+        document.querySelectorAll(".suggestion").forEach((el) =>
+          el.addEventListener("click", function () {
+            if (
+              this.querySelector(".fa-star").classList.contains("fa-regular")
+            ) {
+              loggedInAs.followedLocation.push(
+                `${this.querySelector(".suggestion-location-name").textContent}`
+              );
+              localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+              localStorage.setItem("accounts", JSON.stringify(userAccounts));
+              getManageLocalHTML();
+              return;
+            } else {
+              loggedInAs.followedLocation.splice(
+                loggedInAs.followedLocation.indexOf(
+                  `${
+                    this.querySelector(".suggestion-location-name").textContent
+                  }`,
+                  1
+                )
+              );
+              localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+              localStorage.setItem("accounts", JSON.stringify(userAccounts));
+              getManageLocalHTML();
+              return;
+            }
+          })
+        );
       });
 
+    document.addEventListener("click", function (e) {
+      if (
+        e.target.classList.contains("no-suggestions") ||
+        e.target.closest(".location-page-button")
+      ) {
+        document.querySelector(".suggestions").classList.add("hidden");
+        return;
+      }
+      if (e.target.closest(".location-page-input-container")) return;
+      document.querySelector(".suggestions").classList.add("hidden");
+    });
+    document
+      .querySelector(".location-page-input")
+      .addEventListener("focus", function () {
+        document.querySelector(".suggestions").classList.remove("hidden");
+      });
+    document.querySelectorAll(".followed-location-main").forEach((el) =>
+      el.addEventListener("click", function (e) {
+        if (e.target.closest(".location-vertical-dots")) return;
+        getNewsFromInput(
+          `${this.querySelector(".favorite-location-title").textContent.trim()}`
+        );
+      })
+    );
     if (loggedInAs.followedLocation.includes("Serbia")) {
       document.querySelector(".location-page-suggested-title").innerHTML = "";
     } else {
@@ -2428,11 +2552,11 @@ const getManageLocalHTML = function () {
 
         if (
           el
-            .closest(".followed-location")
+            .closest(".followed-location-main")
             .querySelector(".manage-followed-container")
             .classList.contains("container-showing")
         ) {
-          el.closest(".followed-location")
+          el.closest(".followed-location-main")
             .querySelector(".manage-followed-container")
             .classList.replace("container-showing", "container-not-showing");
 
@@ -2475,7 +2599,7 @@ const getManageLocalHTML = function () {
     document.querySelectorAll(".remove-following-location").forEach((el) => {
       el.addEventListener("click", function (e) {
         let location = e.target
-          .closest(".followed-location")
+          .closest(".followed-location-main")
           .querySelector(".favorite-location-title").textContent;
 
         loggedInAs.followedLocation.splice(
@@ -2483,7 +2607,7 @@ const getManageLocalHTML = function () {
           1
         );
 
-        e.target.closest(".followed-location").remove();
+        e.target.closest(".followed-location-main").remove();
         localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
         loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
         userAccounts.forEach((el) => {
@@ -2499,6 +2623,14 @@ const getManageLocalHTML = function () {
   }
 };
 const firstPageOfFollowing = function () {
+  document.querySelectorAll(".list-button-list").forEach((el) => {
+    el.classList.replace("list-clicked", "list-unclicked");
+    if (el.textContent.trim() === "Following") {
+      el.classList.replace("list-unclicked", "list-clicked");
+      return;
+    }
+  });
+
   document.querySelector("#main").style.width = "110rem";
   document.querySelector("#main").style.gap = "0rem";
   document.querySelector("#main").innerHTML = ` <div class="following-buttons">

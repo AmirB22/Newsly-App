@@ -598,7 +598,7 @@ body {
   width: 100%;
   justify-content: space-between;
   gap: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 .page-top-submain-news .page-title {
   margin-top: 0rem;
@@ -621,6 +621,9 @@ body {
   border: 1px solid white;
   cursor: pointer;
   transform: all 0.5s;
+  height: 3.5rem;
+  display: flex;
+  align-items: center;
 }
 .button-unclicked {
   background-color: black;
@@ -917,6 +920,7 @@ body {
 .following-sources-container img {
   width: 15rem;
 }
+.followed-location-main .lts-icon,
 .followed-category .lts-icon,
 .followed-location .lts-icon,
 .followed-search .lts-icon,
@@ -948,6 +952,7 @@ body {
   cursor: pointer;
 }
 .followed-category .lts-icon::before,
+.followed-location-main .lts-icon::before,
 .followed-location .lts-icon::before,
 .followed-search .lts-icon::before,
 .followed-source.lts-icon::before {
@@ -991,6 +996,7 @@ body {
   row-gap: 3.3rem;
   margin: 1rem;
 }
+.followed-location-main,
 .followed-category,
 .followed-location,
 .followed-search,
@@ -1254,32 +1260,34 @@ body {
   width: 100%;
   display: flex;
   height: 4rem;
+  position: relative;
 }
 .location-page-input {
   width: 100%;
   border: 0px;
-  border-radius: 0rem 5rem 5rem 0rem;
-  padding: 1rem;
+  border-radius: 5rem;
+  padding: 1rem 5rem;
   background-color: transparent;
   border: 1px solid white;
   border-left: none;
+  margin-left: -4rem;
+  z-index: 10;
 }
 .location-page-button {
   width: 5%;
   border: 0px;
   border-radius: 5rem 0rem 0rem 5rem;
-  background-color: white;
-  cursor: pointer;
   padding: 1rem 2rem;
   font-size: 1.5rem;
   background-color: transparent;
-  border: 1px solid white;
-  border-right: none;
+  z-index: 11;
 }
 .location-page-input:focus {
   outline: none;
-  background-color: white;
   color: black;
+  background-color: white;
+  border-radius: 2rem 2rem 0rem 0rem;
+  border: 1px solid rgb(144, 144, 144);
 }
 .location-page-subtitle {
   width: 100%;
@@ -1364,7 +1372,8 @@ body {
   gap: 3rem;
   justify-content: space-between;
 }
-.location-page-cards .followed-location {
+.location-page-cards .followed-location,
+.location-page-cards .followed-location-main {
   background-color: white;
   color: black;
   width: 30rem;
@@ -1382,4 +1391,104 @@ body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+}
+.special-button,
+.special-button-end {
+  padding: 0rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  height: 100%;
+}
+.special-button::after,
+.special-button-end::after {
+  content: "";
+  background-color: white;
+  position: absolute;
+  left: 0.5rem;
+  height: 2.5rem;
+  width: 1px;
+}
+.special-button {
+  margin-right: -2rem;
+}
+.suggestions {
+  position: absolute;
+  top: 4rem;
+  width: calc(100% - 4px);
+  display: flex;
+  background-color: white;
+  color: black;
+  flex-direction: column;
+  z-index: 1;
+  max-height: 50rem;
+  box-shadow: 0px 0px 20px 10px rgba(0, 0, 0, 0.4);
+  gap: 1rem;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  border-top: 1px solid rgb(144, 144, 144);
+  left: 50%;
+  transform: translateX(-50%);
+}
+.suggestions::-webkit-scrollbar {
+  width: 5px;
+}
+.suggestions::-webkit-scrollbar-thumb {
+  background-color: lime;
+}
+.suggestion {
+  font-size: 1.7rem;
+  height: 3rem;
+  display: flex;
+  background-color: white;
+  width: calc(100% - 6rem);
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 3rem;
+  cursor: pointer;
+}
+.suggestion-left {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  font-size: 1.3rem;
+}
+.suggestion i {
+  font-size: 1.5rem;
+}
+.suggestion:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.suggestion .fa-star {
+  padding: 1rem;
+  margin: -1rem;
+  border-radius: 3rem;
+  background-color: rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  color: rgb(91, 91, 246);
+}
+.suggestion .fa-location-dot {
+  padding: 0.8rem 1rem;
+  margin: -0.8rem -1rem;
+  border-radius: 3rem;
+  border: 1px solid rgb(144, 144, 144);
+  background-color: rgba(0, 0, 0, 0.06);
+}
+.suggestion .fa-star:hover {
+  box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.3);
+}
+.hidden {
+  display: none;
+}
+.no-suggestions {
+  width: 100%;
+  font-style: italic;
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+}
+.go-back-suggested {
+  cursor: pointer;
 }

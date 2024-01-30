@@ -792,12 +792,7 @@ const loggedIn = function () {
       name = el.username;
 
       /*Getting current account info */
-      let loggedInAs = {
-        username: el.username,
-        password: el.password,
-        email: el.email,
-        joined: el.joined
-      };
+      let loggedInAs = el
 
       /*Changing localStorage data, changing loggedIn to True and LoggedInAs to the currently logged in account */
       localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
