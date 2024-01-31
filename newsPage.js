@@ -213,7 +213,13 @@ const getHomeHTML = function () {
           </div>
         </div>
       </div>`;
-  getWeather("Novi Pazar");
+  getWeather(
+    `${
+      loggedInAs.followedLocation.length > 0
+        ? loggedInAs.followedLocation[0]
+        : "Serbia"
+    }`
+  );
 
   document
     .querySelector(".weather-left-button")
@@ -3702,9 +3708,9 @@ const getForYouContainerHTML = async function () {
 };
 
 checkIfLoggedIn();
-if (Logged) {
-  getHomeHTML();
-  getWeather("Novi Pazar");
-}
+// if (Logged) {
+//   getHomeHTML();
+//   getWeather("Novi Pazar");
+// }
 
 //TODO: ADD BOOKMARKING NEWS.

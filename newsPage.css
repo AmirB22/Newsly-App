@@ -380,10 +380,12 @@ body {
   height: 10rem;
   padding: 1rem 0rem;
   border-bottom: 1px solid rgb(220, 220, 220);
+  position: relative;
 }
 .small-news {
   position: relative;
   height: 100%;
+  width: 100%;
   flex: 7;
 }
 .logo {
@@ -412,6 +414,7 @@ body {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+  width: 80%;
 }
 .small-news-link {
   color: black;
@@ -1161,6 +1164,7 @@ body {
 }
 .home-page-stories {
   cursor: pointer;
+  color: lime;
 }
 
 .dropdown-main {
@@ -1501,4 +1505,27 @@ body {
 }
 .followed-location-main .favorite-location-title {
   margin-left: -9rem;
+}
+.bookmark {
+  position: absolute;
+
+  color: lime;
+  font-size: 1.7rem;
+  padding: 1rem 1.3rem;
+  margin: -1rem -1.3rem;
+  border-radius: 5rem;
+  background-color: rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+}
+.bookmark:hover {
+  box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.3);
+}
+.small-news-bookmark {
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.big-news-main-bookmark {
+  bottom: 1rem;
+  right: 1rem;
 }
