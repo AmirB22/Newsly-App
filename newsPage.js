@@ -2175,7 +2175,8 @@ const getManageLocalCart = function (el) {
   if (el === loggedInAs.followedLocation[0])
     return ` <div class="followed-location-main favorite-location primary-location-main">
 <i class="fa-solid fa-location-dot lts-icon"></i>
-      <p class=" favorite-location-title">${el}</p>
+      <div class="primary-text-container"><p class="primary-location-title">${el}</p>
+      <p class="subtext-primary">Primary (You'll see more stories from here)</p></div>
       <i class="fa-solid fa-house primary-location"></i>
       <i class="fa-solid fa-ellipsis-vertical location-vertical-dots">
         <div class="manage-followed-container container-not-showing">

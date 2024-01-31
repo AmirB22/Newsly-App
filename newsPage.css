@@ -1492,3 +1492,13 @@ body {
 .go-back-suggested {
   cursor: pointer;
 }
+.primary-text-wrapper {
+  display: flex;
+}
+.subtext-primary {
+  font-size: 1.3rem;
+  color: rgb(144, 144, 144);
+}
+.followed-location-main .favorite-location-title {
+  margin-left: -9rem;
+}
