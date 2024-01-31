@@ -501,6 +501,9 @@ const getHTML = function (data, limit = 1000, dataNum) {
       <a class="main-news-link" href="${
         data.articles[i].url
       }"> <div class="main-news">
+       <div class="big-news-main-bookmark bookmark">
+                  <i class="fa-regular fa-bookmark"></i>
+                </div>
             <img
               class="main-news-image"
               src="${data.articles[i].urlToImage}"
@@ -527,6 +530,9 @@ const getHTML = function (data, limit = 1000, dataNum) {
             <a class="on-the-side-news-link" href="${
               data.articles[j].url
             }"><div class="on-the-side-new">
+             <div class="bookmark on-the-side-bookmark">
+                    <i class="fa-regular fa-bookmark"></i>
+                  </div>
               <div class="logo">
               
                 <p>${data.articles[j]?.source.name}</p>
@@ -561,6 +567,7 @@ const getHTML = function (data, limit = 1000, dataNum) {
       }</span>
           </div>
           <div class="small-news-image">
+          <div class="small-news-bookmark-no-image bookmark"><i class="fa-regular fa-bookmark"></i></div>
           </div></a>
         </div>`;
       i++;
@@ -577,7 +584,7 @@ const getHTML = function (data, limit = 1000, dataNum) {
            </div>  `
     );
     document
-      .querySelector(".home-page-stories")
+      .querySelector(".11-page-stories")
       .addEventListener("click", function () {
         getHeadlinesFromCountries("us", "United States");
       });
@@ -591,7 +598,7 @@ const getHeadlinesFromCountries = async function (country, countryName) {
   document.querySelector("#main").style.gap = "0rem";
 
   const response = await fetch(
-    `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
+    `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=f7d451799ca445c0a4bd4922c91322dd`
   );
   const countryData = await response.json();
   console.log(countryData);
@@ -1011,7 +1018,7 @@ const getNewsFromInput = async function (input) {
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${city}&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
+        `https://newsapi.org/v2/everything?q=${city}&apiKey=f7d451799ca445c0a4bd4922c91322dd`
       );
       console.log("input", response);
 
@@ -1115,7 +1122,11 @@ const getNewsFromInput = async function (input) {
             } · ${el.author ?? ""}</span>
           </div>
           <div class="small-news-image">
-          ${el.urlToImage ? `<img src="${el.urlToImage}"/>` : ""}
+          ${
+            el.urlToImage
+              ? `<img src="${el.urlToImage}"/> <div class="small-news-bookmark-with-image bookmark"><i class="fa-regular fa-bookmark"></i></div>`
+              : `<div class="small-news-bookmark-no-image bookmark"><i class="fa-regular fa-bookmark"></i></div>`
+          }
           </div>
         </div></a>`
           )
@@ -1153,7 +1164,7 @@ const getNewsFromInput = async function (input) {
       </div> `;
       const response = await fetch(
         `
-https://newsapi.org/v2/everything?domains=${source}&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
+https://newsapi.org/v2/everything?domains=${source}&apiKey=f7d451799ca445c0a4bd4922c91322dd`
       );
       console.log("input", response);
 
@@ -1257,7 +1268,11 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=6c4f0ed57a334072a74c6
             } · ${el.author ?? ""}</span>
           </div>
           <div class="small-news-image">
-          ${el.urlToImage ? `<img src="${el.urlToImage}"/>` : ""}
+          ${
+            el.urlToImage
+              ? `<img src="${el.urlToImage}"/> <div class="small-news-bookmark-with-image bookmark"><i class="fa-regular fa-bookmark"></i></div>`
+              : `<div class="small-news-bookmark-no-image bookmark"><i class="fa-regular fa-bookmark"></i></div>`
+          }
           </div>
         </div></a>`
           )
@@ -1293,7 +1308,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=6c4f0ed57a334072a74c6
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${topic}&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
+        `https://newsapi.org/v2/everything?q=${topic}&apiKey=f7d451799ca445c0a4bd4922c91322dd`
       );
       console.log("input", response);
 
@@ -1398,7 +1413,11 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=6c4f0ed57a334072a74c6
             } · ${el.author ?? ""}</span>
           </div>
           <div class="small-news-image">
-          ${el.urlToImage ? `<img src="${el.urlToImage}"/>` : ""}
+          ${
+            el.urlToImage
+              ? `<img src="${el.urlToImage}"/> <div class="small-news-bookmark-with-image bookmark"><i class="fa-regular fa-bookmark"></i></div>`
+              : `<div class="small-news-bookmark-no-image bookmark"><i class="fa-regular fa-bookmark"></i></div>`
+          }
           </div>
         </div></a>`
           )
@@ -1423,7 +1442,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=6c4f0ed57a334072a74c6
         </div>
       </div> `;
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=f7d451799ca445c0a4bd4922c91322dd`
     );
     console.log("input", response);
 
@@ -1527,7 +1546,11 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=6c4f0ed57a334072a74c6
             } · ${el.author ?? ""}</span>
           </div>
           <div class="small-news-image">
-          ${el.urlToImage ? `<img src="${el.urlToImage}"/>` : ""}
+          ${
+            el.urlToImage
+              ? `<img src="${el.urlToImage}"/> <div class="small-news-bookmark-with-image bookmark"><i class="fa-regular fa-bookmark"></i></div>`
+              : `<div class="small-news-bookmark-no-image bookmark"><i class="fa-regular fa-bookmark"></i></div>`
+          }
           </div>
         </div></a>`
         )
@@ -1603,6 +1626,7 @@ const getNewsFromList = async function (clicked) {
 
     document.querySelector("#main").innerHTML = `
         <div class="page-top-submain-news">
+        
        <div class="page-top-submain-news-top">
           <h2 class="page-title">
            ${
@@ -1781,7 +1805,7 @@ const getNewsFromList = async function (clicked) {
     const response = await fetch(
       `https://newsapi.org/v2/everything?q=${
         differentClicked ? differentClicked : clicked
-      }&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
+      }&apiKey=f7d451799ca445c0a4bd4922c91322dd`
     );
     console.log("list", response);
 
@@ -1835,7 +1859,7 @@ const changeContainerHTML = async function (
     }
 
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=f7d451799ca445c0a4bd4922c91322dd`
     );
     const newsData = await response.json();
 
@@ -1863,6 +1887,32 @@ const changeContainerHTML = async function (
     if (type === "fifth-container") getFifthContainerHTML(newsData, side);
     if (type === "sixth-container")
       getSixthContainerHTML(newsData, side, dataNum);
+    console.log("123");
+    document.querySelectorAll("a").forEach((el) =>
+      el.addEventListener("click", function (e) {
+        if (e.target.closest(".bookmark")) e.preventDefault();
+        if (
+          e.target
+            .closest(".bookmark")
+            .firstElementChild.classList.contains("fa-regular")
+        ) {
+          e.target
+            .closest(".bookmark")
+            .firstElementChild.classList.replace("fa-regular", "fa-solid");
+          loggedInAs.bookmarked
+            ? (loggedInAs.bookmarked.dateAuthor = e.target
+                .closest(".main-news")
+                .querySelector(".date-author").textContent)
+            : (loggedInAs.bookmarked = {
+                dateAuthor: e.target
+                  .closest(".main-news")
+                  .querySelector(".date-author").textContent,
+              });
+          console.log(loggedInAs);
+          console.log("123");
+        } else e.target.closest(".bookmark").firstElementChild.classList.replace("fa-solid", "fa-regular");
+      })
+    );
   } catch (err) {
     // document.querySelector(".first-container").innerHTML = `${err.message}`;
     console.error(err);
@@ -1882,6 +1932,9 @@ const getSecondContainerHTML = function (data) {
     document.querySelector(".second-container").innerHTML += `   <a href="${
       data.articles[i].url
     }">  <div class="right-side-card">
+    <div class="secondary-bookmark bookmark">
+                <i class="fa-regular fa-bookmark"></i>
+              </div>
             <div class="right-side-card-left">
               <p class="logo">${data.articles[i].source.name}</p>
               <h2 class="right-side-card-title">
@@ -1914,6 +1967,9 @@ const getThirdContainerHTML = function (data, side) {
     document.querySelector(`.for-you-${side}-side`).innerHTML += `<a href="${
       data.articles[i].url
     }"><div class="right-side-card">
+    <div class="secondary-bookmark bookmark">
+                <i class="fa-regular fa-bookmark"></i>
+              </div>
             <div class="right-side-card-left">
               <p class="logo">${data.articles[i].source.name}</p>
               <h2 class="right-side-card-title">
@@ -1941,7 +1997,7 @@ const getFourthContainerHTML = async function () {
     let k = 0;
     for (let i = 0; i < number; i) {
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
+        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=f7d451799ca445c0a4bd4922c91322dd`
       );
       const data = await response.json();
 
@@ -1963,6 +2019,9 @@ const getFourthContainerHTML = async function () {
              <a class="fourth-container-link" href="${
                data.articles[i].url
              }"> <div class="right-side-card">
+             <div class="secondary-bookmark bookmark">
+                <i class="fa-regular fa-bookmark"></i>
+              </div>
             <div class="right-side-card-left">
               <p class="logo">${data.articles[j].source.name}</p>
               <h2 class="right-side-card-title">
@@ -2012,6 +2071,9 @@ const getFifthContainerHTML = function (data, side) {
     ).innerHTML += `<a class="for-you-${side}-link" href="${
       data.articles[i].url
     }"><div class="right-side-card">
+    <div class="secondary-bookmark bookmark">
+                <i class="fa-regular fa-bookmark"></i>
+              </div>
             <div class="right-side-card-left">
               <p class="logo">${data.articles[i].source.name}</p>
               <h2 class="right-side-card-title">
@@ -2053,6 +2115,9 @@ const getSixthContainerHTML = function (data, side, dataNum) {
     ).innerHTML += `<a class="for-you-${side}-link" href="${
       data.articles[i].url
     }"><div class="right-side-card">
+    <div class="secondary-bookmark bookmark">
+                <i class="fa-regular fa-bookmark"></i>
+              </div>
             <div class="right-side-card-left">
               <p class="logo">${data.articles[i].source.name}</p>
               <h2 class="right-side-card-title">
@@ -3708,9 +3773,9 @@ const getForYouContainerHTML = async function () {
 };
 
 checkIfLoggedIn();
-// if (Logged) {
-//   getHomeHTML();
-//   getWeather("Novi Pazar");
-// }
+if (Logged) {
+  getHomeHTML();
+  getWeather("Novi Pazar");
+}
 
 //TODO: ADD BOOKMARKING NEWS.
