@@ -925,6 +925,10 @@ body {
 .following-sources-container img {
   width: 15rem;
 }
+.followed-category-title {
+  width: 17rem;
+  text-wrap: wrap;
+}
 .followed-location-main .lts-icon,
 .followed-category .lts-icon,
 .followed-location .lts-icon,
@@ -1095,6 +1099,9 @@ body {
 }
 .manage-followed-container-bottom {
   padding: 1rem 0rem;
+}
+.following-main-buttons {
+  position: relative;
 }
 .following-main-buttons:hover {
   color: white;
@@ -1544,4 +1551,93 @@ body {
 .small-news-bookmark-with-image {
   right: 18rem;
   bottom: 1.5rem;
+}
+.followed-story-container {
+  display: flex;
+  flex-wrap: wrap;
+  height: 100%;
+  width: 100%;
+  justify-content: start;
+  gap: 5rem;
+  row-gap: 2.2rem;
+}
+.followed-story {
+  width: 100%;
+  display: flex;
+  height: 100%;
+  background-color: white;
+  padding: 1rem;
+  margin: -1rem;
+  border-radius: 0.7rem;
+  border: 1px solid rgb(144, 144, 144);
+  /* box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.1); */
+}
+.followed-story-left {
+  position: relative;
+  flex: 7;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.followed-story-logo {
+  font-size: 1.3rem;
+  margin-left: 1.5rem;
+}
+.followed-story-title {
+  font-size: 1.6rem;
+  font-weight: normal;
+  width: 85%;
+  max-height: 10rem;
+  overflow: hidden;
+}
+.followed-story-date-author {
+  font-size: 1.3rem;
+  position: absolute;
+  bottom: 0px;
+  text-wrap: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 100%;
+}
+.followed-story-right {
+  flex: 3;
+  display: flex;
+  justify-content: end;
+  margin: -0.5rem;
+}
+.followed-story-right img {
+  width: 100%;
+  height: 60%;
+  border-radius: 1rem;
+  object-fit: cover;
+}
+.followed-story-link {
+  color: black;
+  text-decoration: none;
+  width: 30%;
+  padding: 1rem 0rem;
+  height: 15.5rem;
+  position: relative;
+}
+.followed-story-link:hover .followed-story-title {
+  text-decoration: underline;
+}
+.followed-story-bookmark {
+  bottom: 1.5rem;
+  right: 1.5rem;
+}
+.list-clicked-following {
+  color: white;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.list-clicked-following::after {
+  content: "";
+  position: absolute;
+  bottom: -0.1rem;
+  width: 90%;
+  right: 0.8rem;
+  height: 0.5rem;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  background-color: white;
 }

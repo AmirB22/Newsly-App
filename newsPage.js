@@ -307,10 +307,6 @@ const getHomeHTML = function () {
   );
 };
 
-let date;
-let milliseconds;
-let when;
-let since;
 const months = [
   "January",
   "February",
@@ -479,13 +475,6 @@ const getHTML = function (data, limit = 1000, dataNum) {
   ).innerHTML = ` <i class="fa-solid fa-rotate-right"></i>`;
   document.querySelectorAll(".fa-rotate-right").forEach((el) => el.remove());
   for (let i = 0; i < data.articles.length; i) {
-    date = new Date(`${data.articles[i].publishedAt}`);
-    milliseconds = date.getTime();
-    since = new Date().getTime() - +milliseconds;
-    if (since < 86_400_000) when = `${since / 24 / 1000000} hours ago`;
-    else if (since < 2 * 86_400_000) when = "Yesterday";
-    else if (since < 7 * 86_400_000) when = "Last week";
-    else when = "While ago...";
     if (i === limit || i === limit + 1 || i === limit + 2 || i === limit + 3)
       break;
 
@@ -518,9 +507,11 @@ const getHTML = function (data, limit = 1000, dataNum) {
             <h3 class="main-news-title data-title">
              ${data.articles[i].title}
             </h3>
-            <span class="date-author data-date-author">${when} · ${
-        data.articles[i]?.author ?? ""
-      }</span>
+            <span class="date-author data-date-author">${
+              data.articles[i].publishedAt.slice(5, 10) +
+              "-" +
+              data.articles[i].publishedAt.slice(2, 4)
+            } · ${data.articles[i].author ?? ""}</span>
           </div> </a>
           <div class="on-the-side-news" data-side="${dataNum + i}">
             </div>
@@ -550,8 +541,11 @@ ${
                 ${data.articles[j].title}
               </p>
               <span class="date-author-side data-date-author"
-                >${when}· ${data.articles[j].author ?? ""}</i
-              ></span>
+                >${
+                  data.articles[j].publishedAt.slice(5, 10) +
+                  "-" +
+                  data.articles[j].publishedAt.slice(2, 4)
+                } · ${data.articles[j].author ?? ""}</span>
             </div></a>`;
       }
       i += 4;
@@ -571,9 +565,11 @@ ${
                ${data.articles[i].title}
               </h3>
             </div>
-            <span class="date-author data-date-author">${when} · ${
-        data.articles[i].author ?? ""
-      }</span>
+            <span class="date-author data-date-author">${
+              data.articles[i].publishedAt.slice(5, 10) +
+              "-" +
+              data.articles[i].publishedAt.slice(2, 4)
+            } · ${data.articles[i].author ?? ""}</span>
           </div>
           <div class="small-news-image">
           <div class="small-news-bookmark-no-image bookmark"><i class="fa-regular fa-bookmark"></i></div>
@@ -598,23 +594,24 @@ ${
         getHeadlinesFromCountries("us", "United States");
       });
   }
-  console.log(document.querySelectorAll("a"));
-
-  document.querySelectorAll("a").forEach((elem) => {
-    loggedInAs.bookmarks.forEach((el) => {
-      if (el.urlToSource === elem.href) {
-        elem
-          .querySelector(".fa-bookmark")
-          .classList.replace("fa-regular", "fa-solid");
-      }
-    });
-  });
 
   document
-    .querySelector(`.first-container`)
+    .querySelector(`[data-first-container="${dataNum}"]`)
+    .querySelectorAll("a")
+    .forEach((elem) => {
+      loggedInAs.bookmarks.forEach((el) => {
+        if (el.urlToSource === elem.href) {
+          elem
+            .querySelector(".fa-bookmark")
+            .classList.replace("fa-regular", "fa-solid");
+        }
+      });
+    });
+
+  document
+    .querySelector(`[data-first-container="${dataNum}"]`)
     .querySelectorAll("a")
     .forEach((el) => {
-      console.log("b");
       el.addEventListener("click", function (e) {
         if (!e.target.closest(".bookmark")) return;
         if (e.target.closest(".bookmark")) e.preventDefault();
@@ -654,7 +651,6 @@ ${
           }
           localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
           localStorage.setItem("accounts", JSON.stringify(userAccounts));
-          console.log(loggedInAs);
         } else if (
           this.querySelector(".fa-bookmark").classList.contains("fa-solid")
         ) {
@@ -670,7 +666,6 @@ ${
           );
           localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
           localStorage.setItem("accounts", JSON.stringify(userAccounts));
-          console.log(loggedInAs);
         }
       });
     });
@@ -683,10 +678,9 @@ const getHeadlinesFromCountries = async function (country, countryName) {
   document.querySelector("#main").style.gap = "0rem";
 
   const response = await fetch(
-    `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=f4143d2dd62b44dba213f515b32a2373`
+    `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=8043ca8f1412485d8a3011796543a9be`
   );
   const countryData = await response.json();
-  console.log(countryData);
   document.querySelector("#main").innerHTML = `
       <div class="page-top-submain-news">
         <div class="page-top-submain-news-top">
@@ -922,13 +916,6 @@ const getHeadlinesFromCountries = async function (country, countryName) {
 
   getHTML(countryData, 1000, "9");
 
-  console.log(country, countryName);
-  console.log(
-    `Headlines in ${document
-      .querySelector(".country-news")
-      .textContent.trim()} (${country.trim()})`
-  );
-
   if (
     loggedInAs.following &&
     loggedInAs.following.includes(
@@ -943,7 +930,6 @@ const getHeadlinesFromCountries = async function (country, countryName) {
     document
       .querySelector(".list-follow")
       .classList.replace("not-following", "following");
-    console.log("following");
   }
   document
     .querySelector(".list-follow")
@@ -1012,7 +998,6 @@ const getHeadlinesFromCountries = async function (country, countryName) {
   document
     .querySelector(".dropdown-main")
     .addEventListener("click", function () {
-      console.log(this.lastElementChild);
       if (this.lastElementChild.classList.contains("dropdown-active")) {
         this.lastElementChild.classList.replace(
           "dropdown-active",
@@ -1059,7 +1044,6 @@ const getNewsFromInput = async function (input) {
     .querySelectorAll(".list-button-list")
     .forEach((el) => el.classList.replace("list-clicked", "list-unclicked"));
   try {
-    console.log(input);
     if (
       input.toLowerCase() === "business" ||
       input.toLowerCase() === "world" ||
@@ -1103,9 +1087,8 @@ const getNewsFromInput = async function (input) {
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${city}&apiKey=f4143d2dd62b44dba213f515b32a2373`
+        `https://newsapi.org/v2/everything?q=${city}&apiKey=8043ca8f1412485d8a3011796543a9be`
       );
-      console.log("input", response);
 
       const data = await response.json();
 
@@ -1233,7 +1216,6 @@ const getNewsFromInput = async function (input) {
         .querySelector(`[data-first-container="2"]`)
         .querySelectorAll("a")
         .forEach((el) => {
-          console.log("b");
           el.addEventListener("click", function (e) {
             if (!e.target.closest(".bookmark")) return;
             if (e.target.closest(".bookmark")) e.preventDefault();
@@ -1277,7 +1259,6 @@ const getNewsFromInput = async function (input) {
               }
               localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
               localStorage.setItem("accounts", JSON.stringify(userAccounts));
-              console.log(loggedInAs);
             } else if (
               this.querySelector(".fa-bookmark").classList.contains("fa-solid")
             ) {
@@ -1293,7 +1274,6 @@ const getNewsFromInput = async function (input) {
               );
               localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
               localStorage.setItem("accounts", JSON.stringify(userAccounts));
-              console.log(loggedInAs);
             }
           });
         });
@@ -1329,9 +1309,8 @@ const getNewsFromInput = async function (input) {
       </div> `;
       const response = await fetch(
         `
-https://newsapi.org/v2/everything?domains=${source}&apiKey=f4143d2dd62b44dba213f515b32a2373`
+https://newsapi.org/v2/everything?domains=${source}&apiKey=8043ca8f1412485d8a3011796543a9be`
       );
-      console.log("input", response);
 
       const data = await response.json();
 
@@ -1459,7 +1438,6 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=f4143d2dd62b44dba213f
         .querySelector(`[data-first-container="7"]`)
         .querySelectorAll("a")
         .forEach((el) => {
-          console.log("b");
           el.addEventListener("click", function (e) {
             if (!e.target.closest(".bookmark")) return;
             if (e.target.closest(".bookmark")) e.preventDefault();
@@ -1503,7 +1481,6 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=f4143d2dd62b44dba213f
               }
               localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
               localStorage.setItem("accounts", JSON.stringify(userAccounts));
-              console.log(loggedInAs);
             } else if (
               this.querySelector(".fa-bookmark").classList.contains("fa-solid")
             ) {
@@ -1519,7 +1496,6 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=f4143d2dd62b44dba213f
               );
               localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
               localStorage.setItem("accounts", JSON.stringify(userAccounts));
-              console.log(loggedInAs);
             }
           });
         });
@@ -1555,9 +1531,8 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=f4143d2dd62b44dba213f
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${topic}&apiKey=f4143d2dd62b44dba213f515b32a2373`
+        `https://newsapi.org/v2/everything?q=${topic}&apiKey=8043ca8f1412485d8a3011796543a9be`
       );
-      console.log("input", response);
 
       const data = await response.json();
 
@@ -1635,8 +1610,6 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=f4143d2dd62b44dba213f
       <p>Try searching up something else!</p></div>
       </div>`);
 
-      console.log(data.articles);
-
       document.querySelector(`[data-first-container="6"]`).innerHTML =
         data.articles
           .map(
@@ -1686,7 +1659,6 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=f4143d2dd62b44dba213f
         .querySelector(`[data-first-container="6"]`)
         .querySelectorAll("a")
         .forEach((el) => {
-          console.log("b");
           el.addEventListener("click", function (e) {
             if (!e.target.closest(".bookmark")) return;
             if (e.target.closest(".bookmark")) e.preventDefault();
@@ -1730,7 +1702,6 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=f4143d2dd62b44dba213f
               }
               localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
               localStorage.setItem("accounts", JSON.stringify(userAccounts));
-              console.log(loggedInAs);
             } else if (
               this.querySelector(".fa-bookmark").classList.contains("fa-solid")
             ) {
@@ -1746,7 +1717,6 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=f4143d2dd62b44dba213f
               );
               localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
               localStorage.setItem("accounts", JSON.stringify(userAccounts));
-              console.log(loggedInAs);
             }
           });
         });
@@ -1770,9 +1740,8 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=f4143d2dd62b44dba213f
         </div>
       </div> `;
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=f4143d2dd62b44dba213f515b32a2373`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=8043ca8f1412485d8a3011796543a9be`
     );
-    console.log("input", response);
 
     const data = await response.json();
 
@@ -1900,7 +1869,6 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=f4143d2dd62b44dba213f
       .querySelector(`[data-first-container="5"]`)
       .querySelectorAll("a")
       .forEach((el) => {
-        console.log("b");
         el.addEventListener("click", function (e) {
           if (!e.target.closest(".bookmark")) return;
           if (e.target.closest(".bookmark")) e.preventDefault();
@@ -1941,7 +1909,6 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=f4143d2dd62b44dba213f
             }
             localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
             localStorage.setItem("accounts", JSON.stringify(userAccounts));
-            console.log(loggedInAs);
           } else if (
             this.querySelector(".fa-bookmark").classList.contains("fa-solid")
           ) {
@@ -1957,7 +1924,6 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=f4143d2dd62b44dba213f
             );
             localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
             localStorage.setItem("accounts", JSON.stringify(userAccounts));
-            console.log(loggedInAs);
           }
         });
       });
@@ -2189,7 +2155,6 @@ const getNewsFromList = async function (clicked) {
           clicked = document.querySelector(".page-title").textContent;
         else clicked = e.target.textContent;
         changeContainerHTML(`${clicked}`, 1000, "first-container", "", "4");
-        console.log(123);
       })
     );
     document.querySelector(".first-container").style.width = "82rem";
@@ -2211,9 +2176,8 @@ const getNewsFromList = async function (clicked) {
     const response = await fetch(
       `https://newsapi.org/v2/everything?q=${
         differentClicked ? differentClicked : clicked
-      }&apiKey=f4143d2dd62b44dba213f515b32a2373`
+      }&apiKey=8043ca8f1412485d8a3011796543a9be`
     );
-    console.log("list", response);
 
     const data = await response.json();
 
@@ -2265,11 +2229,11 @@ const changeContainerHTML = async function (
     }
 
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=f4143d2dd62b44dba213f515b32a2373`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=8043ca8f1412485d8a3011796543a9be`
     );
     const newsData = await response.json();
 
-    console.log("container", response);
+    "container", response;
 
     if (
       newsData.message &&
@@ -2302,13 +2266,6 @@ const getSecondContainerHTML = function (data) {
   const array = [2, 3, 4];
 
   for (let i = 0; i < array[Math.floor(Math.random() * 2)]; i++) {
-    date = new Date(`${data.articles[i].publishedAt}`);
-    milliseconds = date.getTime();
-    since = new Date().getTime() - +milliseconds;
-    if (since < 86_400_000) when = `${since / 24} hours ago`;
-    else if (since < 2 * 86_400_000) when = "Yesterday";
-    else if (since < 7 * 86_400_000) when = "Last week";
-    else when = "While ago...";
     document.querySelector(
       ".second-container"
     ).innerHTML += `   <a class="data-link" href="${
@@ -2322,9 +2279,11 @@ const getSecondContainerHTML = function (data) {
               <h2 class="right-side-card-title data-title">
                ${data.articles[i].title}
               </h2>
-              <p class="date-author-side data-date-author">${when} · ${
-      data.articles[i].author ?? ""
-    }</p>
+              <p class="date-author-side data-date-author">${
+                data.articles[i].publishedAt.slice(5, 10) +
+                "-" +
+                data.articles[i].publishedAt.slice(2, 4)
+              } · ${data.articles[i].author ?? ""}</p>
             </div>
             <div class="right-side-card-right">
               <img
@@ -2352,7 +2311,6 @@ const getSecondContainerHTML = function (data) {
     .querySelector(`.second-container`)
     .querySelectorAll("a")
     .forEach((el) => {
-      console.log("b");
       el.addEventListener("click", function (e) {
         if (!e.target.closest(".bookmark")) return;
         if (e.target.closest(".bookmark")) e.preventDefault();
@@ -2392,7 +2350,6 @@ const getSecondContainerHTML = function (data) {
           }
           localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
           localStorage.setItem("accounts", JSON.stringify(userAccounts));
-          console.log(loggedInAs);
         } else if (
           this.querySelector(".fa-bookmark").classList.contains("fa-solid")
         ) {
@@ -2408,21 +2365,12 @@ const getSecondContainerHTML = function (data) {
           );
           localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
           localStorage.setItem("accounts", JSON.stringify(userAccounts));
-          console.log(loggedInAs);
         }
       });
     });
 };
 const getThirdContainerHTML = function (data, side) {
   for (let i = 0; i < 3; i++) {
-    date = new Date(`${data.articles[i].publishedAt}`);
-    milliseconds = date.getTime();
-    since = new Date().getTime() - +milliseconds;
-    if (since < 86_400_000) when = `${since / 24} hours ago`;
-    else if (since < 2 * 86_400_000) when = "Yesterday";
-    else if (since < 7 * 86_400_000) when = "Last week";
-    else when = "While ago...";
-
     document.querySelector(
       `[data-foryou${side}="1"]`
     ).innerHTML += `<a class="data-link" href="${
@@ -2436,9 +2384,11 @@ const getThirdContainerHTML = function (data, side) {
               <h2 class="right-side-card-title data-title">
                ${data.articles[i].title}
               </h2>
-              <p class="date-author-side data-date-author">${when} · ${
-      data.articles[i].author ?? ""
-    }</p>
+              <p class="date-author-side data-date-author">$${
+                data.articles[i].publishedAt.slice(5, 10) +
+                "-" +
+                data.articles[i].publishedAt.slice(2, 4)
+              } · ${data.articles[i].author ?? ""}</p>
             </div>
             <div class="right-side-card-right">
               <img
@@ -2466,7 +2416,6 @@ const getThirdContainerHTML = function (data, side) {
     .querySelector(`[data-foryou${side}="1"]`)
     .querySelectorAll("a")
     .forEach((el) => {
-      console.log("b");
       el.addEventListener("click", function (e) {
         if (!e.target.closest(".bookmark")) return;
         if (e.target.closest(".bookmark")) e.preventDefault();
@@ -2506,7 +2455,6 @@ const getThirdContainerHTML = function (data, side) {
           }
           localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
           localStorage.setItem("accounts", JSON.stringify(userAccounts));
-          console.log(loggedInAs);
         } else if (
           this.querySelector(".fa-bookmark").classList.contains("fa-solid")
         ) {
@@ -2522,7 +2470,6 @@ const getThirdContainerHTML = function (data, side) {
           );
           localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
           localStorage.setItem("accounts", JSON.stringify(userAccounts));
-          console.log(loggedInAs);
         }
       });
     });
@@ -2535,11 +2482,9 @@ const getFourthContainerHTML = async function () {
     let k = 0;
     for (let i = 0; i < number; i) {
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=f4143d2dd62b44dba213f515b32a2373`
+        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=8043ca8f1412485d8a3011796543a9be`
       );
       const data = await response.json();
-
-      console.log("fourth", response);
 
       if (!response.ok) throw new Error();
 
@@ -2565,9 +2510,11 @@ const getFourthContainerHTML = async function () {
               <h2 class="right-side-card-title data-title">
                ${data.articles[j].title}
               </h2>
-              <p class="date-author-side data-date-author">${when} · ${
-          data.articles[j].author ?? ""
-        }</p>
+              <p class="date-author-side data-date-author">${
+                data.articles[j].publishedAt.slice(5, 10) +
+                "-" +
+                data.articles[j].publishedAt.slice(2, 4)
+              } · ${data.articles[j].author ?? ""}</p>
             </div>
             <div class="right-side-card-right">
               <img
@@ -2604,7 +2551,6 @@ const getFourthContainerHTML = async function () {
       .querySelector(`.fourth-container-wrapper`)
       .querySelectorAll("a")
       .forEach((el) => {
-        console.log("b");
         el.addEventListener("click", function (e) {
           if (!e.target.closest(".bookmark")) return;
           if (e.target.closest(".bookmark")) e.preventDefault();
@@ -2645,7 +2591,6 @@ const getFourthContainerHTML = async function () {
             }
             localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
             localStorage.setItem("accounts", JSON.stringify(userAccounts));
-            console.log(loggedInAs);
           } else if (
             this.querySelector(".fa-bookmark").classList.contains("fa-solid")
           ) {
@@ -2661,7 +2606,6 @@ const getFourthContainerHTML = async function () {
             );
             localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
             localStorage.setItem("accounts", JSON.stringify(userAccounts));
-            console.log(loggedInAs);
           }
         });
       });
@@ -2674,14 +2618,6 @@ const getFifthContainerHTML = function (data, side) {
   side === "right" ? (i = 2) : (i = 0);
   let k = i + 2;
   for (i; i < k; i++) {
-    date = new Date(`${data.articles[i].publishedAt}`);
-    milliseconds = date.getTime();
-    since = new Date().getTime() - +milliseconds;
-    if (since < 86_400_000) when = `${since / 24} hours ago`;
-    else if (since < 2 * 86_400_000) when = "Yesterday";
-    else if (since < 7 * 86_400_000) when = "Last week";
-    else when = "A week ago";
-
     document.querySelector(
       `[data-foryou${side}="2"]`
     ).innerHTML += `<a class="for-you-${side}-link data-link" href="${
@@ -2695,9 +2631,11 @@ const getFifthContainerHTML = function (data, side) {
               <h2 class="right-side-card-title data-title">
                ${data.articles[i].title}
               </h2>
-              <p class="date-author data-date-author">${when} · ${
-      data.articles[i].author ?? ""
-    }</p>
+              <p class="date-author data-date-author">${
+                data.articles[i].publishedAt.slice(5, 10) +
+                "-" +
+                data.articles[i].publishedAt.slice(2, 4)
+              } · ${data.articles[i].author ?? ""}</p>
             </div>
           ${
             data.articles[i].urlToImage
@@ -2729,7 +2667,6 @@ const getFifthContainerHTML = function (data, side) {
     .querySelector(`[data-foryou${side}="2"]`)
     .querySelectorAll("a")
     .forEach((el) => {
-      console.log("b");
       el.addEventListener("click", function (e) {
         if (!e.target.closest(".bookmark")) return;
         if (e.target.closest(".bookmark")) e.preventDefault();
@@ -2769,7 +2706,6 @@ const getFifthContainerHTML = function (data, side) {
           }
           localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
           localStorage.setItem("accounts", JSON.stringify(userAccounts));
-          console.log(loggedInAs);
         } else if (
           this.querySelector(".fa-bookmark").classList.contains("fa-solid")
         ) {
@@ -2785,7 +2721,6 @@ const getFifthContainerHTML = function (data, side) {
           );
           localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
           localStorage.setItem("accounts", JSON.stringify(userAccounts));
-          console.log(loggedInAs);
         }
       });
     });
@@ -2795,14 +2730,6 @@ const getSixthContainerHTML = function (data, side, dataNum) {
   side === "right" ? (i = 2) : (i = 0);
   let k = i + 2;
   for (i; i < k; i++) {
-    date = new Date(`${data.articles[i].publishedAt}`);
-    milliseconds = date.getTime();
-    since = new Date().getTime() - +milliseconds;
-    if (since < 86_400_000) when = `${since / 24} hours ago`;
-    else if (since < 2 * 86_400_000) when = "Yesterday";
-    else if (since < 7 * 86_400_000) when = "Last week";
-    else when = "While ago...";
-
     document.querySelector(
       `[data-foryou${side}="${dataNum}"]`
     ).innerHTML += `<a class="for-you-${side}-link data-link" href="${
@@ -2816,9 +2743,11 @@ const getSixthContainerHTML = function (data, side, dataNum) {
               <h2 class="right-side-card-title data-title">
                ${data.articles[i].title}
               </h2>
-              <p class="date-author data-date-author">${when} · ${
-      data.articles[i].author ?? ""
-    }</p>
+              <p class="date-author data-date-author">${
+                data.articles[i].publishedAt.slice(5, 10) +
+                "-" +
+                data.articles[i].publishedAt.slice(2, 4)
+              } · ${data.articles[i].author ?? ""}</p>
             </div>
           ${
             data.articles[i].urlToImage
@@ -2834,7 +2763,7 @@ const getSixthContainerHTML = function (data, side, dataNum) {
           </div></a>`;
   }
   document
-    .querySelector(`[data-foryou${side}="3"]`)
+    .querySelector(`[data-foryou${side}="${dataNum}"]`)
     .querySelectorAll("a")
     .forEach((elem) => {
       loggedInAs.bookmarks.forEach((el) => {
@@ -2847,10 +2776,9 @@ const getSixthContainerHTML = function (data, side, dataNum) {
     });
 
   document
-    .querySelector(`[data-foryou${side}="3"]`)
+    .querySelector(`[data-foryou${side}="${dataNum}"]`)
     .querySelectorAll("a")
     .forEach((el) => {
-      console.log("b");
       el.addEventListener("click", function (e) {
         if (!e.target.closest(".bookmark")) return;
         if (e.target.closest(".bookmark")) e.preventDefault();
@@ -2890,7 +2818,6 @@ const getSixthContainerHTML = function (data, side, dataNum) {
           }
           localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
           localStorage.setItem("accounts", JSON.stringify(userAccounts));
-          console.log(loggedInAs);
         } else if (
           this.querySelector(".fa-bookmark").classList.contains("fa-solid")
         ) {
@@ -2906,7 +2833,6 @@ const getSixthContainerHTML = function (data, side, dataNum) {
           );
           localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
           localStorage.setItem("accounts", JSON.stringify(userAccounts));
-          console.log(loggedInAs);
         }
       });
     });
@@ -2927,7 +2853,6 @@ const hideManageFollowing = function (e) {
 };
 const getFollowingCart = function (el) {
   let image;
-  console.log(el.startsWith("Headlines"));
   if (el.startsWith("Headlines")) {
     image = `<img class="${el} following-icon" src="${images["Headlines"]}" alt="" />`;
   } else if (
@@ -3016,7 +2941,7 @@ const getManageLocalCart = function (el) {
   if (el === loggedInAs.followedLocation[0])
     return ` <div class="followed-location-main favorite-location primary-location-main">
 <i class="fa-solid fa-location-dot lts-icon"></i>
-      <div class="primary-text-container"><p class="primary-location-title">${el}</p>
+      <div class="primary-text-container"><p class="primary-location-title location-title">${el}</p>
       <p class="subtext-primary">Primary (You'll see more stories from here)</p></div>
       <i class="fa-solid fa-house primary-location"></i>
       <i class="fa-solid fa-ellipsis-vertical location-vertical-dots">
@@ -3028,7 +2953,7 @@ const getManageLocalCart = function (el) {
   else {
     return ` <div class="followed-location-main favorite-location">
   <i class="fa-solid fa-location-dot lts-icon"></i>
-        <p class=" favorite-location-title">${el}</p>
+        <p class=" favorite-location-title location-title">${el}</p>
         <i class="fa-solid fa-ellipsis-vertical location-vertical-dots">
           <div class="manage-followed-container container-not-showing">
             <p class="set-as-primary"><i class="fa-solid fa-location-dot"></i>Set as primary</p>
@@ -3112,7 +3037,6 @@ ${icon}
     </div>`;
 };
 const getHeightForManageContainers = function (el, type) {
-  console.log(el.closest(".followed-location"));
   if (
     el.closest(".followed-location-main") &&
     !el
@@ -3170,6 +3094,18 @@ const moveUpByOne = function (el, array) {
   let temp = array[index];
   array[index] = array[index - 1];
   array[index - 1] = temp;
+};
+const hideInput = function (e) {
+  if (
+    e.target.classList.contains("no-suggestions") ||
+    e.target.closest(".location-page-button")
+  ) {
+    document.querySelector(".suggestions").classList.add("hidden");
+    return;
+  }
+  if (e.target.closest(".location-page-input-container")) return;
+  document.querySelector(".suggestions").classList.add("hidden");
+  document.removeEventListener("click", hideInput);
 };
 const getManageLocalHTML = function () {
   document.querySelectorAll(".list-button-list").forEach((el) => {
@@ -3276,118 +3212,6 @@ const getManageLocalHTML = function () {
       });
     });
 
-    document
-      .querySelector(".location-page-input")
-      .addEventListener("keyup", function () {
-        if (!this.value) {
-          document.querySelector(
-            ".suggestions"
-          ).innerHTML = `<p class="no-suggestions">No suggestions</p>`;
-          return;
-        }
-        if (
-          (document.querySelector(".suggestions").innerHTML =
-            arrayOfCities.filter((el) =>
-              el.toLowerCase().startsWith(`${this.value.toLowerCase()}`)
-            ).length !== 0)
-        ) {
-          document.querySelector(".suggestions").innerHTML = arrayOfCities
-            .filter((el) =>
-              el.toLowerCase().startsWith(`${this.value.toLowerCase()}`)
-            )
-            .map((el) => {
-              if (loggedInAs.followedLocation.includes(`${el}`)) {
-                return `
-            <div class="suggestion">
-              <div class="suggestion-left">
-                <i class="fa-solid fa-location-dot"></i>
-                <p class="suggestion-location-name">${el}</p>
-              </div>
-              <i class="fa-solid fa-star"></i>
-            </div>`;
-              } else
-                return `
-            <div class="suggestion">
-              <div class="suggestion-left">
-                <i class="fa-solid fa-location-dot"></i>
-                <p class="suggestion-location-name">${el}</p>
-              </div>
-              <i class="fa-regular fa-star"></i>
-            </div>`;
-            })
-            .join("");
-        } else {
-          document.querySelector(
-            ".suggestions"
-          ).innerHTML = `<p class="no-suggestions">No suggestions</p>`;
-        }
-        document.querySelectorAll(".suggestion").forEach((el) =>
-          el.addEventListener("click", function () {
-            if (
-              this.querySelector(".fa-star").classList.contains("fa-regular")
-            ) {
-              loggedInAs.followedLocation.push(
-                `${this.querySelector(".suggestion-location-name").textContent}`
-              );
-              localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
-              localStorage.setItem("accounts", JSON.stringify(userAccounts));
-              getManageLocalHTML();
-              return;
-            } else {
-              loggedInAs.followedLocation.splice(
-                loggedInAs.followedLocation.indexOf(
-                  `${
-                    this.querySelector(".suggestion-location-name").textContent
-                  }`,
-                  1
-                )
-              );
-              localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
-              localStorage.setItem("accounts", JSON.stringify(userAccounts));
-              getManageLocalHTML();
-              return;
-            }
-          })
-        );
-      });
-
-    document.addEventListener("click", function (e) {
-      if (
-        e.target.classList.contains("no-suggestions") ||
-        e.target.closest(".location-page-button")
-      ) {
-        document.querySelector(".suggestions").classList.add("hidden");
-        return;
-      }
-      if (e.target.closest(".location-page-input-container")) return;
-      document.querySelector(".suggestions").classList.add("hidden");
-    });
-    document
-      .querySelector(".location-page-input")
-      .addEventListener("focus", function () {
-        document.querySelector(".suggestions").classList.remove("hidden");
-      });
-    document.querySelectorAll(".followed-location-main").forEach((el) =>
-      el.addEventListener("click", function (e) {
-        if (e.target.closest(".location-vertical-dots")) return;
-        getNewsFromInput(
-          `${this.querySelector(".favorite-location-title").textContent.trim()}`
-        );
-      })
-    );
-    if (loggedInAs.followedLocation.includes("Serbia")) {
-      document.querySelector(".location-page-suggested-title").innerHTML = "";
-    } else {
-      document
-        .querySelector(".add-suggested")
-        .addEventListener("click", function () {
-          loggedInAs.followedLocation.unshift(
-            `${this.parentElement.textContent.trim()}`
-          );
-          getManageLocalHTML();
-        });
-    }
-
     document.querySelectorAll(".location-vertical-dots").forEach((el) =>
       el.addEventListener("click", function (e) {
         if (e.target.closest(".manage-followed-container")) return;
@@ -3442,7 +3266,7 @@ const getManageLocalHTML = function () {
       el.addEventListener("click", function (e) {
         let location = e.target
           .closest(".followed-location-main")
-          .querySelector(".favorite-location-title").textContent;
+          .querySelector(".location-title").textContent;
 
         loggedInAs.followedLocation.splice(
           loggedInAs.followedLocation.indexOf(`${location}`),
@@ -3463,6 +3287,109 @@ const getManageLocalHTML = function () {
       });
     });
   }
+  document
+    .querySelector(".location-page-input")
+    .addEventListener("keyup", function () {
+      if (!this.value) {
+        document.querySelector(
+          ".suggestions"
+        ).innerHTML = `<p class="no-suggestions">No suggestions</p>`;
+        return;
+      }
+      if (
+        (document.querySelector(".suggestions").innerHTML =
+          arrayOfCities.filter((el) =>
+            el.toLowerCase().startsWith(`${this.value.toLowerCase()}`)
+          ).length !== 0)
+      ) {
+        document.querySelector(".suggestions").innerHTML = arrayOfCities
+          .filter((el) =>
+            el.toLowerCase().startsWith(`${this.value.toLowerCase()}`)
+          )
+          .map((el) => {
+            if (loggedInAs.followedLocation.includes(`${el}`)) {
+              return `
+            <div class="suggestion">
+              <div class="suggestion-left">
+                <i class="fa-solid fa-location-dot"></i>
+                <p class="suggestion-location-name">${el}</p>
+              </div>
+              <i class="fa-solid fa-star"></i>
+            </div>`;
+            } else
+              return `
+            <div class="suggestion">
+              <div class="suggestion-left">
+                <i class="fa-solid fa-location-dot"></i>
+                <p class="suggestion-location-name">${el}</p>
+              </div>
+              <i class="fa-regular fa-star"></i>
+            </div>`;
+          })
+          .join("");
+      } else {
+        document.querySelector(
+          ".suggestions"
+        ).innerHTML = `<p class="no-suggestions">No suggestions</p>`;
+      }
+      document.querySelectorAll(".suggestion").forEach((el) =>
+        el.addEventListener("click", function () {
+          if (this.querySelector(".fa-star").classList.contains("fa-regular")) {
+            loggedInAs.followedLocation.push(
+              `${this.querySelector(".suggestion-location-name").textContent}`
+            );
+            localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+            localStorage.setItem("accounts", JSON.stringify(userAccounts));
+            getManageLocalHTML();
+            return;
+          } else {
+            loggedInAs.followedLocation.splice(
+              loggedInAs.followedLocation.indexOf(
+                `${
+                  this.querySelector(".suggestion-location-name").textContent
+                }`,
+                1
+              )
+            );
+            localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+            localStorage.setItem("accounts", JSON.stringify(userAccounts));
+            getManageLocalHTML();
+            return;
+          }
+        })
+      );
+    });
+
+  document
+    .querySelector(".location-page-input")
+    .addEventListener("focus", function () {
+      document.addEventListener("click", hideInput);
+    });
+  document
+    .querySelector(".location-page-input")
+    .addEventListener("focus", function () {
+      document.querySelector(".suggestions").classList.remove("hidden");
+    });
+  document.querySelectorAll(".followed-location-main").forEach((el) =>
+    el.addEventListener("click", function (e) {
+      if (e.target.closest(".location-vertical-dots")) return;
+      getNewsFromInput(
+        `${this.querySelector(".favorite-location-title").textContent.trim()}`
+      );
+    })
+  );
+  if (loggedInAs.followedLocation.includes("Serbia")) {
+    document.querySelector(".location-page-suggested-title").innerHTML = "";
+  } else {
+    document
+      .querySelector(".add-suggested")
+      .addEventListener("click", function () {
+        loggedInAs.followedLocation.unshift(
+          `${this.parentElement.textContent.trim()}`
+        );
+        getManageLocalHTML();
+      });
+  }
 };
 const firstPageOfFollowing = function () {
   document.querySelectorAll(".list-button-list").forEach((el) => {
@@ -3476,7 +3403,7 @@ const firstPageOfFollowing = function () {
   document.querySelector("#main").style.width = "110rem";
   document.querySelector("#main").style.gap = "0rem";
   document.querySelector("#main").innerHTML = ` <div class="following-buttons">
-        <button class="following-main-buttons">Topics & sources</button>
+        <button class="following-main-buttons list-clicked-following">Topics & sources</button>
         <button class="following-main-buttons">Saved searches</button>
         <button class="following-main-buttons">Saved stories</button>
       </div>
@@ -4179,7 +4106,7 @@ const firstPageOfFollowing = function () {
 const secondPageOfFollowing = function () {
   document.querySelector("#main").innerHTML = `<div class="following-buttons">
         <button class="following-main-buttons">Topics & sources</button>
-        <button class="following-main-buttons">Saved searches</button>
+        <button class="following-main-buttons list-clicked-following">Saved searches</button>
         <button class="following-main-buttons">Saved stories</button>
       </div>
       <div class="following-container">
@@ -4392,7 +4319,7 @@ const thirdPageOfFollowing = function () {
   document.querySelector("#main").innerHTML = `<div class="following-buttons">
         <button class="following-main-buttons">Topics & sources</button>
         <button class="following-main-buttons">Saved searches</button>
-        <button class="following-main-buttons">Saved stories</button>
+        <button class="following-main-buttons list-clicked-following">Saved stories</button>
       </div>
       <div class="following-container">
         <div class="following-page">
@@ -4406,18 +4333,142 @@ const thirdPageOfFollowing = function () {
           </div>
         </div>
       </div>`;
+  if (!loggedInAs.bookmarks || loggedInAs.bookmarks.length === 0) {
+    document.querySelector(
+      ".category-following-page"
+    ).innerHTML = `   <div class="following-categories-container">
+              <img src="https://lh3.googleusercontent.com/7Iv4pkYA_hqsvlyo6XNy3UU0tUYgBR9rGrDHekm8-6cHO14jbUrOu8dCU86to2kzYoRVHJn0Ow=rw" alt="" />
+              <p>
+               Your saved stories will appear here.
+              </p>
+            </div>`;
+  } else {
+    document.querySelector(".category-following-page").innerHTML = `
+         <div class="followed-story-container">
+            </div>`;
+    document.querySelector(".followed-story-container").innerHTML =
+      loggedInAs.bookmarks
+        .map(
+          (el, i) => `   <a class="followed-story-link data-link" href="${
+            loggedInAs.bookmarks[i].urlToSource
+          }">
+                <div class="followed-story-bookmark bookmark">
+                  <i class="fa-solid fa-bookmark"></i>
+                </div>
+                <div class="followed-story">
+                  <div class="followed-story-left">
+                    <p class="followed-story-logo data-source">${
+                      loggedInAs.bookmarks[i].source
+                    }</p>
+                    <h3 class="followed-story-title data-title">
+                   ${loggedInAs.bookmarks[i].title}
+                    </h3>
+                    <p class="followed-story-date-author data-date-author">
+                    ${loggedInAs.bookmarks[i].authorDate}
+                    </p>
+                  </div>
+                ${
+                  loggedInAs.bookmarks[i].imageUrl
+                    ? `  <div class="followed-story-right">
+                    <img class="data-image"
+                      src="${loggedInAs.bookmarks[i].imageUrl}"
+                      alt=""
+                    />
+                  </div>`
+                    : ""
+                }
+                </div>
+              </a>`
+        )
+        .join("");
+
+    document
+      .querySelector(`.followed-story-container`)
+      .querySelectorAll("a")
+      .forEach((el) => {
+        el.addEventListener("click", function (e) {
+          if (!e.target.closest(".bookmark")) return;
+          if (e.target.closest(".bookmark")) e.preventDefault();
+          if (
+            this.querySelector(".fa-bookmark").classList.contains("fa-regular")
+          ) {
+            this.querySelector(".fa-bookmark").classList.replace(
+              "fa-regular",
+              "fa-solid"
+            );
+            if (!loggedInAs.bookmarks) {
+              loggedInAs.bookmarks = [
+                {
+                  imageUrl: this.querySelector(".data-image")
+                    ? this.querySelector(".data-image").src
+                    : null,
+                  title: this.querySelector(".data-title")
+                    .textContent.replaceAll("\n", " ")
+                    .trim(),
+                  authorDate:
+                    this.querySelector(".data-date-author").textContent,
+                  source: this.querySelector(".data-source").textContent,
+                  urlToSource: this.href,
+                },
+              ];
+            } else if (loggedInAs.bookmarks) {
+              loggedInAs.bookmarks.push({
+                imageUrl: this.querySelector(".data-image")
+                  ? this.querySelector(".data-image").src
+                  : null,
+                title: this.querySelector(".data-title")
+                  .textContent.replaceAll("\n", " ")
+                  .trim(),
+                authorDate: this.querySelector(".data-date-author").textContent,
+                source: this.querySelector(".data-source").textContent,
+                urlToSource: this.href,
+              });
+            }
+            localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+            localStorage.setItem("accounts", JSON.stringify(userAccounts));
+          } else if (
+            this.querySelector(".fa-bookmark").classList.contains("fa-solid")
+          ) {
+            this.querySelector(".fa-bookmark").classList.replace(
+              "fa-solid",
+              "fa-regular"
+            );
+            loggedInAs.bookmarks.splice(
+              loggedInAs.bookmarks.findIndex(
+                (el) => el.urlToSource === this.href
+              ),
+              1
+            );
+            localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+            localStorage.setItem("accounts", JSON.stringify(userAccounts));
+          }
+        });
+      });
+  }
   getFollowingContainerHTML();
 };
 const getFollowingContainerHTML = function () {
   document.querySelectorAll(".following-main-buttons").forEach((el) =>
     el.addEventListener("click", function (e) {
       if (e.target.textContent.trim() === "Topics & sources") {
+        document
+          .querySelectorAll(".following-main-buttons")
+          .forEach((el) => el.classList.remove("list-clicked"));
+        e.target.classList.add("list-clicked");
         firstPageOfFollowing();
       }
       if (e.target.textContent.trim() === "Saved searches") {
+        document
+          .querySelectorAll(".following-main-buttons")
+          .forEach((el) => el.classList.remove("list-clicked"));
+        e.target.classList.add("list-clicked");
         secondPageOfFollowing();
       }
       if (e.target.textContent.trim() === "Saved stories") {
+        document
+          .querySelectorAll(".following-main-buttons")
+          .forEach((el) => el.classList.remove("list-clicked"));
+        e.target.classList.add("list-clicked");
         thirdPageOfFollowing();
       }
     })
@@ -4479,7 +4530,6 @@ const getForYouContainerHTML = async function () {
       ).innerHTML += ` <div class="first-container" data-first-container="${
         i + 50
       }"></div>`;
-      console.log(loggedInAs.following[i].slice(13, -5));
       changeContainerHTML(
         `${
           loggedInAs.following
@@ -4538,12 +4588,13 @@ const getForYouContainerHTML = async function () {
     .forEach((el) => (el.style.width = "calc(100% - 3rem)"));
   document
     .querySelectorAll(".sixth-container")
-    .forEach((el) => (elstyle.width = "100%"));
+    .forEach((el) => (el.style.width = "100%"));
   document.querySelectorAll(".fa-rotate-right").forEach((el) => el.remove());
 };
 
 checkIfLoggedIn();
 if (Logged) {
+  // thirdPageOfFollowing();
   getHomeHTML();
   getWeather("Novi Pazar");
 }
