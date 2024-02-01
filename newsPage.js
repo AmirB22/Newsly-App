@@ -182,9 +182,9 @@ const getHomeHTML = function () {
         </h1>
         <p class="page-description">Recommended based on your interests</p>
         <div class="for-you-container">
-            <div class="for-you-left-side">
+            <div class="for-you-left-side" data-foryouleft="1">
             </div>
-            <div class="for-you-right-side">
+            <div class="for-you-right-side" data-foryouright="1">
           </div>
         </div>
       </div>
@@ -202,6 +202,7 @@ const getHomeHTML = function () {
             </div>
             <div class="for-you-right-side" data-foryouright="2">
           </div>
+        </div>
         </div>
         <div class="sixth-container">
         <h1 class="page-title">Beyond the front page</h1>
@@ -599,15 +600,14 @@ ${
   }
   console.log(document.querySelectorAll("a"));
 
-  document.querySelectorAll("a").forEach((el) => {
-    let thiss = this.href;
-    console.log(thiss);
-    if (loggedInAs.bookmarks.some((el) => el.urlToSource === thiss)) {
-      el.querySelector(".fa-bookmark").classList.replace(
-        "fa-regular",
-        "fa-solid"
-      );
-    }
+  document.querySelectorAll("a").forEach((elem) => {
+    loggedInAs.bookmarks.forEach((el) => {
+      if (el.urlToSource === elem.href) {
+        elem
+          .querySelector(".fa-bookmark")
+          .classList.replace("fa-regular", "fa-solid");
+      }
+    });
   });
 
   document
@@ -616,7 +616,7 @@ ${
     .forEach((el) => {
       console.log("b");
       el.addEventListener("click", function (e) {
-        console.log("a");
+        if (!e.target.closest(".bookmark")) return;
         if (e.target.closest(".bookmark")) e.preventDefault();
         if (
           this.querySelector(".fa-bookmark").classList.contains("fa-regular")
@@ -683,7 +683,7 @@ const getHeadlinesFromCountries = async function (country, countryName) {
   document.querySelector("#main").style.gap = "0rem";
 
   const response = await fetch(
-    `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=8043ca8f1412485d8a3011796543a9be`
+    `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=f4143d2dd62b44dba213f515b32a2373`
   );
   const countryData = await response.json();
   console.log(countryData);
@@ -1103,7 +1103,7 @@ const getNewsFromInput = async function (input) {
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${city}&apiKey=8043ca8f1412485d8a3011796543a9be`
+        `https://newsapi.org/v2/everything?q=${city}&apiKey=f4143d2dd62b44dba213f515b32a2373`
       );
       console.log("input", response);
 
@@ -1216,7 +1216,87 @@ const getNewsFromInput = async function (input) {
         </div></a>`
           )
           .join("");
+      document
+        .querySelector(`[data-first-container="2"]`)
+        .querySelectorAll("a")
+        .forEach((elem) => {
+          loggedInAs.bookmarks.forEach((el) => {
+            if (el.urlToSource === elem.href) {
+              elem
+                .querySelector(".fa-bookmark")
+                .classList.replace("fa-regular", "fa-solid");
+            }
+          });
+        });
 
+      document
+        .querySelector(`[data-first-container="2"]`)
+        .querySelectorAll("a")
+        .forEach((el) => {
+          console.log("b");
+          el.addEventListener("click", function (e) {
+            if (!e.target.closest(".bookmark")) return;
+            if (e.target.closest(".bookmark")) e.preventDefault();
+            if (
+              this.querySelector(".fa-bookmark").classList.contains(
+                "fa-regular"
+              )
+            ) {
+              this.querySelector(".fa-bookmark").classList.replace(
+                "fa-regular",
+                "fa-solid"
+              );
+              if (!loggedInAs.bookmarks) {
+                loggedInAs.bookmarks = [
+                  {
+                    imageUrl: this.querySelector(".data-image")
+                      ? this.querySelector(".data-image").src
+                      : null,
+                    title: this.querySelector(".data-title")
+                      .textContent.replaceAll("\n", " ")
+                      .trim(),
+                    authorDate:
+                      this.querySelector(".data-date-author").textContent,
+                    source: this.querySelector(".data-source").textContent,
+                    urlToSource: this.href,
+                  },
+                ];
+              } else if (loggedInAs.bookmarks) {
+                loggedInAs.bookmarks.push({
+                  imageUrl: this.querySelector(".data-image")
+                    ? this.querySelector(".data-image").src
+                    : null,
+                  title: this.querySelector(".data-title")
+                    .textContent.replaceAll("\n", " ")
+                    .trim(),
+                  authorDate:
+                    this.querySelector(".data-date-author").textContent,
+                  source: this.querySelector(".data-source").textContent,
+                  urlToSource: this.href,
+                });
+              }
+              localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+              localStorage.setItem("accounts", JSON.stringify(userAccounts));
+              console.log(loggedInAs);
+            } else if (
+              this.querySelector(".fa-bookmark").classList.contains("fa-solid")
+            ) {
+              this.querySelector(".fa-bookmark").classList.replace(
+                "fa-solid",
+                "fa-regular"
+              );
+              loggedInAs.bookmarks.splice(
+                loggedInAs.bookmarks.findIndex(
+                  (el) => el.urlToSource === this.href
+                ),
+                1
+              );
+              localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+              localStorage.setItem("accounts", JSON.stringify(userAccounts));
+              console.log(loggedInAs);
+            }
+          });
+        });
       return;
     }
     if (
@@ -1249,7 +1329,7 @@ const getNewsFromInput = async function (input) {
       </div> `;
       const response = await fetch(
         `
-https://newsapi.org/v2/everything?domains=${source}&apiKey=8043ca8f1412485d8a3011796543a9be`
+https://newsapi.org/v2/everything?domains=${source}&apiKey=f4143d2dd62b44dba213f515b32a2373`
       );
       console.log("input", response);
 
@@ -1362,6 +1442,88 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=8043ca8f1412485d8a301
         </div></a>`
           )
           .join("");
+      document
+        .querySelector(`[data-first-container="7"]`)
+        .querySelectorAll("a")
+        .forEach((elem) => {
+          loggedInAs.bookmarks.forEach((el) => {
+            if (el.urlToSource === elem.href) {
+              elem
+                .querySelector(".fa-bookmark")
+                .classList.replace("fa-regular", "fa-solid");
+            }
+          });
+        });
+
+      document
+        .querySelector(`[data-first-container="7"]`)
+        .querySelectorAll("a")
+        .forEach((el) => {
+          console.log("b");
+          el.addEventListener("click", function (e) {
+            if (!e.target.closest(".bookmark")) return;
+            if (e.target.closest(".bookmark")) e.preventDefault();
+            if (
+              this.querySelector(".fa-bookmark").classList.contains(
+                "fa-regular"
+              )
+            ) {
+              this.querySelector(".fa-bookmark").classList.replace(
+                "fa-regular",
+                "fa-solid"
+              );
+              if (!loggedInAs.bookmarks) {
+                loggedInAs.bookmarks = [
+                  {
+                    imageUrl: this.querySelector(".data-image")
+                      ? this.querySelector(".data-image").src
+                      : null,
+                    title: this.querySelector(".data-title")
+                      .textContent.replaceAll("\n", " ")
+                      .trim(),
+                    authorDate:
+                      this.querySelector(".data-date-author").textContent,
+                    source: this.querySelector(".data-source").textContent,
+                    urlToSource: this.href,
+                  },
+                ];
+              } else if (loggedInAs.bookmarks) {
+                loggedInAs.bookmarks.push({
+                  imageUrl: this.querySelector(".data-image")
+                    ? this.querySelector(".data-image").src
+                    : null,
+                  title: this.querySelector(".data-title")
+                    .textContent.replaceAll("\n", " ")
+                    .trim(),
+                  authorDate:
+                    this.querySelector(".data-date-author").textContent,
+                  source: this.querySelector(".data-source").textContent,
+                  urlToSource: this.href,
+                });
+              }
+              localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+              localStorage.setItem("accounts", JSON.stringify(userAccounts));
+              console.log(loggedInAs);
+            } else if (
+              this.querySelector(".fa-bookmark").classList.contains("fa-solid")
+            ) {
+              this.querySelector(".fa-bookmark").classList.replace(
+                "fa-solid",
+                "fa-regular"
+              );
+              loggedInAs.bookmarks.splice(
+                loggedInAs.bookmarks.findIndex(
+                  (el) => el.urlToSource === this.href
+                ),
+                1
+              );
+              localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+              localStorage.setItem("accounts", JSON.stringify(userAccounts));
+              console.log(loggedInAs);
+            }
+          });
+        });
+
       return;
     }
     if (
@@ -1393,7 +1555,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=8043ca8f1412485d8a301
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${topic}&apiKey=8043ca8f1412485d8a3011796543a9be`
+        `https://newsapi.org/v2/everything?q=${topic}&apiKey=f4143d2dd62b44dba213f515b32a2373`
       );
       console.log("input", response);
 
@@ -1507,6 +1669,87 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=8043ca8f1412485d8a301
         </div></a>`
           )
           .join("");
+      document
+        .querySelector(`[data-first-container="6"]`)
+        .querySelectorAll("a")
+        .forEach((elem) => {
+          loggedInAs.bookmarks.forEach((el) => {
+            if (el.urlToSource === elem.href) {
+              elem
+                .querySelector(".fa-bookmark")
+                .classList.replace("fa-regular", "fa-solid");
+            }
+          });
+        });
+
+      document
+        .querySelector(`[data-first-container="6"]`)
+        .querySelectorAll("a")
+        .forEach((el) => {
+          console.log("b");
+          el.addEventListener("click", function (e) {
+            if (!e.target.closest(".bookmark")) return;
+            if (e.target.closest(".bookmark")) e.preventDefault();
+            if (
+              this.querySelector(".fa-bookmark").classList.contains(
+                "fa-regular"
+              )
+            ) {
+              this.querySelector(".fa-bookmark").classList.replace(
+                "fa-regular",
+                "fa-solid"
+              );
+              if (!loggedInAs.bookmarks) {
+                loggedInAs.bookmarks = [
+                  {
+                    imageUrl: this.querySelector(".data-image")
+                      ? this.querySelector(".data-image").src
+                      : null,
+                    title: this.querySelector(".data-title")
+                      .textContent.replaceAll("\n", " ")
+                      .trim(),
+                    authorDate:
+                      this.querySelector(".data-date-author").textContent,
+                    source: this.querySelector(".data-source").textContent,
+                    urlToSource: this.href,
+                  },
+                ];
+              } else if (loggedInAs.bookmarks) {
+                loggedInAs.bookmarks.push({
+                  imageUrl: this.querySelector(".data-image")
+                    ? this.querySelector(".data-image").src
+                    : null,
+                  title: this.querySelector(".data-title")
+                    .textContent.replaceAll("\n", " ")
+                    .trim(),
+                  authorDate:
+                    this.querySelector(".data-date-author").textContent,
+                  source: this.querySelector(".data-source").textContent,
+                  urlToSource: this.href,
+                });
+              }
+              localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+              localStorage.setItem("accounts", JSON.stringify(userAccounts));
+              console.log(loggedInAs);
+            } else if (
+              this.querySelector(".fa-bookmark").classList.contains("fa-solid")
+            ) {
+              this.querySelector(".fa-bookmark").classList.replace(
+                "fa-solid",
+                "fa-regular"
+              );
+              loggedInAs.bookmarks.splice(
+                loggedInAs.bookmarks.findIndex(
+                  (el) => el.urlToSource === this.href
+                ),
+                1
+              );
+              localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+              localStorage.setItem("accounts", JSON.stringify(userAccounts));
+              console.log(loggedInAs);
+            }
+          });
+        });
       return;
     }
 
@@ -1527,7 +1770,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=8043ca8f1412485d8a301
         </div>
       </div> `;
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=8043ca8f1412485d8a3011796543a9be`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=f4143d2dd62b44dba213f515b32a2373`
     );
     console.log("input", response);
 
@@ -1640,6 +1883,84 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=8043ca8f1412485d8a301
         </div></a>`
         )
         .join("");
+    document
+      .querySelector(`[data-first-container="5"]`)
+      .querySelectorAll("a")
+      .forEach((elem) => {
+        loggedInAs.bookmarks.forEach((el) => {
+          if (el.urlToSource === elem.href) {
+            elem
+              .querySelector(".fa-bookmark")
+              .classList.replace("fa-regular", "fa-solid");
+          }
+        });
+      });
+
+    document
+      .querySelector(`[data-first-container="5"]`)
+      .querySelectorAll("a")
+      .forEach((el) => {
+        console.log("b");
+        el.addEventListener("click", function (e) {
+          if (!e.target.closest(".bookmark")) return;
+          if (e.target.closest(".bookmark")) e.preventDefault();
+          if (
+            this.querySelector(".fa-bookmark").classList.contains("fa-regular")
+          ) {
+            this.querySelector(".fa-bookmark").classList.replace(
+              "fa-regular",
+              "fa-solid"
+            );
+            if (!loggedInAs.bookmarks) {
+              loggedInAs.bookmarks = [
+                {
+                  imageUrl: this.querySelector(".data-image")
+                    ? this.querySelector(".data-image").src
+                    : null,
+                  title: this.querySelector(".data-title")
+                    .textContent.replaceAll("\n", " ")
+                    .trim(),
+                  authorDate:
+                    this.querySelector(".data-date-author").textContent,
+                  source: this.querySelector(".data-source").textContent,
+                  urlToSource: this.href,
+                },
+              ];
+            } else if (loggedInAs.bookmarks) {
+              loggedInAs.bookmarks.push({
+                imageUrl: this.querySelector(".data-image")
+                  ? this.querySelector(".data-image").src
+                  : null,
+                title: this.querySelector(".data-title")
+                  .textContent.replaceAll("\n", " ")
+                  .trim(),
+                authorDate: this.querySelector(".data-date-author").textContent,
+                source: this.querySelector(".data-source").textContent,
+                urlToSource: this.href,
+              });
+            }
+            localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+            localStorage.setItem("accounts", JSON.stringify(userAccounts));
+            console.log(loggedInAs);
+          } else if (
+            this.querySelector(".fa-bookmark").classList.contains("fa-solid")
+          ) {
+            this.querySelector(".fa-bookmark").classList.replace(
+              "fa-solid",
+              "fa-regular"
+            );
+            loggedInAs.bookmarks.splice(
+              loggedInAs.bookmarks.findIndex(
+                (el) => el.urlToSource === this.href
+              ),
+              1
+            );
+            localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+            localStorage.setItem("accounts", JSON.stringify(userAccounts));
+            console.log(loggedInAs);
+          }
+        });
+      });
     return;
   } catch (err) {
     document.querySelector(".first-container").innerHTML = `${err.message}`;
@@ -1890,7 +2211,7 @@ const getNewsFromList = async function (clicked) {
     const response = await fetch(
       `https://newsapi.org/v2/everything?q=${
         differentClicked ? differentClicked : clicked
-      }&apiKey=8043ca8f1412485d8a3011796543a9be`
+      }&apiKey=f4143d2dd62b44dba213f515b32a2373`
     );
     console.log("list", response);
 
@@ -1944,7 +2265,7 @@ const changeContainerHTML = async function (
     }
 
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=8043ca8f1412485d8a3011796543a9be`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=f4143d2dd62b44dba213f515b32a2373`
     );
     const newsData = await response.json();
 
@@ -2014,6 +2335,83 @@ const getSecondContainerHTML = function (data) {
             </div>
           </div></a>`;
   }
+  document
+    .querySelector(`.second-container`)
+    .querySelectorAll("a")
+    .forEach((elem) => {
+      loggedInAs.bookmarks.forEach((el) => {
+        if (el.urlToSource === elem.href) {
+          elem
+            .querySelector(".fa-bookmark")
+            .classList.replace("fa-regular", "fa-solid");
+        }
+      });
+    });
+
+  document
+    .querySelector(`.second-container`)
+    .querySelectorAll("a")
+    .forEach((el) => {
+      console.log("b");
+      el.addEventListener("click", function (e) {
+        if (!e.target.closest(".bookmark")) return;
+        if (e.target.closest(".bookmark")) e.preventDefault();
+        if (
+          this.querySelector(".fa-bookmark").classList.contains("fa-regular")
+        ) {
+          this.querySelector(".fa-bookmark").classList.replace(
+            "fa-regular",
+            "fa-solid"
+          );
+          if (!loggedInAs.bookmarks) {
+            loggedInAs.bookmarks = [
+              {
+                imageUrl: this.querySelector(".data-image")
+                  ? this.querySelector(".data-image").src
+                  : null,
+                title: this.querySelector(".data-title")
+                  .textContent.replaceAll("\n", " ")
+                  .trim(),
+                authorDate: this.querySelector(".data-date-author").textContent,
+                source: this.querySelector(".data-source").textContent,
+                urlToSource: this.href,
+              },
+            ];
+          } else if (loggedInAs.bookmarks) {
+            loggedInAs.bookmarks.push({
+              imageUrl: this.querySelector(".data-image")
+                ? this.querySelector(".data-image").src
+                : null,
+              title: this.querySelector(".data-title")
+                .textContent.replaceAll("\n", " ")
+                .trim(),
+              authorDate: this.querySelector(".data-date-author").textContent,
+              source: this.querySelector(".data-source").textContent,
+              urlToSource: this.href,
+            });
+          }
+          localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+          localStorage.setItem("accounts", JSON.stringify(userAccounts));
+          console.log(loggedInAs);
+        } else if (
+          this.querySelector(".fa-bookmark").classList.contains("fa-solid")
+        ) {
+          this.querySelector(".fa-bookmark").classList.replace(
+            "fa-solid",
+            "fa-regular"
+          );
+          loggedInAs.bookmarks.splice(
+            loggedInAs.bookmarks.findIndex(
+              (el) => el.urlToSource === this.href
+            ),
+            1
+          );
+          localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+          localStorage.setItem("accounts", JSON.stringify(userAccounts));
+          console.log(loggedInAs);
+        }
+      });
+    });
 };
 const getThirdContainerHTML = function (data, side) {
   for (let i = 0; i < 3; i++) {
@@ -2026,7 +2424,7 @@ const getThirdContainerHTML = function (data, side) {
     else when = "While ago...";
 
     document.querySelector(
-      `.for-you-${side}-side`
+      `[data-foryou${side}="1"]`
     ).innerHTML += `<a class="data-link" href="${
       data.articles[i].url
     }"><div class="right-side-card">
@@ -2051,6 +2449,83 @@ const getThirdContainerHTML = function (data, side) {
             </div>
           </div></a>`;
   }
+  document
+    .querySelector(`[data-foryou${side}="1"]`)
+    .querySelectorAll("a")
+    .forEach((elem) => {
+      loggedInAs.bookmarks.forEach((el) => {
+        if (el.urlToSource === elem.href) {
+          elem
+            .querySelector(".fa-bookmark")
+            .classList.replace("fa-regular", "fa-solid");
+        }
+      });
+    });
+
+  document
+    .querySelector(`[data-foryou${side}="1"]`)
+    .querySelectorAll("a")
+    .forEach((el) => {
+      console.log("b");
+      el.addEventListener("click", function (e) {
+        if (!e.target.closest(".bookmark")) return;
+        if (e.target.closest(".bookmark")) e.preventDefault();
+        if (
+          this.querySelector(".fa-bookmark").classList.contains("fa-regular")
+        ) {
+          this.querySelector(".fa-bookmark").classList.replace(
+            "fa-regular",
+            "fa-solid"
+          );
+          if (!loggedInAs.bookmarks) {
+            loggedInAs.bookmarks = [
+              {
+                imageUrl: this.querySelector(".data-image")
+                  ? this.querySelector(".data-image").src
+                  : null,
+                title: this.querySelector(".data-title")
+                  .textContent.replaceAll("\n", " ")
+                  .trim(),
+                authorDate: this.querySelector(".data-date-author").textContent,
+                source: this.querySelector(".data-source").textContent,
+                urlToSource: this.href,
+              },
+            ];
+          } else if (loggedInAs.bookmarks) {
+            loggedInAs.bookmarks.push({
+              imageUrl: this.querySelector(".data-image")
+                ? this.querySelector(".data-image").src
+                : null,
+              title: this.querySelector(".data-title")
+                .textContent.replaceAll("\n", " ")
+                .trim(),
+              authorDate: this.querySelector(".data-date-author").textContent,
+              source: this.querySelector(".data-source").textContent,
+              urlToSource: this.href,
+            });
+          }
+          localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+          localStorage.setItem("accounts", JSON.stringify(userAccounts));
+          console.log(loggedInAs);
+        } else if (
+          this.querySelector(".fa-bookmark").classList.contains("fa-solid")
+        ) {
+          this.querySelector(".fa-bookmark").classList.replace(
+            "fa-solid",
+            "fa-regular"
+          );
+          loggedInAs.bookmarks.splice(
+            loggedInAs.bookmarks.findIndex(
+              (el) => el.urlToSource === this.href
+            ),
+            1
+          );
+          localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+          localStorage.setItem("accounts", JSON.stringify(userAccounts));
+          console.log(loggedInAs);
+        }
+      });
+    });
 };
 const getFourthContainerHTML = async function () {
   try {
@@ -2060,7 +2535,7 @@ const getFourthContainerHTML = async function () {
     let k = 0;
     for (let i = 0; i < number; i) {
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=8043ca8f1412485d8a3011796543a9be`
+        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=f4143d2dd62b44dba213f515b32a2373`
       );
       const data = await response.json();
 
@@ -2112,6 +2587,84 @@ const getFourthContainerHTML = async function () {
         getNewsFromList(`${e.target.textContent.trim()}`);
       })
     );
+    document
+      .querySelector(`.fourth-container-wrapper`)
+      .querySelectorAll("a")
+      .forEach((elem) => {
+        loggedInAs.bookmarks.forEach((el) => {
+          if (el.urlToSource === elem.href) {
+            elem
+              .querySelector(".fa-bookmark")
+              .classList.replace("fa-regular", "fa-solid");
+          }
+        });
+      });
+
+    document
+      .querySelector(`.fourth-container-wrapper`)
+      .querySelectorAll("a")
+      .forEach((el) => {
+        console.log("b");
+        el.addEventListener("click", function (e) {
+          if (!e.target.closest(".bookmark")) return;
+          if (e.target.closest(".bookmark")) e.preventDefault();
+          if (
+            this.querySelector(".fa-bookmark").classList.contains("fa-regular")
+          ) {
+            this.querySelector(".fa-bookmark").classList.replace(
+              "fa-regular",
+              "fa-solid"
+            );
+            if (!loggedInAs.bookmarks) {
+              loggedInAs.bookmarks = [
+                {
+                  imageUrl: this.querySelector(".data-image")
+                    ? this.querySelector(".data-image").src
+                    : null,
+                  title: this.querySelector(".data-title")
+                    .textContent.replaceAll("\n", " ")
+                    .trim(),
+                  authorDate:
+                    this.querySelector(".data-date-author").textContent,
+                  source: this.querySelector(".data-source").textContent,
+                  urlToSource: this.href,
+                },
+              ];
+            } else if (loggedInAs.bookmarks) {
+              loggedInAs.bookmarks.push({
+                imageUrl: this.querySelector(".data-image")
+                  ? this.querySelector(".data-image").src
+                  : null,
+                title: this.querySelector(".data-title")
+                  .textContent.replaceAll("\n", " ")
+                  .trim(),
+                authorDate: this.querySelector(".data-date-author").textContent,
+                source: this.querySelector(".data-source").textContent,
+                urlToSource: this.href,
+              });
+            }
+            localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+            localStorage.setItem("accounts", JSON.stringify(userAccounts));
+            console.log(loggedInAs);
+          } else if (
+            this.querySelector(".fa-bookmark").classList.contains("fa-solid")
+          ) {
+            this.querySelector(".fa-bookmark").classList.replace(
+              "fa-solid",
+              "fa-regular"
+            );
+            loggedInAs.bookmarks.splice(
+              loggedInAs.bookmarks.findIndex(
+                (el) => el.urlToSource === this.href
+              ),
+              1
+            );
+            localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+            localStorage.setItem("accounts", JSON.stringify(userAccounts));
+            console.log(loggedInAs);
+          }
+        });
+      });
   } catch (err) {
     console.error(err);
   }
@@ -2159,6 +2712,83 @@ const getFifthContainerHTML = function (data, side) {
           }
           </div></a>`;
   }
+  document
+    .querySelector(`[data-foryou${side}="2"]`)
+    .querySelectorAll("a")
+    .forEach((elem) => {
+      loggedInAs.bookmarks.forEach((el) => {
+        if (el.urlToSource === elem.href) {
+          elem
+            .querySelector(".fa-bookmark")
+            .classList.replace("fa-regular", "fa-solid");
+        }
+      });
+    });
+
+  document
+    .querySelector(`[data-foryou${side}="2"]`)
+    .querySelectorAll("a")
+    .forEach((el) => {
+      console.log("b");
+      el.addEventListener("click", function (e) {
+        if (!e.target.closest(".bookmark")) return;
+        if (e.target.closest(".bookmark")) e.preventDefault();
+        if (
+          this.querySelector(".fa-bookmark").classList.contains("fa-regular")
+        ) {
+          this.querySelector(".fa-bookmark").classList.replace(
+            "fa-regular",
+            "fa-solid"
+          );
+          if (!loggedInAs.bookmarks) {
+            loggedInAs.bookmarks = [
+              {
+                imageUrl: this.querySelector(".data-image")
+                  ? this.querySelector(".data-image").src
+                  : null,
+                title: this.querySelector(".data-title")
+                  .textContent.replaceAll("\n", " ")
+                  .trim(),
+                authorDate: this.querySelector(".data-date-author").textContent,
+                source: this.querySelector(".data-source").textContent,
+                urlToSource: this.href,
+              },
+            ];
+          } else if (loggedInAs.bookmarks) {
+            loggedInAs.bookmarks.push({
+              imageUrl: this.querySelector(".data-image")
+                ? this.querySelector(".data-image").src
+                : null,
+              title: this.querySelector(".data-title")
+                .textContent.replaceAll("\n", " ")
+                .trim(),
+              authorDate: this.querySelector(".data-date-author").textContent,
+              source: this.querySelector(".data-source").textContent,
+              urlToSource: this.href,
+            });
+          }
+          localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+          localStorage.setItem("accounts", JSON.stringify(userAccounts));
+          console.log(loggedInAs);
+        } else if (
+          this.querySelector(".fa-bookmark").classList.contains("fa-solid")
+        ) {
+          this.querySelector(".fa-bookmark").classList.replace(
+            "fa-solid",
+            "fa-regular"
+          );
+          loggedInAs.bookmarks.splice(
+            loggedInAs.bookmarks.findIndex(
+              (el) => el.urlToSource === this.href
+            ),
+            1
+          );
+          localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+          localStorage.setItem("accounts", JSON.stringify(userAccounts));
+          console.log(loggedInAs);
+        }
+      });
+    });
 };
 const getSixthContainerHTML = function (data, side, dataNum) {
   let i;
@@ -2203,6 +2833,83 @@ const getSixthContainerHTML = function (data, side, dataNum) {
           }
           </div></a>`;
   }
+  document
+    .querySelector(`[data-foryou${side}="3"]`)
+    .querySelectorAll("a")
+    .forEach((elem) => {
+      loggedInAs.bookmarks.forEach((el) => {
+        if (el.urlToSource === elem.href) {
+          elem
+            .querySelector(".fa-bookmark")
+            .classList.replace("fa-regular", "fa-solid");
+        }
+      });
+    });
+
+  document
+    .querySelector(`[data-foryou${side}="3"]`)
+    .querySelectorAll("a")
+    .forEach((el) => {
+      console.log("b");
+      el.addEventListener("click", function (e) {
+        if (!e.target.closest(".bookmark")) return;
+        if (e.target.closest(".bookmark")) e.preventDefault();
+        if (
+          this.querySelector(".fa-bookmark").classList.contains("fa-regular")
+        ) {
+          this.querySelector(".fa-bookmark").classList.replace(
+            "fa-regular",
+            "fa-solid"
+          );
+          if (!loggedInAs.bookmarks) {
+            loggedInAs.bookmarks = [
+              {
+                imageUrl: this.querySelector(".data-image")
+                  ? this.querySelector(".data-image").src
+                  : null,
+                title: this.querySelector(".data-title")
+                  .textContent.replaceAll("\n", " ")
+                  .trim(),
+                authorDate: this.querySelector(".data-date-author").textContent,
+                source: this.querySelector(".data-source").textContent,
+                urlToSource: this.href,
+              },
+            ];
+          } else if (loggedInAs.bookmarks) {
+            loggedInAs.bookmarks.push({
+              imageUrl: this.querySelector(".data-image")
+                ? this.querySelector(".data-image").src
+                : null,
+              title: this.querySelector(".data-title")
+                .textContent.replaceAll("\n", " ")
+                .trim(),
+              authorDate: this.querySelector(".data-date-author").textContent,
+              source: this.querySelector(".data-source").textContent,
+              urlToSource: this.href,
+            });
+          }
+          localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+          localStorage.setItem("accounts", JSON.stringify(userAccounts));
+          console.log(loggedInAs);
+        } else if (
+          this.querySelector(".fa-bookmark").classList.contains("fa-solid")
+        ) {
+          this.querySelector(".fa-bookmark").classList.replace(
+            "fa-solid",
+            "fa-regular"
+          );
+          loggedInAs.bookmarks.splice(
+            loggedInAs.bookmarks.findIndex(
+              (el) => el.urlToSource === this.href
+            ),
+            1
+          );
+          localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+          localStorage.setItem("accounts", JSON.stringify(userAccounts));
+          console.log(loggedInAs);
+        }
+      });
+    });
 };
 const hideManageFollowing = function (e) {
   if (e.target.closest(".fa-ellipsis-vertical")) {
@@ -3838,8 +4545,7 @@ const getForYouContainerHTML = async function () {
 checkIfLoggedIn();
 if (Logged) {
   getHomeHTML();
-  getHeadlinesFromCountries("us", "United States");
-  // getWeather("Novi Pazar");
+  getWeather("Novi Pazar");
 }
 
 //TODO: ADD BOOKMARKING NEWS.

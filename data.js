@@ -3264,4 +3264,6 @@ export const API_KEYS = [
   "2279e2643cf34d4e9fb13cf3c72121c8",
   "b2963cea2f604ad8b45edf62497f872e",
   "a68b28a9d1364eca80c7354bd792da1a",
+  "9417c28bc45e46749f6baeada5d126a2",
+  "c601aacc1df54b18b3b6438a0eb283a4",
 ];
