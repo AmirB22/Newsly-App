@@ -305,6 +305,7 @@ const getHomeHTML = function () {
     "3"
   );
 };
+
 let date;
 let milliseconds;
 let when;
@@ -498,25 +499,25 @@ const getHTML = function (data, limit = 1000, dataNum) {
       document.querySelector(
         `[data-first-container="${dataNum}"]`
       ).innerHTML += `  <div class="second-news big-news">
-      <a class="main-news-link" href="${
+      <a class="main-news-link data-link" href="${
         data.articles[i].url
       }"> <div class="main-news">
        <div class="big-news-main-bookmark bookmark">
                   <i class="fa-regular fa-bookmark"></i>
                 </div>
             <img
-              class="main-news-image"
+              class="main-news-image data-image"
               src="${data.articles[i].urlToImage}"
               alt=""
             />
             <div class="logo">
            
-              <p>${data.articles[i].source.name}</p>
+              <p class="data-source">${data.articles[i].source.name}</p>
             </div>
-            <h3 class="main-news-title">
+            <h3 class="main-news-title data-title">
              ${data.articles[i].title}
             </h3>
-            <span class="date-author">${when} · ${
+            <span class="date-author data-date-author">${when} · ${
         data.articles[i]?.author ?? ""
       }</span>
           </div> </a>
@@ -527,20 +528,27 @@ const getHTML = function (data, limit = 1000, dataNum) {
         if (data.articles[j].content === "[Removed]") continue;
 
         document.querySelector(`[data-side="${dataNum + i}"]`).innerHTML += `
-            <a class="on-the-side-news-link" href="${
+            <a class="on-the-side-news-link data-link" href="${
               data.articles[j].url
-            }"><div class="on-the-side-new">
+            }">
+${
+  data.articles[j].urlToImage
+    ? `
+            <img class="hidden data-image" src="${data.articles[j].urlToImage}"/>`
+    : ""
+}
+            <div class="on-the-side-new">
              <div class="bookmark on-the-side-bookmark">
                     <i class="fa-regular fa-bookmark"></i>
                   </div>
               <div class="logo">
               
-                <p>${data.articles[j]?.source.name}</p>
+                <p class="data-source">${data.articles[j]?.source.name}</p>
               </div>
-              <p class="on-the-side-title">
+              <p class="on-the-side-title data-title">
                 ${data.articles[j].title}
               </p>
-              <span class="date-author-side"
+              <span class="date-author-side data-date-author"
                 >${when}· ${data.articles[j].author ?? ""}</i
               ></span>
             </div></a>`;
@@ -551,18 +559,18 @@ const getHTML = function (data, limit = 1000, dataNum) {
         `[data-first-container="${dataNum}"]`
       ).innerHTML += `
        <div class="first-news small-news-container">
-       <a href="${data.articles[i].url}">
+       <a class="data-link" href="${data.articles[i].url}">
           <div class="small-news">
             <div>
               <div class="logo">
              
-                <p>${data.articles[i]?.source.name}</p>
+                <p class="data-source">${data.articles[i]?.source.name}</p>
               </div>
-              <h3 class="small-news-title">
+              <h3 class="small-news-title data-title">
                ${data.articles[i].title}
               </h3>
             </div>
-            <span class="date-author">${when} · ${
+            <span class="date-author data-date-author">${when} · ${
         data.articles[i].author ?? ""
       }</span>
           </div>
@@ -584,11 +592,88 @@ const getHTML = function (data, limit = 1000, dataNum) {
            </div>  `
     );
     document
-      .querySelector(".11-page-stories")
+      .querySelector(".home-page-stories")
       .addEventListener("click", function () {
         getHeadlinesFromCountries("us", "United States");
       });
   }
+  console.log(document.querySelectorAll("a"));
+
+  document.querySelectorAll("a").forEach((el) => {
+    let thiss = this.href;
+    console.log(thiss);
+    if (loggedInAs.bookmarks.some((el) => el.urlToSource === thiss)) {
+      el.querySelector(".fa-bookmark").classList.replace(
+        "fa-regular",
+        "fa-solid"
+      );
+    }
+  });
+
+  document
+    .querySelector(`.first-container`)
+    .querySelectorAll("a")
+    .forEach((el) => {
+      console.log("b");
+      el.addEventListener("click", function (e) {
+        console.log("a");
+        if (e.target.closest(".bookmark")) e.preventDefault();
+        if (
+          this.querySelector(".fa-bookmark").classList.contains("fa-regular")
+        ) {
+          this.querySelector(".fa-bookmark").classList.replace(
+            "fa-regular",
+            "fa-solid"
+          );
+          if (!loggedInAs.bookmarks) {
+            loggedInAs.bookmarks = [
+              {
+                imageUrl: this.querySelector(".data-image")
+                  ? this.querySelector(".data-image").src
+                  : null,
+                title: this.querySelector(".data-title")
+                  .textContent.replaceAll("\n", " ")
+                  .trim(),
+                authorDate: this.querySelector(".data-date-author").textContent,
+                source: this.querySelector(".data-source").textContent,
+                urlToSource: this.href,
+              },
+            ];
+          } else if (loggedInAs.bookmarks) {
+            loggedInAs.bookmarks.push({
+              imageUrl: this.querySelector(".data-image")
+                ? this.querySelector(".data-image").src
+                : null,
+              title: this.querySelector(".data-title")
+                .textContent.replaceAll("\n", " ")
+                .trim(),
+              authorDate: this.querySelector(".data-date-author").textContent,
+              source: this.querySelector(".data-source").textContent,
+              urlToSource: this.href,
+            });
+          }
+          localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+          localStorage.setItem("accounts", JSON.stringify(userAccounts));
+          console.log(loggedInAs);
+        } else if (
+          this.querySelector(".fa-bookmark").classList.contains("fa-solid")
+        ) {
+          this.querySelector(".fa-bookmark").classList.replace(
+            "fa-solid",
+            "fa-regular"
+          );
+          loggedInAs.bookmarks.splice(
+            loggedInAs.bookmarks.findIndex(
+              (el) => el.urlToSource === this.href
+            ),
+            1
+          );
+          localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+          localStorage.setItem("accounts", JSON.stringify(userAccounts));
+          console.log(loggedInAs);
+        }
+      });
+    });
 };
 const getHeadlinesFromCountries = async function (country, countryName) {
   document
@@ -598,7 +683,7 @@ const getHeadlinesFromCountries = async function (country, countryName) {
   document.querySelector("#main").style.gap = "0rem";
 
   const response = await fetch(
-    `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=f7d451799ca445c0a4bd4922c91322dd`
+    `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=8043ca8f1412485d8a3011796543a9be`
   );
   const countryData = await response.json();
   console.log(countryData);
@@ -1018,7 +1103,7 @@ const getNewsFromInput = async function (input) {
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${city}&apiKey=f7d451799ca445c0a4bd4922c91322dd`
+        `https://newsapi.org/v2/everything?q=${city}&apiKey=8043ca8f1412485d8a3011796543a9be`
       );
       console.log("input", response);
 
@@ -1104,27 +1189,27 @@ const getNewsFromInput = async function (input) {
       document.querySelector(`[data-first-container="2"]`).innerHTML =
         data.articles
           .map(
-            (el) => `<a class="small-news-link" href="${
+            (el) => `<a class="small-news-link data-link" href="${
               el.url
             }">  <div class="first-news small-news-container">
           <div class="small-news">
             <div>
               <div class="logo">
              
-                <p>${el?.source.name}</p>
+                <p class="data-source">${el?.source.name}</p>
               </div>
-              <h3 class="small-news-title">
+              <h3 class="small-news-title data-title">
                ${el.title}
               </h3>
             </div>
-            <span class="date-author">${
+            <span class="date-author data-date-author">${
               el.publishedAt.slice(5, 10) + "-" + el.publishedAt.slice(2, 4)
             } · ${el.author ?? ""}</span>
           </div>
           <div class="small-news-image">
           ${
             el.urlToImage
-              ? `<img src="${el.urlToImage}"/> <div class="small-news-bookmark-with-image bookmark"><i class="fa-regular fa-bookmark"></i></div>`
+              ? `<img class="data-image" src="${el.urlToImage}"/> <div class="small-news-bookmark-with-image bookmark"><i class="fa-regular fa-bookmark"></i></div>`
               : `<div class="small-news-bookmark-no-image bookmark"><i class="fa-regular fa-bookmark"></i></div>`
           }
           </div>
@@ -1164,7 +1249,7 @@ const getNewsFromInput = async function (input) {
       </div> `;
       const response = await fetch(
         `
-https://newsapi.org/v2/everything?domains=${source}&apiKey=f7d451799ca445c0a4bd4922c91322dd`
+https://newsapi.org/v2/everything?domains=${source}&apiKey=8043ca8f1412485d8a3011796543a9be`
       );
       console.log("input", response);
 
@@ -1251,26 +1336,26 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=f7d451799ca445c0a4bd4
         data.articles
           .map(
             (el) =>
-              ` <a class="small-news-link" href="${
+              ` <a class="small-news-link data-link" href="${
                 el.url
               }">  <div class="first-news small-news-container">
           <div class="small-news">
             <div>
               <div class="logo">
-                <p>${el?.source.name}</p>
+                <p class="data-source">${el?.source.name}</p>
               </div>
-              <h3 class="small-news-title">
+              <h3 class="small-news-title data-title">
                ${el.title}
               </h3>
             </div>
-            <span class="date-author">${
+            <span class="date-author data-date-author">${
               el.publishedAt.slice(5, 10) + "-" + el.publishedAt.slice(2, 4)
             } · ${el.author ?? ""}</span>
           </div>
           <div class="small-news-image">
           ${
             el.urlToImage
-              ? `<img src="${el.urlToImage}"/> <div class="small-news-bookmark-with-image bookmark"><i class="fa-regular fa-bookmark"></i></div>`
+              ? `<img class="data-image" src="${el.urlToImage}"/> <div class="small-news-bookmark-with-image bookmark"><i class="fa-regular fa-bookmark"></i></div>`
               : `<div class="small-news-bookmark-no-image bookmark"><i class="fa-regular fa-bookmark"></i></div>`
           }
           </div>
@@ -1308,7 +1393,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=f7d451799ca445c0a4bd4
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${topic}&apiKey=f7d451799ca445c0a4bd4922c91322dd`
+        `https://newsapi.org/v2/everything?q=${topic}&apiKey=8043ca8f1412485d8a3011796543a9be`
       );
       console.log("input", response);
 
@@ -1395,27 +1480,27 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=f7d451799ca445c0a4bd4
           .map(
             (el) =>
               ` 
-        <a class="small-news-link" href="${
+        <a class="small-news-link data-link" href="${
           el.url
         }">  <div class="first-news small-news-container">
           <div class="small-news">
             <div>
               <div class="logo">
              
-                <p>${el?.source.name}</p>
+                <p class="data-source">${el?.source.name}</p>
               </div>
-              <h3 class="small-news-title">
+              <h3 class="small-news-title data-title">
                ${el.title}
               </h3>
             </div>
-            <span class="date-author">${
+            <span class="date-author data-date-author">${
               el.publishedAt.slice(5, 10) + "-" + el.publishedAt.slice(2, 4)
             } · ${el.author ?? ""}</span>
           </div>
           <div class="small-news-image">
           ${
             el.urlToImage
-              ? `<img src="${el.urlToImage}"/> <div class="small-news-bookmark-with-image bookmark"><i class="fa-regular fa-bookmark"></i></div>`
+              ? `<img class="data-image" src="${el.urlToImage}"/> <div class="small-news-bookmark-with-image bookmark"><i class="fa-regular fa-bookmark"></i></div>`
               : `<div class="small-news-bookmark-no-image bookmark"><i class="fa-regular fa-bookmark"></i></div>`
           }
           </div>
@@ -1442,7 +1527,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=f7d451799ca445c0a4bd4
         </div>
       </div> `;
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=f7d451799ca445c0a4bd4922c91322dd`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=8043ca8f1412485d8a3011796543a9be`
     );
     console.log("input", response);
 
@@ -1529,26 +1614,26 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=f7d451799ca445c0a4bd4
       data.articles
         .map(
           (el) =>
-            ` <a class="small-news-link" href="${
+            ` <a class="small-news-link data-link" href="${
               el.url
             }">  <div class="first-news small-news-container">
           <div class="small-news">
             <div>
               <div class="logo">
-                <p>${el?.source.name}</p>
+                <p class="data-source">${el?.source.name}</p>
               </div>
-              <h3 class="small-news-title">
+              <h3 class="small-news-title data-title">
                ${el.title}
               </h3>
             </div>
-            <span class="date-author">${
+            <span class="date-author data-date-author">${
               el.publishedAt.slice(5, 10) + "-" + el.publishedAt.slice(2, 4)
             } · ${el.author ?? ""}</span>
           </div>
           <div class="small-news-image">
           ${
             el.urlToImage
-              ? `<img src="${el.urlToImage}"/> <div class="small-news-bookmark-with-image bookmark"><i class="fa-regular fa-bookmark"></i></div>`
+              ? `<img class="data-image" src="${el.urlToImage}"/> <div class="small-news-bookmark-with-image bookmark"><i class="fa-regular fa-bookmark"></i></div>`
               : `<div class="small-news-bookmark-no-image bookmark"><i class="fa-regular fa-bookmark"></i></div>`
           }
           </div>
@@ -1805,7 +1890,7 @@ const getNewsFromList = async function (clicked) {
     const response = await fetch(
       `https://newsapi.org/v2/everything?q=${
         differentClicked ? differentClicked : clicked
-      }&apiKey=f7d451799ca445c0a4bd4922c91322dd`
+      }&apiKey=8043ca8f1412485d8a3011796543a9be`
     );
     console.log("list", response);
 
@@ -1859,7 +1944,7 @@ const changeContainerHTML = async function (
     }
 
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=f7d451799ca445c0a4bd4922c91322dd`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=8043ca8f1412485d8a3011796543a9be`
     );
     const newsData = await response.json();
 
@@ -1887,32 +1972,6 @@ const changeContainerHTML = async function (
     if (type === "fifth-container") getFifthContainerHTML(newsData, side);
     if (type === "sixth-container")
       getSixthContainerHTML(newsData, side, dataNum);
-    console.log("123");
-    document.querySelectorAll("a").forEach((el) =>
-      el.addEventListener("click", function (e) {
-        if (e.target.closest(".bookmark")) e.preventDefault();
-        if (
-          e.target
-            .closest(".bookmark")
-            .firstElementChild.classList.contains("fa-regular")
-        ) {
-          e.target
-            .closest(".bookmark")
-            .firstElementChild.classList.replace("fa-regular", "fa-solid");
-          loggedInAs.bookmarked
-            ? (loggedInAs.bookmarked.dateAuthor = e.target
-                .closest(".main-news")
-                .querySelector(".date-author").textContent)
-            : (loggedInAs.bookmarked = {
-                dateAuthor: e.target
-                  .closest(".main-news")
-                  .querySelector(".date-author").textContent,
-              });
-          console.log(loggedInAs);
-          console.log("123");
-        } else e.target.closest(".bookmark").firstElementChild.classList.replace("fa-solid", "fa-regular");
-      })
-    );
   } catch (err) {
     // document.querySelector(".first-container").innerHTML = `${err.message}`;
     console.error(err);
@@ -1929,24 +1988,26 @@ const getSecondContainerHTML = function (data) {
     else if (since < 2 * 86_400_000) when = "Yesterday";
     else if (since < 7 * 86_400_000) when = "Last week";
     else when = "While ago...";
-    document.querySelector(".second-container").innerHTML += `   <a href="${
+    document.querySelector(
+      ".second-container"
+    ).innerHTML += `   <a class="data-link" href="${
       data.articles[i].url
     }">  <div class="right-side-card">
     <div class="secondary-bookmark bookmark">
                 <i class="fa-regular fa-bookmark"></i>
               </div>
             <div class="right-side-card-left">
-              <p class="logo">${data.articles[i].source.name}</p>
-              <h2 class="right-side-card-title">
+              <p class="logo data-source">${data.articles[i].source.name}</p>
+              <h2 class="right-side-card-title data-title">
                ${data.articles[i].title}
               </h2>
-              <p class="date-author-side">${when} · ${
+              <p class="date-author-side data-date-author">${when} · ${
       data.articles[i].author ?? ""
     }</p>
             </div>
             <div class="right-side-card-right">
               <img
-                class="right-side-card-image"
+                class="right-side-card-image data-image"
                 src="${data.articles[i].urlToImage}"
                 alt=""
               />
@@ -1964,24 +2025,26 @@ const getThirdContainerHTML = function (data, side) {
     else if (since < 7 * 86_400_000) when = "Last week";
     else when = "While ago...";
 
-    document.querySelector(`.for-you-${side}-side`).innerHTML += `<a href="${
+    document.querySelector(
+      `.for-you-${side}-side`
+    ).innerHTML += `<a class="data-link" href="${
       data.articles[i].url
     }"><div class="right-side-card">
     <div class="secondary-bookmark bookmark">
                 <i class="fa-regular fa-bookmark"></i>
               </div>
             <div class="right-side-card-left">
-              <p class="logo">${data.articles[i].source.name}</p>
-              <h2 class="right-side-card-title">
+              <p class="logo data-source">${data.articles[i].source.name}</p>
+              <h2 class="right-side-card-title data-title">
                ${data.articles[i].title}
               </h2>
-              <p class="date-author-side">${when} · ${
+              <p class="date-author-side data-date-author">${when} · ${
       data.articles[i].author ?? ""
     }</p>
             </div>
             <div class="right-side-card-right">
               <img
-                class="right-side-card-image"
+                class="right-side-card-image data-image"
                 src="${data.articles[i].urlToImage}"
                 alt=""
               />
@@ -1997,7 +2060,7 @@ const getFourthContainerHTML = async function () {
     let k = 0;
     for (let i = 0; i < number; i) {
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=f7d451799ca445c0a4bd4922c91322dd`
+        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=8043ca8f1412485d8a3011796543a9be`
       );
       const data = await response.json();
 
@@ -2016,24 +2079,24 @@ const getFourthContainerHTML = async function () {
         document.querySelector(
           `[data-secondid="${Categories[k]}"]`
         ).innerHTML += `
-             <a class="fourth-container-link" href="${
+             <a class="fourth-container-link data-link" href="${
                data.articles[i].url
              }"> <div class="right-side-card">
              <div class="secondary-bookmark bookmark">
                 <i class="fa-regular fa-bookmark"></i>
               </div>
             <div class="right-side-card-left">
-              <p class="logo">${data.articles[j].source.name}</p>
-              <h2 class="right-side-card-title">
+              <p class="logo data-source">${data.articles[j].source.name}</p>
+              <h2 class="right-side-card-title data-title">
                ${data.articles[j].title}
               </h2>
-              <p class="date-author-side">${when} · ${
+              <p class="date-author-side data-date-author">${when} · ${
           data.articles[j].author ?? ""
         }</p>
             </div>
             <div class="right-side-card-right">
               <img
-                class="right-side-card-image"
+                class="right-side-card-image data-image"
                 src="${data.articles[j].urlToImage}"
                 alt=""
               />
@@ -2068,18 +2131,18 @@ const getFifthContainerHTML = function (data, side) {
 
     document.querySelector(
       `[data-foryou${side}="2"]`
-    ).innerHTML += `<a class="for-you-${side}-link" href="${
+    ).innerHTML += `<a class="for-you-${side}-link data-link" href="${
       data.articles[i].url
     }"><div class="right-side-card">
     <div class="secondary-bookmark bookmark">
                 <i class="fa-regular fa-bookmark"></i>
               </div>
             <div class="right-side-card-left">
-              <p class="logo">${data.articles[i].source.name}</p>
-              <h2 class="right-side-card-title">
+              <p class="logo data-source">${data.articles[i].source.name}</p>
+              <h2 class="right-side-card-title data-title">
                ${data.articles[i].title}
               </h2>
-              <p class="date-author">${when} · ${
+              <p class="date-author data-date-author">${when} · ${
       data.articles[i].author ?? ""
     }</p>
             </div>
@@ -2087,7 +2150,7 @@ const getFifthContainerHTML = function (data, side) {
             data.articles[i].urlToImage
               ? `  <div class="right-side-card-right">
               <img
-                class="right-side-card-image"
+                class="right-side-card-image data-image"
                 src="${data.articles[i].urlToImage}"
                 alt=""
               />
@@ -2112,18 +2175,18 @@ const getSixthContainerHTML = function (data, side, dataNum) {
 
     document.querySelector(
       `[data-foryou${side}="${dataNum}"]`
-    ).innerHTML += `<a class="for-you-${side}-link" href="${
+    ).innerHTML += `<a class="for-you-${side}-link data-link" href="${
       data.articles[i].url
     }"><div class="right-side-card">
     <div class="secondary-bookmark bookmark">
                 <i class="fa-regular fa-bookmark"></i>
               </div>
             <div class="right-side-card-left">
-              <p class="logo">${data.articles[i].source.name}</p>
-              <h2 class="right-side-card-title">
+              <p class="logo data-source">${data.articles[i].source.name}</p>
+              <h2 class="right-side-card-title data-title">
                ${data.articles[i].title}
               </h2>
-              <p class="date-author">${when} · ${
+              <p class="date-author data-date-author">${when} · ${
       data.articles[i].author ?? ""
     }</p>
             </div>
@@ -2131,7 +2194,7 @@ const getSixthContainerHTML = function (data, side, dataNum) {
             data.articles[i].urlToImage
               ? `  <div class="right-side-card-right">
               <img
-                class="right-side-card-image"
+                class="right-side-card-image data-image"
                 src="${data.articles[i].urlToImage}"
                 alt=""
               />
@@ -3775,7 +3838,8 @@ const getForYouContainerHTML = async function () {
 checkIfLoggedIn();
 if (Logged) {
   getHomeHTML();
-  getWeather("Novi Pazar");
+  getHeadlinesFromCountries("us", "United States");
+  // getWeather("Novi Pazar");
 }
 
 //TODO: ADD BOOKMARKING NEWS.
