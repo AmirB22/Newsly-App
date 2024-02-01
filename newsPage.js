@@ -168,13 +168,33 @@ const getHomeHTML = function () {
       <div class="first-second-container-wrapper">
         <div class="first-container" data-first-container="1">
         </div>
-        <div class="second-container">
+      <div class="second-container-wrapper">
+         ${
+           loggedInAs.followedLocation.length > 0
+             ? ` <div class="second-container">
             <div class="right-side-title">
-            <h1>Picks for you</h1>
-            <p>?</p>
-           
+              <div class="home-local-news-container">
+                <h1 class="home-local-news-title">Local news <i class="fa-solid fa-angle-right"></i></h1>
+                <div class="home-local-news-slider">
+                  <i class="fa-solid fa-sliders local-news-sliders"></i>
+                </div>
+                <div class="home-local-news-buttons">
+                </div>
+              </div>
+            </div>
+           <div class="second-container-child" data-second-container="1">
+            </div>
+          </div>`
+             : ""
+         }
+          <div class="second-container">
+             <div class="right-side-title">
+              <h1>Picks for you</h1>
+              <p>?</p>
+            </div>
+            <div  data-second-container="2"></div>
           </div>
-          </div>
+        </div>
       </div>
       <div class="third-container">
         <h1 class="page-title">
@@ -214,6 +234,53 @@ const getHomeHTML = function () {
           </div>
         </div>
       </div>`;
+
+  if (loggedInAs.followedLocation && loggedInAs.followedLocation.length > 0) {
+    document.querySelector(".home-local-news-buttons").innerHTML +=
+      loggedInAs.followedLocation
+        .map((el, i) =>
+          i === 0
+            ? `  <button class="button-list button-clicked home-local-button">${el}</button>`
+            : i === loggedInAs.followedLocation.length - 1 &&
+              !loggedInAs.followedLocation.includes("Serbia")
+            ? ` <button class="button-list button-unclicked home-local-button">${el}</button> <div class="special-button-home-local home-local-button"><button class="button-list button-unclicked home-local-button">Serbia</button></div>`
+            : ` <button class="button-list button-unclicked home-local-button">${el}</button>`
+        )
+        .join("");
+    document
+      .querySelector(`[data-second-container="1"]`)
+      .closest(".second-container")
+      .addEventListener("click", function (e) {
+        if (e.target.closest(".home-local-button")) {
+          document
+            .querySelectorAll(".home-local-button")
+            .forEach((el) =>
+              el.classList.replace("button-clicked", "button-unclicked")
+            );
+          e.target
+            .closest(".home-local-button")
+            .classList.replace("button-unclicked", "button-clicked");
+          changeContainerHTML(
+            `${e.target.textContent}`,
+            3,
+            "second-container",
+            "",
+            "1"
+          );
+        }
+        if (e.target.closest(".home-local-news-slider")) getManageLocalHTML();
+        if (e.target.closest(".home-local-news-title"))
+          getNewsFromList("Local");
+      });
+
+    changeContainerHTML(
+      loggedInAs.followedLocation[1],
+      3,
+      "second-container",
+      "",
+      "1"
+    );
+  }
   getWeather(
     `${
       loggedInAs.followedLocation.length > 0
@@ -264,8 +331,11 @@ const getHomeHTML = function () {
   changeContainerHTML(
     secondContainerCategories[randomNumber(0, 4)],
     3,
-    "second-container"
+    "second-container",
+    "",
+    "2"
   );
+
   changeContainerHTML(
     thirdContainerCategoriesLeft[randomNumber(0, 1)],
     1000,
@@ -678,7 +748,7 @@ const getHeadlinesFromCountries = async function (country, countryName) {
   document.querySelector("#main").style.gap = "0rem";
 
   const response = await fetch(
-    `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=8043ca8f1412485d8a3011796543a9be`
+    `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
   );
   const countryData = await response.json();
   document.querySelector("#main").innerHTML = `
@@ -1087,7 +1157,7 @@ const getNewsFromInput = async function (input) {
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${city}&apiKey=8043ca8f1412485d8a3011796543a9be`
+        `https://newsapi.org/v2/everything?q=${city}&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
       );
 
       const data = await response.json();
@@ -1309,7 +1379,7 @@ const getNewsFromInput = async function (input) {
       </div> `;
       const response = await fetch(
         `
-https://newsapi.org/v2/everything?domains=${source}&apiKey=8043ca8f1412485d8a3011796543a9be`
+https://newsapi.org/v2/everything?domains=${source}&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
       );
 
       const data = await response.json();
@@ -1531,7 +1601,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=8043ca8f1412485d8a301
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${topic}&apiKey=8043ca8f1412485d8a3011796543a9be`
+        `https://newsapi.org/v2/everything?q=${topic}&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
       );
 
       const data = await response.json();
@@ -1740,7 +1810,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=8043ca8f1412485d8a301
         </div>
       </div> `;
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=8043ca8f1412485d8a3011796543a9be`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
     );
 
     const data = await response.json();
@@ -2176,7 +2246,7 @@ const getNewsFromList = async function (clicked) {
     const response = await fetch(
       `https://newsapi.org/v2/everything?q=${
         differentClicked ? differentClicked : clicked
-      }&apiKey=8043ca8f1412485d8a3011796543a9be`
+      }&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
     );
 
     const data = await response.json();
@@ -2207,29 +2277,33 @@ const changeContainerHTML = async function (
   dataNum
 ) {
   try {
-    document.querySelector(
-      ".first-container"
-    ).innerHTML += ` <i class="fa-solid fa-rotate-right"></i>`;
-    if (document.querySelector(".second-container")) {
+    if (type !== "second-container") {
       document.querySelector(
-        ".second-container"
+        ".first-container"
       ).innerHTML += ` <i class="fa-solid fa-rotate-right"></i>`;
-    }
-    if (document.querySelector(".for-you-container")) {
-      document
-        .querySelectorAll(".for-you-left-side")
-        .forEach(
-          (el) => (el.innerHTML = ` <i class="fa-solid fa-rotate-right"></i>`)
-        );
-      document
-        .querySelectorAll(".for-you-right-side")
-        .forEach(
-          (el) => (el.innerHTML = ` <i class="fa-solid fa-rotate-right"></i>`)
-        );
+      if (document.querySelector(".second-container")) {
+        document.querySelector(
+          ".second-container"
+        ).innerHTML += ` <i class="fa-solid fa-rotate-right"></i>`;
+      }
+      if (document.querySelector(".for-you-container")) {
+        document
+          .querySelectorAll(".for-you-left-side")
+          .forEach(
+            (el) =>
+              (el.innerHTML += ` <i class="fa-solid fa-rotate-right"></i>`)
+          );
+        document
+          .querySelectorAll(".for-you-right-side")
+          .forEach(
+            (el) =>
+              (el.innerHTML += ` <i class="fa-solid fa-rotate-right"></i>`)
+          );
+      }
     }
 
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=8043ca8f1412485d8a3011796543a9be`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
     );
     const newsData = await response.json();
 
@@ -2252,7 +2326,7 @@ const changeContainerHTML = async function (
       </div>`);
 
     if (type === "first-container") getHTML(newsData, limit, dataNum);
-    if (type === "second-container") getSecondContainerHTML(newsData);
+    if (type === "second-container") getSecondContainerHTML(newsData, dataNum);
     if (type === "third-container") getThirdContainerHTML(newsData, side);
     if (type === "fifth-container") getFifthContainerHTML(newsData, side);
     if (type === "sixth-container")
@@ -2262,40 +2336,41 @@ const changeContainerHTML = async function (
     console.error(err);
   }
 };
-const getSecondContainerHTML = function (data) {
+const getSecondContainerHTML = function (data, dataNum) {
   const array = [2, 3, 4];
 
-  for (let i = 0; i < array[Math.floor(Math.random() * 2)]; i++) {
-    document.querySelector(
-      ".second-container"
-    ).innerHTML += `   <a class="data-link" href="${
-      data.articles[i].url
-    }">  <div class="right-side-card">
+  document.querySelector(`[data-second-container="${dataNum}"]`).innerHTML =
+    data.articles
+      .map((el, i) => {
+        if (i <= array[randomNumber(0, 2)])
+          return `   <a class="data-link" href="${
+            el.url
+          }">  <div class="right-side-card">
     <div class="secondary-bookmark bookmark">
                 <i class="fa-regular fa-bookmark"></i>
               </div>
             <div class="right-side-card-left">
-              <p class="logo data-source">${data.articles[i].source.name}</p>
+              <p class="logo data-source">${el.source.name}</p>
               <h2 class="right-side-card-title data-title">
-               ${data.articles[i].title}
+               ${el.title}
               </h2>
               <p class="date-author-side data-date-author">${
-                data.articles[i].publishedAt.slice(5, 10) +
-                "-" +
-                data.articles[i].publishedAt.slice(2, 4)
-              } · ${data.articles[i].author ?? ""}</p>
+                el.publishedAt.slice(5, 10) + "-" + el.publishedAt.slice(2, 4)
+              } · ${el.author ?? ""}</p>
             </div>
             <div class="right-side-card-right">
               <img
                 class="right-side-card-image data-image"
-                src="${data.articles[i].urlToImage}"
+                src="${el.urlToImage}"
                 alt=""
               />
             </div>
           </div></a>`;
-  }
+        else return;
+      })
+      .join("");
   document
-    .querySelector(`.second-container`)
+    .querySelector(`[data-second-container="${dataNum}"]`)
     .querySelectorAll("a")
     .forEach((elem) => {
       loggedInAs.bookmarks.forEach((el) => {
@@ -2308,7 +2383,7 @@ const getSecondContainerHTML = function (data) {
     });
 
   document
-    .querySelector(`.second-container`)
+    .querySelector(`[data-second-container="${dataNum}"]`)
     .querySelectorAll("a")
     .forEach((el) => {
       el.addEventListener("click", function (e) {
@@ -2482,7 +2557,7 @@ const getFourthContainerHTML = async function () {
     let k = 0;
     for (let i = 0; i < number; i) {
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=8043ca8f1412485d8a3011796543a9be`
+        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
       );
       const data = await response.json();
 
@@ -4594,9 +4669,10 @@ const getForYouContainerHTML = async function () {
 
 checkIfLoggedIn();
 if (Logged) {
-  // thirdPageOfFollowing();
   getHomeHTML();
-  getWeather("Novi Pazar");
+  getWeather(
+    loggedInAs.followedLocation ? loggedInAs.followedLocation[0] : "Novi Pazar"
+  );
 }
 
 //TODO: ADD BOOKMARKING NEWS.

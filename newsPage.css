@@ -282,6 +282,8 @@ body {
   width: 3rem;
 }
 .first-second-container-wrapper {
+  font-family: "Roboto", sans-serif;
+  width: 100%;
   gap: 2rem;
   display: flex;
   justify-content: space-between;
@@ -316,7 +318,7 @@ body {
 }
 .second-container {
   position: relative;
-  width: 30%;
+  width: calc(100%-3rem);
   min-height: 10rem;
   background-color: white;
   height: 100%;
@@ -618,7 +620,7 @@ body {
   overflow: hidden;
   box-shadow: inset -10px 0px 30px 0px transparent;
 }
-.page-top-submain-news-bottom button {
+.button-list {
   font-size: 1.5rem;
   padding: 0.8rem 1.7rem;
   text-wrap: nowrap;
@@ -635,6 +637,8 @@ body {
   color: white;
 }
 .button-clicked {
+  border: 1px solid black;
+  padding: -1px;
   background-color: white;
   color: black;
 }
@@ -1640,4 +1644,48 @@ body {
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
   background-color: white;
+}
+.second-container-wrapper {
+  position: relative;
+  width: 30%;
+  min-height: 10rem;
+  height: 100%;
+  border-radius: 2rem;
+  color: black;
+  gap: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+.home-local-news-container {
+  width: 100%;
+}
+.home-local-news-buttons {
+  display: flex;
+  width: 100%;
+  gap: 0.5rem;
+  margin: 1rem 0rem -0.5rem 0rem;
+  overflow: hidden;
+}
+.home-local-news-slider {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  cursor: pointer;
+  font-size: 1.7rem;
+}
+.special-button-home-local {
+  padding: 0rem 0.7rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  height: 100%;
+}
+.special-button-home-local::after {
+  content: "";
+  background-color: rgb(144, 144, 144);
+  position: absolute;
+  left: 0rem;
+  height: 2.5rem;
+  width: 1px;
 }
