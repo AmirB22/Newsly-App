@@ -20,6 +20,7 @@ body {
   align-items: center;
   flex-direction: column;
   color: white;
+  scroll-behavior: smooth;
 }
 * {
   margin: 0px;
@@ -73,7 +74,8 @@ body {
   border-bottom-right-radius: 1rem;
   font-size: 1.6rem;
 }
-.search-container input:focus {
+.search-container input:focus,
+.search-container button:focus {
   outline: none;
 }
 .search-container button {
@@ -262,12 +264,12 @@ body {
   position: relative;
   right: 2rem;
 }
-.fa-chevron-left {
+.weather-chevron {
   transition: transform 1s, background-color 0.3s;
   padding: 0.5rem 0.7rem;
   border-radius: 2rem;
 }
-.weather-left-button:hover .fa-chevron-left {
+.weather-left-button:hover .weather-chevron {
   background-color: rgb(220, 220, 220);
 }
 .weather-temperature {
@@ -325,6 +327,7 @@ body {
   border-radius: 2rem;
   padding: 1.5rem;
   color: black;
+  min-height: 30rem;
 }
 .right-side-title {
   display: flex;
@@ -436,7 +439,7 @@ body {
 .big-news {
   display: flex;
   width: 100%;
-  height: 30rem;
+  height: 100%;
   padding: 1rem 0rem;
   border-bottom: 1px solid rgb(220, 220, 220);
   gap: 1.5rem;
@@ -468,9 +471,8 @@ body {
 .main-news-title {
   font-size: 1.8rem;
   font-weight: normal;
-  height: 6.2rem;
+  height: 6.3rem;
   width: 100%;
-  overflow: hidden;
   text-overflow: ellipsis;
   overflow: hidden;
 }
@@ -612,17 +614,28 @@ body {
 }
 .page-top-submain-news {
   margin-top: 1rem;
+  position: relative;
 }
 .page-top-submain-news-bottom {
+  height: 5.2rem;
+  padding: 0rem 2rem 0rem 0rem;
+  position: relative;
   display: flex;
-  gap: 0.7rem;
+  gap: 0.8rem;
   align-items: center;
-  overflow: hidden;
+  overflow-y: hidden;
+  overflow-x: scroll;
   box-shadow: inset -10px 0px 30px 0px transparent;
+}
+.page-top-submain-news-bottom::-webkit-scrollbar {
+  height: 0px;
+}
+.page-top-submain-news-bottom::-webkit-scrollbar-thumb {
+  background-color: lime;
 }
 .button-list {
   font-size: 1.5rem;
-  padding: 0.8rem 1.7rem;
+  padding: 0.6rem 1.6rem;
   text-wrap: nowrap;
   border-radius: 1rem;
   border: 1px solid white;
@@ -1527,8 +1540,8 @@ body {
   padding: 1rem 1.3rem;
   margin: -1rem -1.3rem;
   border-radius: 5rem;
-  background-color: rgba(0, 0, 0, 0.06);
-  z-index: 1;
+  background-color: rgba(240, 240, 240);
+  z-index: 5;
   cursor: pointer;
 }
 .bookmark:hover {
@@ -1545,7 +1558,7 @@ body {
   transform: translateY(-50%);
 }
 .big-news-main-bookmark {
-  bottom: 1rem;
+  bottom: 0rem;
   right: 1rem;
 }
 .secondary-bookmark {
@@ -1658,18 +1671,25 @@ body {
 }
 .home-local-news-container {
   width: 100%;
+  position: relative;
 }
 .home-local-news-buttons {
   display: flex;
-  width: 100%;
+  width: 30rem;
   gap: 0.5rem;
   margin: 1rem 0rem -0.5rem 0rem;
-  overflow: hidden;
+  overflow-x: scroll;
+}
+.home-local-news-buttons::-webkit-scrollbar {
+  width: 0px;
+}
+.home-local-news-buttons::-webkit-scrollbar-thumb {
+  background-color: transparent;
 }
 .home-local-news-slider {
   position: absolute;
-  top: 2rem;
-  right: 2rem;
+  top: 0.5rem;
+  right: 1rem;
   cursor: pointer;
   font-size: 1.7rem;
 }
@@ -1688,4 +1708,78 @@ body {
   left: 0rem;
   height: 2.5rem;
   width: 1px;
+}
+.nav-button {
+  position: absolute;
+  padding: 1rem;
+  width: 5rem;
+  background-color: lime;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 2rem;
+  height: 4.2rem;
+  top: 8rem;
+  overflow: hidden;
+  z-index: 1;
+  display: none;
+}
+.next-page-submain.active {
+  display: flex;
+  justify-content: flex-end;
+}
+.prev-page-submain.active {
+  display: flex;
+  justify-content: flex-start;
+}
+.prev-page-submain {
+  left: -5rem;
+  background-color: transparent;
+  background-color: rgb(255, 255, 255, 0.2);
+}
+.next-page-submain {
+  background-color: rgb(255, 255, 255, 0.2);
+  right: -5rem;
+}
+.home-local-nav-button {
+  background-color: orange;
+  position: absolute;
+  z-index: 2;
+  height: 4.7rem;
+  width: 4rem;
+  font-size: 1.5rem;
+  display: none;
+  align-items: center;
+  padding: 0rem 1rem;
+  margin: 0rem -1rem;
+  top: 4.3rem;
+  z-index: 5;
+  cursor: pointer;
+}
+.prev-home-local-button.active {
+  display: flex;
+  justify-content: flex-start;
+}
+.next-home-local-button.active {
+  display: flex;
+  justify-content: flex-end;
+}
+.prev-home-local-button {
+  left: 1rem;
+  background-color: rgb(255, 255, 255);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 1) 30%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+.next-home-local-button {
+  right: 1rem;
+  background-color: rgb(255, 255, 255);
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(255, 255, 255, 1) 60%
+  );
 }

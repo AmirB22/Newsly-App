@@ -173,6 +173,12 @@ const getHomeHTML = function () {
            loggedInAs.followedLocation.length > 0
              ? ` <div class="second-container">
             <div class="right-side-title">
+              <div class="prev-home-local-button home-local-nav-button">
+                  <i class="fa-solid fa-chevron-left"></i>
+                </div>
+                <div class="next-home-local-button home-local-nav-button">
+                  <i class="fa-solid fa-chevron-right "></i>
+                </div>
               <div class="home-local-news-container">
                 <h1 class="home-local-news-title">Local news <i class="fa-solid fa-angle-right"></i></h1>
                 <div class="home-local-news-slider">
@@ -239,7 +245,11 @@ const getHomeHTML = function () {
     document.querySelector(".home-local-news-buttons").innerHTML +=
       loggedInAs.followedLocation
         .map((el, i) =>
-          i === 0
+          i === 0 &&
+          loggedInAs.followedLocation.length === 1 &&
+          !loggedInAs.followedLocation.includes("Serbia")
+            ? ` <button class="button-list button-clicked home-local-button">${el}</button> <div class="special-button-home-local home-local-button"><button class="button-list button-unclicked home-local-button">Serbia</button></div>`
+            : i === 0
             ? `  <button class="button-list button-clicked home-local-button">${el}</button>`
             : i === loggedInAs.followedLocation.length - 1 &&
               !loggedInAs.followedLocation.includes("Serbia")
@@ -247,10 +257,38 @@ const getHomeHTML = function () {
             : ` <button class="button-list button-unclicked home-local-button">${el}</button>`
         )
         .join("");
+
+    if (loggedInAs.followedLocation.length >= 3)
+      document.querySelector(".next-home-local-button").classList.add("active");
+
     document
       .querySelector(`[data-second-container="1"]`)
       .closest(".second-container")
       .addEventListener("click", function (e) {
+        const tabList = document.querySelector(".home-local-news-buttons");
+        const leftArrow = document.querySelector(".prev-home-local-button");
+        const rightArrow = document.querySelector(".next-home-local-button");
+
+        const manageIcons = function () {
+          if (tabList.scrollLeft > 20) leftArrow.classList.add("active");
+          else leftArrow.classList.remove("active");
+
+          let maxScrollValue = tabList.scrollWidth - tabList.clientWidth - 20;
+
+          if (tabList.scrollLeft >= maxScrollValue)
+            rightArrow.classList.remove("active");
+          else rightArrow.classList.add("active");
+        };
+        if (e.target.closest(".prev-home-local-button")) {
+          tabList.scrollLeft -= 200;
+          manageIcons();
+        }
+        if (e.target.closest(".next-home-local-button")) {
+          tabList.scrollLeft += 200;
+          manageIcons();
+        }
+        tabList.addEventListener("scroll", manageIcons);
+
         if (e.target.closest(".home-local-button")) {
           document
             .querySelectorAll(".home-local-button")
@@ -274,7 +312,7 @@ const getHomeHTML = function () {
       });
 
     changeContainerHTML(
-      loggedInAs.followedLocation[1],
+      loggedInAs.followedLocation[0],
       3,
       "second-container",
       "",
@@ -435,37 +473,37 @@ document.querySelector(".log-out").addEventListener("click", function () {
   Logged = JSON.parse(localStorage.getItem("logged")) || false;
   checkIfLoggedIn();
 });
-document
-  .querySelector(".weather-left-button")
-  .addEventListener("click", function () {
-    document
-      .querySelector(".weather-search")
-      .classList.toggle("weather-search-active");
-    if (
-      document
-        .querySelector(".weather-search")
-        .classList.contains("weather-search-active")
-    )
-      document.querySelector(".fa-chevron-left").style.transform =
-        "rotate(180deg)";
-    else
-      document.querySelector(".fa-chevron-left").style.transform =
-        "rotate(0deg)";
-  });
+// document
+//   .querySelector(".weather-left-button")
+//   .addEventListener("click", function () {
+//     document
+//       .querySelector(".weather-search")
+//       .classList.toggle("weather-search-active");
+//     if (
+//       document
+//         .querySelector(".weather-search")
+//         .classList.contains("weather-search-active")
+//     )
+//       document.querySelector(".fa-chevron-left").style.transform =
+//         "rotate(180deg)";
+//     else
+//       document.querySelector(".fa-chevron-left").style.transform =
+//         "rotate(0deg)";
+//   });
 
-document
-  .querySelector(".weather-search-input-container")
-  .addEventListener("submit", function (e) {
-    e.preventDefault();
-    const input = document.querySelector(".weather-search-input");
-    if (!input.value) return;
-    getWeather(input.value);
-    document
-      .querySelector(".weather-search")
-      .classList.remove("weather-search-active");
-    document.querySelector(".fa-chevron-left").style.transform = "rotate(0deg)";
-    input.value = "";
-  });
+// document
+//   .querySelector(".weather-search-input-container")
+//   .addEventListener("submit", function (e) {
+//     e.preventDefault();
+//     const input = document.querySelector(".weather-search-input");
+//     if (!input.value) return;
+//     getWeather(input.value);
+//     document
+//       .querySelector(".weather-search")
+//       .classList.remove("weather-search-active");
+//     document.querySelector(".fa-chevron-left").style.transform = "rotate(0deg)";
+//     input.value = "";
+//   });
 document.querySelectorAll("li").forEach((el) => {
   el.classList.add("list-unclicked");
   el.classList.add("list-button-list");
@@ -665,18 +703,20 @@ ${
       });
   }
 
-  document
-    .querySelector(`[data-first-container="${dataNum}"]`)
-    .querySelectorAll("a")
-    .forEach((elem) => {
-      loggedInAs.bookmarks.forEach((el) => {
-        if (el.urlToSource === elem.href) {
-          elem
-            .querySelector(".fa-bookmark")
-            .classList.replace("fa-regular", "fa-solid");
-        }
+  if (loggedInAs.bookmarks) {
+    document
+      .querySelector(`[data-first-container="${dataNum}"]`)
+      .querySelectorAll("a")
+      .forEach((elem) => {
+        loggedInAs.bookmarks.forEach((el) => {
+          if (el.urlToSource === elem.href) {
+            elem
+              .querySelector(".fa-bookmark")
+              .classList.replace("fa-regular", "fa-solid");
+          }
+        });
       });
-    });
+  }
 
   document
     .querySelector(`[data-first-container="${dataNum}"]`)
@@ -748,7 +788,7 @@ const getHeadlinesFromCountries = async function (country, countryName) {
   document.querySelector("#main").style.gap = "0rem";
 
   const response = await fetch(
-    `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
+    `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=f0d39e242b8a4c5694028c73ce16e662`
   );
   const countryData = await response.json();
   document.querySelector("#main").innerHTML = `
@@ -1157,7 +1197,7 @@ const getNewsFromInput = async function (input) {
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${city}&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
+        `https://newsapi.org/v2/everything?q=${city}&apiKey=f0d39e242b8a4c5694028c73ce16e662`
       );
 
       const data = await response.json();
@@ -1269,19 +1309,20 @@ const getNewsFromInput = async function (input) {
         </div></a>`
           )
           .join("");
-      document
-        .querySelector(`[data-first-container="2"]`)
-        .querySelectorAll("a")
-        .forEach((elem) => {
-          loggedInAs.bookmarks.forEach((el) => {
-            if (el.urlToSource === elem.href) {
-              elem
-                .querySelector(".fa-bookmark")
-                .classList.replace("fa-regular", "fa-solid");
-            }
+      if (loggedInAs.bookmarks) {
+        document
+          .querySelector(`[data-first-container="2"]`)
+          .querySelectorAll("a")
+          .forEach((elem) => {
+            loggedInAs.bookmarks.forEach((el) => {
+              if (el.urlToSource === elem.href) {
+                elem
+                  .querySelector(".fa-bookmark")
+                  .classList.replace("fa-regular", "fa-solid");
+              }
+            });
           });
-        });
-
+      }
       document
         .querySelector(`[data-first-container="2"]`)
         .querySelectorAll("a")
@@ -1379,7 +1420,7 @@ const getNewsFromInput = async function (input) {
       </div> `;
       const response = await fetch(
         `
-https://newsapi.org/v2/everything?domains=${source}&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
+https://newsapi.org/v2/everything?domains=${source}&apiKey=f0d39e242b8a4c5694028c73ce16e662`
       );
 
       const data = await response.json();
@@ -1491,18 +1532,20 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=6c4f0ed57a334072a74c6
         </div></a>`
           )
           .join("");
-      document
-        .querySelector(`[data-first-container="7"]`)
-        .querySelectorAll("a")
-        .forEach((elem) => {
-          loggedInAs.bookmarks.forEach((el) => {
-            if (el.urlToSource === elem.href) {
-              elem
-                .querySelector(".fa-bookmark")
-                .classList.replace("fa-regular", "fa-solid");
-            }
+      if (loggedInAs.bookmarks) {
+        document
+          .querySelector(`[data-first-container="7"]`)
+          .querySelectorAll("a")
+          .forEach((elem) => {
+            loggedInAs.bookmarks.forEach((el) => {
+              if (el.urlToSource === elem.href) {
+                elem
+                  .querySelector(".fa-bookmark")
+                  .classList.replace("fa-regular", "fa-solid");
+              }
+            });
           });
-        });
+      }
 
       document
         .querySelector(`[data-first-container="7"]`)
@@ -1601,7 +1644,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=6c4f0ed57a334072a74c6
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${topic}&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
+        `https://newsapi.org/v2/everything?q=${topic}&apiKey=f0d39e242b8a4c5694028c73ce16e662`
       );
 
       const data = await response.json();
@@ -1712,18 +1755,20 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=6c4f0ed57a334072a74c6
         </div></a>`
           )
           .join("");
-      document
-        .querySelector(`[data-first-container="6"]`)
-        .querySelectorAll("a")
-        .forEach((elem) => {
-          loggedInAs.bookmarks.forEach((el) => {
-            if (el.urlToSource === elem.href) {
-              elem
-                .querySelector(".fa-bookmark")
-                .classList.replace("fa-regular", "fa-solid");
-            }
+      if (loggedInAs.bookmarks) {
+        document
+          .querySelector(`[data-first-container="6"]`)
+          .querySelectorAll("a")
+          .forEach((elem) => {
+            loggedInAs.bookmarks.forEach((el) => {
+              if (el.urlToSource === elem.href) {
+                elem
+                  .querySelector(".fa-bookmark")
+                  .classList.replace("fa-regular", "fa-solid");
+              }
+            });
           });
-        });
+      }
 
       document
         .querySelector(`[data-first-container="6"]`)
@@ -1810,7 +1855,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=6c4f0ed57a334072a74c6
         </div>
       </div> `;
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=f0d39e242b8a4c5694028c73ce16e662`
     );
 
     const data = await response.json();
@@ -1922,19 +1967,20 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=6c4f0ed57a334072a74c6
         </div></a>`
         )
         .join("");
-    document
-      .querySelector(`[data-first-container="5"]`)
-      .querySelectorAll("a")
-      .forEach((elem) => {
-        loggedInAs.bookmarks.forEach((el) => {
-          if (el.urlToSource === elem.href) {
-            elem
-              .querySelector(".fa-bookmark")
-              .classList.replace("fa-regular", "fa-solid");
-          }
+    if (loggedInAs.bookmarks) {
+      document
+        .querySelector(`[data-first-container="5"]`)
+        .querySelectorAll("a")
+        .forEach((elem) => {
+          loggedInAs.bookmarks.forEach((el) => {
+            if (el.urlToSource === elem.href) {
+              elem
+                .querySelector(".fa-bookmark")
+                .classList.replace("fa-regular", "fa-solid");
+            }
+          });
         });
-      });
-
+    }
     document
       .querySelector(`[data-first-container="5"]`)
       .querySelectorAll("a")
@@ -2085,6 +2131,17 @@ const getNewsFromList = async function (clicked) {
           </button>`
           }
         </div>
+        ${
+          clicked !== "World" && clicked !== "U.S." && clicked !== "U.s."
+            ? `
+        <button class="prev-page-submain nav-button">
+          <i class="fa-solid fa-angle-left"></i>
+        </button>
+        <button class="next-page-submain nav-button">
+          <i class="fa-solid fa-angle-right"></i>
+        </button>`
+            : ""
+        }
         <div class="page-top-submain-news-bottom">
        ${
          clicked !== "World" &&
@@ -2142,6 +2199,38 @@ const getNewsFromList = async function (clicked) {
         </div>
       </div>
       <div class="first-container" data-first-container="4"></div>`;
+    if (clicked !== "World" && clicked !== "U.S." && clicked !== "U.s.") {
+      const tabList = document.querySelector(".page-top-submain-news-bottom");
+      const leftArrow = document.querySelector(".prev-page-submain");
+      const rightArrow = document.querySelector(".next-page-submain");
+
+      const manageIcons = function () {
+        if (tabList.scrollLeft > 20) leftArrow.classList.add("active");
+        else leftArrow.classList.remove("active");
+
+        let maxScrollValue = tabList.scrollWidth - tabList.clientWidth - 20;
+
+        if (tabList.scrollLeft >= maxScrollValue)
+          rightArrow.classList.remove("active");
+        else rightArrow.classList.add("active");
+      };
+
+      manageIcons();
+
+      document
+        .querySelector(".next-page-submain")
+        .addEventListener("click", function () {
+          tabList.scrollLeft += 600;
+          manageIcons();
+        });
+      document
+        .querySelector(".prev-page-submain")
+        .addEventListener("click", function () {
+          tabList.scrollLeft -= 600;
+          manageIcons();
+        });
+      tabList.addEventListener("scroll", manageIcons);
+    }
     if (clicked === "Local") {
       document
         .querySelector(".special-button-end")
@@ -2246,7 +2335,7 @@ const getNewsFromList = async function (clicked) {
     const response = await fetch(
       `https://newsapi.org/v2/everything?q=${
         differentClicked ? differentClicked : clicked
-      }&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
+      }&apiKey=f0d39e242b8a4c5694028c73ce16e662`
     );
 
     const data = await response.json();
@@ -2303,7 +2392,7 @@ const changeContainerHTML = async function (
     }
 
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=f0d39e242b8a4c5694028c73ce16e662`
     );
     const newsData = await response.json();
 
@@ -2369,18 +2458,20 @@ const getSecondContainerHTML = function (data, dataNum) {
         else return;
       })
       .join("");
-  document
-    .querySelector(`[data-second-container="${dataNum}"]`)
-    .querySelectorAll("a")
-    .forEach((elem) => {
-      loggedInAs.bookmarks.forEach((el) => {
-        if (el.urlToSource === elem.href) {
-          elem
-            .querySelector(".fa-bookmark")
-            .classList.replace("fa-regular", "fa-solid");
-        }
+  if (loggedInAs.bookmarks) {
+    document
+      .querySelector(`[data-second-container="${dataNum}"]`)
+      .querySelectorAll("a")
+      .forEach((elem) => {
+        loggedInAs.bookmarks.forEach((el) => {
+          if (el.urlToSource === elem.href) {
+            elem
+              .querySelector(".fa-bookmark")
+              .classList.replace("fa-regular", "fa-solid");
+          }
+        });
       });
-    });
+  }
 
   document
     .querySelector(`[data-second-container="${dataNum}"]`)
@@ -2474,19 +2565,20 @@ const getThirdContainerHTML = function (data, side) {
             </div>
           </div></a>`;
   }
-  document
-    .querySelector(`[data-foryou${side}="1"]`)
-    .querySelectorAll("a")
-    .forEach((elem) => {
-      loggedInAs.bookmarks.forEach((el) => {
-        if (el.urlToSource === elem.href) {
-          elem
-            .querySelector(".fa-bookmark")
-            .classList.replace("fa-regular", "fa-solid");
-        }
+  if (loggedInAs.bookmarks) {
+    document
+      .querySelector(`[data-foryou${side}="1"]`)
+      .querySelectorAll("a")
+      .forEach((elem) => {
+        loggedInAs.bookmarks.forEach((el) => {
+          if (el.urlToSource === elem.href) {
+            elem
+              .querySelector(".fa-bookmark")
+              .classList.replace("fa-regular", "fa-solid");
+          }
+        });
       });
-    });
-
+  }
   document
     .querySelector(`[data-foryou${side}="1"]`)
     .querySelectorAll("a")
@@ -2557,7 +2649,7 @@ const getFourthContainerHTML = async function () {
     let k = 0;
     for (let i = 0; i < number; i) {
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=6c4f0ed57a334072a74c6f97f2db7387`
+        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=f0d39e242b8a4c5694028c73ce16e662`
       );
       const data = await response.json();
 
@@ -2609,19 +2701,20 @@ const getFourthContainerHTML = async function () {
         getNewsFromList(`${e.target.textContent.trim()}`);
       })
     );
-    document
-      .querySelector(`.fourth-container-wrapper`)
-      .querySelectorAll("a")
-      .forEach((elem) => {
-        loggedInAs.bookmarks.forEach((el) => {
-          if (el.urlToSource === elem.href) {
-            elem
-              .querySelector(".fa-bookmark")
-              .classList.replace("fa-regular", "fa-solid");
-          }
+    if (loggedInAs.bookmarks) {
+      document
+        .querySelector(`.fourth-container-wrapper`)
+        .querySelectorAll("a")
+        .forEach((elem) => {
+          loggedInAs.bookmarks.forEach((el) => {
+            if (el.urlToSource === elem.href) {
+              elem
+                .querySelector(".fa-bookmark")
+                .classList.replace("fa-regular", "fa-solid");
+            }
+          });
         });
-      });
-
+    }
     document
       .querySelector(`.fourth-container-wrapper`)
       .querySelectorAll("a")
@@ -2725,19 +2818,20 @@ const getFifthContainerHTML = function (data, side) {
           }
           </div></a>`;
   }
-  document
-    .querySelector(`[data-foryou${side}="2"]`)
-    .querySelectorAll("a")
-    .forEach((elem) => {
-      loggedInAs.bookmarks.forEach((el) => {
-        if (el.urlToSource === elem.href) {
-          elem
-            .querySelector(".fa-bookmark")
-            .classList.replace("fa-regular", "fa-solid");
-        }
+  if (loggedInAs.bookmarks) {
+    document
+      .querySelector(`[data-foryou${side}="2"]`)
+      .querySelectorAll("a")
+      .forEach((elem) => {
+        loggedInAs.bookmarks.forEach((el) => {
+          if (el.urlToSource === elem.href) {
+            elem
+              .querySelector(".fa-bookmark")
+              .classList.replace("fa-regular", "fa-solid");
+          }
+        });
       });
-    });
-
+  }
   document
     .querySelector(`[data-foryou${side}="2"]`)
     .querySelectorAll("a")
@@ -2837,18 +2931,20 @@ const getSixthContainerHTML = function (data, side, dataNum) {
           }
           </div></a>`;
   }
-  document
-    .querySelector(`[data-foryou${side}="${dataNum}"]`)
-    .querySelectorAll("a")
-    .forEach((elem) => {
-      loggedInAs.bookmarks.forEach((el) => {
-        if (el.urlToSource === elem.href) {
-          elem
-            .querySelector(".fa-bookmark")
-            .classList.replace("fa-regular", "fa-solid");
-        }
+  if (loggedInAs.bookmarks) {
+    document
+      .querySelector(`[data-foryou${side}="${dataNum}"]`)
+      .querySelectorAll("a")
+      .forEach((elem) => {
+        loggedInAs.bookmarks.forEach((el) => {
+          if (el.urlToSource === elem.href) {
+            elem
+              .querySelector(".fa-bookmark")
+              .classList.replace("fa-regular", "fa-solid");
+          }
+        });
       });
-    });
+  }
 
   document
     .querySelector(`[data-foryou${side}="${dataNum}"]`)
@@ -4674,5 +4770,3 @@ if (Logged) {
     loggedInAs.followedLocation ? loggedInAs.followedLocation[0] : "Novi Pazar"
   );
 }
-
-//TODO: ADD BOOKMARKING NEWS.
