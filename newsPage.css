@@ -6,15 +6,15 @@ html {
 }
 body {
   font-family: "Poppins", sans-serif;
-  background: rgb(73, 180, 58);
+  /* background: rgb(73, 180, 58);
   background: linear-gradient(
     135deg,
     rgba(73, 180, 58, 1) 0%,
     rgba(196, 252, 69, 1) 100%
-  );
+  ); */
   min-height: 100svh;
   height: auto;
-  width: calc(100vw - (100vw - 100%));
+  background-color: red;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -30,8 +30,7 @@ body {
 .header {
   position: absolute;
   top: 0px;
-  left: 0px;
-  right: 0px;
+  width: 100%;
   background-color: white;
   height: 11rem;
   padding: 0.5rem 0.5rem 0 0.5rem;
@@ -67,8 +66,8 @@ body {
   justify-content: center;
 }
 .search-container input {
+  width: 50%;
   padding: 1.5rem 1rem;
-  width: 60rem;
   border: 2px solid lightgreen;
   border-top-right-radius: 1rem;
   border-bottom-right-radius: 1rem;
@@ -168,7 +167,8 @@ body {
 }
 #main {
   min-height: calc(100svh - 16rem);
-  width: 110rem;
+  width: 100rem;
+  background-color: blue;
   margin-top: 11.5rem;
   padding-bottom: 5rem;
   display: flex;
@@ -197,7 +197,7 @@ body {
   justify-content: space-between;
   height: 7rem;
   align-items: center;
-  width: 100%;
+  width: calc(100% - 3rem);
   padding: 1.5rem 0rem;
 }
 .page-top .page-title {
@@ -291,7 +291,7 @@ body {
   justify-content: space-between;
 }
 .first-container {
-  width: 75rem;
+  width: 70%;
   position: relative;
   min-height: 50svh;
   background-color: white;
@@ -520,13 +520,13 @@ body {
 }
 .third-container .for-you-container {
   min-height: 30rem;
-  min-width: 110rem;
+  min-width: 100%;
 }
 .for-you-right-side,
 .for-you-left-side {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: calc(100% - 2rem);
   position: relative;
   padding: 0rem 1rem;
   border-right: 1px solid rgb(220, 220, 220);
@@ -843,7 +843,7 @@ body {
 }
 .sixth-container .for-you-container {
   min-height: 27rem;
-  min-width: 85rem;
+  min-width: 100%;
 }
 .button-fourth-container {
   cursor: pointer;
@@ -1782,4 +1782,82 @@ body {
     rgba(0, 0, 0, 0) 0%,
     rgba(255, 255, 255, 1) 60%
   );
+}
+
+@media screen and (max-width: 1100px) {
+  #main {
+    width: 100%;
+    margin-top: 16rem;
+    background-color: green;
+  }
+  .page-top {
+    width: 70%;
+  }
+  .first-second-container-wrapper {
+    flex-direction: column;
+    justify-content: center;
+    width: 70%;
+  }
+  .first-container {
+    width: calc(100% - 3rem);
+  }
+  .second-container-wrapper {
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    background-color: orange;
+  }
+  .main-news {
+    flex: 5;
+  }
+  .on-the-side-news {
+    flex: 5;
+  }
+  .header {
+    height: auto;
+  }
+  .list-container {
+    height: auto;
+    flex-direction: column;
+    align-items: center;
+  }
+  .list-container span {
+    display: none;
+  }
+  .third-container .for-you-container {
+    width: 70%;
+    flex-direction: column;
+  }
+  .for-you-right-side,
+  .for-you-left-side {
+  }
+  .fourth-container {
+    width: 70%;
+  }
+  .fourth-container-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+  .fourth-container .second-container {
+    width: calc(100% - 3rem);
+  }
+  .fifth-container {
+    width: 70%;
+  }
+  .fifth-container .for-you-container {
+    min-height: 37rem;
+    width: 100%;
+    flex-direction: column;
+    height: auto;
+  }
+  .secondary-bookmark {
+    right: 10%;
+  }
+  .sixth-container {
+    width: 70%;
+  }
+  .sixth-container .for-you-container {
+    flex-direction: column;
+    width: calc(100% - 3rem);
+  }
 }

@@ -4764,9 +4764,9 @@ const getForYouContainerHTML = async function () {
 };
 
 checkIfLoggedIn();
-if (Logged) {
-  getHomeHTML();
-  getWeather(
-    loggedInAs.followedLocation ? loggedInAs.followedLocation[0] : "Novi Pazar"
-  );
-}
+// if (Logged) {
+  // getHomeHTML();
+  // getWeather(
+    // loggedInAs.followedLocation ? loggedInAs.followedLocation[0] : "Novi Pazar"
+  // );
+// }
