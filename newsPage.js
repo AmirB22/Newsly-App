@@ -98,8 +98,14 @@ const getWeather = async function (city) {
   }
 };
 const getHomeHTML = function () {
-  document.querySelector("#main").style.width = "110rem";
-  document.querySelector("#main").style.gap = "0rem";
+  if (document.querySelector("#main")) document.querySelector("#main").remove();
+  if (document.querySelector("#main-list"))
+    document.querySelector("#main-list").remove();
+  if (document.querySelector("#main-input"))
+    document.querySelector("#main-input").remove();
+
+  document.body.insertAdjacentHTML("beforeend", `<div id="main"></div>`);
+
   const firstContainerCategories = [
     "America",
     "Space",
@@ -540,20 +546,21 @@ document
     getNewsFromInput(search.value);
   });
 const showProfilePreview = function () {
-  document.querySelector(".account-preview").style.height = "30rem";
-  document.querySelector(".account-preview").style.padding = "3rem 1rem";
-  document.querySelector(".account-preview").style.bottom = "-36rem";
-  document.querySelector(".account-preview").style.boxShadow =
-    "0px 10px 10px rgba(0, 0, 0, 0.3)";
+  document
+    .querySelector(".account-preview")
+    .classList.add("account-preview-active");
 };
 const hideProfilePreview = function () {
-  document.querySelector(".account-preview").style.height = "0rem";
-  document.querySelector(".account-preview").style.padding = "0rem 1rem";
-  document.querySelector(".account-preview").style.bottom = "-0rem";
-  document.querySelector(".account-preview").style.boxShadow = "none";
+  document
+    .querySelector(".account-preview")
+    .classList.remove("account-preview-active");
 };
 const profilePicture = document.querySelector(".profile-picture");
-profilePicture.addEventListener("click", showProfilePreview);
+profilePicture.addEventListener("click", function () {
+  if (this.nextElementSibling.classList.contains("account-preview-active"))
+    hideProfilePreview();
+  else showProfilePreview();
+});
 
 document.addEventListener("click", function (e) {
   if (e.target.classList.contains("log-out")) return;
@@ -788,7 +795,7 @@ const getHeadlinesFromCountries = async function (country, countryName) {
   document.querySelector("#main").style.gap = "0rem";
 
   const response = await fetch(
-    `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=f0d39e242b8a4c5694028c73ce16e662`
+    `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=8043ca8f1412485d8a3011796543a9be`
   );
   const countryData = await response.json();
   document.querySelector("#main").innerHTML = `
@@ -1148,8 +1155,12 @@ const getHeadlinesFromCountries = async function (country, countryName) {
   );
 };
 const getNewsFromInput = async function (input) {
-  document.querySelector("#main").style.width = "110rem";
-  document.querySelector("#main").style.gap = "0rem";
+  if (document.querySelector("#main")) document.querySelector("#main").remove();
+  if (document.querySelector("#main-list"))
+    document.querySelector("#main-list").remove();
+  if (document.querySelector("#main-input"))
+    document.querySelector("#main-input").remove();
+  document.body.insertAdjacentHTML("beforeend", `<div id="main-input"></div>`);
   document
     .querySelectorAll(".list-button-list")
     .forEach((el) => el.classList.replace("list-clicked", "list-unclicked"));
@@ -1180,10 +1191,10 @@ const getNewsFromInput = async function (input) {
           return;
         }
       });
-      document.querySelector("#main").innerHTML = `
-          <div class="first-second-container-wrapper lts-wrapper-container">
-        <div class="first-container lts-container-first" data-first-container="2"></div>
-        <div class="second-container lts-container-second">
+      document.querySelector("#main-input").innerHTML = `
+          <div class="input-first-second-container-wrapper lts-wrapper-container">
+        <div class="input-first-container lts-container-first" data-first-container="2"></div>
+        <div class="input-second-container lts-container-second">
           <div class="lts-container">
             <i class="fa-solid fa-location-dot lts-icon"></i>
             <div class="lts-info-container">
@@ -1197,7 +1208,7 @@ const getNewsFromInput = async function (input) {
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${city}&apiKey=f0d39e242b8a4c5694028c73ce16e662`
+        `https://newsapi.org/v2/everything?q=${city}&apiKey=8043ca8f1412485d8a3011796543a9be`
       );
 
       const data = await response.json();
@@ -1402,10 +1413,10 @@ const getNewsFromInput = async function (input) {
           return;
         }
       });
-      document.querySelector("#main").innerHTML = `
-        <div class="first-second-container-wrapper lts-wrapper-container">
-        <div class="first-container lts-container-first" data-first-container="7"></div>
-        <div class="second-container lts-container-second">
+      document.querySelector("#main-input").innerHTML = `
+        <div class="input-first-second-container-wrapper lts-wrapper-container">
+        <div class="input-first-container lts-container-first" data-first-container="7"></div>
+        <div class="input-second-container lts-container-second">
           <div class="lts-container">
             <i class="fa-solid fa-hashtag lts-icon"></i>
             <div class="lts-info-container">
@@ -1420,7 +1431,7 @@ const getNewsFromInput = async function (input) {
       </div> `;
       const response = await fetch(
         `
-https://newsapi.org/v2/everything?domains=${source}&apiKey=f0d39e242b8a4c5694028c73ce16e662`
+https://newsapi.org/v2/everything?domains=${source}&apiKey=8043ca8f1412485d8a3011796543a9be`
       );
 
       const data = await response.json();
@@ -1627,10 +1638,10 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=f0d39e242b8a4c5694028
           return;
         }
       });
-      document.querySelector("#main").innerHTML = `
-        <div class="first-second-container-wrapper lts-wrapper-container">
-        <div class="first-container lts-container-first" data-first-container="6"></div>
-        <div class="second-container lts-container-second">
+      document.querySelector("#main-input").innerHTML = `
+        <div class="input-first-second-container-wrapper lts-wrapper-container">
+        <div class="input-first-container lts-container-first" data-first-container="6"></div>
+        <div class="input-second-container lts-container-second">
           <div class="lts-container">
             <i class="fa-solid fa-comments lts-icon"></i>
             <div class="lts-info-container">
@@ -1644,7 +1655,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=f0d39e242b8a4c5694028
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${topic}&apiKey=f0d39e242b8a4c5694028c73ce16e662`
+        `https://newsapi.org/v2/everything?q=${topic}&apiKey=8043ca8f1412485d8a3011796543a9be`
       );
 
       const data = await response.json();
@@ -1838,10 +1849,10 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=f0d39e242b8a4c5694028
       return;
     }
 
-    document.querySelector("#main").innerHTML = `
-      <div class="first-second-container-wrapper lts-wrapper-container">
-        <div class="first-container lts-container-first" data-first-container="5"></div>
-        <div class="second-container lts-container-second">
+    document.querySelector("#main-input").innerHTML = `
+      <div class="input-first-second-container-wrapper lts-wrapper-container">
+        <div class="input-first-container lts-container-first" data-first-container="5"></div>
+        <div class="input-second-container lts-container-second">
           <div class="lts-container">
             <i class="fa-solid fa-magnifying-glass lts-icon"></i>
             <div class="lts-info-container">
@@ -1855,7 +1866,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=f0d39e242b8a4c5694028
         </div>
       </div> `;
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=f0d39e242b8a4c5694028c73ce16e662`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=8043ca8f1412485d8a3011796543a9be`
     );
 
     const data = await response.json();
@@ -2045,11 +2056,19 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=f0d39e242b8a4c5694028
       });
     return;
   } catch (err) {
-    document.querySelector(".first-container").innerHTML = `${err.message}`;
+    // document.querySelector(".first-container").innerHTML = `${err.message}`;
   }
 };
 const getNewsFromList = async function (clicked) {
   try {
+    if (document.querySelector("#main"))
+      document.querySelector("#main").remove();
+    if (document.querySelector("#main-list"))
+      document.querySelector("#main-list").remove();
+    if (document.querySelector("#main-input"))
+      document.querySelector("#main-input").remove();
+
+    document.body.insertAdjacentHTML("beforeend", `<div id="main-list"></div>`);
     const Local = loggedInAs.followedLocation;
     const Technology = [
       "Mobile",
@@ -2108,11 +2127,7 @@ const getNewsFromList = async function (clicked) {
       el.classList.remove("list-clicked");
       if (el.textContent.trim() === clicked) el.classList.add("list-clicked");
     });
-
-    document.querySelector("#main").style.width = "85rem";
-    document.querySelector("#main").style.gap = "0rem";
-
-    document.querySelector("#main").innerHTML = `
+    document.querySelector("#main-list").innerHTML = `
         <div class="page-top-submain-news">
         
        <div class="page-top-submain-news-top">
@@ -2198,7 +2213,7 @@ const getNewsFromList = async function (clicked) {
          }
         </div>
       </div>
-      <div class="first-container" data-first-container="4"></div>`;
+      <div class="list-first-container" data-first-container="4"></div>`;
     if (clicked !== "World" && clicked !== "U.S." && clicked !== "U.s.") {
       const tabList = document.querySelector(".page-top-submain-news-bottom");
       const leftArrow = document.querySelector(".prev-page-submain");
@@ -2335,7 +2350,7 @@ const getNewsFromList = async function (clicked) {
     const response = await fetch(
       `https://newsapi.org/v2/everything?q=${
         differentClicked ? differentClicked : clicked
-      }&apiKey=f0d39e242b8a4c5694028c73ce16e662`
+      }&apiKey=8043ca8f1412485d8a3011796543a9be`
     );
 
     const data = await response.json();
@@ -2355,7 +2370,7 @@ const getNewsFromList = async function (clicked) {
 
     getHTML(data, 1000, "4");
   } catch (err) {
-    document.querySelector(".first-container").innerHTML = `${err.message}`;
+    // document.querySelector(".first-container").innerHTML = `${err.message}`;
   }
 };
 const changeContainerHTML = async function (
@@ -2392,7 +2407,7 @@ const changeContainerHTML = async function (
     }
 
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=f0d39e242b8a4c5694028c73ce16e662`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=8043ca8f1412485d8a3011796543a9be`
     );
     const newsData = await response.json();
 
@@ -2649,7 +2664,7 @@ const getFourthContainerHTML = async function () {
     let k = 0;
     for (let i = 0; i < number; i) {
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=f0d39e242b8a4c5694028c73ce16e662`
+        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=8043ca8f1412485d8a3011796543a9be`
       );
       const data = await response.json();
 
@@ -4765,8 +4780,8 @@ const getForYouContainerHTML = async function () {
 
 checkIfLoggedIn();
 // if (Logged) {
-  // getHomeHTML();
-  // getWeather(
-    // loggedInAs.followedLocation ? loggedInAs.followedLocation[0] : "Novi Pazar"
-  // );
+// getHomeHTML();
+// getWeather(
+// loggedInAs.followedLocation ? loggedInAs.followedLocation[0] : "Novi Pazar"
+// );
 // }
