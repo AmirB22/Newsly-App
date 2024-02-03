@@ -586,7 +586,7 @@ const randomNumber = function (min, max) {
 };
 const getHTML = function (data, limit = 1000, dataNum) {
   document.querySelector(
-    ".first-container"
+    `[data-first-container="${dataNum}"]`
   ).innerHTML = ` <i class="fa-solid fa-rotate-right"></i>`;
   document.querySelectorAll(".fa-rotate-right").forEach((el) => el.remove());
   for (let i = 0; i < data.articles.length; i) {
@@ -2320,7 +2320,7 @@ const getNewsFromList = async function (clicked) {
         });
     }
     document.querySelector(
-      ".first-container"
+      `[data-first-container="4"]`
     ).innerHTML = ` <i class="fa-solid fa-rotate-right"></i>`;
     document.querySelectorAll(".button-list").forEach((el) =>
       el.addEventListener("click", function (e) {
@@ -2331,7 +2331,6 @@ const getNewsFromList = async function (clicked) {
         changeContainerHTML(`${clicked}`, 1000, "first-container", "", "4");
       })
     );
-    document.querySelector(".first-container").style.width = "82rem";
 
     document.querySelectorAll(".button-list").forEach((el) =>
       el.addEventListener("click", function (e) {
@@ -2371,6 +2370,7 @@ const getNewsFromList = async function (clicked) {
     getHTML(data, 1000, "4");
   } catch (err) {
     // document.querySelector(".first-container").innerHTML = `${err.message}`;
+    console.error(err);
   }
 };
 const changeContainerHTML = async function (
@@ -2382,9 +2382,10 @@ const changeContainerHTML = async function (
 ) {
   try {
     if (type !== "second-container") {
-      document.querySelector(
-        ".first-container"
-      ).innerHTML += ` <i class="fa-solid fa-rotate-right"></i>`;
+      if (document.querySelector(".first-container"))
+        document.querySelector(
+          ".first-container"
+        ).innerHTML += ` <i class="fa-solid fa-rotate-right"></i>`;
       if (document.querySelector(".second-container")) {
         document.querySelector(
           ".second-container"
