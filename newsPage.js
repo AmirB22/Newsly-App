@@ -98,14 +98,11 @@ const getWeather = async function (city) {
   }
 };
 const getHomeHTML = function () {
-  if (document.querySelector("#main")) document.querySelector("#main").remove();
-  if (document.querySelector("#main-list"))
-    document.querySelector("#main-list").remove();
-  if (document.querySelector("#main-input"))
-    document.querySelector("#main-input").remove();
-  if (document.querySelector("#main-following"))
-    document.querySelector("#main-following").remove();
-  document.body.insertAdjacentHTML("beforeend", `<div id="main"></div>`);
+  if (document.querySelector(".main")) document.querySelector(".main").remove();
+  document.body.insertAdjacentHTML(
+    "beforeend",
+    `<div id="main" class="main"></div>`
+  );
 
   const firstContainerCategories = [
     "America",
@@ -446,7 +443,7 @@ const days = [
   "Saturday",
 ];
 document.querySelector(".profile-picture-container").innerHTML = `  <img
-                class="profile-picture"
+                class="profile-picture pfp-animation"
                 src="https://www.iconpacks.net/icons/2/free-user-icon-3297-thumb.png"
                 alt="User's profile picture"
               />
@@ -472,14 +469,14 @@ document.querySelector(".profile-picture-container").innerHTML = `  <img
                 <button class="log-out">Log out</button>
               </div>`;
 
-document.querySelector(".log-out").addEventListener("click", function () {
+document.querySelectorAll(".log-out").forEach(el=>el.addEventListener("click", function () {
   let LoggedIn = false;
   loggedInAs = {};
   localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
   localStorage.setItem("logged", JSON.stringify(LoggedIn));
   Logged = JSON.parse(localStorage.getItem("logged")) || false;
   checkIfLoggedIn();
-});
+}))
 // document
 //   .querySelector(".weather-left-button")
 //   .addEventListener("click", function () {
@@ -521,6 +518,17 @@ document.querySelectorAll("li").forEach((el) => {
     });
     e.target.classList.remove("list-unclicked");
     e.target.classList.add("list-clicked");
+    if (this.closest(".nav-bottom-phone")) {
+      document
+        .querySelector(".nav-bottom-phone")
+        .classList.replace(
+          "nav-bottom-phone-active",
+          "nav-bottom-phone-inactive"
+        );
+    }
+    document
+      .querySelectorAll(".hamburger-menu i")
+      .forEach((el) => el.classList.replace("fa-x", "fa-bars"));
 
     // document.querySelector(".page-title").textContent = e.target.textContent;
     if (e.target.textContent === "Home") {
@@ -539,29 +547,39 @@ document.querySelectorAll("li").forEach((el) => {
     getNewsFromList(`${e.target.textContent}`);
   });
 });
-const search = document.querySelector(".search-input");
-document
-  .querySelector(".search-container")
-  .addEventListener("submit", function (e) {
+document.querySelectorAll(".search-container").forEach((el) =>
+  el.addEventListener("submit", function (e) {
     e.preventDefault();
-    getNewsFromInput(search.value);
-  });
-const showProfilePreview = function () {
-  document
-    .querySelector(".account-preview")
-    .classList.add("account-preview-active");
+    console.log(this.lastElementChild);
+    getNewsFromInput(this.lastElementChild.value);
+    if (this.closest(".nav-bottom-phone")) {
+      document
+        .querySelector(".nav-bottom-phone")
+        .classList.replace(
+          "nav-bottom-phone-active",
+          "nav-bottom-phone-inactive"
+        );
+    }
+  })
+);
+const showProfilePreview = function (target) {
+  if (!target) return;
+
+  target.nextElementSibling.classList.add("account-preview-active");
 };
-const hideProfilePreview = function () {
-  document
-    .querySelector(".account-preview")
-    .classList.remove("account-preview-active");
+const hideProfilePreview = function (target) {
+  if (!target) return;
+  target.nextElementSibling.classList.remove("account-preview-active");
 };
-const profilePicture = document.querySelector(".profile-picture");
-profilePicture.addEventListener("click", function () {
-  if (this.nextElementSibling.classList.contains("account-preview-active"))
-    hideProfilePreview();
-  else showProfilePreview();
-});
+const profilePictures = document.querySelectorAll(".pfp-animation");
+
+profilePictures.forEach((el) =>
+  el.addEventListener("click", function (e) {
+    if (this.nextElementSibling.classList.contains("account-preview-active"))
+      hideProfilePreview(e.target);
+    else showProfilePreview(e.target);
+  })
+);
 
 document.addEventListener("click", function (e) {
   if (e.target.classList.contains("log-out")) return;
@@ -794,7 +812,7 @@ const getHeadlinesFromCountries = async function (country, countryName) {
   document.querySelector("#main").style.gap = "0rem";
 
   const response = await fetch(
-    `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=8043ca8f1412485d8a3011796543a9be`
+    `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=eb92c2cb99ff425983bcbe0f5bf94c75`
   );
   const countryData = await response.json();
   document.querySelector("#main").innerHTML = `
@@ -1154,14 +1172,11 @@ const getHeadlinesFromCountries = async function (country, countryName) {
   );
 };
 const getNewsFromInput = async function (input) {
-  if (document.querySelector("#main")) document.querySelector("#main").remove();
-  if (document.querySelector("#main-list"))
-    document.querySelector("#main-list").remove();
-  if (document.querySelector("#main-input"))
-    document.querySelector("#main-input").remove();
-  if (document.querySelector("#main-following"))
-    document.querySelector("#main-following").remove();
-  document.body.insertAdjacentHTML("beforeend", `<div id="main-input"></div>`);
+  document.querySelector(".main").remove();
+  document.body.insertAdjacentHTML(
+    "beforeend",
+    `<div id="main-input" class="main"></div>`
+  );
   document
     .querySelectorAll(".list-button-list")
     .forEach((el) => el.classList.replace("list-clicked", "list-unclicked"));
@@ -1209,7 +1224,7 @@ const getNewsFromInput = async function (input) {
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${city}&apiKey=8043ca8f1412485d8a3011796543a9be`
+        `https://newsapi.org/v2/everything?q=${city}&apiKey=eb92c2cb99ff425983bcbe0f5bf94c75`
       );
 
       const data = await response.json();
@@ -1432,7 +1447,7 @@ const getNewsFromInput = async function (input) {
       </div> `;
       const response = await fetch(
         `
-https://newsapi.org/v2/everything?domains=${source}&apiKey=8043ca8f1412485d8a3011796543a9be`
+https://newsapi.org/v2/everything?domains=${source}&apiKey=eb92c2cb99ff425983bcbe0f5bf94c75`
       );
 
       const data = await response.json();
@@ -1656,7 +1671,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=8043ca8f1412485d8a301
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${topic}&apiKey=8043ca8f1412485d8a3011796543a9be`
+        `https://newsapi.org/v2/everything?q=${topic}&apiKey=eb92c2cb99ff425983bcbe0f5bf94c75`
       );
 
       const data = await response.json();
@@ -1867,7 +1882,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=8043ca8f1412485d8a301
         </div>
       </div> `;
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=8043ca8f1412485d8a3011796543a9be`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=eb92c2cb99ff425983bcbe0f5bf94c75`
     );
 
     const data = await response.json();
@@ -2062,15 +2077,11 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=8043ca8f1412485d8a301
 };
 const getNewsFromList = async function (clicked) {
   try {
-    if (document.querySelector("#main"))
-      document.querySelector("#main").remove();
-    if (document.querySelector("#main-list"))
-      document.querySelector("#main-list").remove();
-    if (document.querySelector("#main-input"))
-      document.querySelector("#main-input").remove();
-    if (document.querySelector("#main-following"))
-      document.querySelector("#main-following").remove();
-    document.body.insertAdjacentHTML("beforeend", `<div id="main-list"></div>`);
+    document.querySelector(".main").remove();
+    document.body.insertAdjacentHTML(
+      "beforeend",
+      `<div id="main-list" class="main"></div>`
+    );
     const Local = loggedInAs.followedLocation;
     const Technology = [
       "Mobile",
@@ -2351,7 +2362,7 @@ const getNewsFromList = async function (clicked) {
     const response = await fetch(
       `https://newsapi.org/v2/everything?q=${
         differentClicked ? differentClicked : clicked
-      }&apiKey=8043ca8f1412485d8a3011796543a9be`
+      }&apiKey=eb92c2cb99ff425983bcbe0f5bf94c75`
     );
 
     const data = await response.json();
@@ -2410,7 +2421,7 @@ const changeContainerHTML = async function (
     }
 
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=8043ca8f1412485d8a3011796543a9be`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=eb92c2cb99ff425983bcbe0f5bf94c75`
     );
     const newsData = await response.json();
 
@@ -2667,7 +2678,7 @@ const getFourthContainerHTML = async function () {
     let k = 0;
     for (let i = 0; i < number; i) {
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=8043ca8f1412485d8a3011796543a9be`
+        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=eb92c2cb99ff425983bcbe0f5bf94c75`
       );
       const data = await response.json();
 
@@ -3581,14 +3592,11 @@ const getManageLocalHTML = function () {
   }
 };
 const firstPageOfFollowing = function () {
-  if (document.querySelector("#main")) document.querySelector("#main").remove();
-  if (document.querySelector("#main-list"))
-    document.querySelector("#main-list").remove();
-  if (document.querySelector("#main-input"))
-    document.querySelector("#main-input").remove();
-  if (document.querySelector("#main-following"))
-    document.querySelector("#main-following").remove();
-
+  document.querySelector(".main").remove();
+  document.body.insertAdjacentHTML(
+    "beforeend",
+    `<div id="main-following" class="main"></div>`
+  );
   document.querySelectorAll(".list-button-list").forEach((el) => {
     el.classList.replace("list-clicked", "list-unclicked");
     if (el.textContent.trim() === "Following") {
@@ -3596,16 +3604,21 @@ const firstPageOfFollowing = function () {
       return;
     }
   });
-  document.body.insertAdjacentHTML(
-    "beforeend",
-    `<div id="main-following"></div>`
-  );
   document.querySelector(
     "#main-following"
   ).innerHTML = ` <div class="following-buttons">
-        <button class="following-main-buttons list-clicked-following">Topics & sources</button>
-        <button class="following-main-buttons">Saved searches</button>
-        <button class="following-main-buttons">Saved stories</button>
+      <button class="following-main-buttons list-clicked-following">
+          <i class="fa-solid fa-cloud following-button-icon"></i> Topics &amp;
+          sources
+        </button>
+        <button class="following-main-buttons">
+          <i class="fa-solid fa-magnifying-glass following-button-icon"></i>
+          Saved searches
+        </button>
+        <button class="following-main-buttons">
+          <i class="fa-solid fa-bookmark following-button-icon"></i> Saved
+          stories
+        </button>
       </div>
       <div class="following-container">
         <div class="following-page">
@@ -4304,10 +4317,26 @@ const firstPageOfFollowing = function () {
   getFollowingContainerHTML();
 };
 const secondPageOfFollowing = function () {
-  document.querySelector("#main").innerHTML = `<div class="following-buttons">
-        <button class="following-main-buttons">Topics & sources</button>
-        <button class="following-main-buttons list-clicked-following">Saved searches</button>
-        <button class="following-main-buttons">Saved stories</button>
+  document.querySelector(".main").remove();
+  document.body.insertAdjacentHTML(
+    "beforeend",
+    `<div id="main-following-second" class="main"></div>`
+  );
+  document.querySelector(
+    "#main-following-second"
+  ).innerHTML = `<div class="following-buttons">
+     <button class="following-main-buttons">
+          <i class="fa-solid fa-cloud following-button-icon"></i> Topics &amp;
+          sources
+        </button>
+        <button class="following-main-buttons list-clicked-following">
+          <i class="fa-solid fa-magnifying-glass following-button-icon"></i>
+          Saved searches
+        </button>
+        <button class="following-main-buttons">
+          <i class="fa-solid fa-bookmark following-button-icon"></i> Saved
+          stories
+        </button>
       </div>
       <div class="following-container">
         <div class="following-page">
@@ -4516,10 +4545,27 @@ const secondPageOfFollowing = function () {
   getFollowingContainerHTML();
 };
 const thirdPageOfFollowing = function () {
-  document.querySelector("#main").innerHTML = `<div class="following-buttons">
-        <button class="following-main-buttons">Topics & sources</button>
-        <button class="following-main-buttons">Saved searches</button>
-        <button class="following-main-buttons list-clicked-following">Saved stories</button>
+  document.querySelector(".main").remove();
+  document.body.insertAdjacentHTML(
+    "beforeend",
+    `<div id="main-following-third" class="main"></div>`
+  );
+
+  document.querySelector(
+    "#main-following-third"
+  ).innerHTML = `<div class="following-buttons">
+<button class="following-main-buttons">
+          <i class="fa-solid fa-cloud following-button-icon"></i> Topics &amp;
+          sources
+        </button>
+        <button class="following-main-buttons">
+          <i class="fa-solid fa-magnifying-glass following-button-icon"></i>
+          Saved searches
+        </button>
+        <button class="following-main-buttons list-clicked-following">
+          <i class="fa-solid fa-bookmark following-button-icon"></i> Saved
+          stories
+        </button>
       </div>
       <div class="following-container">
         <div class="following-page">
@@ -4650,36 +4696,41 @@ const thirdPageOfFollowing = function () {
 const getFollowingContainerHTML = function () {
   document.querySelectorAll(".following-main-buttons").forEach((el) =>
     el.addEventListener("click", function (e) {
-      if (e.target.textContent.trim() === "Topics & sources") {
-        document
-          .querySelectorAll(".following-main-buttons")
-          .forEach((el) => el.classList.remove("list-clicked"));
-        e.target.classList.add("list-clicked");
+      if (
+        e.target
+          .closest(".following-main-buttons")
+          .textContent.trim()
+          .endsWith("sources")
+      ) {
         firstPageOfFollowing();
       }
-      if (e.target.textContent.trim() === "Saved searches") {
-        document
-          .querySelectorAll(".following-main-buttons")
-          .forEach((el) => el.classList.remove("list-clicked"));
-        e.target.classList.add("list-clicked");
+      if (
+        e.target
+          .closest(".following-main-buttons")
+          .textContent.trim()
+          .endsWith("Saved searches")
+      ) {
         secondPageOfFollowing();
       }
-      if (e.target.textContent.trim() === "Saved stories") {
-        document
-          .querySelectorAll(".following-main-buttons")
-          .forEach((el) => el.classList.remove("list-clicked"));
-        e.target.classList.add("list-clicked");
+      if (
+        e.target
+          .closest(".following-main-buttons")
+          .textContent.trim()
+          .endsWith("stories")
+      ) {
         thirdPageOfFollowing();
       }
     })
   );
 };
 const getForYouContainerHTML = async function () {
-  document.querySelector("#main").style.width = "85rem";
-  document.querySelector("#main").style.gap = "3rem";
-
+  document.querySelector(".main").remove();
+  document.body.insertAdjacentHTML(
+    "beforeend",
+    `<div id="main-foryou" class="main"></div>`
+  );
   document.querySelector(
-    "#main"
+    "#main-foryou"
   ).innerHTML = `        <div class="for-you-title">
         <h2 class="page-title">For you</h2>
         <p class="page-description">Recommended based on your interests</p>
@@ -4690,7 +4741,7 @@ const getForYouContainerHTML = async function () {
   {
     for (let i = 0; i < 5; i++) {
       document.querySelector(
-        "#main"
+        "#main-foryou"
       ).innerHTML += ` <div class="sixth-container">
           <div class="for-you-container">
             <div class="for-you-left-side" data-foryouleft="${i + 5}">
@@ -4726,7 +4777,7 @@ const getForYouContainerHTML = async function () {
         `${i + 5}`
       );
       document.querySelector(
-        "#main"
+        "#main-foryou"
       ).innerHTML += ` <div class="first-container" data-first-container="${
         i + 50
       }"></div>`;
@@ -4746,7 +4797,7 @@ const getForYouContainerHTML = async function () {
         `${i + 50}`
       );
       document.querySelector(
-        "#main"
+        "#main-foryou"
       ).innerHTML += ` <div class="sixth-container">
           <div class="for-you-container">
             <div class="for-you-left-side" data-foryouleft="${i + 100}">
@@ -4791,6 +4842,38 @@ const getForYouContainerHTML = async function () {
     .forEach((el) => (el.style.width = "100%"));
   document.querySelectorAll(".fa-rotate-right").forEach((el) => el.remove());
 };
+document.querySelectorAll(".hamburger-menu").forEach((el) =>
+  el.addEventListener("click", function (e) {
+    if (e.target.closest(".hamburger-menu")) {
+      if (
+        document
+          .querySelector(".nav-bottom-phone")
+          .classList.contains("nav-bottom-phone-active")
+      ) {
+        document
+          .querySelector(".nav-bottom-phone")
+          .classList.replace(
+            "nav-bottom-phone-active",
+            "nav-bottom-phone-inactive"
+          );
+        document
+          .querySelectorAll(".hamburger-menu i")
+          .forEach((el) => el.classList.replace("fa-x", "fa-bars"));
+
+        return;
+      }
+      document
+        .querySelector(".nav-bottom-phone")
+        .classList.replace(
+          "nav-bottom-phone-inactive",
+          "nav-bottom-phone-active"
+        );
+      document
+        .querySelectorAll(".hamburger-menu i")
+        .forEach((el) => el.classList.replace("fa-bars", "fa-x"));
+    }
+  })
+);
 
 checkIfLoggedIn();
 if (Logged) {
