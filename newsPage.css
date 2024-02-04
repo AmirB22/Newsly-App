@@ -35,6 +35,9 @@ body {
   height: 11rem;
   padding: 0.5rem 0.5rem 0 0.5rem;
 }
+.following-button-icon {
+  font-size: 0rem;
+}
 .nav {
   height: 100%;
   width: 100%;
@@ -167,7 +170,8 @@ body {
 }
 #main,
 #main-input,
-#main-list {
+#main-list,
+#main-following {
   min-height: calc(100svh - 16rem);
   margin-top: 11.5rem;
   padding-bottom: 5rem;
@@ -175,10 +179,12 @@ body {
   flex-direction: column;
   align-items: center;
 }
-#main {
+#main,
+#main-following {
   width: 60%;
   gap: 0rem;
 }
+
 .page-title {
   display: flex;
   align-items: center;
@@ -398,11 +404,11 @@ body {
   width: 100%;
   height: 100%;
   display: flex;
-  padding: 1rem 0rem;
   border-bottom: 1px solid rgb(220, 220, 220);
   position: relative;
   min-height: 11rem;
 }
+
 .small-news {
   position: relative;
   height: 100%;
@@ -440,6 +446,7 @@ body {
 }
 .small-news-link {
   color: black;
+  padding: 1rem 0rem;
   text-decoration: none;
 }
 .small-news-image {
@@ -917,7 +924,7 @@ body {
 .following-container {
   margin-top: 1rem;
   background-color: white;
-  width: 106rem;
+  width: calc(100% - 4rem);
   border-radius: 1.5rem;
   padding: 2rem;
   padding-bottom: 8rem;
@@ -931,11 +938,11 @@ body {
   border-bottom: 1px solid rgb(180, 180, 180);
 }
 .following-buttons {
-  width: 110rem;
+  width: 100%;
   border-bottom: 1px solid rgb(180, 180, 180);
   margin: 2rem 0rem;
 }
-.following-buttons button {
+.following-main-buttons {
   background-color: transparent;
   padding: 1rem;
   border: none;
@@ -944,7 +951,7 @@ body {
   cursor: pointer;
   transition: background-color 0.1s;
 }
-.following-buttons button:active {
+.following-main-buttons:active {
   background-color: white;
   color: black;
 }
@@ -1044,6 +1051,7 @@ body {
   flex-wrap: wrap;
   width: 100%;
   gap: 5.5rem;
+  justify-content: flex-start;
   row-gap: 3.3rem;
   margin: 1rem;
 }
@@ -1067,6 +1075,7 @@ body {
   padding-right: 2rem;
 }
 .followed-category {
+  width: 27rem;
   justify-content: start;
   gap: 1rem;
   position: relative;
@@ -1592,7 +1601,7 @@ body {
   right: 2.5rem;
 }
 .small-news-bookmark-with-image {
-  right: 18rem;
+  right: 25%;
   bottom: 1.5rem;
 }
 .followed-story-container {
@@ -1825,6 +1834,9 @@ body {
   #main-input {
     margin-top: 13rem;
   }
+  .manage-followed-container {
+    left: -540%;
+  }
   .list-first-container,
   .input-first-container {
     min-width: calc(100% - 3rem);
@@ -1834,6 +1846,18 @@ body {
   }
   #main .secondary-bookmark {
     right: 14%;
+  }
+  #main-input .small-news:first-child {
+    height: 15rem;
+  }
+  #main-input .date-author {
+    bottom: 2rem;
+  }
+  #main-following {
+    width: 100%;
+  }
+  .followed-categories {
+    flex-wrap: wrap;
   }
   .first-second-container-wrapper {
     flex-direction: column;
@@ -1977,9 +2001,7 @@ body {
   .second-container-wrapper {
     flex-direction: column;
   }
-  .small-news-bookmark-with-image {
-    right: 15rem;
-  }
+
   .small-news-link {
     height: 15rem;
   }
@@ -1996,6 +2018,7 @@ body {
   }
   .page-title {
     justify-content: center;
+    text-align: center;
   }
   .page-description {
     text-align: center;
@@ -2012,6 +2035,17 @@ body {
   }
 }
 @media screen and (max-width: 550px) {
+  .following-main-buttons {
+    font-size: 0rem;
+    width: 33%;
+  }
+  .following-button-icon {
+    font-size: 1.5rem;
+  }
+  #main-following .following-buttons {
+    display: flex;
+    justify-content: center;
+  }
   .weather-image {
     display: none;
   }
@@ -2028,6 +2062,10 @@ body {
   #main-input {
     width: 100%;
   }
+  #main-list .on-the-side-news,
+  #main .on-the-side-news {
+    gap: 3rem;
+  }
   .next-page-submain {
     right: 0;
   }
@@ -2043,6 +2081,9 @@ body {
   .page-top-left {
     width: 100%;
     justify-content: flex-start;
+  }
+  .logo-container-title {
+    display: none;
   }
   .page-title {
     text-wrap: wrap;
@@ -2070,6 +2111,37 @@ body {
   .header {
     display: none;
   }
+  .followed-category,
+  .followed-source,
+  .followed-location {
+    max-width: 80%;
+  }
+  .followed-location-main .lts-icon,
+  .followed-category .lts-icon,
+  .followed-location .lts-icon,
+  .followed-search .lts-icon,
+  .followed-source .lts-icon {
+    display: none;
+  }
+  .favorite-location-title {
+    margin: 0px;
+  }
+  .following-icon {
+    display: none;
+  }
+  .local-following-title {
+    flex-direction: column;
+    text-align: center;
+    gap: 3rem;
+    padding: 1rem 0rem;
+  }
+  .followed-category-title,
+  .favorite-location-title,
+  .favorite-source-title {
+    min-width: 1%;
+    overflow: hidden;
+  }
+
   #main,
   #main-input,
   #main-list {
@@ -2114,6 +2186,9 @@ body {
   .small-news-bookmark-with-image {
     right: 1rem;
     bottom: 5rem;
+  }
+  #main-input .small-news-bookmark-with-image {
+    bottom: 3rem;
   }
 }
 @media screen and (max-width: 250px) {

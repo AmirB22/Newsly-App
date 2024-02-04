@@ -103,7 +103,8 @@ const getHomeHTML = function () {
     document.querySelector("#main-list").remove();
   if (document.querySelector("#main-input"))
     document.querySelector("#main-input").remove();
-
+  if (document.querySelector("#main-following"))
+    document.querySelector("#main-following").remove();
   document.body.insertAdjacentHTML("beforeend", `<div id="main"></div>`);
 
   const firstContainerCategories = [
@@ -571,16 +572,14 @@ document.addEventListener("click", function (e) {
     return;
   else hideProfilePreview();
 });
-document
-  .querySelector(".logo-container-title")
-  .addEventListener("click", (e) => {
-    document.querySelectorAll("li").forEach((el) => {
-      el.classList.replace("list-clicked", "list-unclicked");
-      if (el.textContent === "Home")
-        el.classList.replace("list-unclicked", "list-clicked");
-    });
-    getHomeHTML();
+document.querySelector(".logo-container").addEventListener("click", (e) => {
+  document.querySelectorAll("li").forEach((el) => {
+    el.classList.replace("list-clicked", "list-unclicked");
+    if (el.textContent === "Home")
+      el.classList.replace("list-unclicked", "list-clicked");
   });
+  getHomeHTML();
+});
 const randomNumber = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
@@ -1160,6 +1159,8 @@ const getNewsFromInput = async function (input) {
     document.querySelector("#main-list").remove();
   if (document.querySelector("#main-input"))
     document.querySelector("#main-input").remove();
+  if (document.querySelector("#main-following"))
+    document.querySelector("#main-following").remove();
   document.body.insertAdjacentHTML("beforeend", `<div id="main-input"></div>`);
   document
     .querySelectorAll(".list-button-list")
@@ -2067,7 +2068,8 @@ const getNewsFromList = async function (clicked) {
       document.querySelector("#main-list").remove();
     if (document.querySelector("#main-input"))
       document.querySelector("#main-input").remove();
-
+    if (document.querySelector("#main-following"))
+      document.querySelector("#main-following").remove();
     document.body.insertAdjacentHTML("beforeend", `<div id="main-list"></div>`);
     const Local = loggedInAs.followedLocation;
     const Technology = [
@@ -3579,6 +3581,14 @@ const getManageLocalHTML = function () {
   }
 };
 const firstPageOfFollowing = function () {
+  if (document.querySelector("#main")) document.querySelector("#main").remove();
+  if (document.querySelector("#main-list"))
+    document.querySelector("#main-list").remove();
+  if (document.querySelector("#main-input"))
+    document.querySelector("#main-input").remove();
+  if (document.querySelector("#main-following"))
+    document.querySelector("#main-following").remove();
+
   document.querySelectorAll(".list-button-list").forEach((el) => {
     el.classList.replace("list-clicked", "list-unclicked");
     if (el.textContent.trim() === "Following") {
@@ -3586,10 +3596,13 @@ const firstPageOfFollowing = function () {
       return;
     }
   });
-
-  document.querySelector("#main").style.width = "110rem";
-  document.querySelector("#main").style.gap = "0rem";
-  document.querySelector("#main").innerHTML = ` <div class="following-buttons">
+  document.body.insertAdjacentHTML(
+    "beforeend",
+    `<div id="main-following"></div>`
+  );
+  document.querySelector(
+    "#main-following"
+  ).innerHTML = ` <div class="following-buttons">
         <button class="following-main-buttons list-clicked-following">Topics & sources</button>
         <button class="following-main-buttons">Saved searches</button>
         <button class="following-main-buttons">Saved stories</button>
@@ -4780,9 +4793,9 @@ const getForYouContainerHTML = async function () {
 };
 
 checkIfLoggedIn();
-// if (Logged) {
-// getHomeHTML();
-// getWeather(
-// loggedInAs.followedLocation ? loggedInAs.followedLocation[0] : "Novi Pazar"
-// );
-// }
+if (Logged) {
+  getHomeHTML();
+  getWeather(
+    loggedInAs.followedLocation ? loggedInAs.followedLocation[0] : "Novi Pazar"
+  );
+}
