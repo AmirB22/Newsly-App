@@ -469,45 +469,16 @@ document.querySelector(".profile-picture-container").innerHTML = `  <img
                 <button class="log-out">Log out</button>
               </div>`;
 
-document.querySelectorAll(".log-out").forEach(el=>el.addEventListener("click", function () {
-  let LoggedIn = false;
-  loggedInAs = {};
-  localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
-  localStorage.setItem("logged", JSON.stringify(LoggedIn));
-  Logged = JSON.parse(localStorage.getItem("logged")) || false;
-  checkIfLoggedIn();
-}))
-// document
-//   .querySelector(".weather-left-button")
-//   .addEventListener("click", function () {
-//     document
-//       .querySelector(".weather-search")
-//       .classList.toggle("weather-search-active");
-//     if (
-//       document
-//         .querySelector(".weather-search")
-//         .classList.contains("weather-search-active")
-//     )
-//       document.querySelector(".fa-chevron-left").style.transform =
-//         "rotate(180deg)";
-//     else
-//       document.querySelector(".fa-chevron-left").style.transform =
-//         "rotate(0deg)";
-//   });
-
-// document
-//   .querySelector(".weather-search-input-container")
-//   .addEventListener("submit", function (e) {
-//     e.preventDefault();
-//     const input = document.querySelector(".weather-search-input");
-//     if (!input.value) return;
-//     getWeather(input.value);
-//     document
-//       .querySelector(".weather-search")
-//       .classList.remove("weather-search-active");
-//     document.querySelector(".fa-chevron-left").style.transform = "rotate(0deg)";
-//     input.value = "";
-//   });
+document.querySelectorAll(".log-out").forEach((el) =>
+  el.addEventListener("click", function () {
+    let LoggedIn = false;
+    loggedInAs = {};
+    localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+    localStorage.setItem("logged", JSON.stringify(LoggedIn));
+    Logged = JSON.parse(localStorage.getItem("logged")) || false;
+    checkIfLoggedIn();
+  })
+);
 document.querySelectorAll("li").forEach((el) => {
   el.classList.add("list-unclicked");
   el.classList.add("list-button-list");
@@ -559,6 +530,10 @@ document.querySelectorAll(".search-container").forEach((el) =>
           "nav-bottom-phone-active",
           "nav-bottom-phone-inactive"
         );
+      console.log(document.querySelector(".hamburger-menu i").classList);
+      document
+        .querySelectorAll(".hamburger-menu i")
+        .forEach((el) => el.classList.replace("fa-x", "fa-bars"));
     }
   })
 );
@@ -805,17 +780,20 @@ ${
     });
 };
 const getHeadlinesFromCountries = async function (country, countryName) {
+  if (document.querySelector(".main")) document.querySelector(".main").remove();
+  document.body.insertAdjacentHTML(
+    "beforeend",
+    `<div id="main-headlines" class="main"></div>`
+  );
   document
     .querySelectorAll(".list-button-list")
     .forEach((el) => el.classList.replace("list-clicked", "list-unclicked"));
-  document.querySelector("#main").style.width = "85rem";
-  document.querySelector("#main").style.gap = "0rem";
 
   const response = await fetch(
-    `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=eb92c2cb99ff425983bcbe0f5bf94c75`
+    `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=ccf39de3db044f009f9298afe2a81d60`
   );
   const countryData = await response.json();
-  document.querySelector("#main").innerHTML = `
+  document.querySelector("#main-headlines").innerHTML = `
       <div class="page-top-submain-news">
         <div class="page-top-submain-news-top">
           <h2 class="page-title">
@@ -1045,8 +1023,7 @@ const getHeadlinesFromCountries = async function (country, countryName) {
           </button>
         </div>
       </div>
-      <div class="first-container" data-first-container="9"></div>`;
-  document.querySelector(".first-container").style.width = "82rem";
+      <div class="list-first-container" data-first-container="9"></div>`;
 
   getHTML(countryData, 1000, "9");
 
@@ -1224,7 +1201,7 @@ const getNewsFromInput = async function (input) {
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${city}&apiKey=eb92c2cb99ff425983bcbe0f5bf94c75`
+        `https://newsapi.org/v2/everything?q=${city}&apiKey=ccf39de3db044f009f9298afe2a81d60`
       );
 
       const data = await response.json();
@@ -1447,7 +1424,7 @@ const getNewsFromInput = async function (input) {
       </div> `;
       const response = await fetch(
         `
-https://newsapi.org/v2/everything?domains=${source}&apiKey=eb92c2cb99ff425983bcbe0f5bf94c75`
+https://newsapi.org/v2/everything?domains=${source}&apiKey=ccf39de3db044f009f9298afe2a81d60`
       );
 
       const data = await response.json();
@@ -1671,7 +1648,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=eb92c2cb99ff425983bcb
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${topic}&apiKey=eb92c2cb99ff425983bcbe0f5bf94c75`
+        `https://newsapi.org/v2/everything?q=${topic}&apiKey=ccf39de3db044f009f9298afe2a81d60`
       );
 
       const data = await response.json();
@@ -1882,7 +1859,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=eb92c2cb99ff425983bcb
         </div>
       </div> `;
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=eb92c2cb99ff425983bcbe0f5bf94c75`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=ccf39de3db044f009f9298afe2a81d60`
     );
 
     const data = await response.json();
@@ -2362,7 +2339,7 @@ const getNewsFromList = async function (clicked) {
     const response = await fetch(
       `https://newsapi.org/v2/everything?q=${
         differentClicked ? differentClicked : clicked
-      }&apiKey=eb92c2cb99ff425983bcbe0f5bf94c75`
+      }&apiKey=ccf39de3db044f009f9298afe2a81d60`
     );
 
     const data = await response.json();
@@ -2394,34 +2371,35 @@ const changeContainerHTML = async function (
   dataNum
 ) {
   try {
-    if (type !== "second-container") {
-      if (document.querySelector(".first-container"))
-        document.querySelector(
-          ".first-container"
-        ).innerHTML += ` <i class="fa-solid fa-rotate-right"></i>`;
-      if (document.querySelector(".second-container")) {
-        document.querySelector(
-          ".second-container"
-        ).innerHTML += ` <i class="fa-solid fa-rotate-right"></i>`;
-      }
-      if (document.querySelector(".for-you-container")) {
-        document
-          .querySelectorAll(".for-you-left-side")
-          .forEach(
-            (el) =>
-              (el.innerHTML += ` <i class="fa-solid fa-rotate-right"></i>`)
-          );
-        document
-          .querySelectorAll(".for-you-right-side")
-          .forEach(
-            (el) =>
-              (el.innerHTML += ` <i class="fa-solid fa-rotate-right"></i>`)
-          );
-      }
+    if (document.querySelector(".first-container"))
+      document
+        .querySelectorAll(".first-container")
+        .forEach(
+          (el) => (el.innerHTML += ` <i class="fa-solid fa-rotate-right"></i>`)
+        );
+    if (document.querySelector(".second-container")) {
+      document
+        .querySelectorAll(".second-container")
+        .forEach(
+          (el) => (el.innerHTML += ` <i class="fa-solid fa-rotate-right"></i>`)
+        );
+    }
+    if (document.querySelector(".for-you-container")) {
+      document
+        .querySelectorAll(".for-you-left-side")
+        .forEach(
+          (el) => (el.innerHTML += ` <i class="fa-solid fa-rotate-right"></i>`)
+        );
+      document
+        .querySelectorAll(".for-you-right-side")
+        .forEach(
+          (el) => (el.innerHTML += ` <i class="fa-solid fa-rotate-right"></i>`)
+        );
+      console.log("123");
     }
 
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=eb92c2cb99ff425983bcbe0f5bf94c75`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=ccf39de3db044f009f9298afe2a81d60`
     );
     const newsData = await response.json();
 
@@ -2678,7 +2656,7 @@ const getFourthContainerHTML = async function () {
     let k = 0;
     for (let i = 0; i < number; i) {
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=eb92c2cb99ff425983bcbe0f5bf94c75`
+        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=ccf39de3db044f009f9298afe2a81d60`
       );
       const data = await response.json();
 
@@ -3308,6 +3286,10 @@ const hideInput = function (e) {
   document.removeEventListener("click", hideInput);
 };
 const getManageLocalHTML = function () {
+  document.querySelector(".main").remove();
+
+document.body.insertAdjacentHTML("beforeend",`<div id="main-managelocal" class="main"></div>`);
+
   document.querySelectorAll(".list-button-list").forEach((el) => {
     el.classList.replace("list-clicked", "list-unclicked");
     if (el.textContent.trim() === "Local") {
@@ -3320,8 +3302,7 @@ const getManageLocalHTML = function () {
     localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
     localStorage.setItem("accounts", JSON.stringify(userAccounts));
   }
-  document.querySelector("#main").style.width = "72rem";
-  document.querySelector("#main").innerHTML = `<div class="location-page-main">
+  document.querySelector("#main-managelocal").innerHTML = `<div class="location-page-main">
         <h1 class="location-page-title">
           <i class="fa-solid fa-arrow-left go-back-suggested"></i> Manage local news
         </h1>
@@ -4840,7 +4821,6 @@ const getForYouContainerHTML = async function () {
   document
     .querySelectorAll(".sixth-container")
     .forEach((el) => (el.style.width = "100%"));
-  document.querySelectorAll(".fa-rotate-right").forEach((el) => el.remove());
 };
 document.querySelectorAll(".hamburger-menu").forEach((el) =>
   el.addEventListener("click", function (e) {
