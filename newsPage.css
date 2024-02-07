@@ -94,6 +94,12 @@ body {
 .search-container button:focus {
   outline: none;
 }
+.arrow-down {
+  display: none;
+  background-color: transparent;
+  border: none;
+  width: 100%;
+}
 .search-container button {
   padding: 0.2rem 0.7rem;
   border-top-left-radius: 1rem;
@@ -289,6 +295,7 @@ body {
 }
 .weather-search-active {
   width: 30rem;
+  height: 100%;
 }
 .weather-search-title {
   font-family: "Poppins", sans-serif;
@@ -314,7 +321,8 @@ body {
   cursor: pointer;
 }
 .weather-search-input:focus,
-.weather-left-button:focus {
+.weather-left-button:focus,
+.arrow-down:focus {
   outline: none;
 }
 .weather-left-button {
@@ -755,6 +763,13 @@ body {
 .button-clicked:focus,
 .button-unclicked:focus {
   outline: none;
+}
+.weather-right-side {
+  height: 100%;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  text-wrap: nowrap;
 }
 .profile-picture {
   height: 5rem;
@@ -1933,6 +1948,22 @@ body {
     min-width: 40%;
   }
 }
+@media screen and (max-width: 1250px) {
+  .weather-search {
+    max-width: 15rem;
+  }
+  .weather-search-title {
+    font-size: 1rem;
+    max-height: 3rem;
+    text-wrap: wrap;
+  }
+  .weather-search-input {
+    width: 50%;
+  }
+  .weather-search-input::placeholder {
+    font-size: 1rem;
+  }
+}
 @media screen and (max-width: 1140px) {
   .followed-category,
   .followed-source,
@@ -2298,6 +2329,17 @@ body {
   }
 }
 @media screen and (max-width: 470px) {
+  #main {
+    margin-top: 6rem;
+  }
+  .arrow-down {
+    display: flex;
+    justify-content: center;
+  }
+  .page-top {
+    gap: 13rem;
+    transition: all 1s;
+  }
   .not-logged-in-container h1 {
     text-align: center;
     font-size: 2rem;
@@ -2324,8 +2366,34 @@ body {
     flex-direction: column-reverse;
     height: auto;
   }
+  .weather-left-button {
+    display: none;
+  }
+  .page-top-right {
+    flex-direction: column-reverse;
+    height: auto;
+    width: 100%;
+  }
+  .weather-search {
+    height: 0px;
+    width: 100%;
+  }
+  .weather-search-active {
+    height: 0px;
+  }
+  .weather-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .weather-image {
+    display: flex;
+  }
 }
 @media screen and (max-width: 420px) {
+  #main-input {
+    margin-top: 13rem;
+  }
   #main-managelocal {
     width: 100%;
   }
@@ -2343,6 +2411,7 @@ body {
   .main-menu {
     display: none;
   }
+  #main,
   #main-list,
   #main-headlines {
     margin-top: 12rem;
@@ -2363,9 +2432,6 @@ body {
     max-width: calc(100% - 2rem);
     width: 100%;
     justify-content: center;
-  }
-  .weather-left-button {
-    display: none;
   }
   #main-list .page-title,
   #main-headlines .page-title {
@@ -2493,7 +2559,7 @@ body {
   #main-input,
   #main-list,
   #main-foryou {
-    margin: 7rem;
+    margin-top: 7rem;
   }
 
   #main-list .big-news,
@@ -2547,6 +2613,14 @@ body {
     bottom: 3rem;
   }
 }
+@media screen and (max-width: 275px) {
+  #main-headlines .page-top-submain-news-top {
+    flex-direction: column;
+  }
+  .dropdown {
+    left: -5rem;
+  }
+}
 @media screen and (max-width: 250px) {
   #main-following-third .following-container {
     padding: 0rem;
@@ -2591,29 +2665,6 @@ body {
   #main-following-third .followed-story-right img {
     width: 50%;
     height: 100%;
-  }
-  .weather-left-button {
-    display: none;
-  }
-  .page-top-right {
-    flex-direction: column-reverse;
-    height: auto;
-  }
-  .weather-info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .weather-image {
-    display: flex;
-  }
-}
-@media screen and (max-width: 275px) {
-  #main-headlines .page-top-submain-news-top {
-    flex-direction: column;
-  }
-  .dropdown {
-    left: -5rem;
   }
 }
 @media screen and (max-width: 225px) {

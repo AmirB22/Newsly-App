@@ -132,13 +132,14 @@ const getHomeHTML = function () {
     months[new Date().getMonth()]
   } ${new Date().getDate()}</p>
         </div>
-        <div class="page-top-right">
+         <div class="page-top-right">
           <div class="weather-search">
             <p class="weather-search-title">Look up weather somewhere else</p>
             <form class="weather-search-input-container">
               <button class="weather-search-button">
-                <i class="fa-solid fa-magnifying-glass"></i>
+                <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
               </button>
+
               <input
                 class="weather-search-input"
                 type="text"
@@ -149,26 +150,31 @@ const getHomeHTML = function () {
             </form>
           </div>
           <button class="weather-left-button">
-            <i class="fa-solid fa-chevron-left"></i>
+            <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
           </button>
-          <div>
-            <img
-              class="weather-image"
-              src="https://static.vecteezy.com/system/resources/previews/012/494/174/original/sun-icon-in-bright-yellow-color-with-transparent-background-png.png"
-              alt=""
-            />
-          </div>
-          <div>
-            <p class="weather-location">Novi Pazar</p>
-            <h2 class="weather-temperature">-5C</h2>
-            <a
-              href="https://news.url.google.com/url?sa=j&url=https%3A%2F%2Fwww.weather.com%2Fwx%2Ftoday%2F%3Flat%3D43.14%26lon%3D20.52%26locale%3Den_US%26par%3Dgoogle&uct=1705710948&usg=qrKFzyNByx7NGcC-M30hdgVyZ8Q.&opi=116942117"
-              class="weather-link"
-              >More on weather.com</a
-            >
+          <button class="arrow-down">
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <div class="weather-right-side">
+            <div>
+              <img
+                class="weather-image"
+                src="https://static.vecteezy.com/system/resources/previews/012/494/174/original/sun-icon-in-bright-yellow-color-with-transparent-background-png.png"
+                alt=""
+              />
+            </div>
+            <div>
+              <p class="weather-location">Serbia</p>
+              <h2 class="weather-temperature">2.7 C°</h2>
+              <a
+                href="https://weather.com/weather/today/l/44.8189,20.46?par=google"
+                class="weather-link"
+                >More on weather.com</a
+              >
+            </div>
           </div>
         </div>
-      </div>
+        </div>
       <div class="first-second-container-wrapper">
         <div class="first-container" data-first-container="1">
         </div>
@@ -348,6 +354,29 @@ const getHomeHTML = function () {
         document.querySelector(".fa-chevron-left").style.transform =
           "rotate(0deg)";
     });
+  document.querySelector(".arrow-down").addEventListener("click", function () {
+    if (
+      document
+        .querySelector(".weather-search")
+        .classList.contains("weather-search-active")
+    ) {
+      document
+        .querySelector(".weather-search")
+        .classList.remove("weather-search-active");
+      document.querySelector(".weather-search").style.height = "0px";
+      document.querySelector(".arrow-down i").style.transform = "rotate(0deg)";
+      document.querySelector(".page-top").style.gap = "13rem";
+    } else {
+      document
+        .querySelector(".weather-search")
+        .classList.add("weather-search-active");
+      document.querySelector(".weather-search").style.height = "6rem";
+      document.querySelector(".arrow-down i").style.transform =
+        "rotate(180deg)";
+      document.querySelector(".page-top").style.gap = "7rem";
+    }
+  });
+
   document
     .querySelector(".weather-search-input-container")
     .addEventListener("submit", function (e) {
@@ -360,6 +389,12 @@ const getHomeHTML = function () {
         .classList.remove("weather-search-active");
       document.querySelector(".fa-chevron-left").style.transform =
         "rotate(0deg)";
+      if (document.querySelector(".arrow-down").style.display !== "none") {
+        document.querySelector(".weather-search").style.height = "0px";
+        document.querySelector(".arrow-down i").style.transform =
+          "rotate(0deg)";
+        document.querySelector(".page-top").style.gap = "13rem";
+      }
       input.value = "";
     });
 
@@ -790,7 +825,7 @@ const getHeadlinesFromCountries = async function (country, countryName) {
     .forEach((el) => el.classList.replace("list-clicked", "list-unclicked"));
 
   const response = await fetch(
-    `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=ccf39de3db044f009f9298afe2a81d60`
+    `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=2d63388910ab47ebb8ba7b5f922b092e`
   );
   const countryData = await response.json();
   document.querySelector("#main-headlines").innerHTML = `
@@ -1201,7 +1236,7 @@ const getNewsFromInput = async function (input) {
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${city}&apiKey=ccf39de3db044f009f9298afe2a81d60`
+        `https://newsapi.org/v2/everything?q=${city}&apiKey=2d63388910ab47ebb8ba7b5f922b092e`
       );
 
       const data = await response.json();
@@ -1424,7 +1459,7 @@ const getNewsFromInput = async function (input) {
       </div> `;
       const response = await fetch(
         `
-https://newsapi.org/v2/everything?domains=${source}&apiKey=ccf39de3db044f009f9298afe2a81d60`
+https://newsapi.org/v2/everything?domains=${source}&apiKey=2d63388910ab47ebb8ba7b5f922b092e`
       );
 
       const data = await response.json();
@@ -1648,7 +1683,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=ccf39de3db044f009f929
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${topic}&apiKey=ccf39de3db044f009f9298afe2a81d60`
+        `https://newsapi.org/v2/everything?q=${topic}&apiKey=2d63388910ab47ebb8ba7b5f922b092e`
       );
 
       const data = await response.json();
@@ -1859,7 +1894,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=ccf39de3db044f009f929
         </div>
       </div> `;
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=ccf39de3db044f009f9298afe2a81d60`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=2d63388910ab47ebb8ba7b5f922b092e`
     );
 
     const data = await response.json();
@@ -2339,7 +2374,7 @@ const getNewsFromList = async function (clicked) {
     const response = await fetch(
       `https://newsapi.org/v2/everything?q=${
         differentClicked ? differentClicked : clicked
-      }&apiKey=ccf39de3db044f009f9298afe2a81d60`
+      }&apiKey=2d63388910ab47ebb8ba7b5f922b092e`
     );
 
     const data = await response.json();
@@ -2395,11 +2430,10 @@ const changeContainerHTML = async function (
         .forEach(
           (el) => (el.innerHTML += ` <i class="fa-solid fa-rotate-right"></i>`)
         );
-      console.log("123");
     }
 
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=ccf39de3db044f009f9298afe2a81d60`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=2d63388910ab47ebb8ba7b5f922b092e`
     );
     const newsData = await response.json();
 
@@ -2656,7 +2690,7 @@ const getFourthContainerHTML = async function () {
     let k = 0;
     for (let i = 0; i < number; i) {
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=ccf39de3db044f009f9298afe2a81d60`
+        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=2d63388910ab47ebb8ba7b5f922b092e`
       );
       const data = await response.json();
 
@@ -3288,7 +3322,10 @@ const hideInput = function (e) {
 const getManageLocalHTML = function () {
   document.querySelector(".main").remove();
 
-document.body.insertAdjacentHTML("beforeend",`<div id="main-managelocal" class="main"></div>`);
+  document.body.insertAdjacentHTML(
+    "beforeend",
+    `<div id="main-managelocal" class="main"></div>`
+  );
 
   document.querySelectorAll(".list-button-list").forEach((el) => {
     el.classList.replace("list-clicked", "list-unclicked");
@@ -3302,7 +3339,9 @@ document.body.insertAdjacentHTML("beforeend",`<div id="main-managelocal" class="
     localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
     localStorage.setItem("accounts", JSON.stringify(userAccounts));
   }
-  document.querySelector("#main-managelocal").innerHTML = `<div class="location-page-main">
+  document.querySelector(
+    "#main-managelocal"
+  ).innerHTML = `<div class="location-page-main">
         <h1 class="location-page-title">
           <i class="fa-solid fa-arrow-left go-back-suggested"></i> Manage local news
         </h1>
