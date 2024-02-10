@@ -110,25 +110,27 @@ a.disabled:hover {
   align-items: start;
   justify-content: center;
   gap: 10rem;
-  flex: 5;
+  height: auto;
+  width: 50%;
 }
 .right-side {
+  width: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex: 5;
 }
 .right-side {
   object-fit: contain;
   width: 30%;
 }
-
+.right-side img {
+  width: 100%;
+}
 .header {
   font-weight: bold;
   position: absolute;
   top: 0px;
-  left: 0px;
-  right: 0px;
+  width: 100%;
   height: 7rem;
   z-index: 3;
   background-color: white;
@@ -274,6 +276,7 @@ a.disabled:hover {
   align-items: center;
   flex-direction: column;
   width: 100%;
+  text-wrap: nowrap;
   margin-top: -15rem;
 }
 
@@ -450,7 +453,10 @@ a.disabled:hover {
   gap: 2rem;
   width: 20%;
   padding: 2rem;
+  max-height: 15rem;
+  overflow: hidden;
   transition: all 1s, background-color 0.2s;
+  background-color: orange;
 }
 .reasons-container div:hover {
   transform: translateY(-10rem) scale(1.1);
@@ -477,8 +483,9 @@ a.disabled:hover {
 }
 .reason-we-are-the-best p {
   font-size: 1.5rem;
-  width: 60%;
+  width: 100%;
   transition: all 1s;
+  background-color: blue;
 }
 .second-page {
   border-top: 1px solid lightgray;
@@ -494,6 +501,7 @@ a.disabled:hover {
   justify-content: center;
   align-items: center;
   height: 100%;
+  width: 50%;
   flex: 5;
 }
 .left-side-scnd-animated-background {
@@ -528,7 +536,7 @@ a.disabled:hover {
 .left-side-scnd-title {
   position: absolute;
   top: 5rem;
-  width: 100rem;
+  max-width: 100%;
   height: 15rem;
   display: flex;
   justify-content: center;
@@ -539,6 +547,7 @@ a.disabled:hover {
 }
 .left-side-scnd-title h1 {
   font-size: 4rem;
+  text-wrap: wrap;
   color: black;
 }
 .left-side-scnd-title p {
@@ -556,8 +565,8 @@ a.disabled:hover {
   align-items: start;
 }
 .menu-container {
-  height: 30rem;
-  margin-top: 10rem;
+  height: 100%;
+  width: 80%;
 }
 .menu-container div {
   display: flex;
@@ -566,7 +575,7 @@ a.disabled:hover {
 }
 .menu-container h1 {
   background-color: white;
-  width: 70rem;
+  width: calc(100% - 8rem);
   padding: 3rem 4rem;
   border-radius: 7rem;
   display: flex;
@@ -576,6 +585,10 @@ a.disabled:hover {
 .menu-container div/*:nth-child(1)*/ h1,
 .menu-container div/*:nth-child(1)*/ p {
   border: 5px solid lime;
+}
+.menu-container div p {
+  height: auto;
+  width: 60%;
 }
 .menu-container div/*:nth-child(1)*/ i:hover {
   cursor: pointer;
@@ -606,10 +619,10 @@ a.disabled:hover {
   padding: 0.5rem 1rem;
   border-radius: 3rem;
 }
-.menu-container div:nth-child(4) i:hover {
-  cursor: pointer;
-  background-color: rgba(0, 255, 255, 0.5);
-}
+/* .menu-container div:nth-child(4) i:hover { */
+/* cursor: pointer; */
+/* background-color: rgba(0, 255, 255, 0.5); */
+/* } */
 
 .menu-container p {
   width: 55rem;
@@ -646,7 +659,7 @@ a.disabled:hover {
   height: 15rem;
   padding: 2rem;
   border-radius: 1rem;
-  width: 120rem;
+  width: calc(100% - 4rem);
   align-self: center;
 }
 .third-page-title {
@@ -670,12 +683,11 @@ a.disabled:hover {
 .reviews-container {
   font-family: "Poppins", sans-serif;
   margin-top: 25rem;
-
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 110rem;
+  width: 60%;
   height: 50rem;
   box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.2);
   background-color: white;
@@ -683,7 +695,7 @@ a.disabled:hover {
 .reviews {
   width: 90rem;
   height: 35rem;
-  overflow: hidden;
+  overflow: scroll;
   position: relative;
 }
 .review {
