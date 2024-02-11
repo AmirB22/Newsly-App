@@ -101,7 +101,7 @@ a.disabled:hover {
   width: 100%;
   height: 100svh;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   box-shadow: inset -100px -50px 500px rgba(0, 0, 0, 0.2);
 }
 .left-side {
@@ -507,7 +507,7 @@ a.disabled:hover {
 .left-side-scnd-animated-background {
   background-color: lime;
   width: 50%;
-  height: 100%;
+  height: 70%;
   position: absolute;
   border-radius: 20%;
   transform: rotate(0deg);
@@ -546,7 +546,7 @@ a.disabled:hover {
   border-radius: 1rem;
 }
 .left-side-scnd-title h1 {
-  font-size: 4rem;
+  font-size: 3vw;
   text-wrap: wrap;
   color: black;
 }
@@ -651,57 +651,64 @@ a.disabled:hover {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  position: relative;
-  gap: 5rem;
+  width: 100%;
 }
 .third-page-title-container {
-  position: absolute;
-  top: 5rem;
-  left: 50%;
-  transform: translateX(-50%);
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 15rem;
+  height: auto;
   padding: 2rem;
   border-radius: 1rem;
   width: calc(100% - 4rem);
-  align-self: center;
+  height: 20%;
 }
 .third-page-title {
-  font-size: 4rem;
+  font-size: 3vw;
+  position: relative;
+  text-align: center;
+  width: 100%;
 }
 .moved-left,
 .moved-right {
-  font-size: 2rem;
+  font-size: 2vw;
   position: absolute;
   color: lime;
+  font-weight: normal;
 }
 .moved-left {
   left: 7rem;
-  top: 5rem;
+  bottom: 100%;
 }
 .moved-right {
   right: 7rem;
-  bottom: 5rem;
+  top: 100%;
 }
+.third-bottom {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
+  height: 80%;
+}
 .reviews-container {
   font-family: "Poppins", sans-serif;
-  margin-top: 25rem;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 60%;
-  height: 50rem;
+  height: auto;
+  padding: 10rem;
   box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.2);
+  overflow: scroll;
   background-color: white;
 }
 .reviews {
   width: 90%;
   height: 35rem;
-  overflow: scroll;
+  overflow-y: hidden;
   position: relative;
 }
 .review {
@@ -710,7 +717,7 @@ a.disabled:hover {
   left: 50%;
   top: 50%;
   width: 100%;
-  height: 35rem;
+  height: auto;
   display: flex;
   font-size: 1.5rem;
   transition: all 1s;
@@ -905,6 +912,9 @@ TODO: MAKE THIS PAGE RESPONSIVE, ADD CONTACT US PAGE*/
   .second-bottom {
     flex-direction: column;
   }
+  .left-side-scnd-animated-background {
+    width: 40%;
+  }
   .second-page {
     height: auto;
   }
@@ -929,12 +939,25 @@ TODO: MAKE THIS PAGE RESPONSIVE, ADD CONTACT US PAGE*/
     justify-content: center;
   }
 }
-@media screen and (max-width: 1350px) {
+@media screen and (max-width: 1250px) {
   .reviews-container {
-    width: 80%;
-    max-width: 80%;
+    width: calc(80% - 10rem);
   }
 }
+@media screen and (max-width: 1100px) {
+  .reviews-container {
+    width: calc(100% - 10rem);
+  }
+  .buttons {
+    display: none;
+  }
+}
+@media screen and (max-width: 1050px) {
+  .reviews-container {
+    padding: 10rem 5rem;
+  }
+}
+
 @media screen and (max-width: 975px) {
   .reason-we-are-the-best {
     display: none;
@@ -946,10 +969,6 @@ TODO: MAKE THIS PAGE RESPONSIVE, ADD CONTACT US PAGE*/
   }
 }
 @media screen and (max-width: 950px) {
-  .reviews-container {
-    width: 100%;
-    max-width: 100%;
-  }
   .added-text {
     flex-wrap: wrap;
     justify-content: center;

@@ -180,8 +180,9 @@ const getHomeHTML = function () {
         </div>
       <div class="second-container-wrapper">
          ${
-           loggedInAs.followedLocation.length > 0
-             ? ` <div class="second-container">
+           loggedInAs.followedLocation
+             ? loggedInAs.followedLocation.length > 0
+               ? ` <div class="second-container">
             <div class="right-side-title">
               <div class="prev-home-local-button home-local-nav-button">
                   <i class="fa-solid fa-chevron-left"></i>
@@ -201,6 +202,7 @@ const getHomeHTML = function () {
            <div class="second-container-child" data-second-container="1">
             </div>
           </div>`
+               : ""
              : ""
          }
           <div class="second-container">
@@ -331,9 +333,10 @@ const getHomeHTML = function () {
   }
   getWeather(
     `${
+      loggedInAs.followedLocation ? 
       loggedInAs.followedLocation.length > 0
         ? loggedInAs.followedLocation[0]
-        : "Serbia"
+        : "Serbia" : "Serbia"
     }`
   );
 
@@ -825,7 +828,7 @@ const getHeadlinesFromCountries = async function (country, countryName) {
     .forEach((el) => el.classList.replace("list-clicked", "list-unclicked"));
 
   const response = await fetch(
-    `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=2d63388910ab47ebb8ba7b5f922b092e`
+    `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=e41cabafe8bb452d86d53ee426db0861`
   );
   const countryData = await response.json();
   document.querySelector("#main-headlines").innerHTML = `
@@ -1236,7 +1239,7 @@ const getNewsFromInput = async function (input) {
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${city}&apiKey=2d63388910ab47ebb8ba7b5f922b092e`
+        `https://newsapi.org/v2/everything?q=${city}&apiKey=e41cabafe8bb452d86d53ee426db0861`
       );
 
       const data = await response.json();
@@ -1459,7 +1462,7 @@ const getNewsFromInput = async function (input) {
       </div> `;
       const response = await fetch(
         `
-https://newsapi.org/v2/everything?domains=${source}&apiKey=2d63388910ab47ebb8ba7b5f922b092e`
+https://newsapi.org/v2/everything?domains=${source}&apiKey=e41cabafe8bb452d86d53ee426db0861`
       );
 
       const data = await response.json();
@@ -1683,7 +1686,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=2d63388910ab47ebb8ba7
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${topic}&apiKey=2d63388910ab47ebb8ba7b5f922b092e`
+        `https://newsapi.org/v2/everything?q=${topic}&apiKey=e41cabafe8bb452d86d53ee426db0861`
       );
 
       const data = await response.json();
@@ -1894,7 +1897,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=2d63388910ab47ebb8ba7
         </div>
       </div> `;
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=2d63388910ab47ebb8ba7b5f922b092e`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=e41cabafe8bb452d86d53ee426db0861`
     );
 
     const data = await response.json();
@@ -2374,7 +2377,7 @@ const getNewsFromList = async function (clicked) {
     const response = await fetch(
       `https://newsapi.org/v2/everything?q=${
         differentClicked ? differentClicked : clicked
-      }&apiKey=2d63388910ab47ebb8ba7b5f922b092e`
+      }&apiKey=e41cabafe8bb452d86d53ee426db0861`
     );
 
     const data = await response.json();
@@ -2433,7 +2436,7 @@ const changeContainerHTML = async function (
     }
 
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=2d63388910ab47ebb8ba7b5f922b092e`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=e41cabafe8bb452d86d53ee426db0861`
     );
     const newsData = await response.json();
 
@@ -2690,7 +2693,7 @@ const getFourthContainerHTML = async function () {
     let k = 0;
     for (let i = 0; i < number; i) {
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=2d63388910ab47ebb8ba7b5f922b092e`
+        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=e41cabafe8bb452d86d53ee426db0861`
       );
       const data = await response.json();
 
