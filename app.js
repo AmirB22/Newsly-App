@@ -215,6 +215,8 @@ animatedBtn.forEach((el) =>
     then we want to hide the paragraph and reset the icons rotation so that it points downwards. */
     if (textContainer.classList.contains("active")) {
       textContainer.style.height = "0px";
+      textContainer.style.bottom = "0";
+      textContainer.style.zIndex = "1";
       e.target.style.transform = "rotate(0deg)";
       textContainer.classList.remove("active");
       return;
@@ -226,10 +228,15 @@ animatedBtn.forEach((el) =>
     animatedBtn.forEach((el) => {
       el.parentElement.nextElementSibling.classList.remove("active");
       el.parentElement.nextElementSibling.style.height = "0px";
+      el.parentElement.nextElementSibling.style.bottom = "0";
+      el.parentElement.nextElementSibling.style.zIndex = "1";
       el.style.transform = "rotate(0deg)";
 
       textContainer.classList.add("active");
-      textContainer.style.height = "30rem";
+      textContainer.style.bottom = "-40rem";
+      textContainer.style.height = "40rem";
+      textContainer.style.zIndex = "2";
+
       e.target.style.transform = "rotate(180deg)";
     });
   })

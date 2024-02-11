@@ -109,9 +109,7 @@ a.disabled:hover {
   flex-direction: column;
   align-items: start;
   justify-content: center;
-  gap: 10rem;
-  height: auto;
-  width: 50%;
+  width: auto;
 }
 .right-side {
   width: 50%;
@@ -275,9 +273,8 @@ a.disabled:hover {
   display: flex;
   align-items: center;
   flex-direction: column;
-  width: 100%;
   text-wrap: nowrap;
-  margin-top: -15rem;
+  width: auto;
 }
 
 .site-title {
@@ -490,7 +487,12 @@ a.disabled:hover {
   height: calc(100svh - 8rem);
   width: 100%;
   display: flex;
+  flex-direction: column;
   box-shadow: inset 100px 50px 500px rgba(0, 0, 0, 0.2);
+}
+.second-bottom {
+  display: flex;
+  height: 100%;
 }
 .left-side-scnd {
   position: relative;
@@ -499,13 +501,13 @@ a.disabled:hover {
   justify-content: center;
   align-items: center;
   height: 100%;
-  width: 50%;
+  width: auto;
   flex: 5;
 }
 .left-side-scnd-animated-background {
   background-color: lime;
-  width: 50rem;
-  height: 50rem;
+  width: 50%;
+  height: 100%;
   position: absolute;
   border-radius: 20%;
   transform: rotate(0deg);
@@ -532,13 +534,13 @@ a.disabled:hover {
   }
 }
 .left-side-scnd-title {
-  position: absolute;
   top: 5rem;
   max-width: 100%;
   height: 15rem;
   display: flex;
   justify-content: center;
   flex-direction: column;
+  text-align: center;
   align-items: center;
   padding: 2rem;
   border-radius: 1rem;
@@ -554,7 +556,7 @@ a.disabled:hover {
 }
 .left-side-scnd-image {
   z-index: 1;
-  width: 60rem;
+  width: 50%;
 }
 .right-side-scnd {
   flex: 5;
@@ -570,6 +572,7 @@ a.disabled:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 }
 .menu-container h1 {
   background-color: white;
@@ -579,6 +582,7 @@ a.disabled:hover {
   display: flex;
   justify-content: space-between;
   padding-right: 2rem;
+  margin-bottom: 1rem;
 }
 .menu-container div/*:nth-child(1)*/ h1,
 .menu-container div/*:nth-child(1)*/ p {
@@ -587,6 +591,10 @@ a.disabled:hover {
 .menu-container div p {
   height: auto;
   width: 60%;
+  position: absolute;
+  height: 0px;
+  bottom: 0;
+  transition: all 0.5s;
 }
 .menu-container div/*:nth-child(1)*/ i:hover {
   cursor: pointer;
@@ -779,6 +787,10 @@ a.disabled:hover {
 .review-right:hover {
   box-shadow: inset -10px 0px 10px rgba(73, 180, 58, 0.2);
 }
+.review-right:focus,
+.review-left:focus {
+  outline: none;
+}
 .between-page-create {
   width: 100%;
   height: 20svh;
@@ -887,5 +899,89 @@ TODO: MAKE THIS PAGE RESPONSIVE, ADD CONTACT US PAGE*/
     transform: scale(1);
     background-color: transparent;
     box-shadow: none;
+  }
+}
+@media screen and (max-width: 1615px) {
+  .second-bottom {
+    flex-direction: column;
+  }
+  .second-page {
+    height: auto;
+  }
+  .second-page {
+    padding-bottom: 10rem;
+  }
+  .menu-container {
+    width: 60%;
+  }
+}
+@media screen and (max-width: 1100px) {
+  .right-side {
+    display: none;
+  }
+  .left-side {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+  }
+  .main-page {
+    justify-content: center;
+  }
+}
+@media screen and (max-width: 1350px) {
+  .reviews-container {
+    width: 80%;
+    max-width: 80%;
+  }
+}
+@media screen and (max-width: 975px) {
+  .reason-we-are-the-best {
+    display: none;
+  }
+  .main-page {
+    background-image: url("image.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+}
+@media screen and (max-width: 950px) {
+  .reviews-container {
+    width: 100%;
+    max-width: 100%;
+  }
+  .added-text {
+    flex-wrap: wrap;
+    justify-content: center;
+    text-wrap: wrap;
+    text-align: center;
+    margin-top: 5rem;
+  }
+}
+@media screen and (max-width: 875px) {
+  .menu-container {
+    width: 80%;
+  }
+}
+@media screen and (max-width: 650px) {
+  .menu-container {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 700px) {
+  .welcome-title-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .header {
+    display: none;
+  }
+
+  .button-up {
+    display: none;
+  }
+  .left-side {
+    justify-content: start;
+    margin-top: 20rem;
   }
 }
