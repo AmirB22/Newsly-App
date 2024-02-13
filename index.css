@@ -298,7 +298,7 @@ a.disabled:hover {
 }
 .site-title-two {
   padding: 1rem;
-  font-size: 2rem;
+  font-size: 2vw;
   transform: skew(-30deg);
   background: rgb(73, 180, 58);
   background: linear-gradient(
@@ -311,13 +311,13 @@ a.disabled:hover {
   margin-right: 1rem;
 }
 .added-text {
-  font-size: 4rem;
+  font-size: 3vw;
   font-weight: normal;
   display: flex;
   align-items: center;
 }
 .title-paragraph {
-  font-size: 2rem;
+  font-size: 3vw;
   color: gray;
   margin-top: 3rem;
   width: 80%;
@@ -426,6 +426,12 @@ a.disabled:hover {
   flex-direction: column;
   height: 20rem;
 }
+.reason-we-are-the-best-second {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+}
 .reason-title {
   font-size: 2rem;
   background: -webkit-linear-gradient(
@@ -437,7 +443,8 @@ a.disabled:hover {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-.reasons-container {
+.reasons-container,
+.reasons-container-second {
   display: flex;
   justify-content: space-evenly;
 }
@@ -451,6 +458,18 @@ a.disabled:hover {
   width: 20%;
   padding: 2rem;
   max-height: 15rem;
+  overflow: hidden;
+  transition: all 1s, background-color 0.2s;
+}
+.reasons-container-second div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  text-align: center;
+  gap: 2rem;
+  width: 20%;
+  padding: 2rem;
   overflow: hidden;
   transition: all 1s, background-color 0.2s;
 }
@@ -652,8 +671,12 @@ a.disabled:hover {
   align-items: center;
   flex-direction: column;
   width: 100%;
+  height: auto;
+  gap: 3rem;
+  padding-bottom: 3rem;
 }
 .third-page-title-container {
+  margin-top: 3rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -719,7 +742,7 @@ a.disabled:hover {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 100%;
+  width: 98%;
   height: auto;
   display: flex;
   font-size: 1.5rem;
@@ -754,6 +777,7 @@ a.disabled:hover {
   border-left: 1px solid lime;
   flex: 7.5;
   width: 100%;
+  gap: 1rem;
   padding: 2rem;
   height: (100% -4rem);
   display: flex;
@@ -944,13 +968,10 @@ TODO: MAKE THIS PAGE RESPONSIVE, ADD CONTACT US PAGE*/
 }
 @media screen and (max-width: 1250px) {
   .reviews-container {
-    width: calc(80% - 10rem);
+    width: calc(90% - 10rem);
   }
 }
 @media screen and (max-width: 1100px) {
-  .reviews-container {
-    width: calc(100% - 10rem);
-  }
   .buttons {
     display: none;
   }
@@ -982,6 +1003,42 @@ TODO: MAKE THIS PAGE RESPONSIVE, ADD CONTACT US PAGE*/
   .reason-we-are-the-best {
     display: none;
   }
+  .second-page {
+    padding-top: 10rem;
+  }
+  .second-top {
+    display: flex;
+    height: auto;
+    flex-direction: column;
+  }
+  .reasons-container-second {
+    align-items: center;
+    background: rgb(73, 180, 58);
+    background: linear-gradient(
+      135deg,
+      rgba(73, 180, 58, 1) 0%,
+      rgba(196, 252, 69, 1) 100%
+    );
+    width: 95%;
+    gap: 3rem;
+    flex-direction: column;
+  }
+  .reasons-container-second div {
+    padding: 1rem;
+    gap: 1rem;
+    width: calc(100% - 4rem);
+  }
+  .reasons-container-second p {
+    padding: 1rem;
+    font-size: 3vw;
+    border-radius: 1rem;
+    background-color: white;
+  }
+  .reason-we-are-the-best-second h2 {
+    font-size: 3vw;
+    background-color: transparent;
+    color: white;
+  }
   .main-page {
     background-image: url("image.png");
     background-repeat: no-repeat;
@@ -1003,6 +1060,9 @@ TODO: MAKE THIS PAGE RESPONSIVE, ADD CONTACT US PAGE*/
   }
   .reviews {
     height: 60rem;
+  }
+  .reviews-container {
+    padding: 0rem 5rem;
   }
   .review-right-side {
     border: none;
@@ -1034,10 +1094,11 @@ TODO: MAKE THIS PAGE RESPONSIVE, ADD CONTACT US PAGE*/
   }
   .second-page,
   .third-page {
-    height: 100svh;
+    height: auto;
   }
   .reviews-container {
     padding: 5rem 1rem;
+    width: calc(95% - 2rem);
   }
   .button-up {
     display: none;
@@ -1045,10 +1106,5 @@ TODO: MAKE THIS PAGE RESPONSIVE, ADD CONTACT US PAGE*/
   .left-side {
     justify-content: start;
     margin-top: 20rem;
-  }
-}
-@media screen and (max-width: 500px) {
-  .reviews-container {
-    width: calc(100% - 2rem);
   }
 }
