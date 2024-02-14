@@ -2,8 +2,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Lemon&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&family=Lemon&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Dancing+Script:wght@400..700&family=Protest+Strike&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 html {
   font-size: 62.5%;
   scroll-behavior: smooth;
@@ -31,6 +30,7 @@ body {
   transition: all 0.5s;
   overflow: hidden;
   cursor: default;
+  z-index: 10;
 }
 .news-container h1 {
   font-size: 1.5rem;
@@ -60,8 +60,8 @@ a.disabled:hover {
 }
 .sticky {
   position: fixed;
-  left: 0px;
-  right: 0px;
+
+  width: calc(100% - 4rem);
   background-color: white;
   box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
 }
@@ -111,6 +111,10 @@ a.disabled:hover {
   justify-content: center;
   width: auto;
 }
+.phone-hamburger i {
+  position: relative;
+  display: none;
+}
 .right-side {
   width: 50%;
   display: flex;
@@ -125,6 +129,7 @@ a.disabled:hover {
   width: 100%;
 }
 .header {
+  position: relative;
   font-weight: bold;
   position: absolute;
   top: 0px;
@@ -133,6 +138,10 @@ a.disabled:hover {
   z-index: 3;
   background-color: white;
   box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+  z-index: 11;
+}
+.phone-header {
+  display: none;
 }
 .nav {
   padding: 0.5rem 2rem;
@@ -203,17 +212,22 @@ a.disabled:hover {
   position: relative;
   height: 0rem;
   width: 20rem;
-  padding: 0rem 0rem;
+  padding: 0rem 1rem;
   overflow: hidden;
   position: absolute;
   background-color: white;
-  bottom: 0rem;
   right: 0rem;
   display: flex;
   flex-direction: column;
   font-family: "Poppins" sans-serif;
   gap: 1rem;
   transition: all 0.5s;
+}
+.account-active {
+  height: 26rem;
+  padding: 3rem 1rem;
+  bottom: -32rem;
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.3);
 }
 .mid-account-section {
   width: 100%;
@@ -266,10 +280,12 @@ a.disabled:hover {
   display: flex;
   align-items: center;
   font-size: 2rem;
+  font-family: "Dancing Script", sans-serif;
 }
 .title-container {
   /* font-family: "Poppins", sans-serif; */
 
+  font-family: "Dancing Script", sans-serif;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -279,7 +295,7 @@ a.disabled:hover {
 
 .site-title {
   padding: 1rem;
-  font-size: 4rem;
+  font-size: 2vw;
   transform: skew(-30deg);
   background: rgb(73, 180, 58);
   background: linear-gradient(
@@ -427,10 +443,11 @@ a.disabled:hover {
   height: 20rem;
 }
 .reason-we-are-the-best-second {
-  display: flex;
+  display: none;
   justify-content: space-around;
   align-items: center;
   flex-direction: column;
+  margin-bottom: 10rem;
 }
 .reason-title {
   font-size: 2rem;
@@ -440,6 +457,7 @@ a.disabled:hover {
     rgba(196, 252, 69, 1) 70%,
     rgba(73, 180, 58, 1) 33%
   );
+  font-family: "Dancing Script", sans-serif;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -570,7 +588,7 @@ a.disabled:hover {
   color: black;
 }
 .left-side-scnd-title p {
-  font-size: 2rem;
+  font-size: 2vw;
   color: lime;
 }
 .left-side-scnd-image {
@@ -593,10 +611,48 @@ a.disabled:hover {
   align-items: center;
   position: relative;
 }
+.phone-container {
+  position: relative;
+  height: 0rem;
+  bottom: 0;
+  width: 100%;
+  overflow: hidden;
+  position: absolute;
+  background-color: white;
+  right: 0rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.5s;
+}
+.phone-container ul {
+  flex-direction: column;
+  display: flex;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  width: 100%;
+  list-style: none;
+  font-size: 10vw;
+  font-weight: normal;
+}
+.phone-container a {
+  text-decoration: none;
+  color: black;
+  width: 90%;
+  text-align: center;
+  border-bottom: 1px solid lime;
+}
+.phone-container-active {
+  bottom: calc(-100vh + 7rem);
+  padding-top: 7rem;
+  height: calc(100vh - 14rem);
+}
 .menu-container h1 {
   background-color: white;
   width: calc(100% - 8rem);
-  padding: 3rem 4rem;
+  padding: 3vh 4vh;
   border-radius: 7rem;
   display: flex;
   justify-content: space-between;
@@ -643,14 +699,15 @@ a.disabled:hover {
   transition: all 0.5s;
   padding: 0.5rem 1rem;
   border-radius: 3rem;
+  max-height: 2rem;
 }
 /* .menu-container div:nth-child(4) i:hover { */
 /* cursor: pointer; */
 /* background-color: rgba(0, 255, 255, 0.5); */
 /* } */
 
-.menu-container p {
-  width: 55rem;
+.menu-container-paragraph {
+  width: 100%;
   background-color: white;
   height: 0px;
   padding: 0rem 5rem;
@@ -660,7 +717,13 @@ a.disabled:hover {
   overflow: hidden;
   display: grid;
   place-items: center;
+  z-index: 1;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+}
+.menu-container-active {
+  bottom: -40rem !important;
+  height: 40rem !important;
+  z-index: 2;
 }
 .third-page {
   height: calc(100svh - 8rem);
@@ -730,6 +793,7 @@ a.disabled:hover {
 .reviews {
   width: 90%;
   height: 35rem;
+  max-height: 70vh;
   overflow-y: hidden;
   overflow-x: scroll;
   position: relative;
@@ -761,10 +825,10 @@ a.disabled:hover {
   flex-direction: column;
 }
 .review-photo {
-  width: 12rem;
-  height: 12rem;
+  width: 6vw;
+  height: 6vw;
   object-fit: cover;
-  border-radius: 6rem;
+  border-radius: 10vw;
 }
 .review-name {
   font-size: 2rem;
@@ -965,6 +1029,13 @@ TODO: MAKE THIS PAGE RESPONSIVE, ADD CONTACT US PAGE*/
   .main-page {
     justify-content: center;
   }
+  .site-title {
+    font-size: 5vw;
+  }
+  .welcome-title-container,
+  .added-text {
+    font-size: 4vw;
+  }
 }
 @media screen and (max-width: 1250px) {
   .reviews-container {
@@ -1021,7 +1092,24 @@ TODO: MAKE THIS PAGE RESPONSIVE, ADD CONTACT US PAGE*/
     );
     width: 95%;
     gap: 3rem;
+
     flex-direction: column;
+  }
+  .reason-we-are-the-best-second {
+    display: flex;
+  }
+  .reason-we-are-the-best-second span {
+    color: black;
+  }
+  .reason-title-second {
+    font-family: "Dancing Script", sans-serif;
+    font-size: 8vw;
+  }
+  .reasons-container-second {
+    border-radius: 3rem;
+    min-height: 80svh;
+    height: auto;
+    padding: 2rem 0rem;
   }
   .reasons-container-second div {
     padding: 1rem;
@@ -1035,7 +1123,8 @@ TODO: MAKE THIS PAGE RESPONSIVE, ADD CONTACT US PAGE*/
     background-color: white;
   }
   .reason-we-are-the-best-second h2 {
-    font-size: 3vw;
+    font-family: "Dancing Script", sans-serif;
+    font-size: 6vw;
     background-color: transparent;
     color: white;
   }
@@ -1061,11 +1150,19 @@ TODO: MAKE THIS PAGE RESPONSIVE, ADD CONTACT US PAGE*/
   .reviews {
     height: 60rem;
   }
+  .review {
+    padding: 0 5rem;
+  }
   .reviews-container {
     padding: 0rem 5rem;
   }
   .review-right-side {
     border: none;
+  }
+  .review-photo {
+    width: 10vw;
+    height: 10vw;
+    border-radius: 10vw;
   }
   .review {
     flex-direction: column;
@@ -1089,8 +1186,87 @@ TODO: MAKE THIS PAGE RESPONSIVE, ADD CONTACT US PAGE*/
     flex-direction: column;
     align-items: center;
   }
-  .header {
+  .news-page {
+    width: 100%;
+  }
+  .news-page li {
+    font-weight: normal;
+  }
+  .get-news {
+    width: 100%;
+  }
+  .review-left-side {
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 2rem;
+  }
+  .review-information {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: flex-end;
+    margin-bottom: 3rem;
+  }
+  .welcome-title-container {
+    font-size: 6vw;
+  }
+  .nav-image-name-container {
+    height: 6rem;
+  }
+  .account-preview {
+    width: calc(100% - 2rem);
+  }
+  .account-active {
+    width: calc(100% - 2rem);
+    height: calc(93svh - 7rem);
+    top: 7rem;
+  }
+  .account-preview p {
+    font-size: 5vw;
+  }
+  .news-container p {
+    font-size: 5vw;
+  }
+  .news-container {
+    width: 100%;
+  }
+  .top-account-section {
+    font-size: 5vw;
+  }
+  .top-account-section img {
+    height: 10rem;
+  }
+  .site-title {
+    margin: 0px;
+  }
+  .nav-image {
+    height: 100%;
+  }
+  .phone-hamburger i {
+    display: flex;
+    font-size: 3rem;
+    margin: 0rem 3rem;
+  }
+  .log-out {
+    height: 5rem;
+    position: absolute;
+    bottom: 5rem;
+  }
+  .nav-list,
+  .site-logo-title {
     display: none;
+  }
+  .phone-header {
+    display: flex;
+    position: absolute;
+    width: calc(100% - 4rem);
+    align-items: center;
+    justify-content: flex-end;
+    padding: 1rem 2rem;
+    top: 0;
+    height: 5rem;
+    font-size: 4rem;
+    background-color: white;
   }
   .second-page,
   .third-page {
@@ -1106,5 +1282,66 @@ TODO: MAKE THIS PAGE RESPONSIVE, ADD CONTACT US PAGE*/
   .left-side {
     justify-content: start;
     margin-top: 20rem;
+  }
+}
+@media screen and (max-width: 550px) {
+  .review-photo {
+    width: 15vw;
+    height: 15vw;
+    border-radius: 7.5vw;
+  }
+  .left-side-scnd-title h1,
+  .third-page-title {
+    font-size: 6vw;
+  }
+  .moved-left,
+  .moved-right {
+    font-size: 3vh;
+  }
+  .left-side-scnd-title p {
+    font-size: 3vw;
+  }
+}
+@media screen and (max-height: 740px) {
+  .reasons-container-second {
+    gap: 0px;
+  }
+  .review-right-side,
+  .review-left-side {
+    padding: 0px;
+  }
+}
+@media screen and (max-height: 650px) {
+  .review-title {
+    font-size: 1.5rem;
+  }
+  .review-right-side {
+    gap: 0.2rem;
+  }
+}
+@media screen and (max-width: 570px) {
+  .menu-container-paragraph {
+    width: 90% !important;
+    padding: 0 1rem;
+  }
+  .menu-container h1 {
+    border-radius: 0px;
+    width: 95%;
+  }
+}
+@media screen and (max-width: 475px) {
+  .menu-container-active {
+    height: 45rem !important;
+    bottom: -45rem !important;
+    font-size: 1.5rem;
+    overflow: auto;
+  }
+  .menu-container-active::-webkit-scrollbar {
+    width: 0px;
+  }
+}
+@media screen and (max-width: 360px) {
+  .review-title {
+    font-size: 1.5rem;
   }
 }

@@ -70,6 +70,7 @@ const checkIfLoggedIn = function () {
                 <button class="log-out">Log out</button>
               </div>
   `;
+
     document.querySelector(".log-out").addEventListener("click", function () {
       LoggedIn = false;
       loggedInAs = {};
@@ -79,65 +80,75 @@ const checkIfLoggedIn = function () {
       checkIfLoggedIn();
     });
   } else if (!Logged && userAccounts.length !== 0) {
-    document.querySelector(
-      ".news-container"
-    ).innerHTML = `      <h1>You aren't logged in yet!</h1>
-                    <p>Log in to see the news.</p>`;
-    document.querySelector(".news-page").classList.add("disabled");
+    const newsContainers = document.querySelectorAll(".news-container");
+    newsContainers.forEach(
+      (el) =>
+        (el.innerHTML = `     
+   <h1>You aren't logged in yet!</h1>
+                    <p>Log in to see the news.</p>`)
+    );
     document
-      .querySelector(".news-page")
-      .addEventListener("click", function (e) {
+      .querySelectorAll(".news-page")
+      .forEach((el) => el.classList.add("disabled"));
+    document.querySelectorAll(".news-page").forEach((el) =>
+      el.addEventListener("click", function (e) {
         e.preventDefault();
-      });
-    document
-      .querySelector(".news-page")
-      .addEventListener("mouseover", function () {
-        document.querySelector(".news-container").style.bottom = "-7.73rem";
-        document.querySelector(".news-container").style.height = "4.6rem";
-        document.querySelector(".news-container").style.padding = "1rem";
-        document.querySelector(".news-container").style.boxShadow =
-          "0px 10px 10px rgba(0, 0, 0, 0.3)";
-      });
-    document
-      .querySelector(".news-page")
-      .addEventListener("mouseleave", function () {
-        document.querySelector(".news-container").style.bottom = "-1rem";
-        document.querySelector(".news-container").style.height = "0rem";
-        document.querySelector(".news-container").style.padding = "0rem 1rem";
-        document.querySelector(".news-container").style.boxShadow = "none";
-      });
+      })
+    );
+    document.querySelectorAll(".news-page").forEach((el) =>
+      el.addEventListener("mouseover", function () {
+        newsContainers.forEach((el) => (el.style.bottom = "-7.73rem"));
+        newsContainers.forEach((el) => (el.style.height = "4.6rem"));
+        newsContainers.forEach((el) => (el.style.padding = "1rem"));
+        newsContainers.forEach(
+          (el) => (el.style.boxShadow = "0px 10px 10px rgba(0, 0, 0, 0.3)")
+        );
+      })
+    );
+    document.querySelectorAll(".news-page").forEach((el) =>
+      el.addEventListener("mouseleave", function () {
+        newsContainers.forEach((el) => (el.style.bottom = "-1rem"));
+        newsContainers.forEach((el) => (el.style.height = "0rem"));
+        newsContainers.forEach((el) => (el.style.padding = "0rem 1rem"));
+        newsContainers.forEach((el) => (el.style.boxShadow = "none"));
+      })
+    );
     document.querySelector(
       ".right-side-nav"
     ).innerHTML = `<a class="nav-button" href="./login-page.html#login"><button>Log in</button></a>`;
   } else if (!Logged && userAccounts.length === 0) {
-    document.querySelector(
-      ".news-container"
-    ).innerHTML = `      <h1>You don't have an account!</h1>
-                    <p>Create one to see the news.</p>`;
-    document.querySelector(".news-page").classList.add("disabled");
+    newsContainers.forEach(
+      (el) =>
+        (el.innerHTML = `      <h1>You don't have an account!</h1>
+                    <p>Create one to see the news.</p>`)
+    );
     document
-      .querySelector(".news-page")
-      .addEventListener("click", function (e) {
+      .querySelectorAll(".news-page")
+      .forEach((el) => el.classList.add("disabled"));
+    document.querySelectorAll(".news-page").forEach((el) =>
+      el.addEventListener("click", function (e) {
         e.preventDefault();
-      });
+      })
+    );
 
-    document
-      .querySelector(".news-page")
-      .addEventListener("mouseover", function () {
-        document.querySelector(".news-container").style.bottom = "-7.73rem";
-        document.querySelector(".news-container").style.height = "4.6rem";
-        document.querySelector(".news-container").style.padding = "1rem";
-        document.querySelector(".news-container").style.boxShadow =
-          "0px 10px 10px rgba(0, 0, 0, 0.3)";
-      });
-    document
-      .querySelector(".news-page")
-      .addEventListener("mouseleave", function () {
-        document.querySelector(".news-container").style.bottom = "-1rem";
-        document.querySelector(".news-container").style.height = "0rem";
-        document.querySelector(".news-container").style.padding = "0rem 1rem";
-        document.querySelector(".news-container").style.boxShadow = "none";
-      });
+    document.querySelectorAll(".news-page").forEach((el) =>
+      el.addEventListener("mouseover", function () {
+        newsContainers.forEach((el) => (el.style.bottom = "-7.73rem"));
+        newsContainers.forEach((el) => (el.style.height = "4.6rem"));
+        newsContainers.forEach((el) => (el.style.padding = "1rem"));
+        newsContainers.forEach(
+          (el) => (el.style.boxShadow = "0px 10px 10px rgba(0, 0, 0, 0.3)")
+        );
+      })
+    );
+    document.querySelectorAll(".news-page").forEach((el) =>
+      el.addEventListener("mouseleave", function () {
+        newsContainers.forEach((el) => (el.style.bottom = "-1rem"));
+        newsContainers.forEach((el) => (el.style.height = "0rem"));
+        newsContainers.forEach((el) => (el.style.padding = "0rem 1rem"));
+        newsContainers.forEach((el) => (el.style.boxShadow = "none"));
+      })
+    );
     document.querySelector(
       ".right-side-nav"
     ).innerHTML = `<a class="nav-button" href="./login-page.html#signup"><button>Create an account</button></a>`;
@@ -214,9 +225,7 @@ animatedBtn.forEach((el) =>
     /*If the button we clicked on already was active (paragraph already showing) 
     then we want to hide the paragraph and reset the icons rotation so that it points downwards. */
     if (textContainer.classList.contains("active")) {
-      textContainer.style.height = "0px";
-      textContainer.style.bottom = "0";
-      textContainer.style.zIndex = "1";
+      textContainer.classList.remove("menu-container-active");
       e.target.style.transform = "rotate(0deg)";
       textContainer.classList.remove("active");
       return;
@@ -227,16 +236,13 @@ animatedBtn.forEach((el) =>
     in a way to create a smooth effect of the paragraph appearing and the icon rotating upwards. */
     animatedBtn.forEach((el) => {
       el.parentElement.nextElementSibling.classList.remove("active");
-      el.parentElement.nextElementSibling.style.height = "0px";
-      el.parentElement.nextElementSibling.style.bottom = "0";
-      el.parentElement.nextElementSibling.style.zIndex = "1";
+      el.parentElement.nextElementSibling.classList.remove(
+        "menu-container-active"
+      );
       el.style.transform = "rotate(0deg)";
 
       textContainer.classList.add("active");
-      textContainer.style.bottom = "-40rem";
-      textContainer.style.height = "40rem";
-      textContainer.style.zIndex = "2";
-
+      textContainer.classList.add("menu-container-active");
       e.target.style.transform = "rotate(180deg)";
     });
   })
@@ -320,17 +326,18 @@ reviewRight.addEventListener("click", showNextReview);
 reviewLeft.addEventListener("click", showPrevReview);
 
 const showProfilePreview = function () {
-  document.querySelector(".account-preview").style.height = "26rem";
-  document.querySelector(".account-preview").style.padding = "3rem 1rem";
-  document.querySelector(".account-preview").style.bottom = "-32rem";
-  document.querySelector(".account-preview").style.boxShadow =
-    "0px 10px 10px rgba(0, 0, 0, 0.3)";
+  if (
+    document
+      .querySelector(".account-preview")
+      .classList.contains("account-active")
+  ) {
+    hideProfilePreview();
+    return;
+  }
+  document.querySelector(".account-preview").classList.add("account-active");
 };
 const hideProfilePreview = function () {
-  document.querySelector(".account-preview").style.height = "0rem";
-  document.querySelector(".account-preview").style.padding = "0rem 1rem";
-  document.querySelector(".account-preview").style.bottom = "-0rem";
-  document.querySelector(".account-preview").style.boxShadow = "none";
+  document.querySelector(".account-preview").classList.remove("account-active");
 };
 const profilePicture = document.querySelector(".profile-picture");
 
@@ -347,3 +354,23 @@ if (Logged) {
     else hideProfilePreview();
   });
 }
+const hamburgerMenu = document.querySelector(".phone-hamburger");
+
+hamburgerMenu.addEventListener("click", (e) => {
+  if (hamburgerMenu.firstElementChild.classList.contains("fa-bars")) {
+    hamburgerMenu.firstElementChild.classList.replace("fa-bars", "fa-x");
+    document
+      .querySelector(".phone-container")
+      .classList.toggle("phone-container-active");
+  } else {
+    if (
+      !e.target.classList.contains("get-news") &&
+      !e.target.classList.contains("phone-container")
+    ) {
+      hamburgerMenu.firstElementChild.classList.replace("fa-x", "fa-bars");
+      document
+        .querySelector(".phone-container")
+        .classList.toggle("phone-container-active");
+    }
+  }
+});
