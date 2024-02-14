@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Lemon&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&family=Lemon&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Anton&family=Dancing+Script:wght@400..700&family=Protest+Strike&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 html {
@@ -481,15 +482,32 @@ a.disabled:hover {
 }
 .reasons-container-second div {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: start;
   text-align: center;
-  gap: 2rem;
   width: 20%;
   padding: 2rem;
   overflow: hidden;
   transition: all 1s, background-color 0.2s;
+}
+.reason {
+  height: 20rem;
+}
+.reasons-left {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+}
+.reasons-right {
+  height: 100%;
+  width: 30%;
+  object-fit: cover;
+}
+.reason-right .reasons-left p {
+  text-align: start;
+}
+.reason-left .reasons-left p {
+  text-align: end;
 }
 .reasons-container div:hover {
   transform: translateY(-10rem) scale(1.1);
@@ -730,10 +748,11 @@ a.disabled:hover {
   box-shadow: inset -100px -50px 500px rgba(0, 0, 0, 0.2);
   border-top: 1px solid lightgray;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   flex-direction: column;
   width: 100%;
+  min-height: 100svh;
   height: auto;
   gap: 3rem;
   padding-bottom: 3rem;
@@ -793,7 +812,7 @@ a.disabled:hover {
 .reviews {
   width: 90%;
   height: 35rem;
-  max-height: 70vh;
+  max-height: calc(70vh - 7rem);
   overflow-y: hidden;
   overflow-x: scroll;
   position: relative;
@@ -889,41 +908,76 @@ a.disabled:hover {
 .review-left:focus {
   outline: none;
 }
-.between-page-create {
-  width: 100%;
-  height: 20svh;
-  background-color: #222;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.between-page-create-link {
-  width: 30%;
-  height: 50%;
-}
-.between-page-create-button {
-  width: 100%;
-  height: 100%;
-  font-size: 2.5rem;
-  border-radius: 25rem;
-  color: white;
-
-  background: rgb(73, 180, 58);
-  background: linear-gradient(
-    135deg,
-    rgba(73, 180, 58, 1) 0%,
-    rgba(196, 252, 69, 1) 100%
-  );
-
-  cursor: pointer;
-}
 
 .fourth-page {
-  height: 100svh;
+  height: calc(100svh - 27rem);
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background-color: #222;
+  color: white;
+  font-family: "Montserrat", sans-serif;
+  border-top: 1px solid rgb(72, 72, 72);
+  padding: 10rem 0rem;
 }
-
+.fourth-top {
+  height: 20%;
+}
+.fourth-top h1 {
+  font-weight: 500;
+  font-size: 7vh;
+}
+.fourth-bottom {
+  height: 70%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.fourth-bottom i {
+  color: lime;
+  font-size: 10vh;
+  margin: 3rem;
+}
+.contact {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 33%;
+  width: 17%;
+  gap: 4rem;
+  height: 100%;
+  font-size: 2.2vh;
+}
+.contact-title {
+  letter-spacing: 5px;
+}
+.contact-time {
+  font-size: 1.3vh;
+}
+.contact p {
+  letter-spacing: 1px;
+}
+.contact-button {
+  width: 90%;
+  padding: 2rem 1rem;
+  font-size: 2vh;
+  background-color: lime;
+  border: none;
+  cursor: pointer;
+  color: white;
+}
+.contact-button:hover {
+  color: lime;
+  background-color: white;
+  border: 2px solid lime;
+  margin: -2px;
+}
+.contact-button:focus {
+  outline: none;
+}
 /* .images {
   display: flex;
   justify-content: center;
@@ -1084,12 +1138,6 @@ TODO: MAKE THIS PAGE RESPONSIVE, ADD CONTACT US PAGE*/
   }
   .reasons-container-second {
     align-items: center;
-    background: rgb(73, 180, 58);
-    background: linear-gradient(
-      135deg,
-      rgba(73, 180, 58, 1) 0%,
-      rgba(196, 252, 69, 1) 100%
-    );
     width: 95%;
     gap: 3rem;
 
@@ -1110,23 +1158,22 @@ TODO: MAKE THIS PAGE RESPONSIVE, ADD CONTACT US PAGE*/
     min-height: 80svh;
     height: auto;
     padding: 2rem 0rem;
+    gap: 10rem;
   }
   .reasons-container-second div {
     padding: 1rem;
-    gap: 1rem;
     width: calc(100% - 4rem);
   }
   .reasons-container-second p {
     padding: 1rem;
-    font-size: 3vw;
-    border-radius: 1rem;
-    background-color: white;
+    font-size: 2vw;
+    border-radius: 2rem 2rem 2rem 0rem;
+    min-height: 5rem;
   }
   .reason-we-are-the-best-second h2 {
     font-family: "Dancing Script", sans-serif;
     font-size: 6vw;
     background-color: transparent;
-    color: white;
   }
   .main-page {
     background-image: url("image.png");
@@ -1319,6 +1366,25 @@ TODO: MAKE THIS PAGE RESPONSIVE, ADD CONTACT US PAGE*/
     gap: 0.2rem;
   }
 }
+@media screen and (max-height: 520px) {
+  .review-photo {
+    display: none;
+  }
+  .reviews {
+    overflow-y: auto;
+  }
+  .review-left-side {
+    flex-direction: column;
+  }
+  .review-information {
+    flex-direction: row;
+    margin: 0px;
+  }
+  .review-photo-name-container {
+    display: flex;
+    align-items: flex-end;
+  }
+}
 @media screen and (max-width: 570px) {
   .menu-container-paragraph {
     width: 90% !important;
@@ -1331,8 +1397,8 @@ TODO: MAKE THIS PAGE RESPONSIVE, ADD CONTACT US PAGE*/
 }
 @media screen and (max-width: 475px) {
   .menu-container-active {
-    height: 45rem !important;
-    bottom: -45rem !important;
+    height: 35rem !important;
+    bottom: -35rem !important;
     font-size: 1.5rem;
     overflow: auto;
   }
