@@ -443,13 +443,6 @@ a.disabled:hover {
   flex-direction: column;
   height: 20rem;
 }
-.reason-we-are-the-best-second {
-  display: none;
-  justify-content: space-around;
-  align-items: center;
-  flex-direction: column;
-  margin-bottom: 10rem;
-}
 .reason-title {
   font-size: 2rem;
   background: -webkit-linear-gradient(
@@ -462,10 +455,13 @@ a.disabled:hover {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-.reasons-container,
-.reasons-container-second {
+
+.reasons-container {
   display: flex;
   justify-content: space-evenly;
+}
+.reasons-container-second {
+  display: none;
 }
 .reasons-container div {
   display: flex;
@@ -490,8 +486,14 @@ a.disabled:hover {
   overflow: hidden;
   transition: all 1s, background-color 0.2s;
 }
+
 .reason {
-  height: 20rem;
+  height: 50%;
+}
+.reason h2 {
+  text-wrap: nowrap;
+  font-size: 4vh;
+  font-family: "Dancing Script", sans-serif;
 }
 .reasons-left {
   width: 70%;
@@ -1084,11 +1086,11 @@ TODO: MAKE THIS PAGE RESPONSIVE, ADD CONTACT US PAGE*/
     justify-content: center;
   }
   .site-title {
-    font-size: 5vw;
+    font-size: 4vw;
   }
   .welcome-title-container,
   .added-text {
-    font-size: 4vw;
+    font-size: 3vw;
   }
 }
 @media screen and (max-width: 1250px) {
@@ -1131,32 +1133,33 @@ TODO: MAKE THIS PAGE RESPONSIVE, ADD CONTACT US PAGE*/
   .second-page {
     padding-top: 10rem;
   }
+  .added-text {
+    font-weight: bold;
+    font-size: 7vh;
+  }
   .second-top {
     display: flex;
     height: auto;
     flex-direction: column;
   }
   .reasons-container-second {
+    display: flex;
+    justify-content: space-evenly;
     align-items: center;
     width: 95%;
     gap: 3rem;
+    border-bottom: 1px solid rgb(222, 222, 222);
 
     flex-direction: column;
-  }
-  .reason-we-are-the-best-second {
-    display: flex;
-  }
-  .reason-we-are-the-best-second span {
-    color: black;
   }
   .reason-title-second {
     font-family: "Dancing Script", sans-serif;
     font-size: 8vw;
   }
   .reasons-container-second {
-    border-radius: 3rem;
     min-height: 80svh;
     height: auto;
+    width: 100%;
     padding: 2rem 0rem;
     gap: 10rem;
   }
@@ -1169,11 +1172,6 @@ TODO: MAKE THIS PAGE RESPONSIVE, ADD CONTACT US PAGE*/
     font-size: 2vw;
     border-radius: 2rem 2rem 2rem 0rem;
     min-height: 5rem;
-  }
-  .reason-we-are-the-best-second h2 {
-    font-family: "Dancing Script", sans-serif;
-    font-size: 6vw;
-    background-color: transparent;
   }
   .main-page {
     background-image: url("image.png");
@@ -1229,6 +1227,9 @@ TODO: MAKE THIS PAGE RESPONSIVE, ADD CONTACT US PAGE*/
   }
 }
 @media screen and (max-width: 700px) {
+  .reasons-container-second {
+    gap: 1rem;
+  }
   .welcome-title-container {
     flex-direction: column;
     align-items: center;
@@ -1315,6 +1316,9 @@ TODO: MAKE THIS PAGE RESPONSIVE, ADD CONTACT US PAGE*/
     font-size: 4rem;
     background-color: white;
   }
+  .added-text {
+    font-size: 5vh;
+  }
   .second-page,
   .third-page {
     height: auto;
@@ -1343,7 +1347,7 @@ TODO: MAKE THIS PAGE RESPONSIVE, ADD CONTACT US PAGE*/
   }
   .moved-left,
   .moved-right {
-    font-size: 3vh;
+    font-size: 2vh;
   }
   .left-side-scnd-title p {
     font-size: 3vw;
@@ -1402,12 +1406,43 @@ TODO: MAKE THIS PAGE RESPONSIVE, ADD CONTACT US PAGE*/
     font-size: 1.5rem;
     overflow: auto;
   }
+  .review-left-side,
+  .review-right-side {
+    padding: 0px;
+  }
+  .review-information {
+    margin-bottom: 1rem;
+  }
   .menu-container-active::-webkit-scrollbar {
     width: 0px;
+  }
+}
+@media screen and (max-width: 420px) {
+  .third-bottom {
+    display: none;
+  }
+  .third-page {
+    min-height: auto;
   }
 }
 @media screen and (max-width: 360px) {
   .review-title {
     font-size: 1.5rem;
+  }
+  .reasons-right {
+    width: 80%;
+  }
+  .reasons-left p {
+    font-size: 1.5vh;
+  }
+  .reason-right .reasons-left p,
+  .reason-left .reasons-left p {
+    text-align: center;
+  }
+  .reason-left {
+    flex-direction: column;
+  }
+  .reason-right {
+    flex-direction: column-reverse;
   }
 }
