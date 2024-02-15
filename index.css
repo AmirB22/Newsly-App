@@ -4,6 +4,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&family=Lemon&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Anton&family=Dancing+Script:wght@400..700&family=Protest+Strike&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 html {
   font-size: 62.5%;
   scroll-behavior: smooth;
@@ -541,7 +542,7 @@ a.disabled:hover {
 }
 .second-page {
   border-top: 1px solid lightgray;
-  height: calc(100svh - 8rem);
+  height: 100svh;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -746,7 +747,7 @@ a.disabled:hover {
   z-index: 2;
 }
 .third-page {
-  height: calc(100svh - 8rem);
+  height: calc(100svh - 10rem);
   box-shadow: inset -100px -50px 500px rgba(0, 0, 0, 0.2);
   border-top: 1px solid lightgray;
   display: flex;
@@ -754,7 +755,7 @@ a.disabled:hover {
   align-items: center;
   flex-direction: column;
   width: 100%;
-  min-height: 100svh;
+  min-height: calc(100svh - 10rem);
   height: auto;
   gap: 3rem;
   padding-bottom: 3rem;
@@ -805,7 +806,7 @@ a.disabled:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 60%;
+  width: 50%;
   padding: 10rem;
   height: auto;
   box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.2);
@@ -910,7 +911,53 @@ a.disabled:hover {
 .review-left:focus {
   outline: none;
 }
-
+.statistics-page {
+  width: calc(100% - 20rem);
+  height: auto;
+  padding: 5rem 10rem;
+  display: flex;
+  justify-content: space-evenly;
+  background-color: #222;
+}
+.statistic {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 3rem;
+}
+.statistic i {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3vh;
+  height: 3rem;
+  width: 3rem;
+  padding: 1rem;
+  margin: -1rem;
+  border-radius: 100rem;
+  color: lime;
+}
+.statistic p {
+  font-size: 2vh;
+  color: white;
+}
+.heart .fa-heart {
+  color: rgb(255, 69, 41);
+  border: 5px solid rgb(255, 69, 41);
+}
+.star .fa-star {
+  color: rgb(191, 154, 33);
+  border: 5px solid rgb(191, 154, 33);
+}
+.newspaper .fa-newspaper {
+  color: gray;
+  border: 5px solid gray;
+}
+.hashtag .fa-hashtag {
+  color: white;
+  border: 5px solid white;
+}
 .fourth-page {
   height: calc(100svh - 27rem);
   width: 100%;
@@ -949,6 +996,7 @@ a.disabled:hover {
   align-items: center;
   max-width: 33%;
   width: 17%;
+
   gap: 4rem;
   height: 100%;
   font-size: 2.2vh;
@@ -979,6 +1027,42 @@ a.disabled:hover {
 }
 .contact-button:focus {
   outline: none;
+}
+footer {
+  border-top: 1px solid rgb(72, 72, 72);
+  background-color: #222;
+  color: white;
+  width: calc(100% - 20rem);
+  display: grid;
+  place-items: center;
+  padding: 10rem;
+}
+footer ul {
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  gap: 5rem;
+  list-style: none;
+}
+footer li {
+  font-size: 1.8vh;
+  cursor: pointer;
+}
+footer li:hover {
+  text-decoration: underline;
+  opacity: 0.3;
+}
+footer img {
+  width: 10rem;
+  margin: 5rem 0rem;
+}
+footer p {
+  font-size: 1.5vh;
+  text-align: center;
+}
+footer span {
+  font-size: 1.3vh;
+  color: gray;
+  font-style: italic;
 }
 /* .images {
   display: flex;
