@@ -735,7 +735,7 @@ a.disabled:hover {
   transition: padding 0.5s, height 0.5s, color 0.9s;
   color: black;
   font-size: 2rem;
-  overflow: hidden;
+  overflow: auto;
   display: grid;
   place-items: center;
   z-index: 1;
@@ -816,7 +816,6 @@ a.disabled:hover {
   height: 40rem;
   max-height: calc(70vh - 7rem);
   overflow-y: hidden;
-  overflow-x: scroll;
   position: relative;
 }
 .reviews::-webkit-scrollbar {
@@ -884,7 +883,8 @@ a.disabled:hover {
 }
 .review-description {
   flex: 5;
-  overflow: auto;
+  overflow: scroll;
+  padding-bottom: 12rem;
 }
 .buttons button {
   position: absolute;
@@ -1418,6 +1418,7 @@ TODO: MAKE THIS PAGE RESPONSIVE, ADD CONTACT US PAGE*/
   }
   .phone-hamburger i {
     display: flex;
+    width: 4rem;
     font-size: 3rem;
     margin: 0rem 3rem;
   }
@@ -1541,10 +1542,13 @@ TODO: MAKE THIS PAGE RESPONSIVE, ADD CONTACT US PAGE*/
   }
 }
 @media screen and (max-width: 475px) {
+  .menu-container-paragraph {
+    font-size: 1.5rem;
+  }
   .menu-container-active {
+    font-size: 1.5rem;
     height: 35rem !important;
     bottom: -35rem !important;
-    font-size: 1.5rem;
     overflow: auto;
   }
   .review-left-side,
