@@ -315,6 +315,14 @@ const general = function (translateValue, translateTo, opacity, html) {
     : (slidingContainer.style.borderRadius = "15rem 0rem 0rem 15rem");
   bttmSlidingContainerText.style.opacity = "0";
 
+  if (translateTo === "Sign up") {
+    logInContainer.style.zIndex = 0;
+    signUpContainer.style.zIndex = 1000;
+  } else {
+    signUpContainer.style.zIndex = 0;
+    logInContainer.style.zIndex = 1000;
+  }
+
   creatingBottomTextTimeoutID = setTimeout(() => {
     bttmSlidingContainerText.innerHTML = `<h1 class="sliding-title">${translateTo} using</h1>
           <div class="log-in-ways">
