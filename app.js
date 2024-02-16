@@ -83,7 +83,7 @@ const checkIfLoggedIn = function () {
     const newsContainers = document.querySelectorAll(".news-container");
     newsContainers.forEach(
       (el) =>
-        (el.innerHTML = `     
+        (el.innerHTML = `
    <h1>You aren't logged in yet!</h1>
                     <p>Log in to see the news.</p>`)
     );
@@ -222,7 +222,7 @@ animatedBtn.forEach((el) =>
   el.addEventListener("click", function (e) {
     const textContainer = e.target.parentElement.nextElementSibling;
 
-    /*If the button we clicked on already was active (paragraph already showing) 
+    /*If the button we clicked on already was active (paragraph already showing)
     then we want to hide the paragraph and reset the icons rotation so that it points downwards. */
     if (textContainer.classList.contains("active")) {
       textContainer.classList.remove("menu-container-active");
