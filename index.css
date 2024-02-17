@@ -15,6 +15,12 @@ body {
   width: calc(100vw - (100vw - 100%));
   font-family: "Roboto";
 }
+body::-webkit-scrollbar {
+  width: 10px;
+}
+body::-webkit-scrollbar-thumb {
+  background-color: lime;
+}
 * {
   margin: 0px;
   padding: 0px;
@@ -214,6 +220,7 @@ a.disabled:hover {
   position: relative;
   height: 0rem;
   width: 20rem;
+  bottom: 0;
   padding: 0rem 1rem;
   overflow: hidden;
   position: absolute;
@@ -884,7 +891,6 @@ a.disabled:hover {
 .review-description {
   flex: 5;
   overflow: scroll;
-  padding-bottom: 12rem;
 }
 .review-description::-webkit-scrollbar {
   width: 0px;
@@ -1313,6 +1319,9 @@ TODO: MAKE THIS PAGE RESPONSIVE, ADD CONTACT US PAGE*/
   .menu-container {
     width: 80%;
   }
+  .review-description {
+    padding-bottom: 12rem;
+  }
   .review-information {
     display: flex;
     flex-direction: column;
@@ -1387,7 +1396,6 @@ TODO: MAKE THIS PAGE RESPONSIVE, ADD CONTACT US PAGE*/
     gap: 2rem;
     height: 100%;
   }
-
   .welcome-title-container {
     font-size: 6vw;
   }
@@ -1396,6 +1404,7 @@ TODO: MAKE THIS PAGE RESPONSIVE, ADD CONTACT US PAGE*/
   }
   .account-preview {
     width: calc(100% - 2rem);
+    top: 7rem;
   }
   .account-active {
     width: calc(100% - 2rem);
