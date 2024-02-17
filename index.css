@@ -886,6 +886,13 @@ a.disabled:hover {
   overflow: scroll;
   padding-bottom: 12rem;
 }
+.review-description::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+.review-description::-webkit-scrollbar-button {
+  color: transparent;
+}
 .buttons button {
   position: absolute;
   width: 5rem;

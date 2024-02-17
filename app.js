@@ -7,6 +7,10 @@ const headerHeight = header.getBoundingClientRect().height;
 // const emailInput = document.querySelector(".email-input");
 const upBtn = document.querySelector(".button-up");
 
+const newsContainers = document.querySelectorAll(".news-container");
+
+console.log(123);
+
 const reviewLeft = document.querySelector(".review-left");
 const reviewRight = document.querySelector(".review-right");
 
@@ -80,7 +84,6 @@ const checkIfLoggedIn = function () {
       checkIfLoggedIn();
     });
   } else if (!Logged && userAccounts.length !== 0) {
-    const newsContainers = document.querySelectorAll(".news-container");
     newsContainers.forEach(
       (el) =>
         (el.innerHTML = `
