@@ -182,7 +182,7 @@ const renderInputErrors = function (inputName, message) {
  * Based on the string, the general function knows where to move the sliding container and which text to show to the user.
  */
 const helper = function (translateTo) {
-  document.querySelector(".sliding-image").style.top = "0rem";
+  // document.querySelector(".sliding-image").style.top = "0rem";
   firstForm ? firstForm.remove() : "";
   secondForm ? secondForm.remove() : "";
   /*If user clicks Log out, width of sliding container is 100% so we need to change width and position */
@@ -642,7 +642,7 @@ const nonexistantHashScreen = function () {
   firstForm ? firstForm.remove() : -1;
   secondForm ? secondForm.remove() : -1;
 
-  document.querySelector(".sliding-image").style.top = "0rem";
+  // document.querySelector(".sliding-image").style.top = "0rem";
   document.querySelector(".go-back-container").style.opacity = "1";
 
   document.querySelector(

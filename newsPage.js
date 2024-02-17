@@ -333,10 +333,11 @@ const getHomeHTML = function () {
   }
   getWeather(
     `${
-      loggedInAs.followedLocation ? 
-      loggedInAs.followedLocation.length > 0
-        ? loggedInAs.followedLocation[0]
-        : "Serbia" : "Serbia"
+      loggedInAs.followedLocation
+        ? loggedInAs.followedLocation.length > 0
+          ? loggedInAs.followedLocation[0]
+          : "Serbia"
+        : "Serbia"
     }`
   );
 
@@ -548,7 +549,6 @@ document.querySelectorAll("li").forEach((el) => {
       firstPageOfFollowing();
       return;
     }
-
     if (e.target.textContent === "For you") {
       getForYouContainerHTML();
       return;
@@ -828,7 +828,7 @@ const getHeadlinesFromCountries = async function (country, countryName) {
     .forEach((el) => el.classList.replace("list-clicked", "list-unclicked"));
 
   const response = await fetch(
-    `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=e41cabafe8bb452d86d53ee426db0861`
+    `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=18d7b7a53d1d4a73895037c6d5233fc6`
   );
   const countryData = await response.json();
   document.querySelector("#main-headlines").innerHTML = `
@@ -1239,7 +1239,7 @@ const getNewsFromInput = async function (input) {
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${city}&apiKey=e41cabafe8bb452d86d53ee426db0861`
+        `https://newsapi.org/v2/everything?q=${city}&apiKey=18d7b7a53d1d4a73895037c6d5233fc6`
       );
 
       const data = await response.json();
@@ -1462,7 +1462,7 @@ const getNewsFromInput = async function (input) {
       </div> `;
       const response = await fetch(
         `
-https://newsapi.org/v2/everything?domains=${source}&apiKey=e41cabafe8bb452d86d53ee426db0861`
+https://newsapi.org/v2/everything?domains=${source}&apiKey=18d7b7a53d1d4a73895037c6d5233fc6`
       );
 
       const data = await response.json();
@@ -1686,7 +1686,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=e41cabafe8bb452d86d53
         </div>
       </div> `;
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${topic}&apiKey=e41cabafe8bb452d86d53ee426db0861`
+        `https://newsapi.org/v2/everything?q=${topic}&apiKey=18d7b7a53d1d4a73895037c6d5233fc6`
       );
 
       const data = await response.json();
@@ -1897,7 +1897,7 @@ https://newsapi.org/v2/everything?domains=${source}&apiKey=e41cabafe8bb452d86d53
         </div>
       </div> `;
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=e41cabafe8bb452d86d53ee426db0861`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=18d7b7a53d1d4a73895037c6d5233fc6`
     );
 
     const data = await response.json();
@@ -2151,6 +2151,30 @@ const getNewsFromList = async function (clicked) {
     if (clicked === "Science") array = Science;
     if (clicked === "Entertainment") array = Entertainment;
 
+    if (
+      clicked === "Local" &&
+      (!loggedInAs.followedLocation || loggedInAs.followedLocation.length === 0)
+    ) {
+      document.querySelector("#main-list").innerHTML = `
+      <div class="page-top-submain-news">
+        <div class="page-top-submain-news-top">
+          <h2 class="page-title">
+         Your local news
+          </h2>
+          </div
+          <div class="page-top-submain-news-bottom">
+          <div class="special-button-end no-location"><button class="button-unclicked button-list"><i class="fa-solid fa-sliders"></i></button></div></div>
+        </div>
+      </div>
+<div class="no-locations-followed"> 
+      <img  src="https://lh3.googleusercontent.com/koerUWAVeldK3xhohSUShwRRCWTGJ35VqJQn2QvfR3fVU9K6lR3pGj0nBKakQeEKQEntM56hXQ=w288-rw"/> <p>See local news you are about by adding locations</p>;
+</div>`;
+      document
+        .querySelector(".special-button-end")
+        .addEventListener("click", getManageLocalHTML);
+      return;
+    }
+
     document.querySelectorAll(".list-button-list").forEach((el) => {
       el.classList.remove("list-clicked");
       if (el.textContent.trim() === clicked) el.classList.add("list-clicked");
@@ -2195,13 +2219,21 @@ const getNewsFromList = async function (clicked) {
            : ""
        } 
           ${
-            clicked === "Local" && loggedInAs.followedLocation.length === 0
-              ? `<button class="button-clicked button-list">Serbia</button>`
-              : ""
-          }
-          ${
             clicked === "Local"
-              ? loggedInAs.followedLocation.includes("Serbia")
+              ? loggedInAs.followedLocation.length === 1 &&
+                loggedInAs.followedLocation.includes("Serbia")
+                ? `<button class="button-clicked button-list">Serbia</button>
+                <div class="special-button-end">
+                <button class="button-unclicked button-list">
+              <i class="fa-solid fa-sliders"></i></button></div></button>`
+                : loggedInAs.followedLocation.length === 1 &&
+                  !loggedInAs.followedLocation.includes("Serbia")
+                ? `<button class="button-clicked button-list">${loggedInAs.followedLocation[0]}</button>
+               <div class="special-button">
+                      <button class="button-unclicked button-list">Serbia</button></div>
+                <div class="special-button-end"><button class="button-unclicked button-list">
+                <i class="fa-solid fa-sliders"></i></button></div>`
+                : loggedInAs.followedLocation.includes("Serbia")
                 ? array
                     .map((el, i) =>
                       i === 0
@@ -2377,7 +2409,7 @@ const getNewsFromList = async function (clicked) {
     const response = await fetch(
       `https://newsapi.org/v2/everything?q=${
         differentClicked ? differentClicked : clicked
-      }&apiKey=e41cabafe8bb452d86d53ee426db0861`
+      }&apiKey=18d7b7a53d1d4a73895037c6d5233fc6`
     );
 
     const data = await response.json();
@@ -2436,7 +2468,7 @@ const changeContainerHTML = async function (
     }
 
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${input}&apiKey=e41cabafe8bb452d86d53ee426db0861`
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=18d7b7a53d1d4a73895037c6d5233fc6`
     );
     const newsData = await response.json();
 
@@ -2693,7 +2725,7 @@ const getFourthContainerHTML = async function () {
     let k = 0;
     for (let i = 0; i < number; i) {
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=e41cabafe8bb452d86d53ee426db0861`
+        `https://newsapi.org/v2/everything?q=${Categories[k]}&apiKey=18d7b7a53d1d4a73895037c6d5233fc6`
       );
       const data = await response.json();
 
@@ -3530,7 +3562,10 @@ const getManageLocalHTML = function () {
             el.toLowerCase().startsWith(`${this.value.toLowerCase()}`)
           )
           .map((el) => {
-            if (loggedInAs.followedLocation.includes(`${el}`)) {
+            if (
+              loggedInAs.followedLocation &&
+              loggedInAs.followedLocation.includes(`${el}`)
+            ) {
               return `
             <div class="suggestion">
               <div class="suggestion-left">
@@ -3558,9 +3593,16 @@ const getManageLocalHTML = function () {
       document.querySelectorAll(".suggestion").forEach((el) =>
         el.addEventListener("click", function () {
           if (this.querySelector(".fa-star").classList.contains("fa-regular")) {
-            loggedInAs.followedLocation.push(
-              `${this.querySelector(".suggestion-location-name").textContent}`
-            );
+            if (!loggedInAs.followedLocation) {
+              loggedInAs.followedLocation = [
+                `${
+                  this.querySelector(".suggestion-location-name").textContent
+                }`,
+              ];
+            } else
+              loggedInAs.followedLocation.push(
+                `${this.querySelector(".suggestion-location-name").textContent}`
+              );
             localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
             localStorage.setItem("accounts", JSON.stringify(userAccounts));
             getManageLocalHTML();
@@ -3601,7 +3643,10 @@ const getManageLocalHTML = function () {
       );
     })
   );
-  if (loggedInAs.followedLocation.includes("Serbia")) {
+  if (
+    loggedInAs.followedLocation &&
+    loggedInAs.followedLocation.includes("Serbia")
+  ) {
     document.querySelector(".location-page-suggested-title").innerHTML = "";
   } else {
     document

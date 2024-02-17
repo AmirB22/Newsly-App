@@ -922,6 +922,27 @@ body {
     transform: rotate(360deg);
   }
 }
+
+.no-locations-followed {
+height: 100%;
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 3rem;
+font-size: 2vh;
+align-self: center;
+justify-content: center;
+}
+.no-locations-followed img {
+  width: 45%;
+}
+.no-location {
+  width: 5rem;
+  margin-left: -2rem;
+}
+.no-location::after {
+  display: none;
+}
 .fifth-container .for-you-container {
   min-height: 37rem;
 }
@@ -974,6 +995,7 @@ body {
   width: 100%;
   justify-content: space-between;
   align-items: center;
+  height: 6.5rem;
 }
 .list-follow {
   font-family: "Poppins", sans-serif;
