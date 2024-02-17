@@ -409,7 +409,39 @@ body {
   left: 10rem;
   opacity: 1;
 }
-
+.nonex-go-back:focus,
+.back-to-site-href:focus {
+  outline: none;
+}
+.logged-slider {
+  transform: translateX(-50%);
+  border-radius: 0px;
+  width: 100%;
+  z-index: 2000;
+  opacity: 1;
+}
+.not-logged-slider {
+  transform: translateX(0%);
+  border-radius: 15rem 0rem 0rem 15rem;
+  width: 50%;
+}
+.login-in-slider {
+  transform: translateX(0%);
+  border-radius: 15rem 0rem 0rem 15rem;
+}
+.sign-up-slider {
+  transform: translateX(-100%);
+  border-radius: 0rem 15rem 15rem 0rem;
+}
+.change-password-slider {
+  transform: translateX(-50%);
+  border-radius: 15rem;
+  opacity: 1;
+  z-index: 1001;
+}
+.change-password-slider .sliding-image {
+  top: 75%;
+}
 @media screen and (max-width: 1650px) {
   .log-in {
     width: 80%;
@@ -425,7 +457,7 @@ body {
     width: 100%;
   }
 }
-@media screen and (max-width: 350px) {
+@media screen and (max-width: 800px) {
   .log-in {
     flex-direction: column;
   }
@@ -440,6 +472,34 @@ body {
   }
   .sliding-container {
     display: none;
+  }
+  .logged-slider {
+    display: flex;
+    text-align: center;
+  }
+  .log-in-ways-container {
+    gap: 3rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .forgot-password {
+    right: 50%;
+    transform: translate(50%);
+  }
+  .change-password-slider {
+    display: flex;
+    width: 100%;
+    border-radius: 0px;
+  }
+  .log-out {
+    position: relative;
+    right: 0;
+  }
+}
+@media screen and (max-height: 875px) {
+  .change-password-slider .sliding-image {
+    width: 10rem;
+    top: 80%;
   }
 }
 @media screen and (max-height: 800px) {

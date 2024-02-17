@@ -26,10 +26,11 @@ const checkIfLoggedIn = function () {
     setTimeout(() => {
       logInContainer.innerHTML = "";
     }, 650);
-    slidingContainer.style.transform = "translateX(-50%)";
-    slidingContainer.style.borderRadius = "0px";
-    slidingContainer.style.width = "100%";
-    bttmSlidingContainerText.style.opacity = "1";
+    // slidingContainer.style.transform = "translateX(-50%)";
+    // slidingContainer.style.borderRadius = "0px";
+    // slidingContainer.style.width = "100%";
+    // bttmSlidingContainerText.style.opacity = "1";
+    slidingContainer.setAttribute("class", "sliding-container logged-slider");
     //prettier-ignore
     bttmSlidingContainerText.innerHTML = `
     <a class="back-to-site-href" href="./index.html">
@@ -37,9 +38,10 @@ const checkIfLoggedIn = function () {
     <i class="fa-solid fa-arrow-left"></i>
      Back to site </button>
     </a>
-      <button class="log-out logout">
+      <button class="log-out logout" >
       <i class="fa-solid fa-arrow-right-from-bracket"></i>
        Log out</button>`;
+    bttmSlidingContainerText.style.opacity = 1;
 
     if (
       !alreadyLoggedText.innerHTML ||
@@ -61,9 +63,13 @@ const checkIfLoggedIn = function () {
       Logged = JSON.parse(localStorage.getItem("logged")) || false;
     });
   } else {
-    slidingContainer.style.transform = "translateX(0%)";
-    slidingContainer.style.borderRadius = "15rem 0rem 0rem 15rem";
-    slidingContainer.style.width = "50%";
+    slidingContainer.setAttribute(
+      "class",
+      "sliding-container not-logged-slider"
+    );
+    // slidingContainer.style.transform = "translateX(0%)";
+    // slidingContainer.style.borderRadius = "15rem 0rem 0rem 15rem";
+    // slidingContainer.style.width = "50%";
     alreadyLoggedText.innerHTML = ``;
     bttmSlidingContainerText.innerHTML = `
     <div class="log-in-ways-container">
@@ -180,12 +186,11 @@ const helper = function (translateTo) {
   firstForm ? firstForm.remove() : "";
   secondForm ? secondForm.remove() : "";
   /*If user clicks Log out, width of sliding container is 100% so we need to change width and position */
-  slidingContainer.style.width = "50%";
+  // slidingContainer.style.width = "50%";
   alreadyLoggedText.innerHTML = ``;
 
   let translateValue, opacity, html;
   if (translateTo === "Sign up") {
-    translateValue = "-100";
     opacity = 1;
     html = `
      <div class="signup-credentials-container">
@@ -248,7 +253,6 @@ const helper = function (translateTo) {
         </div>
 `;
   } else if (translateTo === "Log in") {
-    translateValue = "0";
     opacity = 0;
     html = `
          <div class="credentials-container">
@@ -291,7 +295,7 @@ const helper = function (translateTo) {
         </div>
 `;
   }
-  general(translateValue, translateTo, opacity, html);
+  general(opacity, translateTo, html);
 };
 /**
  * General function is used to show the Sign-up or Log-in forms based on where the user clicks.
@@ -305,22 +309,20 @@ const helper = function (translateTo) {
  */
 
 let logInTimeoutID, signUpTimeoutID, creatingBottomTextTimeoutID;
-const general = function (translateValue, translateTo, opacity, html) {
+const general = function (opacity, translateTo, html) {
   window.location.hash = translateTo === "Sign up" ? "#signup" : "#login";
   document.querySelector(".go-back-container").innerHTML = "";
 
-  slidingContainer.style.transform = `translateX(${translateValue}%)`;
-  translateTo === "Sign up"
-    ? (slidingContainer.style.borderRadius = "0rem 15rem 15rem 0rem")
-    : (slidingContainer.style.borderRadius = "15rem 0rem 0rem 15rem");
   bttmSlidingContainerText.style.opacity = "0";
 
   if (translateTo === "Sign up") {
     logInContainer.style.zIndex = 0;
     signUpContainer.style.zIndex = 1000;
+    slidingContainer.setAttribute("class", "sliding-container sign-up-slider");
   } else {
     signUpContainer.style.zIndex = 0;
     logInContainer.style.zIndex = 1000;
+    slidingContainer.setAttribute("class", "sliding-container log-in-slider");
   }
 
   creatingBottomTextTimeoutID = setTimeout(() => {
@@ -407,7 +409,7 @@ const forgotPassword = function () {
   clearTimeout(signUpTimeoutID);
   clearTimeout(logInTimeoutID);
 
-  slidingContainer.style.width = "50%";
+  // slidingContainer.style.width = "50%";
   firstForm ? firstForm.remove() : -1;
   alreadyLoggedText.opacity = "0";
 
@@ -481,9 +483,13 @@ const forgotPassword = function () {
     console.log("forgot-password");
   }, 1000);
 
-  slidingContainer.style.transform = "translateX(-50%)";
-  slidingContainer.style.borderRadius = "15rem";
-  document.querySelector(".sliding-image").style.top = "75%";
+  slidingContainer.setAttribute(
+    "class",
+    "sliding-container change-password-slider"
+  );
+
+  // slidingContainer.style.transform = "translateX(-50%)";
+  // slidingContainer.style.borderRadius = "15rem";
 
   firstForm.addEventListener("submit", function (e) {
     e.preventDefault();
@@ -605,7 +611,6 @@ function secondSubmit() {
       localStorage.setItem("accounts", JSON.stringify(userAccounts));
 
       secondForm.style.opacity = "0";
-      document.querySelector(".sliding-image").style.top = "0rem";
       document.querySelector(".go-back").style.opacity = "0";
       createPasswordChangedContainerTextID = setTimeout(() => {
         document.querySelector(".go-back-container").innerHTML = "";
@@ -653,11 +658,7 @@ const nonexistantHashScreen = function () {
       window.location.hash = "#login";
       checkHash();
     });
-
-  slidingContainer.style.width = "100%";
-  slidingContainer.style.transform = "translateX(-50%)";
-  slidingContainer.style.borderRadius = "0rem";
-
+  slidingContainer.setAttribute("class", "sliding-container logged-slider");
   bttmSlidingContainerText.innerHTML = "";
 };
 const checkHash = function () {
@@ -752,9 +753,12 @@ const signedUp = function () {
 };
 const accountCreated = function (pin) {
   /*Centering sliding container and making it 100% width, adding text,and a Log in button*/
-  slidingContainer.style.transform = "translateX(-50%)";
-  slidingContainer.style.borderRadius = "0px";
-  slidingContainer.style.width = "100%";
+  // slidingContainer.style.transform = "translateX(-50%)";
+  // slidingContainer.style.borderRadius = "0px";
+  // slidingContainer.style.width = "100%";
+
+  slidingContainer.setAttribute("class", "sliding-container logged-slider");
+
   alreadyLoggedText.innerHTML = `<p class="pin">Your PIN is ${pin}</p><h1>Successfully created an account</h1> <p>You can go back and log in!</p> `;
   bttmSlidingContainerText.innerHTML = `<button class="created-account-log-in-button"><i class="fa-solid fa-right-to-bracket"></i>Log in</button>`;
   const newLogInBtn = document.querySelector(".created-account-log-in-button");
