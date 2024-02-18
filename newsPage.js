@@ -367,17 +367,15 @@ const getHomeHTML = function () {
       document
         .querySelector(".weather-search")
         .classList.remove("weather-search-active");
-      document.querySelector(".weather-search").style.height = "0px";
+      // document.querySelector(".weather-search").style.height = "0px";
       document.querySelector(".arrow-down i").style.transform = "rotate(0deg)";
-      document.querySelector(".page-top").style.gap = "13rem";
     } else {
       document
         .querySelector(".weather-search")
         .classList.add("weather-search-active");
-      document.querySelector(".weather-search").style.height = "6rem";
+      // document.querySelector(".weather-search").style.height = "6rem";
       document.querySelector(".arrow-down i").style.transform =
         "rotate(180deg)";
-      document.querySelector(".page-top").style.gap = "7rem";
     }
   });
 
@@ -394,10 +392,8 @@ const getHomeHTML = function () {
       document.querySelector(".fa-chevron-left").style.transform =
         "rotate(0deg)";
       if (document.querySelector(".arrow-down").style.display !== "none") {
-        document.querySelector(".weather-search").style.height = "0px";
         document.querySelector(".arrow-down i").style.transform =
           "rotate(0deg)";
-        document.querySelector(".page-top").style.gap = "13rem";
       }
       input.value = "";
     });
