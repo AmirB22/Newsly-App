@@ -1,0 +1,107 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lemon&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&family=Lemon&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Dancing+Script:wght@400..700&family=Protest+Strike&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+body {
+  width: 100vw;
+  height: 100svh;
+  display: grid;
+  place-items: center;
+  background-image: url("https://png.pngtree.com/background/20220731/original/pngtree-lime-green-with-blend-on-white-gradient-bokeh-background-picture-image_1908727.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+* {
+  padding: 0px;
+  margin: 0px;
+}
+html {
+  font-size: 62.5%;
+}
+#main {
+  width: 80%;
+  height: 80%;
+  border-radius: 5rem;
+  background-color: white;
+  overflow: hidden;
+  display: flex;
+  font-family: "Roboto", sans-serif;
+}
+#menu {
+  width: 20%;
+  font-size: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-bottom: 10rem;
+  box-shadow: 1rem -5rem 2rem rgba(0, 255, 0, 0.1);
+}
+#menu ul {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+}
+#menu h1 {
+  font-family: "Dancing Script", sans-serif;
+  padding: 2rem 0rem;
+  margin-left: 3rem;
+}
+#menu ul li {
+  padding: 1.5rem 0rem;
+  padding-left: 5rem;
+  cursor: pointer;
+}
+.menu-clicked {
+  border-left: 1rem solid lime;
+  background: rgb(0, 255, 0);
+  background: linear-gradient(
+    90deg,
+    rgba(0, 255, 0, 0.2413340336134454) 28%,
+    rgba(235, 14, 219, 0) 100%
+  );
+  padding-left: 4rem !important;
+}
+#display {
+  font-size: 1.6rem;
+  width: 80%;
+  background: rgb(0, 255, 0);
+  background: linear-gradient(
+    135deg,
+    rgba(0, 255, 0, 0.10688025210084029) 10%,
+    rgba(235, 14, 219, 0) 30%
+  );
+
+  display: flex;
+  justify-content: space-between;
+}
+#account-basics img {
+  width: 10rem;
+}
+#account-pfp {
+  align-items: center;
+}
+#account-pfp-text {
+  justify-content: center;
+  flex-direction: column;
+}
+.flex {
+  display: flex;
+}
+.basic-info {
+  justify-content: space-between;
+}
+.account-info {
+  justify-content: space-between;
+}
+#display-left {
+  width: calc(70% - 30rem);
+  padding: 15rem;
+  background-color: yellow;
+}
+#display-right {
+  width: 30%;
+  background-color: orange;
+}
