@@ -28,7 +28,7 @@ html {
   background-color: white;
   overflow: hidden;
   display: flex;
-  font-family: "Roboto", sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 #menu {
   width: 20%;
@@ -47,10 +47,10 @@ html {
 #menu h1 {
   font-family: "Dancing Script", sans-serif;
   padding: 2rem 0rem;
-  margin-left: 3rem;
+  margin-left: 5rem;
 }
 #menu ul li {
-  padding: 1.5rem 0rem;
+  padding: 1rem 0rem;
   padding-left: 5rem;
   cursor: pointer;
 }
@@ -65,7 +65,7 @@ html {
   padding-left: 4rem !important;
 }
 #display {
-  font-size: 1.6rem;
+  font-size: 1.3rem;
   width: 80%;
   background: rgb(0, 255, 0);
   background: linear-gradient(
@@ -92,16 +92,50 @@ html {
 }
 .basic-info {
   justify-content: space-between;
+  padding: 1.5rem 0rem;
+  border-bottom: 1px solid rgba(0, 255, 0, 0.5);
+}
+.wd40 {
+  width: 40%;
+}
+.wd60 {
+  width: 60%;
+}
+.basic-info-value {
+  justify-content: space-between;
+  font-weight: bold;
+  cursor: pointer;
 }
 .account-info {
   justify-content: space-between;
+  padding: 1.5rem 0rem;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(0, 255, 0, 0.5);
+}
+.account-info-value {
+  justify-content: space-between;
+}
+#account-info h2,
+#account-basics h2 {
+  margin: 2rem 0rem;
+  font-size: 2.3rem;
 }
 #display-left {
   width: calc(70% - 30rem);
-  padding: 15rem;
-  background-color: yellow;
+  padding: 0rem 15rem;
+  padding-top: 9rem;
+}
+#display-left h1 {
+  margin-bottom: 5rem;
+  font-size: 3rem;
 }
 #display-right {
   width: 30%;
-  background-color: orange;
+}
+.fa-angle-right {
+  font-size: 1.7rem;
+}
+.red {
+  color: red;
+  font-weight: bold;
 }
