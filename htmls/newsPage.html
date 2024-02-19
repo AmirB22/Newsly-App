@@ -1,0 +1,1445 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="..//final-logo.png" />
+    <title>Newsly App | News</title>
+    <link rel="stylesheet" href="../styles/newsPage.css" />
+    <script type="module" defer src="../script/newsPage.js"></script>
+  </head>
+  <body>
+    <header class="header">
+      <nav class="nav">
+        <div class="nav-top">
+          <div class="logo-container">
+            <img src="../final-logo.png" alt="Site's logo" />
+            <h2 class="logo-container-title">Newsly</h2>
+          </div>
+          <form class="search-container">
+            <button>
+              <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+            </button>
+            <input
+              class="search-input"
+              type="text"
+              placeholder="Search for topics, locations &amp; sources"
+              name=""
+              id=""
+            />
+          </form>
+          <div class="hamburger-menu main-menu">
+            <i class="fa-solid fa-bars"></i>
+          </div>
+          <div class="profile-picture-container">
+            <img
+              class="profile-picture pfp-animation"
+              src="https://www.iconpacks.net/icons/2/free-user-icon-3297-thumb.png"
+              alt="User's profile picture"
+            />
+            <div class="account-preview">
+              <div class="top-account-section">
+                <img
+                  class="profile-picture"
+                  src="https://www.iconpacks.net/icons/2/free-user-icon-3297-thumb.png"
+                  alt="User's profile picture"
+                />
+                <h2>Murga</h2>
+              </div>
+              <div class="mid-account-section">
+                <p>Email: <span>muricamar2004@gmail.com</span></p>
+                <p>Level: <span>0</span></p>
+                <p>Joined: <span>25/1/2024</span></p>
+              </div>
+              <div class="settings">
+                <p>User settings</p>
+                <p>Preferences</p>
+                <p>Bookmarks</p>
+              </div>
+              <button class="log-out">Log out</button>
+            </div>
+          </div>
+        </div>
+        <div class="nav-bottom">
+          <div class="list-container">
+            <ul class="first-list">
+              <li class="list-clicked list-unclicked list-button-list">Home</li>
+              <li class="list-unclicked list-button-list">For you</li>
+              <li class="list-unclicked list-button-list">Following</li>
+            </ul>
+            <span>|</span>
+            <ul class="second-list">
+              <li class="list-unclicked list-button-list">U.S.</li>
+              <li class="list-unclicked list-button-list">World</li>
+              <li class="list-unclicked list-button-list">Local</li>
+              <li class="list-unclicked list-button-list">Business</li>
+              <li class="list-unclicked list-button-list">Technology</li>
+              <li class="list-unclicked list-button-list">Entertainment</li>
+              <li class="list-unclicked list-button-list">Sports</li>
+              <li class="list-unclicked list-button-list">Science</li>
+              <li class="list-unclicked list-button-list">Health</li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <div class="nav-bottom-phone nav-bottom-phone-inactive">
+      <div class="nav-top-phone">
+        <div class="logo-pfp-phone">
+          <div class="logo-container logo-container-phone">
+            <img src="../final-logo.png" alt="Site's logo" />
+            <h2 class="logo-container-title logo-container-title-phone">
+              Newsly
+            </h2>
+          </div>
+          <div class="profile-picture-container pfp-phone">
+            <img
+              class="profile-picture pfp-animation"
+              src="https://www.iconpacks.net/icons/2/free-user-icon-3297-thumb.png"
+              alt="User's profile picture"
+            />
+            <div class="account-preview acc-preview-phone">
+              <div class="top-account-section">
+                <img
+                  class="profile-picture"
+                  src="https://www.iconpacks.net/icons/2/free-user-icon-3297-thumb.png"
+                  alt="User's profile picture"
+                />
+                <h2>Murga</h2>
+              </div>
+              <div class="mid-account-section">
+                <p>Email: <span>muricamar2004@gmail.com</span></p>
+                <p>Level: <span>0</span></p>
+                <p>Joined: <span>25/1/2024</span></p>
+              </div>
+              <div class="settings">
+                <p>User settings</p>
+                <p>Preferences</p>
+                <p>Bookmarks</p>
+              </div>
+              <button class="log-out">Log out</button>
+            </div>
+          </div>
+        </div>
+        <form class="search-container search-container-phone">
+          <button>
+            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+          </button>
+          <input
+            class="search-input search-input-phone"
+            type="text"
+            placeholder="Search for topics, locations &amp; sources"
+            name=""
+            id=""
+          />
+        </form>
+      </div>
+      <div class="nav-bottom-phone-wrapper">
+        <ul class="first-list">
+          <li class="list-clicked list-unclicked list-button-list">Home</li>
+          <li class="list-unclicked list-button-list">For you</li>
+          <li class="list-unclicked list-button-list">Following</li>
+        </ul>
+        <span>|</span>
+        <ul class="second-list">
+          <li class="list-unclicked list-button-list">U.S.</li>
+          <li class="list-unclicked list-button-list">World</li>
+          <li class="list-unclicked list-button-list">Local</li>
+          <li class="list-unclicked list-button-list">Business</li>
+          <li class="list-unclicked list-button-list">Technology</li>
+          <li class="list-unclicked list-button-list">Entertainment</li>
+          <li class="list-unclicked list-button-list">Sports</li>
+          <li class="list-unclicked list-button-list">Science</li>
+          <li class="list-unclicked list-button-list">Health</li>
+        </ul>
+      </div>
+    </div>
+    <header class="header-phone">
+      <div class="hamburger-menu">
+        <i class="fa-solid fa-bars"></i>
+      </div>
+    </header>
+
+    <!-- <div id="main-following">
+      <div class="following-buttons">
+        <button class="following-main-buttons list-clicked-following">
+          <i class="fa-solid fa-cloud following-button-icon"></i> Topics &amp;
+          sources
+        </button>
+        <button class="following-main-buttons">
+          <i class="fa-solid fa-magnifying-glass following-button-icon"></i>
+          Saved searches
+        </button>
+        <button class="following-main-buttons">
+          <i class="fa-solid fa-bookmark following-button-icon"></i> Saved
+          stories
+        </button>
+      </div>
+      <div class="following-container">
+        <div class="following-page">
+          <div class="followings category-following-page">
+            <h1>Topics</h1>
+            <div class="followed-categories">
+              <div class="followed-category">
+                <i class="fa-solid fa-comments lts-icon" aria-hidden="true"></i>
+
+                <p class="followed-category-title">Dogs</p>
+                <i
+                  class="fa-solid fa-ellipsis-vertical topic-vertical-dots"
+                  aria-hidden="true"
+                >
+                  <div class="manage-followed-container container-not-showing">
+                    <div class="manage-followed-container-top">
+                      <p class="move-toward-bottom-following-category">
+                        <i
+                          class="fa-solid fa-chevron-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward bottom
+                      </p>
+                      <p class="move-bottom-following-category">
+                        <i
+                          class="fa-solid fa-arrow-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move to bottom
+                      </p>
+                    </div>
+                    <div class="manage-followed-container-bottom">
+                      <p class="remove-following-category">
+                        <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                        Remove from library
+                      </p>
+                    </div>
+                  </div>
+                </i>
+              </div>
+              <div class="followed-category">
+                <img
+                  class="Headlines in Canada (ca) following-icon"
+                  src="https://lh3.ggpht.com/16hfpPK4nois_ekV4s4PRXYinW3MN_5EnUNq0sdaMvkfVECIVrMa44HBUVxSWyRB4CjtDlDYvg=s56-rw-p"
+                  alt=""
+                />
+                <p class="followed-category-title">Headlines in Canada (ca)</p>
+                <i
+                  class="fa-solid fa-ellipsis-vertical topic-vertical-dots"
+                  aria-hidden="true"
+                >
+                  <div class="manage-followed-container container-not-showing">
+                    <div class="manage-followed-container-top">
+                      <p class="move-top-following-category">
+                        <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+                        Move to top
+                      </p>
+                      <p class="move-toward-top-following-category">
+                        <i
+                          class="fa-solid fa-chevron-up"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward top
+                      </p>
+                      <p class="move-toward-bottom-following-category">
+                        <i
+                          class="fa-solid fa-chevron-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward bottom
+                      </p>
+                      <p class="move-bottom-following-category">
+                        <i
+                          class="fa-solid fa-arrow-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move to bottom
+                      </p>
+                    </div>
+                    <div class="manage-followed-container-bottom">
+                      <p class="remove-following-category">
+                        <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                        Remove from library
+                      </p>
+                    </div>
+                  </div>
+                </i>
+              </div>
+              <div class="followed-category">
+                <img
+                  class="Headlines in Austria (at) following-icon"
+                  src="https://lh3.ggpht.com/16hfpPK4nois_ekV4s4PRXYinW3MN_5EnUNq0sdaMvkfVECIVrMa44HBUVxSWyRB4CjtDlDYvg=s56-rw-p"
+                  alt=""
+                />
+                <p class="followed-category-title">Headlines in Austria (at)</p>
+                <i
+                  class="fa-solid fa-ellipsis-vertical topic-vertical-dots"
+                  aria-hidden="true"
+                >
+                  <div class="manage-followed-container container-not-showing">
+                    <div class="manage-followed-container-top">
+                      <p class="move-top-following-category">
+                        <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+                        Move to top
+                      </p>
+                      <p class="move-toward-top-following-category">
+                        <i
+                          class="fa-solid fa-chevron-up"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward top
+                      </p>
+                      <p class="move-toward-bottom-following-category">
+                        <i
+                          class="fa-solid fa-chevron-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward bottom
+                      </p>
+                      <p class="move-bottom-following-category">
+                        <i
+                          class="fa-solid fa-arrow-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move to bottom
+                      </p>
+                    </div>
+                    <div class="manage-followed-container-bottom">
+                      <p class="remove-following-category">
+                        <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                        Remove from library
+                      </p>
+                    </div>
+                  </div>
+                </i>
+              </div>
+              <div class="followed-category">
+                <img
+                  class="Health following-icon"
+                  src="https://lh3.ggpht.com/r4EKXwEo49BFQUa3OVZ8FC3j6teq_hUrmGcO4fI8BqoBgWSVJyu6D-vvXs9wGO7e_BKMbeqo4dk=s56-rw-p"
+                  alt=""
+                />
+                <p class="followed-category-title">Health</p>
+                <i
+                  class="fa-solid fa-ellipsis-vertical topic-vertical-dots"
+                  aria-hidden="true"
+                >
+                  <div class="manage-followed-container container-not-showing">
+                    <div class="manage-followed-container-top">
+                      <p class="move-top-following-category">
+                        <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+                        Move to top
+                      </p>
+                      <p class="move-toward-top-following-category">
+                        <i
+                          class="fa-solid fa-chevron-up"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward top
+                      </p>
+                      <p class="move-toward-bottom-following-category">
+                        <i
+                          class="fa-solid fa-chevron-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward bottom
+                      </p>
+                      <p class="move-bottom-following-category">
+                        <i
+                          class="fa-solid fa-arrow-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move to bottom
+                      </p>
+                    </div>
+                    <div class="manage-followed-container-bottom">
+                      <p class="remove-following-category">
+                        <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                        Remove from library
+                      </p>
+                    </div>
+                  </div>
+                </i>
+              </div>
+              <div class="followed-category">
+                <i class="fa-solid fa-comments lts-icon" aria-hidden="true"></i>
+                <p class="followed-category-title">iPhone</p>
+                <i
+                  class="fa-solid fa-ellipsis-vertical topic-vertical-dots"
+                  aria-hidden="true"
+                >
+                  <div class="manage-followed-container container-not-showing">
+                    <div class="manage-followed-container-top">
+                      <p class="move-top-following-category">
+                        <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+                        Move to top
+                      </p>
+                      <p class="move-toward-top-following-category">
+                        <i
+                          class="fa-solid fa-chevron-up"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward top
+                      </p>
+                      <p class="move-toward-bottom-following-category">
+                        <i
+                          class="fa-solid fa-chevron-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward bottom
+                      </p>
+                      <p class="move-bottom-following-category">
+                        <i
+                          class="fa-solid fa-arrow-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move to bottom
+                      </p>
+                    </div>
+                    <div class="manage-followed-container-bottom">
+                      <p class="remove-following-category">
+                        <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                        Remove from library
+                      </p>
+                    </div>
+                  </div>
+                </i>
+              </div>
+              <div class="followed-category">
+                <img
+                  class="Sports following-icon"
+                  src="https://lh3.ggpht.com/fJKuBX6iUFA_nPU2_2bIXcrTf3osSPhgBCL0sGqR2pZo-P6uZpiSmHW098W4I-CQHmsxZBd4=s56-rw-p"
+                  alt=""
+                />
+                <p class="followed-category-title">Sports</p>
+                <i
+                  class="fa-solid fa-ellipsis-vertical topic-vertical-dots"
+                  aria-hidden="true"
+                >
+                  <div class="manage-followed-container container-not-showing">
+                    <div class="manage-followed-container-top">
+                      <p class="move-top-following-category">
+                        <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+                        Move to top
+                      </p>
+                      <p class="move-toward-top-following-category">
+                        <i
+                          class="fa-solid fa-chevron-up"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward top
+                      </p>
+                      <p class="move-toward-bottom-following-category">
+                        <i
+                          class="fa-solid fa-chevron-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward bottom
+                      </p>
+                      <p class="move-bottom-following-category">
+                        <i
+                          class="fa-solid fa-arrow-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move to bottom
+                      </p>
+                    </div>
+                    <div class="manage-followed-container-bottom">
+                      <p class="remove-following-category">
+                        <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                        Remove from library
+                      </p>
+                    </div>
+                  </div>
+                </i>
+              </div>
+              <div class="followed-category">
+                <img
+                  class="World following-icon"
+                  src="https://lh3.ggpht.com/MMoPETUaDbUB1bO3KAi3cKQ_lzssju3VEp9ZPauGIamgSniMr4nV2SVkVvG-rKUJSLQJP84q7EA=s56-rw-p"
+                  alt=""
+                />
+                <p class="followed-category-title">World</p>
+                <i
+                  class="fa-solid fa-ellipsis-vertical topic-vertical-dots"
+                  aria-hidden="true"
+                >
+                  <div class="manage-followed-container container-not-showing">
+                    <div class="manage-followed-container-top">
+                      <p class="move-top-following-category">
+                        <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+                        Move to top
+                      </p>
+                      <p class="move-toward-top-following-category">
+                        <i
+                          class="fa-solid fa-chevron-up"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward top
+                      </p>
+                      <p class="move-toward-bottom-following-category">
+                        <i
+                          class="fa-solid fa-chevron-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward bottom
+                      </p>
+                      <p class="move-bottom-following-category">
+                        <i
+                          class="fa-solid fa-arrow-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move to bottom
+                      </p>
+                    </div>
+                    <div class="manage-followed-container-bottom">
+                      <p class="remove-following-category">
+                        <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                        Remove from library
+                      </p>
+                    </div>
+                  </div>
+                </i>
+              </div>
+              <div class="followed-category">
+                <img
+                  class="Business following-icon"
+                  src="https://lh3.ggpht.com/A0UiqrMFOJnh5R_g7xhIrslGxotNEcyK5V15p5yJkUlrXMBGqGw3TkU0x06Yb0Q-72QXK9N9=s56-rw-p"
+                  alt=""
+                />
+                <p class="followed-category-title">Business</p>
+                <i
+                  class="fa-solid fa-ellipsis-vertical topic-vertical-dots"
+                  aria-hidden="true"
+                >
+                  <div class="manage-followed-container container-not-showing">
+                    <div class="manage-followed-container-top">
+                      <p class="move-top-following-category">
+                        <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+                        Move to top
+                      </p>
+                      <p class="move-toward-top-following-category">
+                        <i
+                          class="fa-solid fa-chevron-up"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward top
+                      </p>
+                      <p class="move-toward-bottom-following-category">
+                        <i
+                          class="fa-solid fa-chevron-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward bottom
+                      </p>
+                      <p class="move-bottom-following-category">
+                        <i
+                          class="fa-solid fa-arrow-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move to bottom
+                      </p>
+                    </div>
+                    <div class="manage-followed-container-bottom">
+                      <p class="remove-following-category">
+                        <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                        Remove from library
+                      </p>
+                    </div>
+                  </div>
+                </i>
+              </div>
+              <div class="followed-category">
+                <img
+                  class="Science following-icon"
+                  src="https://lh3.ggpht.com/fJKuBX6iUFA_nPU2_2bIXcrTf3osSPhgBCL0sGqR2pZo-P6uZpiSmHW098W4I-CQHmsxZBd4=s56-rw-p"
+                  alt=""
+                />
+                <p class="followed-category-title">Science</p>
+                <i
+                  class="fa-solid fa-ellipsis-vertical topic-vertical-dots"
+                  aria-hidden="true"
+                >
+                  <div class="manage-followed-container container-not-showing">
+                    <div class="manage-followed-container-top">
+                      <p class="move-top-following-category">
+                        <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+                        Move to top
+                      </p>
+                      <p class="move-toward-top-following-category">
+                        <i
+                          class="fa-solid fa-chevron-up"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward top
+                      </p>
+                      <p class="move-toward-bottom-following-category">
+                        <i
+                          class="fa-solid fa-chevron-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward bottom
+                      </p>
+                      <p class="move-bottom-following-category">
+                        <i
+                          class="fa-solid fa-arrow-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move to bottom
+                      </p>
+                    </div>
+                    <div class="manage-followed-container-bottom">
+                      <p class="remove-following-category">
+                        <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                        Remove from library
+                      </p>
+                    </div>
+                  </div>
+                </i>
+              </div>
+              <div class="followed-category">
+                <i class="fa-solid fa-comments lts-icon" aria-hidden="true"></i>
+                <p class="followed-category-title">Video Games</p>
+                <i
+                  class="fa-solid fa-ellipsis-vertical topic-vertical-dots"
+                  aria-hidden="true"
+                >
+                  <div class="manage-followed-container container-not-showing">
+                    <div class="manage-followed-container-top">
+                      <p class="move-top-following-category">
+                        <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+                        Move to top
+                      </p>
+                      <p class="move-toward-top-following-category">
+                        <i
+                          class="fa-solid fa-chevron-up"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward top
+                      </p>
+                      <p class="move-toward-bottom-following-category">
+                        <i
+                          class="fa-solid fa-chevron-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward bottom
+                      </p>
+                      <p class="move-bottom-following-category">
+                        <i
+                          class="fa-solid fa-arrow-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move to bottom
+                      </p>
+                    </div>
+                    <div class="manage-followed-container-bottom">
+                      <p class="remove-following-category">
+                        <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                        Remove from library
+                      </p>
+                    </div>
+                  </div>
+                </i>
+              </div>
+              <div class="followed-category">
+                <i class="fa-solid fa-comments lts-icon" aria-hidden="true"></i>
+                <p class="followed-category-title">New York Vacations</p>
+                <i
+                  class="fa-solid fa-ellipsis-vertical topic-vertical-dots"
+                  aria-hidden="true"
+                >
+                  <div class="manage-followed-container container-not-showing">
+                    <div class="manage-followed-container-top">
+                      <p class="move-top-following-category">
+                        <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+                        Move to top
+                      </p>
+                      <p class="move-toward-top-following-category">
+                        <i
+                          class="fa-solid fa-chevron-up"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward top
+                      </p>
+                      <p class="move-toward-bottom-following-category">
+                        <i
+                          class="fa-solid fa-chevron-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward bottom
+                      </p>
+                      <p class="move-bottom-following-category">
+                        <i
+                          class="fa-solid fa-arrow-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move to bottom
+                      </p>
+                    </div>
+                    <div class="manage-followed-container-bottom">
+                      <p class="remove-following-category">
+                        <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                        Remove from library
+                      </p>
+                    </div>
+                  </div>
+                </i>
+              </div>
+              <div class="followed-category">
+                <img
+                  class="Technology following-icon"
+                  src="https://lh3.ggpht.com/0JsT7seg_L1MnpCuWZvJ6CJCHpkCawqEMdOr8Iw_NWjNUyTqWZJZNDbfa6kUGg-q1KN4FiUPaw=s56-rw-p"
+                  alt=""
+                />
+                <p class="followed-category-title">Technology</p>
+                <i
+                  class="fa-solid fa-ellipsis-vertical topic-vertical-dots"
+                  aria-hidden="true"
+                >
+                  <div class="manage-followed-container container-not-showing">
+                    <div class="manage-followed-container-top">
+                      <p class="move-top-following-category">
+                        <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+                        Move to top
+                      </p>
+                      <p class="move-toward-top-following-category">
+                        <i
+                          class="fa-solid fa-chevron-up"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward top
+                      </p>
+                      <p class="move-toward-bottom-following-category">
+                        <i
+                          class="fa-solid fa-chevron-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward bottom
+                      </p>
+                      <p class="move-bottom-following-category">
+                        <i
+                          class="fa-solid fa-arrow-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move to bottom
+                      </p>
+                    </div>
+                    <div class="manage-followed-container-bottom">
+                      <p class="remove-following-category">
+                        <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                        Remove from library
+                      </p>
+                    </div>
+                  </div>
+                </i>
+              </div>
+              <div class="followed-category">
+                <img
+                  class="Headlines in United States (us) following-icon"
+                  src="https://lh3.ggpht.com/16hfpPK4nois_ekV4s4PRXYinW3MN_5EnUNq0sdaMvkfVECIVrMa44HBUVxSWyRB4CjtDlDYvg=s56-rw-p"
+                  alt=""
+                />
+                <p class="followed-category-title">
+                  Headlines in United States (us)
+                </p>
+                <i
+                  class="fa-solid fa-ellipsis-vertical topic-vertical-dots"
+                  aria-hidden="true"
+                >
+                  <div class="manage-followed-container container-not-showing">
+                    <div class="manage-followed-container-top">
+                      <p class="move-top-following-category">
+                        <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+                        Move to top
+                      </p>
+                      <p class="move-toward-top-following-category">
+                        <i
+                          class="fa-solid fa-chevron-up"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward top
+                      </p>
+                      <p class="move-toward-bottom-following-category">
+                        <i
+                          class="fa-solid fa-chevron-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward bottom
+                      </p>
+                      <p class="move-bottom-following-category">
+                        <i
+                          class="fa-solid fa-arrow-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move to bottom
+                      </p>
+                    </div>
+                    <div class="manage-followed-container-bottom">
+                      <p class="remove-following-category">
+                        <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                        Remove from library
+                      </p>
+                    </div>
+                  </div>
+                </i>
+              </div>
+              <div class="followed-category">
+                <img
+                  class="Headlines in England (en) following-icon"
+                  src="https://lh3.ggpht.com/16hfpPK4nois_ekV4s4PRXYinW3MN_5EnUNq0sdaMvkfVECIVrMa44HBUVxSWyRB4CjtDlDYvg=s56-rw-p"
+                  alt=""
+                />
+                <p class="followed-category-title">Headlines in England (en)</p>
+                <i
+                  class="fa-solid fa-ellipsis-vertical topic-vertical-dots"
+                  aria-hidden="true"
+                >
+                  <div class="manage-followed-container container-not-showing">
+                    <div class="manage-followed-container-top">
+                      <p class="move-top-following-category">
+                        <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+                        Move to top
+                      </p>
+                      <p class="move-toward-top-following-category">
+                        <i
+                          class="fa-solid fa-chevron-up"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward top
+                      </p>
+                      <p class="move-toward-bottom-following-category">
+                        <i
+                          class="fa-solid fa-chevron-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward bottom
+                      </p>
+                      <p class="move-bottom-following-category">
+                        <i
+                          class="fa-solid fa-arrow-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move to bottom
+                      </p>
+                    </div>
+                    <div class="manage-followed-container-bottom">
+                      <p class="remove-following-category">
+                        <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                        Remove from library
+                      </p>
+                    </div>
+                  </div>
+                </i>
+              </div>
+              <div class="followed-category">
+                <img
+                  class="Headlines in Czech Republic (cz) following-icon"
+                  src="https://lh3.ggpht.com/16hfpPK4nois_ekV4s4PRXYinW3MN_5EnUNq0sdaMvkfVECIVrMa44HBUVxSWyRB4CjtDlDYvg=s56-rw-p"
+                  alt=""
+                />
+                <p class="followed-category-title">
+                  Headlines in Czech Republic (cz)
+                </p>
+                <i
+                  class="fa-solid fa-ellipsis-vertical topic-vertical-dots"
+                  aria-hidden="true"
+                >
+                  <div class="manage-followed-container container-not-showing">
+                    <div class="manage-followed-container-top">
+                      <p class="move-top-following-category">
+                        <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+                        Move to top
+                      </p>
+                      <p class="move-toward-top-following-category">
+                        <i
+                          class="fa-solid fa-chevron-up"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward top
+                      </p>
+                      <p class="move-toward-bottom-following-category">
+                        <i
+                          class="fa-solid fa-chevron-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward bottom
+                      </p>
+                      <p class="move-bottom-following-category">
+                        <i
+                          class="fa-solid fa-arrow-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move to bottom
+                      </p>
+                    </div>
+                    <div class="manage-followed-container-bottom">
+                      <p class="remove-following-category">
+                        <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                        Remove from library
+                      </p>
+                    </div>
+                  </div>
+                </i>
+              </div>
+              <div class="followed-category">
+                <img
+                  class="Headlines in Latvia (lv) following-icon"
+                  src="https://lh3.ggpht.com/16hfpPK4nois_ekV4s4PRXYinW3MN_5EnUNq0sdaMvkfVECIVrMa44HBUVxSWyRB4CjtDlDYvg=s56-rw-p"
+                  alt=""
+                />
+                <p class="followed-category-title">Headlines in Latvia (lv)</p>
+                <i
+                  class="fa-solid fa-ellipsis-vertical topic-vertical-dots"
+                  aria-hidden="true"
+                >
+                  <div class="manage-followed-container container-not-showing">
+                    <div class="manage-followed-container-top">
+                      <p class="move-top-following-category">
+                        <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+                        Move to top
+                      </p>
+                      <p class="move-toward-top-following-category">
+                        <i
+                          class="fa-solid fa-chevron-up"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward top
+                      </p>
+                      <p class="move-toward-bottom-following-category">
+                        <i
+                          class="fa-solid fa-chevron-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward bottom
+                      </p>
+                      <p class="move-bottom-following-category">
+                        <i
+                          class="fa-solid fa-arrow-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move to bottom
+                      </p>
+                    </div>
+                    <div class="manage-followed-container-bottom">
+                      <p class="remove-following-category">
+                        <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                        Remove from library
+                      </p>
+                    </div>
+                  </div>
+                </i>
+              </div>
+              <div class="followed-category">
+                <img
+                  class="Headlines in Bulgaria (bg) following-icon"
+                  src="https://lh3.ggpht.com/16hfpPK4nois_ekV4s4PRXYinW3MN_5EnUNq0sdaMvkfVECIVrMa44HBUVxSWyRB4CjtDlDYvg=s56-rw-p"
+                  alt=""
+                />
+                <p class="followed-category-title">
+                  Headlines in Bulgaria (bg)
+                </p>
+                <i
+                  class="fa-solid fa-ellipsis-vertical topic-vertical-dots"
+                  aria-hidden="true"
+                >
+                  <div class="manage-followed-container container-not-showing">
+                    <div class="manage-followed-container-top">
+                      <p class="move-top-following-category">
+                        <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+                        Move to top
+                      </p>
+                      <p class="move-toward-top-following-category">
+                        <i
+                          class="fa-solid fa-chevron-up"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward top
+                      </p>
+                      <p class="move-toward-bottom-following-category">
+                        <i
+                          class="fa-solid fa-chevron-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward bottom
+                      </p>
+                      <p class="move-bottom-following-category">
+                        <i
+                          class="fa-solid fa-arrow-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move to bottom
+                      </p>
+                    </div>
+                    <div class="manage-followed-container-bottom">
+                      <p class="remove-following-category">
+                        <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                        Remove from library
+                      </p>
+                    </div>
+                  </div>
+                </i>
+              </div>
+              <div class="followed-category">
+                <img
+                  class="U.S. following-icon"
+                  src="https://lh3.googleusercontent.com/proxy/4bKny4MdGPqmBQJQCme5SXcs3Idk0T26DpoDaDToXQmJpHssPJYZK-nnUigTPdUyxHjkh_zd22dsimWdR4wpWHj2fUTTzMMtHow650KJwvKo7Bq1lfLb8EICSOcPOFnnEGY9wbJXyhQXtK8oPIREwNYe3Ya3DbHkJhpoZMoxnKo8UHw=s56-rw-p"
+                  alt=""
+                />
+                <p class="followed-category-title">U.S.</p>
+                <i
+                  class="fa-solid fa-ellipsis-vertical topic-vertical-dots"
+                  aria-hidden="true"
+                >
+                  <div class="manage-followed-container container-not-showing">
+                    <div class="manage-followed-container-top">
+                      <p class="move-top-following-category">
+                        <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+                        Move to top
+                      </p>
+                      <p class="move-toward-top-following-category">
+                        <i
+                          class="fa-solid fa-chevron-up"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward top
+                      </p>
+                      <p class="move-toward-bottom-following-category">
+                        <i
+                          class="fa-solid fa-chevron-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward bottom
+                      </p>
+                      <p class="move-bottom-following-category">
+                        <i
+                          class="fa-solid fa-arrow-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move to bottom
+                      </p>
+                    </div>
+                    <div class="manage-followed-container-bottom">
+                      <p class="remove-following-category">
+                        <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                        Remove from library
+                      </p>
+                    </div>
+                  </div>
+                </i>
+              </div>
+              <div class="followed-category">
+                <img
+                  class="Headlines in Nigeria (ng) following-icon"
+                  src="https://lh3.ggpht.com/16hfpPK4nois_ekV4s4PRXYinW3MN_5EnUNq0sdaMvkfVECIVrMa44HBUVxSWyRB4CjtDlDYvg=s56-rw-p"
+                  alt=""
+                />
+                <p class="followed-category-title">Headlines in Nigeria (ng)</p>
+                <i
+                  class="fa-solid fa-ellipsis-vertical topic-vertical-dots"
+                  aria-hidden="true"
+                >
+                  <div class="manage-followed-container container-not-showing">
+                    <div class="manage-followed-container-top">
+                      <p class="move-top-following-category">
+                        <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+                        Move to top
+                      </p>
+                      <p class="move-toward-top-following-category">
+                        <i
+                          class="fa-solid fa-chevron-up"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward top
+                      </p>
+                      <p class="move-toward-bottom-following-category">
+                        <i
+                          class="fa-solid fa-chevron-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward bottom
+                      </p>
+                      <p class="move-bottom-following-category">
+                        <i
+                          class="fa-solid fa-arrow-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move to bottom
+                      </p>
+                    </div>
+                    <div class="manage-followed-container-bottom">
+                      <p class="remove-following-category">
+                        <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                        Remove from library
+                      </p>
+                    </div>
+                  </div>
+                </i>
+              </div>
+              <div class="followed-category">
+                <img
+                  class="Entertainment following-icon"
+                  src="https://lh3.ggpht.com/M-7V3aFj1BEw9EYBVHdLFmjCerci3j2MvsB43zu6-9iu-znG_WuOYrz5urJlStV5n59mW0WY5Q=s56-rw-p"
+                  alt=""
+                />
+
+                <p class="followed-category-title">Entertainment</p>
+                <i
+                  class="fa-solid fa-ellipsis-vertical topic-vertical-dots"
+                  aria-hidden="true"
+                >
+                  <div class="manage-followed-container container-not-showing">
+                    <div class="manage-followed-container-top">
+                      <p class="move-top-following-category">
+                        <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+                        Move to top
+                      </p>
+                      <p class="move-toward-top-following-category">
+                        <i
+                          class="fa-solid fa-chevron-up"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward top
+                      </p>
+                    </div>
+                    <div class="manage-followed-container-bottom">
+                      <p class="remove-following-category">
+                        <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                        Remove from library
+                      </p>
+                    </div>
+                  </div>
+                </i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="following-page">
+          <div class="followings local-following-page">
+            <div class="local-following-title">
+              <h1>Local</h1>
+              <p class="manage-local">Manage local news</p>
+            </div>
+            <div class="followed-locations">
+              <div class="followed-location favorite-location">
+                <i
+                  class="fa-solid fa-location-dot lts-icon"
+                  aria-hidden="true"
+                ></i>
+                <p class="favorite-location-title">Serbia</p>
+                <i
+                  class="fa-solid fa-ellipsis-vertical location-vertical-dots"
+                  aria-hidden="true"
+                >
+                  <div class="manage-followed-container container-not-showing">
+                    <div class="manage-followed-container-top">
+                      <p class="move-toward-bottom-following-location">
+                        <i
+                          class="fa-solid fa-chevron-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward bottom
+                      </p>
+                      <p class="move-bottom-following-location">
+                        <i
+                          class="fa-solid fa-arrow-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move to bottom
+                      </p>
+                    </div>
+                    <div class="manage-followed-container-bottom">
+                      <p class="remove-following-location">
+                        <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                        Remove from library
+                      </p>
+                    </div>
+                  </div>
+                </i>
+              </div>
+              <div class="followed-location favorite-location">
+                <i
+                  class="fa-solid fa-location-dot lts-icon"
+                  aria-hidden="true"
+                ></i>
+                <p class="favorite-location-title">Paris</p>
+                <i
+                  class="fa-solid fa-ellipsis-vertical location-vertical-dots"
+                  aria-hidden="true"
+                >
+                  <div class="manage-followed-container container-not-showing">
+                    <div class="manage-followed-container-top">
+                      <p class="move-top-following-location">
+                        <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+                        Move to top
+                      </p>
+                      <p class="move-toward-top-following-location">
+                        <i
+                          class="fa-solid fa-chevron-up"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward top
+                      </p>
+                    </div>
+                    <div class="manage-followed-container-bottom">
+                      <p class="remove-following-location">
+                        <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                        Remove from library
+                      </p>
+                    </div>
+                  </div>
+                </i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="following-page">
+          <div class="followings sources-following-page">
+            <h1>Sources</h1>
+            <div class="followed-sources">
+              <div class="followed-source favorite-source">
+                <i class="fa-solid fa-hashtag lts-icon" aria-hidden="true"></i>
+                <p class="favorite-source-title">bbc.com</p>
+                <i
+                  class="fa-solid fa-ellipsis-vertical source-vertical-dots"
+                  aria-hidden="true"
+                >
+                  <div class="manage-followed-container container-not-showing">
+                    <div class="manage-followed-container-top">
+                      <p class="move-toward-bottom-following-source">
+                        <i
+                          class="fa-solid fa-chevron-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward bottom
+                      </p>
+                      <p class="move-bottom-following-source">
+                        <i
+                          class="fa-solid fa-arrow-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move to bottom
+                      </p>
+                    </div>
+                    <div class="manage-followed-container-bottom">
+                      <p class="remove-following-source">
+                        <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                        Remove from library
+                      </p>
+                    </div>
+                  </div>
+                </i>
+              </div>
+              <div class="followed-source favorite-source">
+                <i class="fa-solid fa-hashtag lts-icon" aria-hidden="true"></i>
+                <p class="favorite-source-title">cnn.com</p>
+                <i
+                  class="fa-solid fa-ellipsis-vertical source-vertical-dots"
+                  aria-hidden="true"
+                >
+                  <div class="manage-followed-container container-not-showing">
+                    <div class="manage-followed-container-top">
+                      <p class="move-top-following-source">
+                        <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+                        Move to top
+                      </p>
+                      <p class="move-toward-top-following-source">
+                        <i
+                          class="fa-solid fa-chevron-up"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward top
+                      </p>
+                      <p class="move-toward-bottom-following-source">
+                        <i
+                          class="fa-solid fa-chevron-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward bottom
+                      </p>
+                      <p class="move-bottom-following-source">
+                        <i
+                          class="fa-solid fa-arrow-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move to bottom
+                      </p>
+                    </div>
+                    <div class="manage-followed-container-bottom">
+                      <p class="remove-following-source">
+                        <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                        Remove from library
+                      </p>
+                    </div>
+                  </div>
+                </i>
+              </div>
+              <div class="followed-source favorite-source">
+                <i class="fa-solid fa-hashtag lts-icon" aria-hidden="true"></i>
+                <p class="favorite-source-title">businessinsider.com</p>
+                <i
+                  class="fa-solid fa-ellipsis-vertical source-vertical-dots"
+                  aria-hidden="true"
+                >
+                  <div class="manage-followed-container container-not-showing">
+                    <div class="manage-followed-container-top">
+                      <p class="move-top-following-source">
+                        <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+                        Move to top
+                      </p>
+                      <p class="move-toward-top-following-source">
+                        <i
+                          class="fa-solid fa-chevron-up"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward top
+                      </p>
+                      <p class="move-toward-bottom-following-source">
+                        <i
+                          class="fa-solid fa-chevron-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward bottom
+                      </p>
+                      <p class="move-bottom-following-source">
+                        <i
+                          class="fa-solid fa-arrow-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move to bottom
+                      </p>
+                    </div>
+                    <div class="manage-followed-container-bottom">
+                      <p class="remove-following-source">
+                        <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                        Remove from library
+                      </p>
+                    </div>
+                  </div>
+                </i>
+              </div>
+              <div class="followed-source favorite-source">
+                <i class="fa-solid fa-hashtag lts-icon" aria-hidden="true"></i>
+                <p class="favorite-source-title">finance.yahoo.com</p>
+                <i
+                  class="fa-solid fa-ellipsis-vertical source-vertical-dots"
+                  aria-hidden="true"
+                >
+                  <div class="manage-followed-container container-not-showing">
+                    <div class="manage-followed-container-top">
+                      <p class="move-top-following-source">
+                        <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+                        Move to top
+                      </p>
+                      <p class="move-toward-top-following-source">
+                        <i
+                          class="fa-solid fa-chevron-up"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward top
+                      </p>
+                      <p class="move-toward-bottom-following-source">
+                        <i
+                          class="fa-solid fa-chevron-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward bottom
+                      </p>
+                      <p class="move-bottom-following-source">
+                        <i
+                          class="fa-solid fa-arrow-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move to bottom
+                      </p>
+                    </div>
+                    <div class="manage-followed-container-bottom">
+                      <p class="remove-following-source">
+                        <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                        Remove from library
+                      </p>
+                    </div>
+                  </div>
+                </i>
+              </div>
+              <div class="followed-source favorite-source">
+                <i class="fa-solid fa-hashtag lts-icon" aria-hidden="true"></i>
+                <p class="favorite-source-title">people.com</p>
+                <i
+                  class="fa-solid fa-ellipsis-vertical source-vertical-dots"
+                  aria-hidden="true"
+                >
+                  <div class="manage-followed-container container-not-showing">
+                    <div class="manage-followed-container-top">
+                      <p class="move-top-following-source">
+                        <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+                        Move to top
+                      </p>
+                      <p class="move-toward-top-following-source">
+                        <i
+                          class="fa-solid fa-chevron-up"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward top
+                      </p>
+                      <p class="move-toward-bottom-following-source">
+                        <i
+                          class="fa-solid fa-chevron-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward bottom
+                      </p>
+                      <p class="move-bottom-following-source">
+                        <i
+                          class="fa-solid fa-arrow-down"
+                          aria-hidden="true"
+                        ></i>
+                        Move to bottom
+                      </p>
+                    </div>
+                    <div class="manage-followed-container-bottom">
+                      <p class="remove-following-source">
+                        <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                        Remove from library
+                      </p>
+                    </div>
+                  </div>
+                </i>
+              </div>
+              <div class="followed-source favorite-source">
+                <i class="fa-solid fa-hashtag lts-icon" aria-hidden="true"></i>
+                <p class="favorite-source-title">the-sun.com</p>
+                <i
+                  class="fa-solid fa-ellipsis-vertical source-vertical-dots"
+                  aria-hidden="true"
+                >
+                  <div class="manage-followed-container container-not-showing">
+                    <div class="manage-followed-container-top">
+                      <p class="move-top-following-source">
+                        <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+                        Move to top
+                      </p>
+                      <p class="move-toward-top-following-source">
+                        <i
+                          class="fa-solid fa-chevron-up"
+                          aria-hidden="true"
+                        ></i>
+                        Move toward top
+                      </p>
+                    </div>
+                    <div class="manage-followed-container-bottom">
+                      <p class="remove-following-source">
+                        <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                        Remove from library
+                      </p>
+                    </div>
+                  </div>
+                </i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+    <script
+      src="https://kit.fontawesome.com/504433244e.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
