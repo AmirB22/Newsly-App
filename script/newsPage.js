@@ -2163,7 +2163,7 @@ const getNewsFromList = async function (clicked) {
         </div>
       </div>
 <div class="no-locations-followed"> 
-      <img  src="https://lh3.googleusercontent.com/koerUWAVeldK3xhohSUShwRRCWTGJ35VqJQn2QvfR3fVU9K6lR3pGj0nBKakQeEKQEntM56hXQ=w288-rw"/> <p>See local news you are about by adding locations</p>;
+      <img  src="https://lh3.googleusercontent.com/koerUWAVeldK3xhohSUShwRRCWTGJ35VqJQn2QvfR3fVU9K6lR3pGj0nBKakQeEKQEntM56hXQ=w288-rw"/> <p>See local news you care about by adding locations</p>
 </div>`;
       document
         .querySelector(".special-button-end")
@@ -4945,3 +4945,5 @@ if (Logged) {
     loggedInAs.followedLocation ? loggedInAs.followedLocation[0] : "Novi Pazar"
   );
 }
+
+//TODO: create settings page

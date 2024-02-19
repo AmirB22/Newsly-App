@@ -1301,7 +1301,7 @@ TODO: MAKE THIS PAGE RESPONSIVE, ADD CONTACT US PAGE*/
     min-height: 5rem;
   }
   .main-page {
-    /* background-image: url("boards-glasses-smartphone-phone-75652.jpeg"); */
+    background-image: url("../image.png");
     background-repeat: no-repeat;
     background-size: cover;
   }

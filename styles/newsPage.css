@@ -2408,7 +2408,7 @@ body {
 
     background-color: white;
     transition: height 0.5s;
-    padding: 0rem 5rem;
+    padding: 0rem 10%;
     border-radius: 0rem 0rem 1rem 1rem;
   }
   .weather-search-active {
