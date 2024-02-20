@@ -41,25 +41,26 @@
               <div class="basic-info flex">
                 <p class="basic-info-key flex wd40">Name</p>
                 <p class="basic-info-value flex wd60">
-                  Share your name <i class="fa-solid fa-angle-right"></i>
+                  Add a name...<i class="fa-solid fa-angle-right"></i>
                 </p>
               </div>
               <div class="basic-info flex">
                 <p class="basic-info-key flex wd40">Date of Birth</p>
                 <p class="basic-info-value flex wd60">
-                  Share your date <i class="fa-solid fa-angle-right"></i>
+                  Add your date of birth...
+                  <i class="fa-solid fa-angle-right"></i>
                 </p>
               </div>
               <div class="basic-info flex">
                 <p class="basic-info-key flex wd40">Gender</p>
                 <p class="basic-info-value flex wd60">
-                  Share your gender <i class="fa-solid fa-angle-right"></i>
+                  Add a gender...<i class="fa-solid fa-angle-right"></i>
                 </p>
               </div>
               <div class="basic-info flex">
                 <p class="basic-info-key flex wd40">Email</p>
                 <p class="basic-info-value flex wd60">
-                  Share your email <i class="fa-solid fa-angle-right"></i>
+                  email <i class="fa-solid fa-angle-right"></i>
                 </p>
               </div>
             </div>
@@ -80,7 +81,72 @@
             </div>
           </div>
         </div>
-        <div id="display-right">123</div>
+        <div id="display-right" class="flex">
+          <!-- <div class="control-window flex">
+            <i class="fa-solid fa-arrow-right-long"></i>
+            <p class="nowrap">Hide window</p>
+          </div>
+          <div class="workbench flex">
+            <i class="fa-solid fa-wrench"></i>
+            <p class="nowrap">This is where the magic happens.</p>
+          </div> -->
+          <div id="change-name">
+            <div class="control-window flex">
+              <i class="fa-solid fa-arrow-right-long"></i>
+              <p class="nowrap">Hide window</p>
+            </div>
+            <div id="change-name-top" class="flex">
+              <h2>Change name</h2>
+              <p>2/19/2024</p>
+            </div>
+            <div id="change-name-bottom" class="flex">
+              <h2>Credentials</h2>
+
+              <form action="submit" class="flex">
+                <p>Please enter your first and last name.</p>
+                <div id="change-name-input-container" class="flex">
+                  <div class="flex">
+                    <input type="text" name="" />
+                    <p id="first-name" class="input-text">First Name</p>
+                  </div>
+                  <div class="flex">
+                    <input type="text" name="" />
+                    <p id="last-name" class="input-text">Last Name</p>
+                  </div>
+                </div>
+                <p>
+                  By default, your name will be displayed in your profile
+                  preview meaning other people will be able to see it, you can
+                  choose to disable this.
+                </p>
+              </form>
+              <div id="change-name-buttons-container">
+                <button id="change-name-save-button" class="change-name-button">
+                  Save
+                </button>
+                <button
+                  id="change-name-cancel-button"
+                  class="change-name-button"
+                >
+                  Cancel
+                </button>
+              </div>
+              <p id="change-name-bottom-text">
+                By choosing to share your name with Us you agree with our
+                <a href="#">Terms and Conditions</a>
+              </p>
+              <div id="change-name-added-container" class="flex">
+                <div id="change-name-added-left" class="flex">
+                  <p>Username</p>
+                  <span>Click here to edit your username</span>
+                </div>
+                <div id="change-name-added-right">
+                  <i class="fa-solid fa-pen"></i> <span>Edit</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <script

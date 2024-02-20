@@ -29,6 +29,8 @@ html {
   overflow: hidden;
   display: flex;
   font-family: "Poppins", sans-serif;
+  position: relative;
+  z-index: 999;
 }
 #menu {
   width: 20%;
@@ -37,7 +39,7 @@ html {
   flex-direction: column;
   justify-content: center;
   padding-bottom: 10rem;
-  box-shadow: 1rem -5rem 2rem rgba(0, 255, 0, 0.1);
+  box-shadow: 1rem -5rem 2rem rgba(0, 255, 0, 0.05);
 }
 #menu ul {
   display: flex;
@@ -84,6 +86,8 @@ html {
   align-items: center;
 }
 #account-pfp-text {
+  margin-left: 3rem;
+  text-wrap: nowrap;
   justify-content: center;
   flex-direction: column;
 }
@@ -93,7 +97,10 @@ html {
 .basic-info {
   justify-content: space-between;
   padding: 1.5rem 0rem;
-  border-bottom: 1px solid rgba(0, 255, 0, 0.5);
+  border-bottom: 1px solid rgba(0, 255, 0, 0.2);
+}
+.basic-name i {
+  transition: all 0.2s;
 }
 .wd40 {
   width: 40%;
@@ -121,16 +128,42 @@ html {
   font-size: 2.3rem;
 }
 #display-left {
-  width: calc(70% - 30rem);
+  width: 100%;
   padding: 0rem 15rem;
   padding-top: 9rem;
+  padding-right: 5rem;
+  background-color: white;
+  z-index: 10;
 }
 #display-left h1 {
   margin-bottom: 5rem;
   font-size: 3rem;
 }
 #display-right {
-  width: 30%;
+  width: 50%;
+  align-items: center;
+  justify-content: center;
+  transition: width 1s, margin 1s, opacity 0.5s;
+  position: relative;
+}
+.display-change-name {
+  width: 100% !important;
+}
+.workbench {
+  background-color: rgba(0, 255, 0, 0.10688025210084029);
+  box-shadow: 1rem 1rem 5rem 5rem rgba(0, 255, 0, 0.10688025210084029);
+  width: 70%;
+  height: 30%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  border-radius: 3rem;
+  gap: 2rem;
+  position: absolute;
+}
+.workbench i {
+  font-size: 3rem;
 }
 .fa-angle-right {
   font-size: 1.7rem;
@@ -138,4 +171,152 @@ html {
 .red {
   color: red;
   font-weight: bold;
+  cursor: pointer;
+}
+.control-window {
+  position: absolute;
+  top: 10%;
+  gap: 3rem;
+  right: 0;
+  padding: 1rem 2rem;
+  align-items: center;
+
+  width: 20rem;
+  border-radius: 2rem 0rem 0rem 2rem;
+
+  cursor: pointer;
+  z-index: 999;
+
+  background-color: lime;
+}
+.control-window::after {
+  content: "";
+  width: 80%;
+  height: 80%;
+  background-color: transparent;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  border-top-right-radius: 2rem;
+  box-shadow: 0rem -2rem 0rem lime;
+}
+.control-window i {
+  font-size: 3rem;
+}
+.nowrap {
+  text-wrap: nowrap;
+}
+.display-right-hidden {
+  width: 0% !important;
+  margin: 0px;
+  opacity: 0;
+}
+#change-name {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  bottom: 0;
+}
+#change-name-top {
+  height: 30%;
+
+  justify-content: flex-end;
+  flex-direction: column;
+  text-wrap: nowrap;
+  align-items: center;
+}
+#change-name-bottom {
+  flex-direction: column;
+  height: 70%;
+  padding: 0rem 3rem;
+  width: calc(100% - 6rem);
+  position: absolute;
+}
+#change-name-bottom form {
+  align-items: flex-start;
+  flex-direction: column;
+  padding: 5rem 0rem;
+  padding-top: 1rem;
+}
+#change-name-bottom form div {
+  padding: 1rem 0rem;
+  justify-content: flex-start;
+  width: 100%;
+  position: relative;
+}
+#change-name-bottom input {
+  padding: 0.5rem;
+  border: 1px solid lime;
+  border-radius: 1rem;
+  width: 100%;
+  height: 3rem;
+}
+#change-name-bottom input:focus {
+  outline: none;
+}
+#change-name-input-container {
+  gap: 3rem;
+}
+.input-text {
+  position: absolute;
+  top: 50%;
+  left: 1rem;
+  transform: translateY(-50%);
+  background-color: white;
+  padding: 0.5rem;
+  transition: all 0.5s;
+}
+.input-text-focused {
+  left: 0.5rem;
+  top: 1rem;
+  color: lime;
+  font-size: 1rem;
+}
+#change-name-buttons-container {
+  display: flex;
+  margin: 1rem 0rem;
+}
+.change-name-button {
+  width: 25%;
+  height: 4rem;
+  border: none;
+  cursor: pointer;
+}
+#change-name-save-button {
+  background-color: lime;
+  color: white;
+}
+#change-name-save-button:hover {
+  background-color: rgb(0, 151, 0);
+}
+#change-name-cancel-button:hover {
+  background-color: rgb(196, 196, 196);
+}
+#change-name-cancel-button {
+  color: lime;
+}
+#change-name-bottom-text {
+  font-size: 1rem;
+}
+#change-name-added-container {
+  background-color: rgba(0, 255, 0, 0.10688025210084029);
+  position: absolute;
+  justify-content: space-between;
+  bottom: 2rem;
+  width: calc(87% - 4rem);
+  border-bottom-right-radius: 3rem;
+  padding: 2rem;
+}
+#change-name-added-left {
+  flex-direction: column;
+  gap: 0.3rem;
+}
+#change-name-added-left p {
+  font-weight: bold;
+}
+#change-name-added-right {
+  cursor: pointer;
+}
+#change-name-added-right:hover {
+  text-decoration: underline;
 }
