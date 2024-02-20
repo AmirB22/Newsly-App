@@ -235,8 +235,8 @@ html {
 #change-name-bottom form {
   align-items: flex-start;
   flex-direction: column;
-  padding: 5rem 0rem;
-  padding-top: 1rem;
+  padding: 1rem 0rem;
+  padding-bottom: 0rem;
 }
 #change-name-bottom form div {
   padding: 1rem 0rem;
@@ -253,6 +253,7 @@ html {
 }
 #change-name-bottom input:focus {
   outline: none;
+  background-color: white;
 }
 #change-name-input-container {
   gap: 3rem;
@@ -275,6 +276,7 @@ html {
 #change-name-buttons-container {
   display: flex;
   margin: 1rem 0rem;
+  margin-top: 5rem;
 }
 .change-name-button {
   width: 25%;
@@ -319,4 +321,38 @@ html {
 }
 #change-name-added-right:hover {
   text-decoration: underline;
+}
+.input-error {
+  border-color: red !important;
+}
+.input-error-text {
+  color: red;
+  position: absolute;
+  bottom: -0.5rem;
+  font-size: 1rem;
+}
+.name-changed {
+  position: absolute;
+  top: -1rem;
+  color: lime;
+  font-weight: bold;
+}
+.hidden {
+  display: none;
+}
+.spinning {
+  animation: spinning 2s linear infinite;
+  color: lime;
+  font-size: 4rem;
+}
+@keyframes spinning {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
 }

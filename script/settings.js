@@ -97,59 +97,10 @@ menuBtns.forEach((el) =>
 );
 const changeUsername = function () {
   const changeContainer = document.querySelector("#display-right");
-  changeContainer.innerHTML = ` <div id="change-name">
-            <div id="change-name-top" class="flex">
-              <h2>Change name</h2>
-              <p>2/19/2024</p>
-            </div>
-            <div id="change-name-bottom" class="flex">
-              <h2>Credentials</h2>
 
-              <form action="submit" class="flex">
-                <p>Please enter your first and last name.</p>
-                <div id="change-name-input-container" class="flex">
-                  <div class="flex">
-                    <input type="text" name="" />
-                    <p id="first-name" class="input-text">First Name</p>
-                  </div>
-                  <div class="flex">
-                    <input type="text" name="" />
-                    <p id="last-name" class="input-text">Last Name</p>
-                  </div>
-                </div>
-                <p>
-                  By default, your name will be displayed in your profile
-                  preview meaning other people will be able to see it, you can
-                  choose to disable this.
-                </p>
-              </form>
-              <div id="change-name-buttons-container">
-                <button id="change-name-save-button" class="change-name-button">
-                  Save
-                </button>
-                <button
-                  id="change-name-cancel-button"
-                  class="change-name-button"
-                >
-                  Cancel
-                </button>
-              </div>
-              <p id="change-name-bottom-text">
-                By choosing to share your name with Us you agree with our
-                <a href="#">Terms and Conditions</a>
-              </p>
-              <div id="change-name-added-container" class="flex">
-                <div id="change-name-added-left" class="flex">
-                  <p>Username</p>
-                  <span>Click here to edit your username</span>
-                </div>
-                <div id="change-name-added-right">
-                  <i class="fa-solid fa-pen"></i> <span>Edit</span>
-                </div>
-              </div>
-            </div>
-          </div>`;
   const changeName = document.querySelector(".basic-name");
+
+  changeNameHTML(changeContainer);
 
   const childArrow = changeName.lastElementChild;
   childArrow.style.transform = "rotate(180deg)";
@@ -164,6 +115,50 @@ const changeUsername = function () {
 
   const cancelBtn = document.querySelector("#change-name-cancel-button");
 
+  const form = document.querySelector("#change-name form");
+  const firstName = document.querySelector("#first-name");
+  const lastName = document.querySelector("#last-name");
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const errorMessages = document.querySelectorAll(".input-error-text");
+
+    firstName.classList.remove("input-error");
+    lastName.classList.remove("input-error");
+
+    errorMessages.forEach((el) => el.classList.add("hidden"));
+
+    let error;
+
+    if (!firstName.value) {
+      firstName.classList.add("input-error");
+      firstName.parentElement.lastElementChild.classList.remove("hidden");
+      error = 1;
+    }
+    if (!lastName.value) {
+      lastName.classList.add("input-error");
+      lastName.parentElement.lastElementChild.classList.remove("hidden");
+      error = 1;
+    }
+    if (error) return;
+
+    changeContainer.innerHTML = `<i class="fa-solid fa-spinner spinning"></i>`;
+
+    setTimeout(() => {
+      loggedInAs._firstName = firstName.value;
+      loggedInAs._lastName = lastName.value;
+
+      changeUsername();
+      const successMessage = document.querySelector(".name-changed");
+
+      successMessage.classList.remove("hidden");
+      setTimeout(() => {
+        successMessage.classList.add("hidden");
+      }, 5000);
+      changeName.innerHTML = `${loggedInAs._firstName}, ${loggedInAs._lastName} <i class="fa-solid fa-angle-right" aria-hidden="true"></i>`;
+    }, 3000);
+  });
+
   cancelBtn.addEventListener("click", function () {
     changeContainer.innerHTML = `  <div class="workbench flex">
             <i class="fa-solid fa-wrench"></i>
@@ -172,7 +167,6 @@ const changeUsername = function () {
     changeContainer.classList.remove("display-change-name");
     childArrow.style.transform = "rotate(0deg)";
   });
-
   inputInnerText.forEach((el) =>
     el.addEventListener("click", function () {
       this.previousElementSibling.focus();
@@ -188,6 +182,71 @@ const changeUsername = function () {
     })
   );
 };
+const changeNameHTML = function (container) {
+  return (container.innerHTML = ` <div id="change-name">
+            <div id="change-name-top" class="flex">
+              <h2>Change name</h2>
+              <p>2/19/2024</p>
+            </div>
+            <div id="change-name-bottom" class="flex">
+              <h2>Credentials</h2>
+
+              <form action="submit" class="flex">
+                <p>Please enter your first and last name.</p>
+                <div id="change-name-input-container" class="flex">
+                  <div class="flex">
+                    <input type="text" name="" id="first-name"/>
+                    <p id="first-name" class="input-text">First Name</p>
+                      <p class="input-error-text hidden">
+                      * Field can not be empty
+                    </p>
+                  </div>
+                  <div class="flex">
+                    <input type="text" name="" id="last-name" />
+                    <p id="last-name" class="input-text">Last Name</p>
+                      <p class="input-error-text hidden">
+                      * Field can not be empty
+                    </p>
+                  </div>
+                </div>
+                <p>
+                  By default, your name will be displayed in your profile
+                  preview meaning other people will be able to see it, you can
+                  choose to disable this.
+                </p>
+        
+              <div id="change-name-buttons-container">
+               <p class="name-changed hidden">
+                    First and last name succesfully changed!
+                  </p>
+                <button id="change-name-save-button" class="change-name-button">
+                  Save
+                </button>
+                <button
+                  id="change-name-cancel-button"
+                  class="change-name-button"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+              <p id="change-name-bottom-text">
+                By choosing to share your name with Us you agree with our
+                <a href="#">Terms and Conditions</a>
+              </p>
+              <div id="change-name-added-container" class="flex">
+                <div id="change-name-added-left" class="flex">
+                  <p>Username</p>
+                  <span>Click here to edit your username</span>
+                </div>
+                <div id="change-name-added-right">
+                  <i class="fa-solid fa-pen"></i> <span>Edit</span>
+                </div>
+              </div>
+            </div>
+          </div>`);
+};
+
 const controlWindowHTML = function () {
   const controlWindow = document.querySelector(".control-window");
   const container = document.querySelector("#display-right");
