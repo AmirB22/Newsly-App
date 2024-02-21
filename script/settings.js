@@ -53,8 +53,12 @@ menuBtns.forEach((el) =>
               </div>
               <div class="basic-info flex">
                 <p class="basic-info-key flex wd40">Gender</p>
-                <p class="basic-info-value flex wd60">
-                  Add a gender...<i class="fa-solid fa-angle-right"></i>
+                <p class="basic-info-value flex wd60 basic-gender">
+                 ${
+                   loggedInAs._gender
+                     ? `${loggedInAs._gender}`
+                     : "Add a gender..."
+                 }<i class="fa-solid fa-angle-right"></i>
                 </p>
               </div>
               <div class="basic-info flex">
@@ -95,11 +99,13 @@ menuBtns.forEach((el) =>
 
       const changeNameElement = document.querySelector(".basic-name");
       const changeDateElement = document.querySelector(".basic-date-of-birth");
+      const changeGenderElement = document.querySelector(".basic-gender");
 
       const controlWindow = document.querySelector(".control-window");
 
       changeNameElement.addEventListener("click", changeName);
       changeDateElement.addEventListener("click", changeDate);
+      changeGenderElement.addEventListener("click", changeGender);
 
       controlWindow.addEventListener("click", controlWindowHTML);
     } else display.innerHTML = "nigger";
@@ -463,6 +469,176 @@ const handleDays = function (day, month, year) {
     day.setAttribute("max", "31");
   else if (month.value > 7 && month.value < 13 && +month.value % 2 !== 0)
     day.setAttribute("max", "30");
+};
+
+const changeGender = function () {
+  const changeContainer = document.querySelector("#display-right");
+
+  const changeGenderElement = document.querySelector(".basic-gender");
+
+  changeGenderHTML(changeContainer);
+
+  handleIconRotation();
+  const childArrow = changeGenderElement.lastElementChild;
+  childArrow.style.transform = "rotate(180deg)";
+
+  changeContainer.classList.remove("display-change-name");
+  changeContainer.classList.add("display-right-hidden");
+
+  controlWindowHTML();
+
+  const form = document.querySelector("#change-gender form");
+  const selection = document.querySelector("#change-gender-selection");
+
+  const cancelBtn = document.querySelector("#change-gender-cancel-button");
+
+  selection.addEventListener("change", function () {
+    const otherGender = document.querySelector("#change-gender-other");
+    const controlButtons = document.querySelector(
+      "#change-gender-buttons-container"
+    );
+    if (selection.value == 3) {
+      otherGender.classList.remove("change-gender-hidden");
+      controlButtons.style.marginTop = "0rem";
+
+      const gender = document.querySelector("#change-gender-other input");
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        let error;
+
+        if (!gender.value) {
+          gender.classList.add("input-error");
+          gender.parentElement.lastElementChild.classList.remove("hidden");
+          error = 1;
+        }
+
+        if (error) return;
+
+        changeContainer.innerHTML = `<i class="fa-solid fa-spinner spinning"></i>`;
+
+        setTimeout(() => {
+          loggedInAs._gender = `${gender.value}`;
+
+          localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+
+          changeGender();
+
+          const successMessage = document.querySelector(".name-changed");
+
+          successMessage.classList.remove("hidden");
+          setTimeout(() => {
+            successMessage.classList.add("hidden");
+          }, 5000);
+          changeGenderElement.innerHTML = `${gender.value} <i class="fa-solid fa-angle-right" aria-hidden="true"></i>`;
+        }, 3000);
+      });
+    } else {
+      otherGender.classList.add("change-gender-hidden");
+      controlButtons.style.marginTop = "5rem";
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const gender = selection[selection.value].innerHTML;
+
+        changeContainer.innerHTML = `<i class="fa-solid fa-spinner spinning"></i>`;
+
+        setTimeout(() => {
+          loggedInAs._gender = gender;
+
+          localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+
+          changeGender();
+
+          const successMessage = document.querySelector(".name-changed");
+
+          successMessage.classList.remove("hidden");
+          setTimeout(() => {
+            successMessage.classList.add("hidden");
+          }, 5000);
+          changeGenderElement.innerHTML = `${gender} <i class="fa-solid fa-angle-right" aria-hidden="true"></i>`;
+        }, 3000);
+      });
+    }
+  });
+
+  cancelBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+    changeContainer.innerHTML = `  <div class="workbench flex">
+            <i class="fa-solid fa-wrench"></i>
+            <p class="nowrap">This is where the magic happens.</p>
+          </div>`;
+    changeContainer.classList.remove("display-change-name");
+    childArrow.style.transform = "rotate(0deg)";
+  });
+};
+const changeGenderHTML = function (container) {
+  return (container.innerHTML = ` <div id="change-gender">
+            <div id="change-gender-top" class="flex">
+              <h2>Share gender</h2>
+              <p>2/19/2024</p>
+            </div>
+            <div id="change-gender-bottom" class="flex">
+              <h2>Gender</h2>
+
+              <form action="submit" class="flex">
+                <p>Please enter your gender.</p>
+                <div id="change-gender-input-container" class="flex">
+                  <select name="gender" id="change-gender-selection">
+                    <option value="0">Male</option>
+                    <option value="1">Female</option>
+                    <option value="2">Ismail</option>
+                    <option value="3">Other...</option>
+                  </select>
+                  <div id="change-gender-other" class="change-gender-hidden">
+                    <p id="change-gender-text">Enter your gender</p>
+                    <input
+                      type="text"
+                      placeholder="Attack Helicopter..."
+                      name=""
+                      id=""
+                    />
+                    <p class="input-error-text hidden">* Field can not be empty </p>
+                  </div>
+                </div>
+                <p>
+                  Sharing your gender does not affect the experience you will
+                  have in the news page what-so-ever.
+                </p>
+
+                <div id="change-gender-buttons-container">
+                  <p class="name-changed hidden">Displayed gender changed!</p>
+                  <button
+                    id="change-gender-save-button"
+                    class="change-name-button"
+                  >
+                    Save
+                  </button>
+                  <button
+                    id="change-gender-cancel-button"
+                    class="change-name-button"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+              <p id="change-gender-bottom-text">
+                By choosing to share your gender with Us you agree to our
+                <a href="#">Terms and Conditions</a>
+              </p>
+              <div id="change-gender-added-container" class="flex">
+                <div id="change-gender-added-left" class="flex">
+                  <p>Email</p>
+                  <span>Click here to edit your email</span>
+                </div>
+                <div id="change-gender-added-right">
+                  <i class="fa-solid fa-pen"></i> <span>Edit</span>
+                </div>
+              </div>
+            </div>
+          </div>`);
 };
 
 //TODO: ADD CHANGING GENDER

@@ -210,6 +210,7 @@ html {
   margin: 0px;
   opacity: 0;
 }
+#change-gender,
 #change-name,
 #change-date {
   width: 100%;
@@ -217,6 +218,7 @@ html {
   position: absolute;
   bottom: 0;
 }
+#change-gender-top,
 #change-name-top,
 #change-date-top {
   height: 30%;
@@ -226,6 +228,7 @@ html {
   text-wrap: nowrap;
   align-items: center;
 }
+#change-gender-bottom,
 #change-name-bottom,
 #change-date-bottom {
   flex-direction: column;
@@ -234,6 +237,7 @@ html {
   width: calc(100% - 6rem);
   position: absolute;
 }
+#change-gender-bottom form,
 #change-name-bottom form,
 #change-date-bottom form {
   align-items: flex-start;
@@ -241,6 +245,7 @@ html {
   padding: 1rem 0rem;
   padding-bottom: 0rem;
 }
+#change-gender-bottom form div,
 #change-name-bottom form div,
 #change-date-bottom form div {
   padding: 1rem 0rem;
@@ -248,6 +253,7 @@ html {
   width: 100%;
   position: relative;
 }
+#change-gender-bottom input,
 #change-name-bottom input,
 #change-date-bottom input {
   padding: 0.5rem;
@@ -263,10 +269,50 @@ html {
 #change-date-year {
   width: 6rem !important;
 }
+#change-gender-input-container input:focus,
+#change-gender-selection:focus,
 #change-name-bottom input:focus,
 #change-date-bottom input:focus {
   outline: none;
   background-color: white;
+}
+#change-gender-input-container {
+  align-items: center;
+  flex-direction: column;
+}
+#change-gender-other {
+  width: 100%;
+  height: 5rem;
+  display: flex;
+  justify-content: center !important;
+  align-items: center;
+  overflow: hidden;
+  margin-top: 3rem;
+  position: relative;
+  transition: all 0.5s;
+}
+.change-gender-hidden {
+  margin-top: 0px !important;
+  height: 0px !important;
+  padding: 0px !important;
+}
+#change-gender-text {
+  font-size: 1rem;
+  position: absolute;
+  top: 0rem;
+}
+#change-gender-other input {
+  border-radius: 0px;
+}
+#change-gender-selection {
+  padding: 1rem;
+  border: 1px solid lime;
+  width: 50%;
+  cursor: pointer;
+}
+#change-gender-selection option {
+  width: 100%;
+  padding: 1rem;
 }
 #change-name-input-container {
   gap: 3rem;
@@ -293,6 +339,7 @@ html {
   color: lime;
   font-size: 1rem;
 }
+#change-gender-buttons-container,
 #change-name-buttons-container,
 #change-date-buttons-container {
   display: flex;
@@ -305,27 +352,33 @@ html {
   border: none;
   cursor: pointer;
 }
+#change-gender-save-button,
 #change-name-save-button,
 #change-date-save-button {
   background-color: lime;
   color: white;
 }
+#change-gender-save-button:hover,
 #change-name-save-button:hover,
 #change-date-save-button:hover {
   background-color: rgb(0, 151, 0);
 }
+#change-gender-cancel-button:hover,
 #change-name-cancel-button:hover,
 #change-date-cancel-button:hover {
   background-color: rgb(196, 196, 196);
 }
+#change-gender-cancel-button,
 #change-name-cancel-button,
 #change-name-cancel-button {
   color: lime;
 }
+#change-gender-bottom-text,
 #change-name-bottom-text,
 #change-date-bottom-text {
   font-size: 1rem;
 }
+#change-gender-added-container,
 #change-name-added-container,
 #change-date-added-container {
   background-color: rgba(0, 255, 0, 0.10688025210084029);
@@ -336,19 +389,23 @@ html {
   border-bottom-right-radius: 3rem;
   padding: 2rem;
 }
+#change-gender-added-left,
 #change-name-added-left,
 #change-date-added-left {
   flex-direction: column;
   gap: 0.3rem;
 }
+#change-gender-added-left p,
 #change-name-added-left p,
 #change-date-added-left p {
   font-weight: bold;
 }
+#change-gender-added-right,
 #change-name-added-right,
 #change-date-added-right {
   cursor: pointer;
 }
+#change-gender-added-right:hover,
 #change-name-added-right:hover,
 #change-date-added-right:hover {
   text-decoration: underline;
