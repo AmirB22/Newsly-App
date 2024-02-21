@@ -25,12 +25,13 @@ html {
   width: 80%;
   height: 80%;
   border-radius: 5rem;
-  background-color: white;
   overflow: hidden;
   display: flex;
   font-family: "Poppins", sans-serif;
   position: relative;
   z-index: 999;
+  background-color: white;
+  opacity: 0.8;
 }
 #menu {
   width: 20%;
@@ -99,9 +100,6 @@ html {
   padding: 1.5rem 0rem;
   border-bottom: 1px solid rgba(0, 255, 0, 0.2);
 }
-.basic-name i {
-  transition: all 0.2s;
-}
 .wd40 {
   width: 40%;
 }
@@ -132,7 +130,6 @@ html {
   padding: 0rem 15rem;
   padding-top: 9rem;
   padding-right: 5rem;
-  background-color: white;
   z-index: 10;
 }
 #display-left h1 {
@@ -167,6 +164,7 @@ html {
 }
 .fa-angle-right {
   font-size: 1.7rem;
+  transition: all 0.2s;
 }
 .red {
   color: red;
@@ -211,13 +209,15 @@ html {
   margin: 0px;
   opacity: 0;
 }
-#change-name {
+#change-name,
+#change-date {
   width: 100%;
   height: 100%;
   position: absolute;
   bottom: 0;
 }
-#change-name-top {
+#change-name-top,
+#change-date-top {
   height: 30%;
 
   justify-content: flex-end;
@@ -225,38 +225,57 @@ html {
   text-wrap: nowrap;
   align-items: center;
 }
-#change-name-bottom {
+#change-name-bottom,
+#change-date-bottom {
   flex-direction: column;
   height: 70%;
   padding: 0rem 3rem;
   width: calc(100% - 6rem);
   position: absolute;
 }
-#change-name-bottom form {
+#change-name-bottom form,
+#change-date-bottom form {
   align-items: flex-start;
   flex-direction: column;
   padding: 1rem 0rem;
   padding-bottom: 0rem;
 }
-#change-name-bottom form div {
+#change-name-bottom form div,
+#change-date-bottom form div {
   padding: 1rem 0rem;
   justify-content: flex-start;
   width: 100%;
   position: relative;
 }
-#change-name-bottom input {
+#change-name-bottom input,
+#change-date-bottom input {
   padding: 0.5rem;
   border: 1px solid lime;
   border-radius: 1rem;
   width: 100%;
   height: 3rem;
 }
-#change-name-bottom input:focus {
+#change-date-day,
+#change-date-month {
+  width: 4rem !important;
+}
+#change-date-year {
+  width: 6rem !important;
+}
+#change-name-bottom input:focus,
+#change-date-bottom input:focus {
   outline: none;
   background-color: white;
 }
 #change-name-input-container {
   gap: 3rem;
+}
+#change-date-input-container {
+  gap: 1rem;
+}
+.input-date {
+  justify-content: center;
+  width: auto !important;
 }
 .input-text {
   position: absolute;
@@ -273,7 +292,8 @@ html {
   color: lime;
   font-size: 1rem;
 }
-#change-name-buttons-container {
+#change-name-buttons-container,
+#change-date-buttons-container {
   display: flex;
   margin: 1rem 0rem;
   margin-top: 5rem;
@@ -284,23 +304,29 @@ html {
   border: none;
   cursor: pointer;
 }
-#change-name-save-button {
+#change-name-save-button,
+#change-date-save-button {
   background-color: lime;
   color: white;
 }
-#change-name-save-button:hover {
+#change-name-save-button:hover,
+#change-date-save-button:hover {
   background-color: rgb(0, 151, 0);
 }
-#change-name-cancel-button:hover {
+#change-name-cancel-button:hover,
+#change-date-cancel-button:hover {
   background-color: rgb(196, 196, 196);
 }
+#change-name-cancel-button,
 #change-name-cancel-button {
   color: lime;
 }
-#change-name-bottom-text {
+#change-name-bottom-text,
+#change-date-bottom-text {
   font-size: 1rem;
 }
-#change-name-added-container {
+#change-name-added-container,
+#change-date-added-container {
   background-color: rgba(0, 255, 0, 0.10688025210084029);
   position: absolute;
   justify-content: space-between;
@@ -309,17 +335,21 @@ html {
   border-bottom-right-radius: 3rem;
   padding: 2rem;
 }
-#change-name-added-left {
+#change-name-added-left,
+#change-date-added-left {
   flex-direction: column;
   gap: 0.3rem;
 }
-#change-name-added-left p {
+#change-name-added-left p,
+#change-date-added-left p {
   font-weight: bold;
 }
-#change-name-added-right {
+#change-name-added-right,
+#change-date-added-right {
   cursor: pointer;
 }
-#change-name-added-right:hover {
+#change-name-added-right:hover,
+#change-date-added-right:hover {
   text-decoration: underline;
 }
 .input-error {
@@ -330,6 +360,10 @@ html {
   position: absolute;
   bottom: -0.5rem;
   font-size: 1rem;
+}
+.birth-error {
+  text-wrap: nowrap;
+  margin-left: -4rem;
 }
 .name-changed {
   position: absolute;

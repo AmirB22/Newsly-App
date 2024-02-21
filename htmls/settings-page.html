@@ -90,66 +90,82 @@
             <i class="fa-solid fa-wrench"></i>
             <p class="nowrap">This is where the magic happens.</p>
           </div> -->
-          <div id="change-name">
-            <div id="change-name-top" class="flex">
-              <h2>Change name</h2>
+          <div id="change-date">
+            <div id="change-date-top" class="flex">
+              <h2>Share date of birth</h2>
               <p>2/19/2024</p>
             </div>
-            <div id="change-name-bottom" class="flex">
-              <h2>Credentials</h2>
+            <div id="change-date-bottom" class="flex">
+              <h2>Date</h2>
 
               <form action="submit" class="flex">
-                <p>Please enter your first and last name.</p>
-                <div id="change-name-input-container" class="flex">
-                  <div class="flex">
-                    <input type="text" name="" id="first-name" />
-                    <p id="first-name" class="input-text">First Name</p>
-                    <p class="input-error-text hidden">
-                      * Field can not be empty
+                <p>Please enter your date of birth.</p>
+                <div id="change-date-input-container" class="flex">
+                  <div class="flex input-date">
+                    <input
+                      placeholder="DD"
+                      type="number"
+                      name=""
+                      min="1"
+                      max="31"
+                      id="change-date-day"
+                    />
+                  </div>
+                  <div class="flex input-date">
+                    <input
+                      placeholder="MM"
+                      type="number"
+                      name=""
+                      min="1"
+                      max="12"
+                      id="change-date-month"
+                    />
+                    <p class="input-error-text birth-error">
+                      * All fields need to be filled
                     </p>
                   </div>
-                  <div class="flex">
-                    <input type="text" name="" id="last-name" />
-                    <p id="last-name" class="input-text">Last Name</p>
-                    <p class="input-error-text hidden">
-                      * Field can not be empty
-                    </p>
+                  <div class="flex input-date">
+                    <input
+                      placeholder="YYYY"
+                      type="number"
+                      name=""
+                      min="1900"
+                      max="2024"
+                      id="change-date-year"
+                    />
                   </div>
                 </div>
                 <p>
-                  By default, your name will be displayed in your profile
-                  preview meaning other people will be able to see it, you can
-                  choose to disable this.
+                  We use your age to show or hide news appropriate to the age
+                  you provide.
                 </p>
 
-                <div id="change-name-buttons-container">
-                  <p class="name-changed hidden">
-                    First and last name succesfully changed!
-                  </p>
+                <div id="change-date-buttons-container">
+                  <p class="name-changed hidden">Date of birth added!</p>
                   <button
-                    id="change-name-save-button"
+                    id="change-date-save-button"
                     class="change-name-button"
                   >
                     Save
                   </button>
                   <button
-                    id="change-name-cancel-button"
+                    id="change-date-cancel-button"
                     class="change-name-button"
                   >
                     Cancel
                   </button>
                 </div>
               </form>
-              <p id="change-name-bottom-text">
-                By choosing to share your name with Us you agree with our
+              <p id="change-date-bottom-text">
+                By choosing to share your date of birth with Us you agree to our
                 <a href="#">Terms and Conditions</a>
               </p>
-              <div id="change-name-added-container" class="flex">
-                <div id="change-name-added-left" class="flex">
-                  <p>Username</p>
-                  <span>Click here to edit your username</span>
+              <div id="change-date-added-container" class="flex">
+                <div id="change-date-added-left" class="flex">
+                  <p>Email</p>
+                  <span>Click here to edit your email</span>
                 </div>
-                <div id="change-name-added-right">
+                <div id="change-date-added-right">
                   <i class="fa-solid fa-pen"></i> <span>Edit</span>
                 </div>
               </div>
