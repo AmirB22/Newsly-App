@@ -82,6 +82,7 @@ html {
 }
 #account-basics img {
   width: 10rem;
+  border-radius: 5rem;
 }
 #account-pfp {
   align-items: center;

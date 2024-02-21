@@ -33,13 +33,21 @@ menuBtns.forEach((el) =>
               <div class="basic-info flex">
                 <p class="basic-info-key flex wd40">Name</p>
                 <p class="basic-info-value flex wd60 basic-name">
-                  Add a name...<i class="fa-solid fa-angle-right"></i>
+                 ${
+                   loggedInAs._firstName
+                     ? `${loggedInAs._firstName}, ${loggedInAs._lastName}`
+                     : "Add a name..."
+                 }<i class="fa-solid fa-angle-right"></i>
                 </p>
               </div>
               <div class="basic-info flex">
                 <p class="basic-info-key flex wd40">Date of Birth</p>
                 <p class="basic-info-value flex wd60 basic-date-of-birth">
-                  Add your date of birth...
+                 ${
+                   loggedInAs._dateOfBirth
+                     ? `${loggedInAs._dateOfBirth}`
+                     : "Add your date of birth..."
+                 }
                   <i class="fa-solid fa-angle-right"></i>
                 </p>
               </div>
@@ -121,6 +129,7 @@ const changeName = function () {
   const form = document.querySelector("#change-name form");
   const firstName = document.querySelector("#first-name");
   const lastName = document.querySelector("#last-name");
+
   form.addEventListener("submit", function (e) {
     e.preventDefault();
 
@@ -150,6 +159,8 @@ const changeName = function () {
     setTimeout(() => {
       loggedInAs._firstName = firstName.value;
       loggedInAs._lastName = lastName.value;
+
+      localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
 
       changeName();
       const successMessage = document.querySelector(".name-changed");
@@ -275,26 +286,27 @@ const controlWindowHTML = function () {
 const changeDate = function () {
   const changeContainer = document.querySelector("#display-right");
 
-  dateOfBirthHTML(changeContainer);
-
-  const cancelBtn = document.querySelector("#change-date-cancel-button");
   const changeDateElement = document.querySelector(".basic-date-of-birth");
 
-  const year = document.querySelector("#change-date-year");
-  const month = document.querySelector("#change-date-month");
-  const day = document.querySelector("#change-date-day");
+  dateOfBirthHTML(changeContainer);
 
   handleIconRotation();
 
   const childArrow = changeDateElement.lastElementChild;
   childArrow.style.transform = "rotate(180deg)";
 
-  const form = document.querySelector("#change-date form");
-
   changeContainer.classList.add("display-right-hidden");
   changeContainer.classList.remove("display-change-name");
 
   controlWindowHTML();
+
+  const cancelBtn = document.querySelector("#change-date-cancel-button");
+
+  const year = document.querySelector("#change-date-year");
+  const month = document.querySelector("#change-date-month");
+  const day = document.querySelector("#change-date-day");
+
+  const form = document.querySelector("#change-date form");
 
   cancelBtn.addEventListener("click", function () {
     changeContainer.innerHTML = `  <div class="workbench flex">
@@ -303,6 +315,10 @@ const changeDate = function () {
           </div>`;
     changeContainer.classList.remove("display-change-name");
     childArrow.style.transform = "rotate(0deg)";
+  });
+
+  [year, month, day].forEach((el) => {
+    el.addEventListener("change", handleDays.bind(null, day, month, year));
   });
 
   form.addEventListener("submit", function (e) {
@@ -320,17 +336,17 @@ const changeDate = function () {
 
     if (!year.value) {
       year.classList.add("input-error");
-      year.parentElement.lastElementChild.classList.remove("hidden");
+      errorMessages.classList.remove("hidden");
       error = 1;
     }
     if (!month.value) {
       month.classList.add("input-error");
-      month.parentElement.lastElementChild.classList.remove("hidden");
+      errorMessages.classList.remove("hidden");
       error = 1;
     }
     if (!day.value) {
       day.classList.add("input-error");
-      day.parentElement.lastElementChild.classList.remove("hidden");
+      errorMessages.classList.remove("hidden");
       error = 1;
     }
     if (error) return;
@@ -339,6 +355,8 @@ const changeDate = function () {
 
     setTimeout(() => {
       loggedInAs._dateOfBirth = `${day.value}/${month.value}/${year.value}`;
+
+      localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
 
       changeDate();
       const successMessage = document.querySelector(".name-changed");
@@ -430,7 +448,7 @@ const dateOfBirthHTML = function (container) {
           </div>`);
 };
 
-const handleDays = function () {
+const handleDays = function (day, month, year) {
   if (
     (month.value == 2 && +year.value % 4 === 0 && +year.value % 100 !== 0) ||
     (month.value == 2 && +year.value % 400 === 0)
@@ -447,8 +465,5 @@ const handleDays = function () {
     day.setAttribute("max", "30");
 };
 
-const year = document.querySelector("#change-date-year");
-const month = document.querySelector("#change-date-month");
-const day = document.querySelector("#change-date-day");
-
-[year, month, day].forEach((el) => el.addEventListener("click", handleDays));
+//TODO: ADD CHANGING GENDER
+//TODO: ADD CHANGING EMAIL (REQUIRING PASSWORD TO CHANGE)
