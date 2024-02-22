@@ -210,6 +210,8 @@ html {
   margin: 0px;
   opacity: 0;
 }
+#change-email-second,
+#change-email,
 #change-gender,
 #change-name,
 #change-date {
@@ -218,6 +220,8 @@ html {
   position: absolute;
   bottom: 0;
 }
+#change-email-top-second,
+#change-email-top,
 #change-gender-top,
 #change-name-top,
 #change-date-top {
@@ -228,6 +232,8 @@ html {
   text-wrap: nowrap;
   align-items: center;
 }
+#change-email-bottom-second,
+#change-email-bottom,
 #change-gender-bottom,
 #change-name-bottom,
 #change-date-bottom {
@@ -237,6 +243,8 @@ html {
   width: calc(100% - 6rem);
   position: absolute;
 }
+#change-email-bottom-second form,
+#change-email-bottom form,
 #change-gender-bottom form,
 #change-name-bottom form,
 #change-date-bottom form {
@@ -245,6 +253,12 @@ html {
   padding: 1rem 0rem;
   padding-bottom: 0rem;
 }
+#change-email-bottom-second form,
+#change-email-bottom form {
+  position: relative;
+}
+#change-email-bottom-second form div,
+#change-email-bottom form div,
 #change-gender-bottom form div,
 #change-name-bottom form div,
 #change-date-bottom form div {
@@ -253,6 +267,8 @@ html {
   width: 100%;
   position: relative;
 }
+#change-email-bottom-second input,
+#change-email-bottom input,
 #change-gender-bottom input,
 #change-name-bottom input,
 #change-date-bottom input {
@@ -269,6 +285,8 @@ html {
 #change-date-year {
   width: 6rem !important;
 }
+#change-email-input-container-second input:focus,
+#change-email-input-container input:focus,
 #change-gender-input-container input:focus,
 #change-gender-selection:focus,
 #change-name-bottom input:focus,
@@ -276,10 +294,18 @@ html {
   outline: none;
   background-color: white;
 }
-#change-gender-input-container {
+#change-email-input-container-second,
+#change-gender-input-container,
+#change-email-input-container {
   align-items: center;
   flex-direction: column;
 }
+#change-email-pin-input {
+  width: 8% !important;
+  align-self: flex-start;
+  padding: 0.5rem 2rem !important;
+}
+
 #change-gender-other {
   width: 100%;
   height: 5rem;
@@ -287,7 +313,7 @@ html {
   justify-content: center !important;
   align-items: center;
   overflow: hidden;
-  margin-top: 3rem;
+  margin-top: 1rem;
   position: relative;
   transition: all 0.5s;
 }
@@ -309,6 +335,10 @@ html {
   border: 1px solid lime;
   width: 50%;
   cursor: pointer;
+}
+#change-gender-container {
+  display: flex;
+  justify-content: center !important;
 }
 #change-gender-selection option {
   width: 100%;
@@ -339,6 +369,7 @@ html {
   color: lime;
   font-size: 1rem;
 }
+#change-email-buttons-container,
 #change-gender-buttons-container,
 #change-name-buttons-container,
 #change-date-buttons-container {
@@ -346,38 +377,47 @@ html {
   margin: 1rem 0rem;
   margin-top: 5rem;
 }
+#change-email-buttons-container {
+  margin-top: 0rem;
+}
 .change-name-button {
   width: 25%;
   height: 4rem;
   border: none;
   cursor: pointer;
 }
+#change-email-save-button,
 #change-gender-save-button,
 #change-name-save-button,
 #change-date-save-button {
   background-color: lime;
   color: white;
 }
+#change-email-save-button:hover,
 #change-gender-save-button:hover,
 #change-name-save-button:hover,
 #change-date-save-button:hover {
   background-color: rgb(0, 151, 0);
 }
+#change-email-cancel-buttons:hover,
 #change-gender-cancel-button:hover,
 #change-name-cancel-button:hover,
 #change-date-cancel-button:hover {
   background-color: rgb(196, 196, 196);
 }
+#change-email-cancel-button,
 #change-gender-cancel-button,
 #change-name-cancel-button,
-#change-name-cancel-button {
+#change-date-cancel-button {
   color: lime;
 }
+#change-email-bottom-text,
 #change-gender-bottom-text,
 #change-name-bottom-text,
 #change-date-bottom-text {
   font-size: 1rem;
 }
+#change-email-added-container,
 #change-gender-added-container,
 #change-name-added-container,
 #change-date-added-container {
@@ -389,22 +429,26 @@ html {
   border-bottom-right-radius: 3rem;
   padding: 2rem;
 }
+#change-email-added-left,
 #change-gender-added-left,
 #change-name-added-left,
 #change-date-added-left {
   flex-direction: column;
   gap: 0.3rem;
 }
+#change-email-added-left p,
 #change-gender-added-left p,
 #change-name-added-left p,
 #change-date-added-left p {
   font-weight: bold;
 }
+#change-email-added-right,
 #change-gender-added-right,
 #change-name-added-right,
 #change-date-added-right {
   cursor: pointer;
 }
+#change-email-added-right:hover,
 #change-gender-added-right:hover,
 #change-name-added-right:hover,
 #change-date-added-right:hover {
@@ -413,11 +457,18 @@ html {
 .input-error {
   border-color: red !important;
 }
-.input-error-text {
+.input-error-text,
+.input-error-text-credentials {
   color: red;
   position: absolute;
   bottom: -0.5rem;
   font-size: 1rem;
+}
+.input-error-text-credentials {
+  bottom: none;
+  top: -0.5rem;
+  text-wrap: nowrap;
+  max-height: 1rem;
 }
 .birth-error {
   text-wrap: nowrap;

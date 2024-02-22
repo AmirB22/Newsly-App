@@ -21,6 +21,10 @@
       </div>
       <div id="display">
         <div id="display-left">
+          <div class="control-window flex">
+            <i class="fa-solid fa-arrow-right-long"></i>
+            <p class="nowrap">Hide window</p>
+          </div>
           <h1>Account Settings</h1>
           <div id="account-basics">
             <h2>Basic Info</h2>
@@ -59,7 +63,7 @@
               </div>
               <div class="basic-info flex">
                 <p class="basic-info-key flex wd40">Email</p>
-                <p class="basic-info-value flex wd60">
+                <p class="basic-info-value flex wd60 basic-email">
                   email <i class="fa-solid fa-angle-right"></i>
                 </p>
               </div>
@@ -82,72 +86,76 @@
           </div>
         </div>
         <div id="display-right" class="flex">
-          <!-- <div class="control-window flex">
-            <i class="fa-solid fa-arrow-right-long"></i>
-            <p class="nowrap">Hide window</p>
-          </div>
-          <div class="workbench flex">
-            <i class="fa-solid fa-wrench"></i>
-            <p class="nowrap">This is where the magic happens.</p>
-          </div> -->
-          <div id="change-gender">
-            <div id="change-gender-top" class="flex">
-              <h2>Share gender</h2>
+          <div id="change-email-second">
+            <div id="change-email-top-second" class="flex">
+              <h2>Change email</h2>
               <p>2/19/2024</p>
             </div>
-            <div id="change-gender-bottom" class="flex">
-              <h2>Gender</h2>
+            <div id="change-email-bottom-second" class="flex">
+              <h2>Email</h2>
 
               <form action="submit" class="flex">
-                <p>Please enter your gender.</p>
-                <div id="change-gender-input-container" class="flex">
-                  <select name="gender" id="change-gender-selection">
-                    <option value="0">Male</option>
-                    <option value="1">Female</option>
-                    <option value="2">Ismail</option>
-                    <option value="3">Other...</option>
-                  </select>
-                  <div id="change-gender-other" class="change-gender-hidden">
-                    <p id="change-gender-text">Enter your gender</p>
+                <p>Great! Enter a new email you'd like to use.</p>
+
+                <div id="change-email-input-container-second" class="flex">
+                  <div>
+                    <input type="text" name="" id="change-email-second-first" />
+                    <p id="first-name" class="input-text">Email</p>
+                    <p class="input-error-text hidden email-error gmail-error">
+                      * Email must end in @gmail.com
+                    </p>
+                    <p class="input-error-text hidden email-error char-error">
+                      * Email must be longer than 5 characters
+                    </p>
+                    <p class="input-error-text hidden email-error norm-error">
+                      * Field can not be empty
+                    </p>
+                  </div>
+                  <div>
                     <input
                       type="text"
-                      placeholder="Attack Helicopter..."
                       name=""
-                      id=""
+                      id="change-email-second-confirmation"
                     />
+                    <p id="first-name" class="input-text">Confirm email</p>
+
+                    <p
+                      class="input-error-text email-error hidden second-norm-error"
+                    >
+                      * Field can not be empty
+                    </p>
+                    <p class="input-error-text hidden email-error same-error">
+                      * Provided emails do not match
+                    </p>
                   </div>
                 </div>
-                <p>
-                  Sharing your gender does not affect the experience you will
-                  have in the news page what-so-ever.
-                </p>
 
-                <div id="change-gender-buttons-container">
-                  <p class="name-changed hidden">Gender added!</p>
+                <div id="change-email-buttons-container">
+                  <p class="name-changed hidden">Email changed!</p>
                   <button
-                    id="change-gender-save-button"
+                    id="change-email-save-button"
                     class="change-name-button"
                   >
                     Save
                   </button>
                   <button
-                    id="change-gender-cancel-button"
+                    id="change-email-cancel-button"
                     class="change-name-button"
                   >
                     Cancel
                   </button>
                 </div>
               </form>
-              <p id="change-gender-bottom-text">
-                By choosing to share your gender with Us you agree to our
+              <p id="change-email-bottom-text">
+                By choosing to change your email you agree to our
                 <a href="#">Terms and Conditions</a>
               </p>
-              <div id="change-gender-added-container" class="flex">
-                <div id="change-gender-added-left" class="flex">
+              <div id="change-email-added-container" class="flex">
+                <div id="change-email-added-left" class="flex">
                   <p>Email</p>
                   <span>Click here to edit your email</span>
                 </div>
-                <div id="change-gender-added-right">
+                <div id="change-email-added-right">
                   <i class="fa-solid fa-pen"></i> <span>Edit</span>
                 </div>
               </div>

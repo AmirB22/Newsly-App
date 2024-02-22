@@ -1,9 +1,13 @@
+"use strict";
+
 const menuBtns = document.querySelectorAll("#menu ul li");
 const display = document.querySelector("#display");
 
 const loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
+const userAccounts = JSON.parse(localStorage.getItem("accounts"));
 
 console.log(loggedInAs);
+console.log(userAccounts);
 
 menuBtns.forEach((el) =>
   el.addEventListener("click", function (e) {
@@ -63,7 +67,7 @@ menuBtns.forEach((el) =>
               </div>
               <div class="basic-info flex">
                 <p class="basic-info-key flex wd40">Email</p>
-                <p class="basic-info-value flex wd60">
+                <p class="basic-info-value flex wd60 basic-email">
                   ${loggedInAs.email} <i class="fa-solid fa-angle-right"></i>
                 </p>
               </div>
@@ -100,12 +104,14 @@ menuBtns.forEach((el) =>
       const changeNameElement = document.querySelector(".basic-name");
       const changeDateElement = document.querySelector(".basic-date-of-birth");
       const changeGenderElement = document.querySelector(".basic-gender");
+      const changeEmailElement = document.querySelector(".basic-email");
 
       const controlWindow = document.querySelector(".control-window");
 
       changeNameElement.addEventListener("click", changeName);
       changeDateElement.addEventListener("click", changeDate);
       changeGenderElement.addEventListener("click", changeGender);
+      changeEmailElement.addEventListener("click", changeEmail);
 
       controlWindow.addEventListener("click", controlWindowHTML);
     } else display.innerHTML = "nigger";
@@ -196,6 +202,11 @@ const changeName = function () {
   inputs.forEach((el) =>
     el.addEventListener("focus", function () {
       this.nextElementSibling.classList.add("input-text-focused");
+      this.classList.remove("input-error");
+      this.parentElement
+        .querySelector(".input-error-text")
+        .classList.add("hidden");
+
       el.addEventListener("focusout", function () {
         if (!this.value)
           this.nextElementSibling.classList.remove("input-text-focused");
@@ -330,29 +341,43 @@ const changeDate = function () {
   form.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    const errorMessages = document.querySelector(".birth-error");
+    const errorMessage = document.querySelector(".birth-error");
+    const inputs = document.querySelectorAll(".change-date-input");
 
+    /*
+    I have no idea what i did here, main thing is, it works, it looks through every input and checks if any of them have the "input-error" class, if none of them have it, it removes the error message... somehow...??
+    */
+    inputs.forEach((el) => {
+      el.addEventListener("focus", () => {
+        el.classList.remove("input-error");
+        let noErrors = 1;
+        inputs.forEach((el) => {
+          if (el.classList.contains("input-error")) noErrors = 0;
+        });
+        if (noErrors) errorMessage.classList.add("hidden");
+      });
+    });
     year.classList.remove("input-error");
     month.classList.remove("input-error");
     day.classList.remove("input-error");
 
-    errorMessages.classList.add("hidden");
+    errorMessage.classList.add("hidden");
 
     let error;
 
     if (!year.value) {
       year.classList.add("input-error");
-      errorMessages.classList.remove("hidden");
+      errorMessage.classList.remove("hidden");
       error = 1;
     }
     if (!month.value) {
       month.classList.add("input-error");
-      errorMessages.classList.remove("hidden");
+      errorMessage.classList.remove("hidden");
       error = 1;
     }
     if (!day.value) {
       day.classList.add("input-error");
-      errorMessages.classList.remove("hidden");
+      errorMessage.classList.remove("hidden");
       error = 1;
     }
     if (error) return;
@@ -394,6 +419,7 @@ const dateOfBirthHTML = function (container) {
                     min="1"
                     max="31"
                     id="change-date-day"
+                    class="change-date-input"
                   />
                    </div>
                  <div class="flex"> <input
@@ -403,6 +429,7 @@ const dateOfBirthHTML = function (container) {
                     min="1"
                     max="12"
                     id="change-date-month"
+                    class="change-date-input"
                   />
                     <p class="input-error-text hidden birth-error">
                       * All fields must be filled
@@ -414,6 +441,7 @@ const dateOfBirthHTML = function (container) {
                     min="1900"
                     max="2024"
                     id="change-date-year"
+                    class="change-date-input"
                   />
                     </div>
                   </div>
@@ -492,12 +520,25 @@ const changeGender = function () {
 
   const cancelBtn = document.querySelector("#change-gender-cancel-button");
 
+  /*
+  At first form needs to input an screen telling the user to choose a gender. Most importantly, I need to remove this event listener after the function happens so that it doesn't interfiere with other form event listeners.
+  */
+  form.addEventListener("submit", genderHelper);
+
+  selection.addEventListener("focus", function () {
+    selection.classList.remove("input-error");
+    selection.parentElement.lastElementChild.classList.add("hidden");
+  });
+
   selection.addEventListener("change", function () {
+    form.removeEventListener("submit", genderHelper);
+
     const otherGender = document.querySelector("#change-gender-other");
     const controlButtons = document.querySelector(
       "#change-gender-buttons-container"
     );
-    if (selection.value == 3) {
+
+    if (selection.value == 4) {
       otherGender.classList.remove("change-gender-hidden");
       controlButtons.style.marginTop = "0rem";
 
@@ -507,6 +548,11 @@ const changeGender = function () {
         e.preventDefault();
 
         let error;
+
+        gender.addEventListener("focus", function () {
+          this.classList.remove("input-error");
+          this.parentElement.lastElementChild.classList.add("hidden");
+        });
 
         if (!gender.value) {
           gender.classList.add("input-error");
@@ -555,6 +601,7 @@ const changeGender = function () {
           const successMessage = document.querySelector(".name-changed");
 
           successMessage.classList.remove("hidden");
+
           setTimeout(() => {
             successMessage.classList.add("hidden");
           }, 5000);
@@ -586,12 +633,16 @@ const changeGenderHTML = function (container) {
               <form action="submit" class="flex">
                 <p>Please enter your gender.</p>
                 <div id="change-gender-input-container" class="flex">
-                  <select name="gender" id="change-gender-selection">
-                    <option value="0">Male</option>
-                    <option value="1">Female</option>
-                    <option value="2">Ismail</option>
-                    <option value="3">Other...</option>
+              <div id="change-gender-container"> 
+                  <select name="gender"  id="change-gender-selection">
+                    <option value="0" disabled selected>Gender</option>
+                    <option value="1">Male</option>
+                    <option value="2">Female</option>
+                    <option value="3">Ismail</option>
+                    <option value="4">Other...</option>
                   </select>
+                  <p class="input-error-text hidden"> * Choose a gender</p>
+              </div>
                   <div id="change-gender-other" class="change-gender-hidden">
                     <p id="change-gender-text">Enter your gender</p>
                     <input
@@ -640,6 +691,361 @@ const changeGenderHTML = function (container) {
             </div>
           </div>`);
 };
+const genderHelper = function (e) {
+  e.preventDefault();
+  const form = document.querySelector("#change-gender form");
+  const selection = document.querySelector("#change-gender-selection");
 
+  selection.classList.add("input-error");
+  selection.parentElement.lastElementChild.classList.remove("hidden");
+
+  /*
+  If the selection we chose after clicking on "Gender" is still Gender, then we do NOT remove the gender helper function, and continue to display an error to the user. Otherwise, we remove the event listener, meaning the script will give form another event listener appropriate to the users gender selection.
+   */
+  if (+selection.value) form.removeEventListener("submit", genderHelper);
+};
+
+const changeEmail = function () {
+  const changeContainer = document.querySelector("#display-right");
+
+  const changeEmailElement = document.querySelector(".basic-email");
+
+  changeEmailHTML(changeContainer);
+
+  handleIconRotation();
+  const childArrow = changeEmailElement.lastElementChild;
+  childArrow.style.transform = "rotate(180deg)";
+
+  changeContainer.classList.remove("display-change-name");
+  changeContainer.classList.add("display-right-hidden");
+
+  controlWindowHTML();
+
+  const password = document.querySelector("#change-email-password-input");
+  const PIN = document.querySelector("#change-email-pin-input");
+  const form = document.querySelector("#change-email form");
+
+  const cancelBtn = document.querySelector("#change-email-cancel-button");
+
+  const credentialsError = document.querySelector(
+    ".input-error-text-credentials"
+  );
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    password.classList.remove("input-error");
+    PIN.classList.remove("input-error");
+    credentialsError.classList.add("hidden");
+
+    const errorMessages = document.querySelectorAll(".input-error-text");
+
+    errorMessages.forEach((el) => el.classList.add("hidden"));
+
+    let error;
+
+    if (!password.value) {
+      password.classList.add("input-error");
+      password.parentElement.lastElementChild.classList.remove("hidden");
+      error = 1;
+    }
+    if (!PIN.value) {
+      PIN.classList.add("input-error");
+      PIN.parentElement.lastElementChild.classList.remove("hidden");
+      error = 1;
+    }
+
+    if (error) return;
+
+    if (
+      PIN.value !== loggedInAs.pin ||
+      password.value !== loggedInAs.password
+    ) {
+      credentialsError.classList.remove("hidden");
+      PIN.classList.add("input-error");
+      password.classList.add("input-error");
+      return;
+    }
+
+    changeContainer.innerHTML = `<i class="fa-solid fa-spinner spinning"></i>`;
+
+    setTimeout(() => {
+      changeEmailSecond();
+    }, 3000);
+  });
+  cancelBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+    changeContainer.innerHTML = `  <div class="workbench flex">
+            <i class="fa-solid fa-wrench"></i>
+            <p class="nowrap">This is where the magic happens.</p>
+          </div>`;
+    changeContainer.classList.remove("display-change-name");
+    childArrow.style.transform = "rotate(0deg)";
+  });
+};
+const changeEmailHTML = function (container) {
+  return (container.innerHTML = `<div id="change-email">
+            <div id="change-email-top" class="flex">
+              <h2>Change email</h2>
+              <p>2/19/2024</p>
+            </div>
+            <div id="change-email-bottom" class="flex">
+              <h2>Email</h2>
+
+              <form action="submit" class="flex">
+                <p>
+                  Before changing your email, you will need to provide your
+                  password and PIN for added security.
+                </p>
+
+                <div id="change-email-input-container" class="flex">
+                  <div>
+                    <input
+                      type="password"
+                      placeholder="Password"
+                      name=""
+                      id="change-email-password-input"
+                    />
+                    <p class="input-error-text-credentials hidden">
+                      * Password and PIN don't match your account
+                    </p>
+                    <p class="input-error-text hidden">
+                      * Field can not be empty
+                    </p>
+                  </div>
+                  <div>
+                    <input
+                      type="password"
+                      placeholder="PIN"
+                      name=""
+                      maxlength="4"
+                      id="change-email-pin-input"
+                    />
+                    <p class="input-error-text hidden">
+                      * Field can not be empty
+                    </p>
+                  </div>
+                </div>
+
+                <div id="change-email-buttons-container">
+                  <p class="name-changed hidden">Email changed!</p>
+                  <button
+                    id="change-email-save-button"
+                    class="change-name-button"
+                  >
+                    Proceed
+                  </button>
+                  <button
+                    id="change-email-cancel-button"
+                    class="change-name-button"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+              <p id="change-email-bottom-text">
+                By choosing to change your email you agree to our
+                <a href="#">Terms and Conditions</a>
+              </p>
+              <div id="change-email-added-container" class="flex">
+                <div id="change-email-added-left" class="flex">
+                  <p>Email</p>
+                  <span>Click here to edit your email</span>
+                </div>
+                <div id="change-email-added-right">
+                  <i class="fa-solid fa-pen"></i> <span>Edit</span>
+                </div>
+              </div>
+            </div>
+          </div>`);
+};
+const changeEmailSecond = function () {
+  const changeContainer = document.querySelector("#display-right");
+
+  const changeEmailElement = document.querySelector(".basic-email");
+
+  changeEmailSecondHTML(changeContainer);
+
+  const inputInnerText = document.querySelectorAll(".input-text");
+  const inputs = document.querySelectorAll("#change-email-second input");
+
+  const childArrow = changeEmailElement.lastElementChild;
+
+  const firstEmail = document.querySelector("#change-email-second-first");
+  const secondEmail = document.querySelector(
+    "#change-email-second-confirmation"
+  );
+
+  const cancelBtn = document.querySelector("#change-email-cancel-button");
+  const allErrors = document.querySelectorAll(".email-error");
+
+  const form = document.querySelector("#change-email-second form");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    allErrors.forEach((el) => el.classList.add("hidden"));
+
+    let error;
+
+    if (!firstEmail.value) {
+      firstEmail.parentElement
+        .querySelector(".norm-error")
+        .classList.remove("hidden");
+      firstEmail.classList.add("input-error");
+      error = 1;
+    } else if (!firstEmail.value.endsWith("@gmail.com")) {
+      firstEmail.parentElement
+        .querySelector(".gmail-error")
+        .classList.remove("hidden");
+      firstEmail.classList.add("input-error");
+      error = 1;
+    } else if (firstEmail.value.slice(0, -10).length < 5) {
+      firstEmail.parentElement
+        .querySelector(".char-error")
+        .classList.remove("hidden");
+      firstEmail.classList.add("input-error");
+      error = 1;
+    }
+    if (!secondEmail.value) {
+      secondEmail.parentElement
+        .querySelector(".second-norm-error")
+        .classList.remove("hidden");
+      secondEmail.classList.add("input-error");
+      error = 1;
+    } else if (firstEmail.value !== secondEmail.value) {
+      secondEmail.parentElement
+        .querySelector(".same-error")
+        .classList.remove("hidden");
+      secondEmail.classList.add("input-error");
+      error = 1;
+    }
+    if (error) return;
+
+    changeContainer.innerHTML = `<i class="fa-solid fa-spinner spinning"></i>`;
+
+    setTimeout(() => {
+      loggedInAs.email = `${firstEmail.value}`;
+
+      localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+
+      changeEmail();
+
+      const successMessage = document.querySelector(".name-changed");
+
+      successMessage.classList.remove("hidden");
+      setTimeout(() => {
+        successMessage.classList.add("hidden");
+      }, 5000);
+      changeEmailElement.innerHTML = `${firstEmail.value} <i class="fa-solid fa-angle-right" aria-hidden="true"></i>`;
+    }, 3000);
+  });
+
+  cancelBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+    changeContainer.innerHTML = `  <div class="workbench flex">
+            <i class="fa-solid fa-wrench"></i>
+            <p class="nowrap">This is where the magic happens.</p>
+          </div>`;
+    changeContainer.classList.remove("display-change-name");
+    childArrow.style.transform = "rotate(0deg)";
+  });
+  inputInnerText.forEach((el) =>
+    el.addEventListener("click", function () {
+      this.previousElementSibling.focus();
+    })
+  );
+  inputs.forEach((el) =>
+    el.addEventListener("focus", function () {
+      this.nextElementSibling.classList.add("input-text-focused");
+      this.classList.remove("input-error");
+      this.parentElement
+        .querySelectorAll(".input-error-text")
+        .forEach((el) => el.classList.add("hidden"));
+
+      el.addEventListener("focusout", function () {
+        if (!this.value)
+          this.nextElementSibling.classList.remove("input-text-focused");
+      });
+    })
+  );
+};
+const changeEmailSecondHTML = function (container) {
+  return (container.innerHTML = `  <div id="change-email-second">
+            <div id="change-email-top-second" class="flex">
+              <h2>Change email</h2>
+              <p>2/19/2024</p>
+            </div>
+            <div id="change-email-bottom-second" class="flex">
+              <h2>Email</h2>
+
+              <form action="submit" class="flex">
+                <p>Great! Enter a new email you'd like to use.</p>
+
+                <div id="change-email-input-container-second" class="flex">
+                  <div>
+                    <input type="text" name="" id="change-email-second-first" />
+                    <p id="first-name" class="input-text">Email</p>
+                    <p class="input-error-text hidden email-error gmail-error">
+                      * Email must end in @gmail.com
+                    </p>
+                    <p class="input-error-text hidden email-error char-error">
+                      * Email must be longer than 5 characters
+                    </p>
+                    <p class="input-error-text hidden email-error norm-error">
+                      * Field can not be empty
+                    </p>
+                  </div>
+                  <div>
+                    <input
+                      type="text"
+                      name=""
+                      id="change-email-second-confirmation"
+                    />
+                    <p id="first-name" class="input-text">Confirm email</p>
+
+                    <p
+                      class="input-error-text email-error hidden second-norm-error"
+                    >
+                      * Field can not be empty
+                    </p>
+                    <p class="input-error-text hidden email-error same-error">
+                      * Provided emails do not match
+                    </p>
+                  </div>
+                </div>
+
+                <div id="change-email-buttons-container">
+                  <p class="name-changed hidden">Email changed!</p>
+                  <button
+                    id="change-email-save-button"
+                    class="change-name-button"
+                  >
+                    Save
+                  </button>
+                  <button
+                    id="change-email-cancel-button"
+                    class="change-name-button"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+              <p id="change-email-bottom-text">
+                By choosing to change your email you agree to our
+                <a href="#">Terms and Conditions</a>
+              </p>
+              <div id="change-email-added-container" class="flex">
+                <div id="change-email-added-left" class="flex">
+                  <p>Email</p>
+                  <span>Click here to edit your email</span>
+                </div>
+                <div id="change-email-added-right">
+                  <i class="fa-solid fa-pen"></i> <span>Edit</span>
+                </div>
+              </div>
+            </div>
+          </div>`);
+};
 //TODO: ADD CHANGING GENDER
 //TODO: ADD CHANGING EMAIL (REQUIRING PASSWORD TO CHANGE)

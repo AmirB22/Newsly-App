@@ -9,6 +9,7 @@ export const arrayOfCities = [
   "Abu Dhabi",
   "Abuja",
   "Acapulco",
+  "Novi Pazar",
   "Accra",
   "Adamstown",
   "Addis Ababa",
