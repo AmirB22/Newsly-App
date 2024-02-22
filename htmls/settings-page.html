@@ -86,46 +86,46 @@
           </div>
         </div>
         <div id="display-right" class="flex">
-          <div id="change-email-second">
-            <div id="change-email-top-second" class="flex">
+          <div id="change-email">
+            <div id="change-email-top" class="flex">
               <h2>Change email</h2>
               <p>2/19/2024</p>
             </div>
-            <div id="change-email-bottom-second" class="flex">
+            <div id="change-email-bottom" class="flex">
               <h2>Email</h2>
 
               <form action="submit" class="flex">
-                <p>Great! Enter a new email you'd like to use.</p>
+                <p>
+                  Before changing your email, you will need to provide your
+                  password and PIN for added security.
+                </p>
 
-                <div id="change-email-input-container-second" class="flex">
+                <div id="change-email-input-container" class="flex">
                   <div>
-                    <input type="text" name="" id="change-email-second-first" />
-                    <p id="first-name" class="input-text">Email</p>
-                    <p class="input-error-text hidden email-error gmail-error">
-                      * Email must end in @gmail.com
+                    <input
+                      type="password"
+                      placeholder="Password"
+                      name=""
+                      id="change-email-password-input"
+                    />
+                    <p class="input-error-text-credentials hidden">
+                      * Password and PIN don't match your account
                     </p>
-                    <p class="input-error-text hidden email-error char-error">
-                      * Email must be longer than 5 characters
-                    </p>
-                    <p class="input-error-text hidden email-error norm-error">
+                    <p class="input-error-text hidden">
                       * Field can not be empty
                     </p>
+                    <p class="forgot-password">Forgot password</p>
                   </div>
                   <div>
                     <input
-                      type="text"
+                      type="password"
+                      placeholder="PIN"
                       name=""
-                      id="change-email-second-confirmation"
+                      maxlength="4"
+                      id="change-email-pin-input"
                     />
-                    <p id="first-name" class="input-text">Confirm email</p>
-
-                    <p
-                      class="input-error-text email-error hidden second-norm-error"
-                    >
+                    <p class="input-error-text hidden">
                       * Field can not be empty
-                    </p>
-                    <p class="input-error-text hidden email-error same-error">
-                      * Provided emails do not match
                     </p>
                   </div>
                 </div>
@@ -136,7 +136,7 @@
                     id="change-email-save-button"
                     class="change-name-button"
                   >
-                    Save
+                    Proceed
                   </button>
                   <button
                     id="change-email-cancel-button"

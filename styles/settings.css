@@ -305,7 +305,9 @@ html {
   align-self: flex-start;
   padding: 0.5rem 2rem !important;
 }
-
+#change-email-input-container-second {
+  gap: 0.5rem;
+}
 #change-gender-other {
   width: 100%;
   height: 5rem;
@@ -368,6 +370,16 @@ html {
   top: 1rem;
   color: lime;
   font-size: 1rem;
+}
+.forgot-password {
+  position: absolute;
+  right: 0;
+  font-size: 1rem;
+  color: teal;
+  cursor: pointer;
+}
+.forgot-password:hover {
+  text-decoration: underline;
 }
 #change-email-buttons-container,
 #change-gender-buttons-container,

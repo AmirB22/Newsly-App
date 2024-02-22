@@ -174,6 +174,15 @@ const changeName = function () {
 
       localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
 
+      userAccounts.forEach((el) => {
+        if ((loggedInAs.pin = el.pin)) {
+          el._firstName = loggedInAs._firstName;
+          el._lastName = loggedInAs._lastName;
+        }
+      });
+
+      localStorage.setItem("accounts", JSON.stringify(userAccounts));
+
       changeName();
       const successMessage = document.querySelector(".name-changed");
 
@@ -389,6 +398,14 @@ const changeDate = function () {
 
       localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
 
+      userAccounts.forEach((el) =>
+        loggedInAs.pin === el.pin
+          ? (el._dateOfBirth = loggedInAs._dateOfBirth)
+          : 0
+      );
+
+      localStorage.setItem("accounts", JSON.stringify(userAccounts));
+
       changeDate();
       const successMessage = document.querySelector(".name-changed");
 
@@ -569,6 +586,12 @@ const changeGender = function () {
 
           localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
 
+          userAccounts.forEach((el) =>
+            loggedInAs.pin === el.pin ? (el._gender = loggedInAs._gender) : 0
+          );
+
+          localStorage.setItem("accounts", JSON.stringify(userAccounts));
+
           changeGender();
 
           const successMessage = document.querySelector(".name-changed");
@@ -595,6 +618,12 @@ const changeGender = function () {
           loggedInAs._gender = gender;
 
           localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+
+          userAccounts.forEach((el) =>
+            loggedInAs.pin === el.pin ? (el._gender = loggedInAs._gender) : 0
+          );
+
+          localStorage.setItem("accounts", JSON.stringify(userAccounts));
 
           changeGender();
 
@@ -906,6 +935,18 @@ const changeEmailSecond = function () {
         .classList.remove("hidden");
       firstEmail.classList.add("input-error");
       error = 1;
+    } else if (firstEmail.value === loggedInAs.email) {
+      firstEmail.parentElement
+        .querySelector(".owned-error")
+        .classList.remove("hidden");
+      firstEmail.classList.add("input-error");
+      error = 1;
+    } else if (userAccounts.some((el) => el.email === firstEmail.value)) {
+      firstEmail.parentElement
+        .querySelector(".taken-error")
+        .classList.remove("hidden");
+      firstEmail.classList.add("input-error");
+      error = 1;
     }
     if (!secondEmail.value) {
       secondEmail.parentElement
@@ -929,7 +970,15 @@ const changeEmailSecond = function () {
 
       localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
 
+      userAccounts.forEach((el) =>
+        loggedInAs.pin === el.pin ? (el.email = loggedInAs.email) : 0
+      );
+
+      localStorage.setItem("accounts", JSON.stringify(userAccounts));
+
       changeEmail();
+
+      console.log(userAccounts);
 
       const successMessage = document.querySelector(".name-changed");
 
@@ -995,6 +1044,12 @@ const changeEmailSecondHTML = function (container) {
                     <p class="input-error-text hidden email-error norm-error">
                       * Field can not be empty
                     </p>
+                     <p class="input-error-text hidden email-error taken-error">
+                      * Email already taken
+                    </p>
+                    <p class="input-error-text hidden email-error owned-error">
+                      * You already have this email
+                    </p>
                   </div>
                   <div>
                     <input
@@ -1005,8 +1060,7 @@ const changeEmailSecondHTML = function (container) {
                     <p id="first-name" class="input-text">Confirm email</p>
 
                     <p
-                      class="input-error-text email-error hidden second-norm-error"
-                    >
+                      class="input-error-text email-error hidden second-norm-error">
                       * Field can not be empty
                     </p>
                     <p class="input-error-text hidden email-error same-error">
