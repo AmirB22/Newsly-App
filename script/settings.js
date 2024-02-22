@@ -1047,5 +1047,8 @@ const changeEmailSecondHTML = function (container) {
             </div>
           </div>`);
 };
-//TODO: ADD CHANGING GENDER
-//TODO: ADD CHANGING EMAIL (REQUIRING PASSWORD TO CHANGE)
+//TODO: Add more error handling to email changing (Check if email is the same as the original email & if another user has the email already.)
+//TODO: (maybe) Add getting new PIN code if the user forgot it (Requires username and password)
+//TODO: (maybe) Add a forgot password button, when user clicks on it he gets redirected to the login reset password page.
+
+//TODO: Create the username change page
