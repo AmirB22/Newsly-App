@@ -22,6 +22,9 @@ let LoggedIn;
 const checkIfLoggedIn = function () {
   if (Logged) {
     logInContainer.style.opacity = "0";
+    document.querySelector(".forgot-password-container")
+      ? (document.querySelector(".forgot-password-container").innerHTML = "")
+      : 0;
     document.querySelector(".go-back-container").textContent = "";
     setTimeout(() => {
       logInContainer.innerHTML = "";
@@ -538,12 +541,12 @@ const forgotPassword = function () {
     });
 
     if (found) {
-      secondSubmit();
+      secondSubmit(accountFound);
       firstForm.style.opacity = "0";
     } else renderInputErrors("forgot-password-credentials", "No account found under given credentials");
   });
 };
-function secondSubmit() {
+function secondSubmit(accountFound) {
   if (secondForm) secondForm.remove();
   secondForm = document.createElement("form");
   secondForm.classList.add("change-password-container");
@@ -608,27 +611,24 @@ function secondSubmit() {
           el.password = firstPassword.value;
         }
       });
+      loggedInAs.password = firstPassword.value;
+
       localStorage.setItem("accounts", JSON.stringify(userAccounts));
+      localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
 
       secondForm.style.opacity = "0";
-      document.querySelector(".go-back").style.opacity = "0";
       createPasswordChangedContainerTextID = setTimeout(() => {
-        document.querySelector(".go-back-container").innerHTML = "";
         secondForm.innerHTML = `<div class="change-password-changed">
               <h1 class="change-password-message">Password successfully changed</h1>
               <p class="change-password-new-password">New password is <span>${firstPassword.value}</span></p></div>`;
         document.querySelector(".change-password-container").style.opacity =
           "1";
-        bttmSlidingContainerText.innerHTML = `<button class="changed-password-log-in-button"><i class="fa-solid fa-right-to-bracket"></i>Log in</button>`;
+
         document
-          .querySelector(".changed-password-log-in-button")
+          .querySelector(".go-back-container")
           .addEventListener("click", function () {
-            helper("Log in");
             secondForm.remove();
           });
-        setTimeout(() => {
-          bttmSlidingContainerText.style.opacity = "1";
-        }, 500);
       }, 500);
     });
 }
@@ -668,8 +668,7 @@ const checkHash = function () {
     Logged ? checkIfLoggedIn() : helper("Sign up");
   } else if (window.location.hash === "#login") {
     Logged ? checkIfLoggedIn() : helper("Log in");
-  } else if (window.location.hash === "#reset-password")
-    Logged ? checkIfLoggedIn() : forgotPassword();
+  } else if (window.location.hash === "#reset-password") forgotPassword();
   else nonexistantHashScreen();
 };
 checkHash();

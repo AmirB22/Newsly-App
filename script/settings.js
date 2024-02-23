@@ -82,7 +82,7 @@ menuBtns.forEach((el) =>
               </div>
               <div class="account-info flex">
                 <p class="wd40">Password</p>
-                <p class="account-info-value flex wd60">
+                <p class="account-info-value flex wd60 basic-password">
                   ********** <i class="fa-solid fa-angle-right"></i>
                 </p>
               </div>
@@ -105,6 +105,7 @@ menuBtns.forEach((el) =>
       const changeDateElement = document.querySelector(".basic-date-of-birth");
       const changeGenderElement = document.querySelector(".basic-gender");
       const changeEmailElement = document.querySelector(".basic-email");
+      const changePasswordElement = document.querySelector(".basic-password");
 
       const controlWindow = document.querySelector(".control-window");
 
@@ -112,6 +113,7 @@ menuBtns.forEach((el) =>
       changeDateElement.addEventListener("click", changeDate);
       changeGenderElement.addEventListener("click", changeGender);
       changeEmailElement.addEventListener("click", changeEmail);
+      changePasswordElement.addEventListener("click", changePassword);
 
       controlWindow.addEventListener("click", controlWindowHTML);
     } else display.innerHTML = "nigger";
@@ -741,6 +743,9 @@ const changeEmail = function () {
 
   changeEmailHTML(changeContainer);
 
+  const inputInnerText = document.querySelectorAll(".input-text");
+  const inputs = document.querySelectorAll("#change-email input");
+
   handleIconRotation();
   const childArrow = changeEmailElement.lastElementChild;
   childArrow.style.transform = "rotate(180deg)";
@@ -775,7 +780,9 @@ const changeEmail = function () {
 
     if (!password.value) {
       password.classList.add("input-error");
-      password.parentElement.lastElementChild.classList.remove("hidden");
+      password.parentElement
+        .querySelector(".norm-error")
+        .classList.remove("hidden");
       error = 1;
     }
     if (!PIN.value) {
@@ -811,6 +818,26 @@ const changeEmail = function () {
     changeContainer.classList.remove("display-change-name");
     childArrow.style.transform = "rotate(0deg)";
   });
+
+  inputInnerText.forEach((el) =>
+    el.addEventListener("click", function () {
+      this.previousElementSibling.focus();
+    })
+  );
+  inputs.forEach((el) =>
+    el.addEventListener("focus", function () {
+      this.nextElementSibling.classList.add("input-text-focused");
+      this.classList.remove("input-error");
+      this.parentElement
+        .querySelectorAll(".input-error-text")
+        .forEach((el) => el.classList.add("hidden"));
+
+      el.addEventListener("focusout", function () {
+        if (!this.value)
+          this.nextElementSibling.classList.remove("input-text-focused");
+      });
+    })
+  );
 };
 const changeEmailHTML = function (container) {
   return (container.innerHTML = `<div id="change-email">
@@ -838,9 +865,10 @@ const changeEmailHTML = function (container) {
                     <p class="input-error-text-credentials hidden">
                       * Password and PIN don't match your account
                     </p>
-                    <p class="input-error-text hidden">
+                    <p class="input-error-text norm-error hidden">
                       * Field can not be empty
                     </p>
+                    <a href="../htmls/login-page.html#reset-password" class="forgot-password">Forgot password</a>
                   </div>
                   <div>
                     <input
@@ -1101,8 +1129,241 @@ const changeEmailSecondHTML = function (container) {
             </div>
           </div>`);
 };
-//TODO: Add more error handling to email changing (Check if email is the same as the original email & if another user has the email already.)
+
+const changePassword = function () {
+  const changeContainer = document.querySelector("#display-right");
+
+  const changePasswordElement = document.querySelector(".basic-password");
+
+  changePasswordHTML(changeContainer);
+
+  const inputInnerText = document.querySelectorAll(".input-text");
+  const inputs = document.querySelectorAll("#change-password input");
+
+  handleIconRotation();
+
+  const childArrow = changePasswordElement.lastElementChild;
+  childArrow.style.transform = "rotate(180deg)";
+
+  changeContainer.classList.remove("display-change-name");
+  changeContainer.classList.add("display-right-hidden");
+
+  controlWindowHTML();
+
+  const oldPassword = document.querySelector("#change-password-old");
+  const newPassword = document.querySelector("#change-password-new");
+  const confirmationPassword = document.querySelector(
+    "#change-password-confirmation"
+  );
+
+  const cancelBtn = document.querySelector("#change-password-cancel-button");
+  const allErrors = document.querySelectorAll(".password-error");
+
+  const form = document.querySelector("#change-password form");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    allErrors.forEach((el) => el.classList.add("hidden"));
+
+    let error;
+
+    if (!oldPassword.value) {
+      oldPassword.parentElement
+        .querySelector(".norm-error")
+        .classList.remove("hidden");
+      oldPassword.classList.add("input-error");
+      error = 1;
+    } else if (oldPassword.value !== loggedInAs.password) {
+      console.log(oldPassword.value, loggedInAs.password);
+      oldPassword.parentElement
+        .querySelector(".old-error")
+        .classList.remove("hidden");
+      oldPassword.classList.add("input-error");
+      error = 1;
+    }
+
+    if (!newPassword.value) {
+      newPassword.parentElement
+        .querySelector(".norm-error")
+        .classList.remove("hidden");
+      newPassword.classList.add("input-error");
+      error = 1;
+    } else if (newPassword.value === loggedInAs.password) {
+      newPassword.parentElement
+        .querySelector(".own-error")
+        .classList.remove("hidden");
+      newPassword.classList.add("input-error");
+      error = 1;
+    }
+
+    if (!confirmationPassword.value) {
+      confirmationPassword.parentElement
+        .querySelector(".norm-error")
+        .classList.remove("hidden");
+      confirmationPassword.classList.add("input-error");
+      error = 1;
+    } else if (confirmationPassword.value !== newPassword.value) {
+      confirmationPassword.parentElement
+        .querySelector(".same-error")
+        .classList.remove("hidden");
+      confirmationPassword.classList.add("input-error");
+      error = 1;
+    }
+    if (error) return;
+
+    changeContainer.innerHTML = `<i class="fa-solid fa-spinner spinning"></i>`;
+
+    setTimeout(() => {
+      loggedInAs.password = `${newPassword.value}`;
+
+      localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+
+      userAccounts.forEach((el) => {
+        if (loggedInAs.pin === el.pin) {
+          el.password = loggedInAs.password;
+          console.log(el.password, loggedInAs.password);
+          console.log(el);
+          console.log(loggedInAs.pin, el.pin);
+        }
+      });
+
+      localStorage.setItem("accounts", JSON.stringify(userAccounts));
+
+      changePassword();
+
+      const successMessage = document.querySelector(".name-changed");
+
+      successMessage.classList.remove("hidden");
+      setTimeout(() => {
+        successMessage.classList.add("hidden");
+      }, 5000);
+    }, 3000);
+  });
+
+  cancelBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+    changeContainer.innerHTML = `  <div class="workbench flex">
+            <i class="fa-solid fa-wrench"></i>
+            <p class="nowrap">This is where the magic happens.</p>
+          </div>`;
+    changeContainer.classList.remove("display-change-name");
+    childArrow.style.transform = "rotate(0deg)";
+  });
+  inputInnerText.forEach((el) =>
+    el.addEventListener("click", function () {
+      this.previousElementSibling.focus();
+    })
+  );
+  inputs.forEach((el) =>
+    el.addEventListener("focus", function () {
+      this.nextElementSibling.classList.add("input-text-focused");
+      this.classList.remove("input-error");
+      this.parentElement
+        .querySelectorAll(".input-error-text")
+        .forEach((el) => el.classList.add("hidden"));
+
+      el.addEventListener("focusout", function () {
+        if (!this.value)
+          this.nextElementSibling.classList.remove("input-text-focused");
+      });
+    })
+  );
+};
+const changePasswordHTML = function (container) {
+  return (container.innerHTML = ` <div id="change-password">
+            <div id="change-password-top" class="flex">
+              <h2>Change password</h2>
+              <p>2/19/2024</p>
+            </div>
+            <div id="change-password-bottom" class="flex">
+              <h2>Password</h2>
+
+              <form action="submit" class="flex">
+                <p>
+                  Please enter your old password and then choose a new password.
+                </p>
+
+                <div id="change-password-input-container" class="flex">
+                  <div>
+                    <input type="password" name="" id="change-password-old"/>
+                    <p id="first-name" class="input-text">Old password</p>
+                    <a
+                      href="../htmls/login-page.html#reset-password"
+                      class="forgot-password"
+                      >Forgot password</a
+                    >
+
+                    <p class="input-error-text old-error hidden password-error">
+                      * Password does not match your old password
+                    </p>
+
+                    <p class="input-error-text norm-error hidden password-error">
+                      * Field can not be empty
+                    </p>
+                  </div>
+                  <div>
+                    <input type="password" name="" id="change-password-new" />
+                    <p id="first-name" class="input-text">New password</p>
+
+                    <p class="input-error-text norm-error hidden password-error">
+                      * Field can not be empty
+                    </p>
+                    <p class="input-error-text own-error hidden password-error">
+                      * Password can't be your old password
+                    </p>
+                  </div>
+                  <div>
+                    <input
+                      type="password"
+                      name=""
+                       id="change-password-confirmation"
+                    />
+                    <p id="first-name" class="input-text">Confirm password</p>
+
+
+                    <p class="input-error-text norm-error hidden password-error">
+                      * Field can not be empty
+                    </p>
+                    <p class="input-error-text same-error hidden password-error">
+                      * Passwords do not match
+                    </p>
+                  </div>
+                </div>
+
+                <div id="change-password-buttons-container">
+                  <p class="name-changed hidden">Password changed!</p>
+                  <button
+                    id="change-password-save-button"
+                    class="change-name-button"
+                  >
+                    Save
+                  </button>
+                  <button
+                    id="change-password-cancel-button"
+                    class="change-name-button"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+              <p id="change-password-bottom-text">
+                By choosing to change your password you agree to our
+                <a href="#">Terms and Conditions</a>
+              </p>
+              <div id="change-password-added-container" class="flex">
+                <div id="change-password-added-left" class="flex">
+                  <p>Email</p>
+                  <span>Click here to edit your password</span>
+                </div>
+                <div id="change-password-added-right">
+                  <i class="fa-solid fa-pen"></i> <span>Edit</span>
+                </div>
+              </div>
+            </div>
+          </div>`);
+};
+
 //TODO: (maybe) Add getting new PIN code if the user forgot it (Requires username and password)
-//TODO: (maybe) Add a forgot password button, when user clicks on it he gets redirected to the login reset password page.
 
 //TODO: Create the username change page

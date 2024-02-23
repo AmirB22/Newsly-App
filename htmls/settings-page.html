@@ -86,76 +86,85 @@
           </div>
         </div>
         <div id="display-right" class="flex">
-          <div id="change-email">
-            <div id="change-email-top" class="flex">
-              <h2>Change email</h2>
+          <div id="change-password">
+            <div id="change-password-top" class="flex">
+              <h2>Change password</h2>
               <p>2/19/2024</p>
             </div>
-            <div id="change-email-bottom" class="flex">
-              <h2>Email</h2>
+            <div id="change-password-bottom" class="flex">
+              <h2>Password</h2>
 
               <form action="submit" class="flex">
                 <p>
-                  Before changing your email, you will need to provide your
-                  password and PIN for added security.
+                  Please enter your old password and then choose a new password.
                 </p>
 
-                <div id="change-email-input-container" class="flex">
+                <div id="change-password-input-container" class="flex">
                   <div>
-                    <input
-                      type="password"
-                      placeholder="Password"
-                      name=""
-                      id="change-email-password-input"
-                    />
-                    <p class="input-error-text-credentials hidden">
-                      * Password and PIN don't match your account
+                    <input type="password" placeholder="Old password" name="" />
+                    <a
+                      href="../htmls/login-page.html#reset-password"
+                      class="forgot-password"
+                      >Forgot password</a
+                    >
+
+                    <p class="input-error-text old-error hidden">
+                      * Password does not match your old password
                     </p>
-                    <p class="input-error-text hidden">
+                    <p class="input-error-text norm-error hidden">
                       * Field can not be empty
                     </p>
-                    <p class="forgot-password">Forgot password</p>
+                  </div>
+                  <div>
+                    <input type="password" placeholder="New password" name="" />
+                    <p class="input-error-text norm-error hidden">
+                      * Field can not be empty
+                    </p>
+                    <p class="input-error-text own-error hidden">
+                      * Password can't be your old password
+                    </p>
                   </div>
                   <div>
                     <input
                       type="password"
-                      placeholder="PIN"
+                      placeholder="Confirm password"
                       name=""
-                      maxlength="4"
-                      id="change-email-pin-input"
                     />
-                    <p class="input-error-text hidden">
+                    <p class="input-error-text norm-error hidden">
                       * Field can not be empty
+                    </p>
+                    <p class="input-error-text same-error hidden">
+                      * Passwords do not match
                     </p>
                   </div>
                 </div>
 
-                <div id="change-email-buttons-container">
+                <div id="change-password-buttons-container">
                   <p class="name-changed hidden">Email changed!</p>
                   <button
-                    id="change-email-save-button"
+                    id="change-password-save-button"
                     class="change-name-button"
                   >
-                    Proceed
+                    Save
                   </button>
                   <button
-                    id="change-email-cancel-button"
+                    id="change-password-cancel-button"
                     class="change-name-button"
                   >
                     Cancel
                   </button>
                 </div>
               </form>
-              <p id="change-email-bottom-text">
-                By choosing to change your email you agree to our
+              <p id="change-password-bottom-text">
+                By choosing to change your password you agree to our
                 <a href="#">Terms and Conditions</a>
               </p>
-              <div id="change-email-added-container" class="flex">
-                <div id="change-email-added-left" class="flex">
+              <div id="change-password-added-container" class="flex">
+                <div id="change-password-added-left" class="flex">
                   <p>Email</p>
-                  <span>Click here to edit your email</span>
+                  <span>Click here to edit your password</span>
                 </div>
-                <div id="change-email-added-right">
+                <div id="change-password-added-right">
                   <i class="fa-solid fa-pen"></i> <span>Edit</span>
                 </div>
               </div>
