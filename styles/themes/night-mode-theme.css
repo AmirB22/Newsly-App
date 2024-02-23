@@ -5,10 +5,12 @@
   --primary-color-opacity-2: rgba(0, 0, 0, 0.2);
   --primary-color-opacity-5: rgba(0, 0, 0, 0.5);
 
+  --control-window-background: rgb(0, 0, 0);
+  --input-background: rgb(0, 0, 0);
+
   --text-color: #ffffff;
   --main-background-color: rgb(30, 30, 30, 0.8);
   --focused-background: transparent;
 
   --success-color: lime;
-
 }

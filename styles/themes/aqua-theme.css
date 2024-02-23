@@ -5,6 +5,9 @@
   --primary-color-opacity-2: rgba(23, 23, 23, 0.2);
   --primary-color-opacity-5: rgba(23, 23, 23, 0.5);
 
+  --control-window-background: cyan;
+  --input-background: cyan;
+
   --text-color: #ffffff;
   --main-background-color: rgb(100, 100, 100, 0.8);
   --focused-background: transparent;
