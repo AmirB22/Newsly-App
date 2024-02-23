@@ -1,0 +1,14 @@
+:root {
+  --primary-color: rgb(255, 165, 0);
+  --primary-color-opacity-05: rgba(255, 165, 0, 0.05);
+  --primary-color-opacity-1: rgba(255, 165, 0, 0.1);
+  --primary-color-opacity-2: rgba(255, 165, 0, 0.2);
+  --primary-color-opacity-5: rgba(255, 165, 0, 0.5);
+
+  --text-color: #000000;
+  --main-background-color: rgb(255, 255, 255, 0.8);
+  --focused-background: transparent;
+
+  --success-color: lime;
+
+}

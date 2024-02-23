@@ -34,9 +34,9 @@ menuBtns.forEach((el) =>
                   </div>
                 </div>
               </div>
-              <div class="basic-info flex">
+              <div class="basic-info flex basic-name">
                 <p class="basic-info-key flex wd40">Name</p>
-                <p class="basic-info-value flex wd60 basic-name">
+                <p class="basic-info-value flex wd60">
                  ${
                    loggedInAs._firstName
                      ? `${loggedInAs._firstName}, ${loggedInAs._lastName}`
@@ -44,9 +44,9 @@ menuBtns.forEach((el) =>
                  }<i class="fa-solid fa-angle-right"></i>
                 </p>
               </div>
-              <div class="basic-info flex">
+              <div class="basic-info flex basic-date-of-birth">
                 <p class="basic-info-key flex wd40">Date of Birth</p>
-                <p class="basic-info-value flex wd60 basic-date-of-birth">
+                <p class="basic-info-value flex wd60">
                  ${
                    loggedInAs._dateOfBirth
                      ? `${loggedInAs._dateOfBirth}`
@@ -55,9 +55,9 @@ menuBtns.forEach((el) =>
                   <i class="fa-solid fa-angle-right"></i>
                 </p>
               </div>
-              <div class="basic-info flex">
+              <div class="basic-info flex basic-gender">
                 <p class="basic-info-key flex wd40">Gender</p>
-                <p class="basic-info-value flex wd60 basic-gender">
+                <p class="basic-info-value flex wd60">
                  ${
                    loggedInAs._gender
                      ? `${loggedInAs._gender}`
@@ -65,24 +65,24 @@ menuBtns.forEach((el) =>
                  }<i class="fa-solid fa-angle-right"></i>
                 </p>
               </div>
-              <div class="basic-info flex">
+              <div class="basic-info flex basic-email">
                 <p class="basic-info-key flex wd40">Email</p>
-                <p class="basic-info-value flex wd60 basic-email">
+                <p class="basic-info-value flex wd60">
                   ${loggedInAs.email} <i class="fa-solid fa-angle-right"></i>
                 </p>
               </div>
             </div>
             <div id="account-info">
               <h2>Account info</h2>
-              <div class="account-info flex">
+              <div class="account-info flex basic-username">
                 <p class="wd40">Username</p>
                 <p class="account-info-value flex wd60">
                   ${loggedInAs.username} <i class="fa-solid fa-angle-right"></i>
                 </p>
               </div>
-              <div class="account-info flex">
+              <div class="account-info flex basic-password">
                 <p class="wd40">Password</p>
-                <p class="account-info-value flex wd60 basic-password">
+                <p class="account-info-value flex wd60">
                   ********** <i class="fa-solid fa-angle-right"></i>
                 </p>
               </div>
@@ -106,6 +106,7 @@ menuBtns.forEach((el) =>
       const changeGenderElement = document.querySelector(".basic-gender");
       const changeEmailElement = document.querySelector(".basic-email");
       const changePasswordElement = document.querySelector(".basic-password");
+      const changeUsernameElement = document.querySelector(".basic-username");
 
       const controlWindow = document.querySelector(".control-window");
 
@@ -114,6 +115,7 @@ menuBtns.forEach((el) =>
       changeGenderElement.addEventListener("click", changeGender);
       changeEmailElement.addEventListener("click", changeEmail);
       changePasswordElement.addEventListener("click", changePassword);
+      changeUsernameElement.addEventListener("click", changeUsername);
 
       controlWindow.addEventListener("click", controlWindowHTML);
     } else display.innerHTML = "nigger";
@@ -122,12 +124,17 @@ menuBtns.forEach((el) =>
 const changeName = function () {
   const changeContainer = document.querySelector("#display-right");
 
-  const changeNameElement = document.querySelector(".basic-name");
+  const changeNameElement = document
+    .querySelector(".basic-name")
+    .querySelector(".basic-info-value");
 
   changeNameHTML(changeContainer);
 
   handleIconRotation();
-  const childArrow = changeNameElement.lastElementChild;
+
+  console.log(changeNameElement);
+
+  const childArrow = changeNameElement.firstElementChild;
   childArrow.style.transform = "rotate(180deg)";
 
   changeContainer.classList.add("display-change-name");
@@ -314,13 +321,14 @@ const controlWindowHTML = function () {
 const changeDate = function () {
   const changeContainer = document.querySelector("#display-right");
 
-  const changeDateElement = document.querySelector(".basic-date-of-birth");
-
+  const changeDateElement = document
+    .querySelector(".basic-date-of-birth")
+    .querySelector(".basic-info-value");
   dateOfBirthHTML(changeContainer);
 
   handleIconRotation();
 
-  const childArrow = changeDateElement.lastElementChild;
+  const childArrow = changeDateElement.firstElementChild;
   childArrow.style.transform = "rotate(180deg)";
 
   changeContainer.classList.add("display-right-hidden");
@@ -521,12 +529,13 @@ const handleDays = function (day, month, year) {
 const changeGender = function () {
   const changeContainer = document.querySelector("#display-right");
 
-  const changeGenderElement = document.querySelector(".basic-gender");
-
+  const changeGenderElement = document
+    .querySelector(".basic-gender")
+    .querySelector(".basic-info-value");
   changeGenderHTML(changeContainer);
 
   handleIconRotation();
-  const childArrow = changeGenderElement.lastElementChild;
+  const childArrow = changeGenderElement.firstElementChild;
   childArrow.style.transform = "rotate(180deg)";
 
   changeContainer.classList.remove("display-change-name");
@@ -739,15 +748,16 @@ const genderHelper = function (e) {
 const changeEmail = function () {
   const changeContainer = document.querySelector("#display-right");
 
-  const changeEmailElement = document.querySelector(".basic-email");
-
+  const changeEmailElement = document
+    .querySelector(".basic-email")
+    .querySelector(".basic-info-value");
   changeEmailHTML(changeContainer);
 
   const inputInnerText = document.querySelectorAll(".input-text");
   const inputs = document.querySelectorAll("#change-email input");
 
   handleIconRotation();
-  const childArrow = changeEmailElement.lastElementChild;
+  const childArrow = changeEmailElement.firstElementChild;
   childArrow.style.transform = "rotate(180deg)";
 
   changeContainer.classList.remove("display-change-name");
@@ -926,7 +936,7 @@ const changeEmailSecond = function () {
   const inputInnerText = document.querySelectorAll(".input-text");
   const inputs = document.querySelectorAll("#change-email-second input");
 
-  const childArrow = changeEmailElement.lastElementChild;
+  const childArrow = changeEmailElement.firstElementChild;
 
   const firstEmail = document.querySelector("#change-email-second-first");
   const secondEmail = document.querySelector(
@@ -1005,8 +1015,6 @@ const changeEmailSecond = function () {
       localStorage.setItem("accounts", JSON.stringify(userAccounts));
 
       changeEmail();
-
-      console.log(userAccounts);
 
       const successMessage = document.querySelector(".name-changed");
 
@@ -1133,8 +1141,9 @@ const changeEmailSecondHTML = function (container) {
 const changePassword = function () {
   const changeContainer = document.querySelector("#display-right");
 
-  const changePasswordElement = document.querySelector(".basic-password");
-
+  const changePasswordElement = document
+    .querySelector(".basic-password")
+    .querySelector(".account-info-value");
   changePasswordHTML(changeContainer);
 
   const inputInnerText = document.querySelectorAll(".input-text");
@@ -1142,7 +1151,7 @@ const changePassword = function () {
 
   handleIconRotation();
 
-  const childArrow = changePasswordElement.lastElementChild;
+  const childArrow = changePasswordElement.firstElementChild;
   childArrow.style.transform = "rotate(180deg)";
 
   changeContainer.classList.remove("display-change-name");
@@ -1175,7 +1184,6 @@ const changePassword = function () {
       oldPassword.classList.add("input-error");
       error = 1;
     } else if (oldPassword.value !== loggedInAs.password) {
-      console.log(oldPassword.value, loggedInAs.password);
       oldPassword.parentElement
         .querySelector(".old-error")
         .classList.remove("hidden");
@@ -1222,9 +1230,6 @@ const changePassword = function () {
       userAccounts.forEach((el) => {
         if (loggedInAs.pin === el.pin) {
           el.password = loggedInAs.password;
-          console.log(el.password, loggedInAs.password);
-          console.log(el);
-          console.log(loggedInAs.pin, el.pin);
         }
       });
 
@@ -1357,6 +1362,183 @@ const changePasswordHTML = function (container) {
                   <span>Click here to edit your password</span>
                 </div>
                 <div id="change-password-added-right">
+                  <i class="fa-solid fa-pen"></i> <span>Edit</span>
+                </div>
+              </div>
+            </div>
+          </div>`);
+};
+
+const changeUsername = function () {
+  const changeContainer = document.querySelector("#display-right");
+
+  const changeUsernameElement = document
+    .querySelector(".basic-username")
+    .querySelector(".account-info-value");
+
+  changeUsernameHTML(changeContainer);
+
+  const inputInnerText = document.querySelector(".input-text");
+  const input = document.querySelector("#change-username input");
+
+  handleIconRotation();
+
+  console.log(changeUsernameElement);
+  const childArrow = changeUsernameElement.firstElementChild;
+  childArrow.style.transform = "rotate(180deg)";
+
+  changeContainer.classList.remove("display-change-name");
+  changeContainer.classList.add("display-right-hidden");
+
+  controlWindowHTML();
+
+  const newUsername = document.querySelector("#change-username-new");
+
+  const allErrors = document.querySelectorAll(".username-error");
+  const cancelBtn = document.querySelector("#change-username-cancel-button");
+
+  const form = document.querySelector("#change-username form");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    allErrors.forEach((el) => el.classList.add("hidden"));
+
+    let error;
+
+    if (!newUsername.value) {
+      newUsername.parentElement
+        .querySelector(".norm-error")
+        .classList.remove("hidden");
+      newUsername.classList.add("input-error");
+      error = 1;
+    } else if (newUsername.value === loggedInAs.username) {
+      newUsername.parentElement
+        .querySelector(".own-error")
+        .classList.remove("hidden");
+      newUsername.classList.add("input-error");
+      error = 1;
+    } else if (userAccounts.some((el) => el.username === newUsername.value)) {
+      newUsername.parentElement
+        .querySelector(".taken-error")
+        .classList.remove("hidden");
+      newUsername.classList.add("input-error");
+      error = 1;
+    }
+
+    if (error) return;
+
+    changeContainer.innerHTML = `<i class="fa-solid fa-spinner spinning"></i>`;
+
+    setTimeout(() => {
+      loggedInAs.username = `${newUsername.value}`;
+
+      localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+
+      userAccounts.forEach((el) => {
+        if (loggedInAs.pin === el.pin) el.username = loggedInAs.username;
+      });
+
+      localStorage.setItem("accounts", JSON.stringify(userAccounts));
+
+      changeUsername();
+
+      const successMessage = document.querySelector(".name-changed");
+
+      successMessage.classList.remove("hidden");
+      setTimeout(() => {
+        successMessage.classList.add("hidden");
+      }, 5000);
+      changeUsernameElement.innerHTML = `${newUsername.value}<i class="fa-solid fa-angle-right" aria-hidden="true"></i>`;
+    }, 3000);
+  });
+
+  cancelBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+    changeContainer.innerHTML = `  <div class="workbench flex">
+            <i class="fa-solid fa-wrench"></i>
+            <p class="nowrap">This is where the magic happens.</p>
+          </div>`;
+    changeContainer.classList.remove("display-change-name");
+    childArrow.style.transform = "rotate(0deg)";
+  });
+  inputInnerText.addEventListener("click", function () {
+    this.previousElementSibling.focus();
+  });
+  input.addEventListener("focus", function () {
+    this.nextElementSibling.classList.add("input-text-focused");
+    this.classList.remove("input-error");
+    this.parentElement
+      .querySelectorAll(".input-error-text")
+      .forEach((el) => el.classList.add("hidden"));
+
+    input.addEventListener("focusout", function () {
+      if (!this.value)
+        this.nextElementSibling.classList.remove("input-text-focused");
+    });
+  });
+};
+const changeUsernameHTML = function (container) {
+  return (container.innerHTML = `<div id="change-username">
+            <div id="change-username-top" class="flex">
+              <h2>Change username</h2>
+              <p>2/19/2024</p>
+            </div>
+            <div id="change-username-bottom" class="flex">
+              <h2>Username</h2>
+
+              <form action="submit" class="flex">
+                <p>What would you like other people to call you?</p>
+
+                <div id="change-username-input-container" class="flex">
+                  <div>
+                    <input type="text" name="" id="change-username-new" />
+                    <p id="first-name" class="input-text">New username</p>
+
+                    <p class="input-error-text taken-error hidden username-error">
+                      * Username already taken
+                    </p>
+
+                    <p class="input-error-text own-error hidden username-error">
+                      * You're already using this username
+                    </p>
+
+                    <p class="input-error-text norm-error hidden username-error">
+                      * Field can not be empty
+                    </p>
+                  </div>
+                </div>
+                <p>
+                  You can choose whether to show your username or first and last
+                  name to other users in the privacy tab.
+                </p>
+
+                <div id="change-username-buttons-container">
+                  <p class="name-changed hidden">Username changed!</p>
+                  <button
+                    id="change-username-save-button"
+                    class="change-name-button"
+                  >
+                    Save
+                  </button>
+                  <button
+                    id="change-username-cancel-button"
+                    class="change-name-button"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+              <p id="change-username-bottom-text">
+                By choosing to change your username you agree to our
+                <a href="#">Terms and Conditions</a>
+              </p>
+              <div id="change-username-added-container" class="flex">
+                <div id="change-username-added-left" class="flex">
+                  <p>Email</p>
+                  <span>Click here to edit your password</span>
+                </div>
+                <div id="change-username-added-right">
                   <i class="fa-solid fa-pen"></i> <span>Edit</span>
                 </div>
               </div>

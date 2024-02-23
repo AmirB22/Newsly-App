@@ -3,6 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="../final-logo.png" />
+    <link rel="stylesheet" href="../styles/themes/aqua-theme.css" />
     <link rel="stylesheet" href="../styles/settings.css" />
     <script defer src="../script/settings.js"></script>
     <title>Newsly | Settings</title>
@@ -86,85 +88,70 @@
           </div>
         </div>
         <div id="display-right" class="flex">
-          <div id="change-password">
-            <div id="change-password-top" class="flex">
-              <h2>Change password</h2>
+          <div id="change-username">
+            <div id="change-username-top" class="flex">
+              <h2>Change username</h2>
               <p>2/19/2024</p>
             </div>
-            <div id="change-password-bottom" class="flex">
-              <h2>Password</h2>
+            <div id="change-username-bottom" class="flex">
+              <h2>Username</h2>
 
               <form action="submit" class="flex">
-                <p>
-                  Please enter your old password and then choose a new password.
-                </p>
+                <p>What would you like other people to call you?</p>
 
-                <div id="change-password-input-container" class="flex">
+                <div id="change-username-input-container" class="flex">
                   <div>
-                    <input type="password" placeholder="Old password" name="" />
-                    <a
-                      href="../htmls/login-page.html#reset-password"
-                      class="forgot-password"
-                      >Forgot password</a
+                    <input type="password" name="" id="change-username-new" />
+                    <p id="first-name" class="input-text">New username</p>
+
+                    <p
+                      class="input-error-text taken-error hidden username-error"
                     >
+                      * Username already taken
+                    </p>
 
-                    <p class="input-error-text old-error hidden">
-                      * Password does not match your old password
+                    <p class="input-error-text own-error hidden username-error">
+                      * You're already using this username
                     </p>
-                    <p class="input-error-text norm-error hidden">
+
+                    <p
+                      class="input-error-text norm-error hidden username-error"
+                    >
                       * Field can not be empty
-                    </p>
-                  </div>
-                  <div>
-                    <input type="password" placeholder="New password" name="" />
-                    <p class="input-error-text norm-error hidden">
-                      * Field can not be empty
-                    </p>
-                    <p class="input-error-text own-error hidden">
-                      * Password can't be your old password
-                    </p>
-                  </div>
-                  <div>
-                    <input
-                      type="password"
-                      placeholder="Confirm password"
-                      name=""
-                    />
-                    <p class="input-error-text norm-error hidden">
-                      * Field can not be empty
-                    </p>
-                    <p class="input-error-text same-error hidden">
-                      * Passwords do not match
                     </p>
                   </div>
                 </div>
+                <p>
+                  You can choose whether to show your username or first and last
+                  name to other users in the privacy tab.
+                </p>
 
-                <div id="change-password-buttons-container">
-                  <p class="name-changed hidden">Email changed!</p>
+                <div id="change-username-buttons-container">
+                  <p class="name-changed hidden">Password changed!</p>
                   <button
-                    id="change-password-save-button"
+                    id="change-username-save-button"
                     class="change-name-button"
                   >
                     Save
                   </button>
                   <button
-                    id="change-password-cancel-button"
+                    id="change-username-cancel-button"
                     class="change-name-button"
                   >
                     Cancel
                   </button>
                 </div>
               </form>
-              <p id="change-password-bottom-text">
-                By choosing to change your password you agree to our
+              <p id="change-username-bottom-text">
+                By choosing to change your username you agree to our
                 <a href="#">Terms and Conditions</a>
               </p>
-              <div id="change-password-added-container" class="flex">
-                <div id="change-password-added-left" class="flex">
+              <div id="change-username-added-container" class="flex">
+                <div id="change-username-added-left" class="flex">
                   <p>Email</p>
                   <span>Click here to edit your password</span>
                 </div>
-                <div id="change-password-added-right">
+                <div id="change-username-added-right">
                   <i class="fa-solid fa-pen"></i> <span>Edit</span>
                 </div>
               </div>
