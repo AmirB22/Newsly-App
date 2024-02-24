@@ -1,11 +1,11 @@
 :root {
-  --main-background-color: var(--primary-color);
+  --main-background-color: var(--primary-color-2);
   --text-color: white;
 
   --input-color-focused: white;
 
   --primary-color-opacity-2: var(--text-color);
-  --menu-text-color: var(--main-background-color);
+  --menu-text-color: var(--primary-color);
 }
 .control-window {
   border: 1px solid var(--text-color);
@@ -33,4 +33,10 @@
 #change-name-bottom input,
 #change-date-bottom input {
   border: 1px solid var(--text-color) !important;
+}
+#change-gender-selection {
+  border: 1px solid var(--text-color) !important;
+}
+.input-error-text {
+  color: var(--text-color) !important;
 }

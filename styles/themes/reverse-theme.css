@@ -1,0 +1,45 @@
+:root {
+  --primary-color: rgb(255, 255, 255);
+  --primary-color-opacity-05: rgba(255, 255, 255, 0.05);
+  --primary-color-opacity-1: rgba(255, 255, 255, 0.1);
+  --primary-color-opacity-2: rgba(255, 255, 255, 0.2);
+  --primary-color-opacity-5: rgba(255, 255, 255, 0.5);
+
+  --control-window-background: rgb(255, 255, 255);
+  --control-window-text-color: black;
+
+  --input-background: white;
+  --input-text-background: transparent;
+
+  --background-color: rgb(255, 255, 255);
+  --main-background-accent: rgba(255, 255, 255, 0.1);
+  --main-background-accent-two: rgba(255, 255, 255, 0.1);
+
+  --input-color: black;
+  --input-color-focused: white;
+  --input-text-background: transparent;
+
+  --text-color: #ffffff;
+  --main-background-color: rgb(0, 0, 0, 0.8);
+  --focused-background: transparent;
+
+  --success-color: lime;
+
+  --primary-color-2: rgb(255, 255, 255);
+}
+#change-username-save-button,
+#change-password-save-button,
+#change-email-save-button,
+#change-gender-save-button,
+#change-name-save-button,
+#change-date-save-button {
+  background-color: black !important;
+}
+#change-username-cancel-button,
+#change-password-cancel-button,
+#change-email-cancel-button,
+#change-gender-cancel-button,
+#change-name-cancel-button,
+#change-date-cancel-button {
+  color: black !important;
+}

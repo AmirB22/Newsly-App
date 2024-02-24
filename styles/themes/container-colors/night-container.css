@@ -1,6 +1,6 @@
 :root {
-  --main-background-color: rgba(30, 30, 30, 0.8);
-  --text-color: white;
+  --main-background-color: rgba(30, 30, 30, 1);
+  --text-color: white !important;
 
   --input-color-focused: white;
 }

@@ -42,7 +42,9 @@ html {
   flex-direction: column;
   justify-content: center;
   padding-bottom: 10rem;
-  box-shadow: 1rem -5rem 2rem var(--primary-color-opacity-05);
+  box-shadow: 1rem 0rem 2rem var(--main-background-accent-two);
+
+  z-index: 10000;
 }
 #menu ul {
   display: flex;
@@ -76,12 +78,13 @@ html {
   background: var(--primary-color);
   background: linear-gradient(
     135deg,
-    var(--primary-color-opacity-1) 10%,
+    var(--main-background-accent) 10%,
     rgba(235, 14, 219, 0) 30%
   );
 
   display: flex;
   justify-content: space-between;
+  z-index: 1000;
 }
 #account-basics img {
   width: 10rem;
@@ -363,7 +366,7 @@ html {
   width: 50%;
   cursor: pointer;
   background-color: var(--input-background);
-  color: var(--text-color);
+  color: var(--input-color);
 }
 #change-gender-container {
   display: flex;
