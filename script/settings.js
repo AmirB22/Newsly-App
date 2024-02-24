@@ -118,7 +118,7 @@ menuBtns.forEach((el) =>
       changeUsernameElement.addEventListener("click", changeUsername);
 
       controlWindow.addEventListener("click", controlWindowHTML);
-    } else display.innerHTML = "nigger";
+    } else display.innerHTML = "Not found";
   })
 );
 const changeName = function () {

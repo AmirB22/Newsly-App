@@ -1,0 +1,6 @@
+:root {
+  --background-color: white;
+}
+#main {
+  border: 1px solid var(--primary-color);
+}

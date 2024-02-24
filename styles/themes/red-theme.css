@@ -7,6 +7,13 @@
 
   --control-window-background: rgb(255, 0, 0);
   --input-background: rgb(255, 0, 0);
+  --input-text-background: transparent;
+
+  --background-color: rgb(255, 0, 0);
+
+  --input-color: white;
+  --input-color-focused: white;
+  --input-text-background: transparent;
 
   --text-color: #000000;
   --main-background-color: rgb(255, 255, 255, 0.8);

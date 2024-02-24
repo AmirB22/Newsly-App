@@ -1,0 +1,6 @@
+:root {
+  --main-background-color: rgba(30, 30, 30, 0.8);
+  --text-color: white;
+
+  --input-color-focused: white;
+}

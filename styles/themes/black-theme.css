@@ -1,22 +1,24 @@
 :root {
-  --primary-color: #000000;
+  --primary-color: rgb(0, 0, 0);
   --primary-color-opacity-05: rgba(0, 0, 0, 0.05);
   --primary-color-opacity-1: rgba(0, 0, 0, 0.1);
   --primary-color-opacity-2: rgba(0, 0, 0, 0.2);
   --primary-color-opacity-5: rgba(0, 0, 0, 0.5);
 
   --control-window-background: rgb(0, 0, 0);
-  --input-background: rgb(0, 0, 0);
+  --control-window-text-color: white;
+
+  --input-background: black;
   --input-text-background: transparent;
 
-  --background-color: #000000;
+  --background-color: rgb(0, 0, 0);
 
   --input-color: white;
-  --input-color-focused: white;
+  --input-color-focused: black;
   --input-text-background: transparent;
 
-  --text-color: #ffffff;
-  --main-background-color: rgb(30, 30, 30, 0.8);
+  --text-color: #000000;
+  --main-background-color: rgb(255, 255, 255, 0.8);
   --focused-background: transparent;
 
   --success-color: lime;

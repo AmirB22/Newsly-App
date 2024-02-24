@@ -1,0 +1,22 @@
+:root {
+  --primary-color: rgb(128, 0, 128);
+  --primary-color-opacity-05: rgba(128, 0, 128, 0.05);
+  --primary-color-opacity-1: rgba(128, 0, 128, 0.1);
+  --primary-color-opacity-2: rgba(128, 0, 128, 0.2);
+  --primary-color-opacity-5: rgba(128, 0, 128, 0.5);
+
+  --control-window-background: rgb(128, 0, 128);
+  --input-background: rgb(128, 0, 128);
+  --input-text-background: transparent;
+
+  --background-color: rgb(128, 0, 128);
+
+  --input-color: white;
+  --input-color-focused: white;
+  --input-text-background: transparent;
+
+  --text-color: #000000;
+  --main-background-color: rgb(255, 255, 255, 0.8);
+
+  --success-color: lime;
+}

@@ -1,0 +1,6 @@
+:root {
+  --main-background-color: var(var(--main-background-color));
+  --text-color: var(var(--text-color));
+
+  --input-color-focused: var(var(--input-color-focused));
+}

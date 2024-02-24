@@ -1,0 +1,36 @@
+:root {
+  --main-background-color: var(--primary-color);
+  --text-color: white;
+
+  --input-color-focused: white;
+
+  --primary-color-opacity-2: var(--text-color);
+  --menu-text-color: var(--main-background-color);
+}
+.control-window {
+  border: 1px solid var(--text-color);
+  border-right: none;
+}
+.control-window::after {
+  border-top: 1px solid var(--text-color) !important;
+}
+#main {
+  border: 1px solid var(--text-color);
+}
+#change-username-save-button,
+#change-password-save-button,
+#change-email-save-button,
+#change-gender-save-button,
+#change-name-save-button,
+#change-date-save-button {
+  border: 1px solid var(--text-color) !important;
+}
+#change-username-bottom input,
+#change-password-bottom input,
+#change-email-bottom-second input,
+#change-email-bottom input,
+#change-gender-bottom input,
+#change-name-bottom input,
+#change-date-bottom input {
+  border: 1px solid var(--text-color) !important;
+}

@@ -1,0 +1,5 @@
+:root {
+  --input-background: var(var(--input-background));
+  --input-color: var(var(--input-color));
+  --input-color-focused: var(var(--input-color-focused));
+}
