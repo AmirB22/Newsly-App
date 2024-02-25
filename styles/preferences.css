@@ -1,14 +1,67 @@
-#preferences i {
+.pref-top i {
   font-size: 10rem;
-  color: blue;
 }
-#preferences svg {
-  color: blue;
+.preferences-top {
+  height: 20%;
 }
-#preferences {
+.preferences-bottom {
   width: 100%;
-  height: 100%;
+  height: 80%;
   display: grid;
-  grid-template-columns: 33% 33% 33%;
   place-items: center;
+  grid-template-columns: 30% 30% 30%;
+  grid-template-rows: 45% 45%;
+  gap: 2.5%;
+  padding: 2.5%;
+}
+.preference {
+  width: calc(100% - 4rem);
+  height: calc(100% - 4rem);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: var(--text-color);
+  border-radius: 2rem;
+  transition: all 0.3s;
+  opacity: 0.8;
+  padding: 2rem;
+}
+.preference:hover {
+  transform: scale(1.05);
+}
+.pref-bottom {
+  color: var(--main-background-color);
+  width: 100%;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.pref-top {
+  color: var(--primary-color);
+  width: 100%;
+  height: 50%;
+}
+.pref-bottom-button,
+.pref-bottom-select {
+  background-color: var(--primary-color);
+  border: none;
+  color: var(--control-window-color);
+  padding: 1rem 2rem;
+  align-self: flex-end;
+  cursor: pointer;
+}
+.pref-bottom-button:hover {
+  border: 4px solid var(--background-color);
+  margin: -4px;
+}
+.pref-bottom-button:focus,
+.pref-bottom-select:focus {
+  outline: none;
+}
+.pref-bottom h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
 }
