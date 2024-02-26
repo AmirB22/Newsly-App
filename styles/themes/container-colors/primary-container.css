@@ -1,21 +1,20 @@
 :root {
   --main-background-color: var(--primary-color-2);
-  --text-color: white;
+
+--text-color: white;
 
   --input-color-focused: white;
 
   --primary-color-opacity-2: var(--text-color);
-  --menu-text-color: var(--primary-color);
+  --menu-text-color: var(--menu-color);
 }
+
 .control-window {
   border: 1px solid var(--text-color);
   border-right: none;
 }
 .control-window::after {
   border-top: 1px solid var(--text-color) !important;
-}
-#main {
-  border: 1px solid var(--text-color);
 }
 #change-username-save-button,
 #change-password-save-button,
@@ -39,4 +38,7 @@
 }
 .input-error-text {
   color: var(--text-color) !important;
+}
+.preference {
+  border: 1px solid var(--text-color);
 }

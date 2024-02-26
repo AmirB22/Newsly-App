@@ -23,7 +23,9 @@
   --main-background-color: rgb(255, 255, 255, 0.8);
 
   --success-color: lime;
+  --menu-color: var(--primary-color);
 
-  --primary-color-2: rgb(128, 0, 128);
+
+  --primary-color-2: rgb(100, 0, 100);
 
 }

@@ -30,7 +30,7 @@ html {
   border-radius: 5rem;
   overflow: hidden;
   display: flex;
-  font-family: "Poppins", sans-serif;
+  font-family: "Inter", sans-serif;
   position: relative;
   z-index: 999;
   background-color: var(--main-background-color);
@@ -567,5 +567,21 @@ html {
   }
   100% {
     transform: rotate(0deg);
+  }
+}
+
+@media screen and (max-width: 1500px) {
+  #main {
+    width: 95%;
+    height: 95%;
+  }
+  #display-left {
+    padding: 10rem 7rem;
+  }
+  #display-left h1{
+    margin-bottom: 2rem;
+  }
+  #account-basics img {
+    width: 7rem;
   }
 }

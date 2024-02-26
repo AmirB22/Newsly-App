@@ -24,6 +24,8 @@
   --focused-background: transparent;
 
   --success-color: lime;
+  --menu-color: var(--primary-color);
 
-  --primary-color-2: rgb(255, 165, 0);
+
+  --primary-color-2: rgb(230, 145, 0);
 }

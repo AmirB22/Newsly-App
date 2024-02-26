@@ -1,0 +1,94 @@
+#themes {
+    width: calc(100% - 20rem);
+    height: calc(100% - 12rem);
+    padding: 10rem;
+    padding-top: 2rem;
+}
+#theme-title {
+    font-size: 4rem;
+    margin-bottom: 2rem;
+}
+.theme-subtitle {
+    font-weight: normal;
+    margin: 1rem 0rem;
+    cursor: pointer;
+
+}
+#theme-colors,#theme-colors-premade {
+    display: flex;
+    gap: 1rem;
+}
+#theme-colors {
+    height: 0px;
+    overflow: hidden;
+    transition: all 0.3s;
+}
+#theme-colors-premade {
+    overflow: hidden;
+}
+.theme-colors-clicked { 
+    height: 5rem !important;
+}
+.theme-father{
+    width: 4rem;
+    height: 4rem;
+    cursor: pointer;
+    display: grid;
+    border-radius: 4rem;
+    place-items: center;
+}
+.theme-father div {
+    width: 90%;
+    height: 90%;
+    border-radius: 2rem;
+    transition: all 0.3s;
+}
+.theme-father:hover {
+    & div {
+     transform: scale(0.8);
+    }
+}
+.theme-father:active {
+& div {
+    transform: scale(1.1);
+}
+}
+.blue-bg {
+background-color: blue;
+}
+.red-bg {
+    background-color: red;
+}
+.green-bg {
+    background-color: green;
+}
+.pink-bg {
+    background-color: pink;
+}
+.hot-pink-bg {
+    background-color: hotpink;
+}
+.yellow-bg {
+    background-color: yellow;
+}
+.orange-bg {
+    background-color: orange;
+}
+.aqua-bg {
+    background-color: teal;
+}
+.purple-bg {
+    background-color: purple    ;
+}
+.gray-bg {
+    background-color: gray;
+}
+.black-bg {
+    background-color: black;
+}
+.white-bg {
+    background-color: white;
+}
+.colorful-bg {
+    background-color: brown;
+}

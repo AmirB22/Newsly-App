@@ -24,8 +24,9 @@
   --focused-background: transparent;
 
   --success-color: lime;
+  --menu-color: black;
 
-  --primary-color-2: rgb(255, 255, 255);
+  --primary-color-2: rgb(200,200,200);
 }
 #change-username-save-button,
 #change-password-save-button,

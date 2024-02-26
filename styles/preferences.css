@@ -1,8 +1,57 @@
-.pref-top i {
-  font-size: 10rem;
-}
 .preferences-top {
-  height: 20%;
+  height: 10%;
+  width: calc(100% - 10%);
+  display: flex;
+  justify-content: space-between;
+  padding: 2.5% 5%;
+  border-bottom: 1px solid var(--text-color);
+}
+.preference-profile-container {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+.pref-profile-info {
+  display: flex;
+  flex-direction: column;
+justify-content: center;
+text-align: end;
+}
+.pref-view-profile {
+  cursor: pointer;
+}
+.pref-view-profile:hover {
+  text-decoration: underline;
+}
+.pref-profile-image {
+  width: 5rem;
+  height: 5rem;
+  position: relative;
+}
+.pref-profile-image img{
+  width: 100%;
+  height: 100%;
+  border-radius: 2.5rem;
+}
+.pref-view-profile-hover {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  background-color: rgba(0,0,0,0.5);
+  height: 100%;
+  width: 100%;
+  border-radius: 2.5rem;
+  color: rgb(216, 216, 216);
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  transition: opacity 0.5s;
+  cursor: pointer;
+
+}
+.pref-view-profile-hover:hover {
+  opacity: 1;
 }
 .preferences-bottom {
   width: 100%;
@@ -53,6 +102,21 @@
   align-self: flex-end;
   cursor: pointer;
 }
+.pref-bottom-select option {
+  color: var(--text-color);
+}
+#choose-timezone,#choose-language {
+width: 60%;
+overflow: hidden;
+white-space:nowrap;
+text-overflow: ellipsis;
+}
+#choose-language {
+  width: 48%;
+}
+#choose-languge option::-webkit-scrollbar {
+  width: 0px;
+}
 .pref-bottom-button:hover {
   border: 4px solid var(--main-background-color);
   margin: -4px;
@@ -64,4 +128,91 @@
 .pref-bottom h1 {
   font-size: 2rem;
   margin-bottom: 1rem;
+}
+.fluent--paint-brush-16-filled {
+  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23000' d='M10 4.5V1H9v2.5a.5.5 0 0 1-1 0V1H3.5a.5.5 0 0 0-.5.5V7h10V1.5a.5.5 0 0 0-.5-.5H11v3.5a.5.5 0 0 1-1 0M13 8H3v1a2 2 0 0 0 2 2h1.5v2.5a1.5 1.5 0 0 0 3 0V11H11a2 2 0 0 0 2-2z'/%3E%3C/svg%3E");
+
+}
+.fa-solid--ad {
+  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23000' d='M157.52 272h36.96L176 218.78zM352 256c-13.23 0-24 10.77-24 24s10.77 24 24 24s24-10.77 24-24s-10.77-24-24-24M464 64H48C21.5 64 0 85.5 0 112v288c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48M250.58 352h-16.94c-6.81 0-12.88-4.32-15.12-10.75L211.15 320h-70.29l-7.38 21.25A16 16 0 0 1 118.36 352h-16.94c-11.01 0-18.73-10.85-15.12-21.25L140 176.12A23.995 23.995 0 0 1 162.67 160h26.66A23.99 23.99 0 0 1 212 176.13l53.69 154.62c3.61 10.4-4.11 21.25-15.11 21.25M424 336c0 8.84-7.16 16-16 16h-16c-4.85 0-9.04-2.27-11.98-5.68c-8.62 3.66-18.09 5.68-28.02 5.68c-39.7 0-72-32.3-72-72s32.3-72 72-72c8.46 0 16.46 1.73 24 4.42V176c0-8.84 7.16-16 16-16h16c8.84 0 16 7.16 16 16z'/%3E%3C/svg%3E");
+
+}
+.fluent--code-text-16-filled {
+  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23000' d='M1.75 2.5a.75.75 0 0 0 0 1.5h5a.75.75 0 0 0 0-1.5zm3 3a.75.75 0 0 0 0 1.5h3.5a.75.75 0 0 0 0-1.5zM3 9.25a.75.75 0 0 1 .75-.75h7.5a.75.75 0 0 1 0 1.5h-7.5A.75.75 0 0 1 3 9.25M1.75 11.5a.75.75 0 0 0 0 1.5h7a.75.75 0 0 0 0-1.5zm8.75-5.25a.75.75 0 0 1 .75-.75h2a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1-.75-.75M9.75 2.5a.75.75 0 0 0 0 1.5h4.5a.75.75 0 0 0 0-1.5z'/%3E%3C/svg%3E");
+}
+.fa6-solid--language {
+  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 512'%3E%3Cpath fill='%23000' d='M0 128c0-35.3 28.7-64 64-64h512c35.3 0 64 28.7 64 64v256c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64zm320 0v256h256V128zm-141.7 47.9c-3.2-7.2-10.4-11.9-18.3-11.9s-15.1 4.7-18.3 11.9l-64 144c-4.5 10.1.1 21.9 10.2 26.4s21.9-.1 26.4-10.2l8.9-20.1h73.6l8.9 20.1c4.5 10.1 16.3 14.6 26.4 10.2s14.6-16.3 10.2-26.4zM160 233.2l19 42.8h-38zM448 164c11 0 20 9 20 20v4h60c11 0 20 9 20 20s-9 20-20 20h-2l-1.6 4.5c-8.9 24.4-22.4 46.6-39.6 65.4c.9.6 1.8 1.1 2.7 1.6l18.9 11.3c9.5 5.7 12.5 18 6.9 27.4s-18 12.5-27.4 6.9L467 333.8c-4.5-2.7-8.8-5.5-13.1-8.5c-10.6 7.5-21.9 14-34 19.4l-3.6 1.6c-10.1 4.5-21.9-.1-26.4-10.2s.1-21.9 10.2-26.4l3.6-1.6c6.4-2.9 12.6-6.1 18.5-9.8L410 286.1c-7.8-7.8-7.8-20.5 0-28.3s20.5-7.8 28.3 0l14.6 14.6l.5.5c12.4-13.1 22.5-28.3 29.8-45H376c-11 0-20-9-20-20s9-20 20-20h52v-4c0-11 9-20 20-20z'/%3E%3C/svg%3E");
+}
+.mdi--timezone {
+  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M15 12h1.5v4.25l2.86 1.69l-.75 1.22L15 17zm8 4a7 7 0 0 1-7 7c-3 0-5.6-1.92-6.58-4.6L8 17.9l-5.34 2.07l-.16.03a.5.5 0 0 1-.5-.5V4.38c0-.23.15-.41.36-.48L8 2l6 2.1L19.34 2h.16a.5.5 0 0 1 .5.5v7.75c1.81 1.25 3 3.37 3 5.75M9 16c0-3.17 2.11-5.85 5-6.71V6.11L8 4v11.89l1 .35zm7-5a5 5 0 0 0-5 5a5 5 0 0 0 5 5a5 5 0 0 0 5-5a5 5 0 0 0-5-5'/%3E%3C/svg%3E");
+}
+.subway--sharing {
+  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23000' d='M325.8 0v186.2h69.8v46.5H116.4v-46.5h69.8V0H0v186.2h69.8v93.1h162.9v46.5h-69.8V512h186.2V325.8h-69.8v-46.5h162.9v-93.1H512V0z'/%3E%3C/svg%3E");
+}
+.dog {
+  display: inline-block;
+width: 7rem;
+height: 7rem;;
+  background-color: currentColor;
+  -webkit-mask-image: var(--svg);
+  mask-image: var(--svg);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+.dog:hover {
+  animation: wiggle 3s linear infinite;
+}
+@keyframes wiggle {
+  0%, 7% {
+    transform: rotateZ(0);
+  }
+  15% {
+    transform: rotateZ(-15deg);
+  }
+  20% {
+    transform: rotateZ(10deg);
+  }
+  25% {
+    transform: rotateZ(-10deg);
+  }
+  30% {
+    transform: rotateZ(6deg);
+  }
+  35% {
+    transform: rotateZ(-4deg);
+  }
+  40%, 100% {
+    transform: rotateZ(0);
+  }
+}
+
+@media screen and (max-width: 1500px) {
+.pref-top i {
+  font-size: 7rem;
+}
+.pref-top svg {
+  width: 7rem;
+}
+.pref-top 
+{
+  height: 35%;
+}
+.pref-bottom {
+  height: 65%;
+}
+.preference {
+  gap: 5%;
+}
+}
+.no-accent,.no-accent-two {
+  border: 2px solid red;
+}
+.no-accent:hover,.no-accent-two:hover {
+  & div {
+  transform: scale(1);
+  background-color: red;
+  }
+}#create-own-theme {
 }

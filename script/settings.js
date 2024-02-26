@@ -6,16 +6,20 @@ const display = document.querySelector("#display");
 const loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
 const userAccounts = JSON.parse(localStorage.getItem("accounts"));
 
+const prefBtn = document.querySelector("#menu-preferences");
+const accountBtn = document.querySelector("#menu-account");
+
 console.log(loggedInAs);
 console.log(userAccounts);
 
-menuBtns.forEach((el) =>
-  el.addEventListener("click", function (e) {
-    menuBtns.forEach((el) => el.classList.remove("menu-clicked"));
-    e.target.classList.add("menu-clicked");
+const removeCLickedClasses = () =>
+  menuBtns.forEach((el) => el.classList.remove("menu-clicked"));
 
-    if (el.textContent === "Account") {
-      display.innerHTML = `
+const accountPage = function () {
+  removeCLickedClasses();
+  accountBtn.classList.add("menu-clicked");
+
+  display.innerHTML = `
        <div id="display-left">
           <h1>Account Settings</h1>
           <div id="account-basics">
@@ -101,26 +105,326 @@ menuBtns.forEach((el) =>
           </div>
         </div>`;
 
-      const changeNameElement = document.querySelector(".basic-name");
-      const changeDateElement = document.querySelector(".basic-date-of-birth");
-      const changeGenderElement = document.querySelector(".basic-gender");
-      const changeEmailElement = document.querySelector(".basic-email");
-      const changePasswordElement = document.querySelector(".basic-password");
-      const changeUsernameElement = document.querySelector(".basic-username");
+  const changeNameElement = document.querySelector(".basic-name");
+  const changeDateElement = document.querySelector(".basic-date-of-birth");
+  const changeGenderElement = document.querySelector(".basic-gender");
+  const changeEmailElement = document.querySelector(".basic-email");
+  const changePasswordElement = document.querySelector(".basic-password");
+  const changeUsernameElement = document.querySelector(".basic-username");
 
-      const controlWindow = document.querySelector(".control-window");
+  const controlWindow = document.querySelector(".control-window");
 
-      changeNameElement.addEventListener("click", changeName);
-      changeDateElement.addEventListener("click", changeDate);
-      changeGenderElement.addEventListener("click", changeGender);
-      changeEmailElement.addEventListener("click", changeEmail);
-      changePasswordElement.addEventListener("click", changePassword);
-      changeUsernameElement.addEventListener("click", changeUsername);
+  changeNameElement.addEventListener("click", changeName);
+  changeDateElement.addEventListener("click", changeDate);
+  changeGenderElement.addEventListener("click", changeGender);
+  changeEmailElement.addEventListener("click", changeEmail);
+  changePasswordElement.addEventListener("click", changePassword);
+  changeUsernameElement.addEventListener("click", changeUsername);
 
-      controlWindow.addEventListener("click", controlWindowHTML);
-    } else display.innerHTML = "Not found";
-  })
-);
+  controlWindow.addEventListener("click", controlWindowHTML);
+};
+const prefPage = function () {
+  removeCLickedClasses();
+  prefBtn.classList.add("menu-clicked");
+  display.innerHTML = `  <div id="preferences">
+          <div class="preferences-top">
+            <div class="perference-title-container">
+              <h1>Preferences</h1>
+              <p>
+                The place where you can make your experience on the site
+                special.
+              </p>
+            </div>
+            <div class="preference-profile-container">
+              <div class="pref-profile-info"">
+                <h3>${
+                  loggedInAs._firstName
+                    ? `${loggedInAs._firstName}, ${loggedInAs._lastName}`
+                    : `${loggedInAs.username}`
+                }</h3>
+                <p class="pref-view-profile">View profile</p>
+              </div>
+                <div class="pref-profile-image">
+              <img src="${loggedInAs.img}" alt="" />
+              <div class="pref-view-profile-hover">
+                <p>View</p>
+              </div>
+            </div>
+            </div>
+          </div>
+          <div class="preferences-bottom">
+            <div class="preference">
+              <div class="pref-top">
+                <span class="fluent--paint-brush-16-filled dog"></span>
+
+              </div>
+              <div class="pref-bottom">
+                <div>
+                  <h1>Theme</h1>
+                  <p>
+                    Choose the theme of the website. Use one of the premade
+                    themes or create your own.
+                  </p>
+                  
+                </div>
+                <button class="pref-bottom-button">
+                  Edit now <i class="fa-solid fa-pen-to-square"></i> 
+                </button>
+              </div>
+            </div>
+            <div class="preference">
+              <div class="pref-top">
+            <span class="fa-solid--ad dog"></span>
+              </div>
+              <div class="pref-bottom">
+                <div>
+                  <h1>Advertising</h1>
+                  <p>
+                    Modify the settings around what advertisements you get, how
+                    many advertisements etc.
+                  </p>
+                </div>
+                <button class="pref-bottom-button">
+                  Change
+                </button>
+              </div>
+            </div>
+            <div class="preference">
+              <div class="pref-top">
+             <span class="fluent--code-text-16-filled dog"></span>
+              </div>
+              <div class="pref-bottom">
+                <div>
+                  <h1>Displayed information</h1>
+                  <p>
+                    Choose what information gets displayed when other people
+                    click on your profile
+                  </p>
+                </div>
+                <button class="pref-bottom-button">
+                  Change
+                </button>
+              </div>
+            </div>
+            <div class="preference">
+              <div class="pref-top">
+                <span class="fa6-solid--language dog"></span>
+              </div>
+              <div class="pref-bottom">
+                <div>
+                  <h1>Language</h1>
+                  <p>
+                    Share your preferred language and get in contact with other
+                    people that share the same language
+                  </p>
+                </div>
+            <select class="pref-bottom-select" id="choose-language">
+              <option value="Choose" disabled selected >Choose</option>
+              <option value="Afrikaans">Afrikaans</option>
+              <option value="Albanian">Albanian</option>
+              <option value="Arabic">Arabic</option>
+              <option value="Armenian">Armenian</option>
+              <option value="Basque">Basque</option>
+              <option value="Bengali">Bengali</option>
+              <option value="Bulgarian">Bulgarian</option>
+              <option value="Catalan">Catalan</option>
+              <option value="Cambodian">Cambodian</option>
+              <option value="Chinese (Mandarin)">Chinese (Mandarin)</option>
+              <option value="Croatian">Croatian</option>
+              <option value="Czech">Czech</option>
+              <option value="Danish">Danish</option>
+              <option value="Dutch">Dutch</option>
+              <option value="English">English</option>
+              <option value="Estonian">Estonian</option>
+              <option value="Fiji">Fiji</option>
+              <option value="Finnish">Finnish</option>
+              <option value="French">French</option>
+              <option value="Georgian">Georgian</option>
+              <option value="German">German</option>
+              <option value="Greek">Greek</option>
+              <option value="Gujarati">Gujarati</option>
+              <option value="Hebrew">Hebrew</option>
+              <option value="Hindi">Hindi</option>
+              <option value="Hungarian">Hungarian</option>
+              <option value="Icelandic">Icelandic</option>
+              <option value="Indonesian">Indonesian</option>
+              <option value="Irish">Irish</option>
+              <option value="Italian">Italian</option>
+              <option value="Japanese">Japanese</option>
+              <option value="Javanese">Javanese</option>
+              <option value="Korean">Korean</option>
+              <option value="Latin">Latin</option>
+              <option value="Latvian">Latvian</option>
+              <option value="Lithuanian">Lithuanian</option>
+              <option value="Macedonian">Macedonian</option>
+              <option value="Malay">Malay</option>
+              <option value="Malayalam">Malayalam</option>
+              <option value="Maltese">Maltese</option>
+              <option value="Maori">Maori</option>
+              <option value="Marathi">Marathi</option>
+              <option value="Mongolian">Mongolian</option>
+              <option value="Nepali">Nepali</option>
+              <option value="Norwegian">Norwegian</option>
+              <option value="Persian">Persian</option>
+              <option value="Polish">Polish</option>
+              <option value="Portuguese">Portuguese</option>
+              <option value="Punjabi">Punjabi</option>
+              <option value="Quechua">Quechua</option>
+              <option value="Romanian">Romanian</option>
+              <option value="Russian">Russian</option>
+              <option value="Samoan">Samoan</option>
+              <option value="Serbian">Serbian</option>
+              <option value="Slovak">Slovak</option>
+              <option value="Slovenian">Slovenian</option>
+              <option value="Spanish">Spanish</option>
+              <option value="Swahili">Swahili</option>
+              <option value="Swedish ">Swedish </option>
+              <option value="Tamil">Tamil</option>
+              <option value="Tatar">Tatar</option>
+              <option value="Telugu">Telugu</option>
+              <option value="Thai">Thai</option>
+              <option value="Tibetan">Tibetan</option>
+              <option value="Tonga">Tonga</option>
+              <option value="Turkish">Turkish</option>
+              <option value="Ukrainian">Ukrainian</option>
+              <option value="Urdu">Urdu</option>
+              <option value="Uzbek">Uzbek</option>
+              <option value="Vietnamese">Vietnamese</option>
+              <option value="Welsh">Welsh</option>
+              <option value="Xhosa">Xhosa</option>
+            </select>
+              </div>
+            </div>
+            <div class="preference">
+              <div class="pref-top">
+          <span class="mdi--timezone dog"></span>
+              </div>
+              <div class="pref-bottom">
+                <div>
+                  <h1>Your timezone</h1>
+                  <p>Share your timezone</p>
+                </div>
+           <select name="timezone_offset" id="choose-timezone" class="pref-bottom-select">
+            <option value="Choose" disabled selected >Choose</option>
+            <option value="-12:00">(GMT -12:00) Eniwetok, Kwajalein</option>
+            <option value="-11:00">(GMT -11:00) Midway Island, Samoa</option>
+            <option value="-10:00">(GMT -10:00) Hawaii</option>
+            <option value="-09:50">(GMT -9:30) Taiohae</option>
+            <option value="-09:00">(GMT -9:00) Alaska</option>
+            <option value="-08:00">(GMT -8:00) Pacific Time (US &amp; Canada)</option>
+            <option value="-07:00">(GMT -7:00) Mountain Time (US &amp; Canada)</option>
+            <option value="-06:00">(GMT -6:00) Central Time (US &amp; Canada), Mexico City</option>
+            <option value="-05:00">(GMT -5:00) Eastern Time (US &amp; Canada), Bogota, Lima</option>
+            <option value="-04:50">(GMT -4:30) Caracas</option>
+            <option value="-04:00">(GMT -4:00) Atlantic Time (Canada), Caracas, La Paz</option>
+            <option value="-03:50">(GMT -3:30) Newfoundland</option>
+            <option value="-03:00">(GMT -3:00) Brazil, Buenos Aires, Georgetown</option>
+            <option value="-02:00">(GMT -2:00) Mid-Atlantic</option>
+            <option value="-01:00">(GMT -1:00) Azores, Cape Verde Islands</option>
+            <option value="+00:00">(GMT) Western Europe Time, London, Lisbon, Casablanca</option>
+            <option value="+01:00">(GMT +1:00) Brussels, Copenhagen, Madrid, Paris</option>
+            <option value="+02:00">(GMT +2:00) Kaliningrad, South Africa</option>
+            <option value="+03:00">(GMT +3:00) Baghdad, Riyadh, Moscow, St. Petersburg</option>
+            <option value="+03:50">(GMT +3:30) Tehran</option>
+            <option value="+04:00">(GMT +4:00) Abu Dhabi, Muscat, Baku, Tbilisi</option>
+            <option value="+04:50">(GMT +4:30) Kabul</option>
+            <option value="+05:00">(GMT +5:00) Ekaterinburg, Islamabad, Karachi, Tashkent</option>
+            <option value="+05:50">(GMT +5:30) Bombay, Calcutta, Madras, New Delhi</option>
+            <option value="+05:75">(GMT +5:45) Kathmandu, Pokhara</option>
+            <option value="+06:00">(GMT +6:00) Almaty, Dhaka, Colombo</option>
+            <option value="+06:50">(GMT +6:30) Yangon, Mandalay</option>
+            <option value="+07:00">(GMT +7:00) Bangkok, Hanoi, Jakarta</option>
+            <option value="+08:00">(GMT +8:00) Beijing, Perth, Singapore, Hong Kong</option>
+            <option value="+08:75">(GMT +8:45) Eucla</option>
+            <option value="+09:00">(GMT +9:00) Tokyo, Seoul, Osaka, Sapporo, Yakutsk</option>
+            <option value="+09:50">(GMT +9:30) Adelaide, Darwin</option>
+            <option value="+10:00">(GMT +10:00) Eastern Australia, Guam, Vladivostok</option>
+            <option value="+10:50">(GMT +10:30) Lord Howe Island</option>
+            <option value="+11:00">(GMT +11:00) Magadan, Solomon Islands, New Caledonia</option>
+            <option value="+11:50">(GMT +11:30) Norfolk Island</option>
+            <option value="+12:00">(GMT +12:00) Auckland, Wellington, Fiji, Kamchatka</option>
+            <option value="+12:75">(GMT +12:45) Chatham Islands</option>
+            <option value="+13:00">(GMT +13:00) Apia, Nukualofa</option>
+            <option value="+14:00">(GMT +14:00) Line Islands, Tokelau</option>
+          </select>
+              </div>
+            </div>
+            <div class="preference">
+              <div class="pref-top">
+                <span class="subway--sharing dog"></span>
+              </div>
+              <div class="pref-bottom">
+                <div>
+                  <h1>Data sharing</h1>
+                  <p>Choose what we do with the data you provide.</p>
+                </div>
+                <button class="pref-bottom-button">
+                  Change
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>`;
+
+  const viewProfile = document.querySelector(".pref-view-profile");
+  const viewProfileImage = document.querySelector(".pref-view-profile-hover");
+
+  [viewProfileImage, viewProfile].forEach((el) =>
+    el.addEventListener("click", function () {
+      prefBtn.classList.add("menu-clicked");
+      accountPage();
+    })
+  );
+
+  const languageSelection = document.querySelector("#choose-language");
+  const timezoneSelection = document.querySelector("#choose-timezone");
+
+  languageSelection.addEventListener("change", function () {
+    if (languageSelection.value === "Choose") return;
+    loggedInAs.language = languageSelection.value;
+    localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+
+    userAccounts.forEach((el) => {
+      if (loggedInAs.pin === el.pin) {
+        el.language = loggedInAs.language;
+      }
+    });
+  });
+  localStorage.setItem("accounts", JSON.stringify(userAccounts));
+
+  timezoneSelection.addEventListener("change", function () {
+    if (timezoneSelection.value === "Choose") return;
+    loggedInAs.timezone = timezoneSelection.value;
+    localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+
+    userAccounts.forEach((el) => {
+      if (loggedInAs.pin === el.pin) {
+        el.timezone = loggedInAs.timezone;
+        console.log(el);
+      }
+    });
+    localStorage.setItem("accounts", JSON.stringify(userAccounts));
+  });
+
+  /*Giving the option that the user clicked on before a selected attribute (can not use forEach when working with HTML elements for some reason) */
+  for (let i = 0; i < languageSelection.children.length; i++) {
+    let child = languageSelection.children[i];
+    if (child.value === loggedInAs.language) child.setAttribute("selected", "");
+  }
+  for (let i = 0; i < timezoneSelection.children.length; i++) {
+    let timezone = timezoneSelection.children[i];
+    if (timezone.value === loggedInAs.timezone)
+      timezone.setAttribute("selected", "");
+  }
+};
+const changePages = function (e) {
+  if (e.target.id === "menu-account") accountPage();
+  else if (e.target.id === "menu-preferences") prefPage();
+  else return;
+};
+
+menuBtns.forEach((el) => el.addEventListener("click", (e) => changePages(e)));
+
 const changeName = function () {
   const changeContainer = document.querySelector("#display-right");
 
@@ -184,7 +488,7 @@ const changeName = function () {
       localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
 
       userAccounts.forEach((el) => {
-        if ((loggedInAs.pin = el.pin)) {
+        if (loggedInAs.pin === el.pin) {
           el._firstName = loggedInAs._firstName;
           el._lastName = loggedInAs._lastName;
         }
@@ -1549,3 +1853,169 @@ const changeUsernameHTML = function (container) {
 //TODO: (maybe) Add getting new PIN code if the user forgot it (Requires username and password)
 
 //TODO: Create the username change page
+
+const allBtns = document.querySelectorAll(".theme-father");
+
+const premadeBtns = document.querySelectorAll(".theme-color-father-premade");
+const themeBtns = document.querySelectorAll(".theme-color-father");
+/*prettier-ignore*/
+const containerThemeBtns = document.querySelectorAll(".theme-color-father-cont");
+/*prettier-ignore*/
+const backgroundThemeBtns = document.querySelectorAll(".theme-color-father-bg");
+/*prettier-ignore*/
+const accentOneThemeBtns = document.querySelectorAll(".theme-color-father-accent-one");
+/*prettier-ignore*/
+const accentTwoThemeBtns = document.querySelectorAll(".theme-color-father-accent-two");
+
+const generalTheme = document.querySelector("#general-theme");
+const containerTheme = document.querySelector("#container-theme");
+const backgroundTheme = document.querySelector("#background-theme");
+const firstAccentTheme = document.querySelector("#first-accent-theme");
+const secondAccentTheme = document.querySelector("#second-accent-theme");
+
+/*prettier-ignore*/
+const changingColorContainer = document.querySelector(".theme-changing-color-cont");
+/*prettier-ignore*/
+const changingColorBackground = document.querySelector(".theme-changing-color-bg");
+/*prettier-ignore*/
+const changingAccentOne = document.querySelector(".theme-changing-color-accent-one");
+/*prettier-ignore*/
+const changingAccentTwo = document.querySelector(".theme-changing-color-accent-two");
+
+const mainContainer = document.querySelector("#main");
+
+let genTheme, contTheme, bgTheme, accentThemeOne, accentThemeTwo;
+
+if (loggedInAs && loggedInAs.theme) {
+  if (loggedInAs.theme.generalTheme)
+    generalTheme.setAttribute(
+      "href",
+      `../styles/themes/${loggedInAs.theme.generalTheme}.css`
+    );
+  if (loggedInAs.theme.containerTheme)
+    containerTheme.setAttribute(
+      "href",
+      `../styles/themes/container-colors/${loggedInAs.theme.containerTheme}.css`
+    );
+  if (loggedInAs.theme.backgroundTheme)
+    backgroundTheme.setAttribute(
+      "href",
+      `../styles/themes/background-colors/${loggedInAs.theme.backgroundTheme}.css`
+    );
+} else if (loggedInAs) {
+  loggedInAs.theme = {
+    generalTheme: null,
+    containerTheme: null,
+    backgroundTheme: null,
+    firstAccentTheme: null,
+    secondAccentTheme: null,
+  };
+  localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+}
+premadeBtns.forEach((el) =>
+  el.addEventListener("click", function () {
+    let genTheme = el.dataset.theme;
+    generalTheme.setAttribute("href", `../styles/themes/${genTheme}.css`);
+    containerTheme.setAttribute(
+      "href",
+      `../styles/themes/container-colors/default-container.css`
+    );
+    backgroundTheme.setAttribute(
+      "href",
+      `../styles/themes/background-colors/default-background.css`
+    );
+  })
+);
+themeBtns.forEach((el) =>
+  el.addEventListener("click", function (e) {
+    genTheme = el.dataset.theme;
+    const color = el.dataset.color;
+
+    generalTheme.setAttribute("href", `../styles/themes/${genTheme}.css`);
+
+    loggedInAs.theme.generalTheme = genTheme;
+    /*prettier-ignore */
+    changingColorContainer.setAttribute("class", `theme-changing-color-cont ${color}-bg`);
+    /*prettier-ignore */
+    changingColorContainer.parentElement.setAttribute("data-theme", `primary-container`);
+
+    /*prettier-ignore */
+    changingColorBackground.setAttribute("class", `theme-changing-color-bg ${color}-bg`);
+    /*prettier-ignore */
+    changingColorBackground.parentElement.setAttribute("data-theme", `primary-container`);
+
+    /*prettier-ignore */
+    changingAccentOne.setAttribute("class", `theme-changing-color-accent-one ${color}-bg`);
+    /*prettier-ignore*/
+    changingAccentOne.parentElement.setAttribute("data-theme", `primary-container`);
+
+    /*prettier-ignore */
+    changingAccentTwo.setAttribute("class", `theme-changing-accent-two ${color}-bg`);
+    /*prettier-ignore */
+    changingAccentTwo.parentElement.setAttribute("data-theme", `primary-container`);
+
+    localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+  })
+);
+containerThemeBtns.forEach((el) =>
+  el.addEventListener("click", function (e) {
+    contTheme = el.dataset.theme;
+
+    /*prettier-ignore */
+    containerTheme.setAttribute("href", `../styles/themes/container-colors/${contTheme}.css`);
+
+    loggedInAs.theme.containerTheme = contTheme;
+    localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+  })
+);
+backgroundThemeBtns.forEach((el) =>
+  el.addEventListener("click", function () {
+    bgTheme = el.dataset.theme;
+
+    /*prettier-ignore */
+    backgroundTheme.setAttribute("href", `../styles/themes/background-colors/${bgTheme}.css`);
+    loggedInAs.theme.backgroundTheme = bgTheme;
+    localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+  })
+);
+accentOneThemeBtns.forEach((el) =>
+  el.addEventListener("click", function () {
+    accentThemeOne = el.dataset.theme;
+
+    /*prettier-ignore */
+    firstAccentTheme.setAttribute("href", `../styles/themes/accent-colors/${accentThemeOne}.css`);
+    loggedInAs.theme.firstAccentTheme = accentThemeOne;
+    localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+  })
+);
+accentTwoThemeBtns.forEach((el) =>
+  el.addEventListener("click", function () {
+    accentThemeTwo = el.dataset.theme;
+
+    /*prettier-ignore */
+    secondAccentTheme.setAttribute("href", `../styles/themes/accent-colors-two/${accentThemeTwo}.css`);
+    loggedInAs.theme.secondAccentTheme = accentThemeTwo;
+    localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+  })
+);
+
+const editTheme = document.querySelectorAll(".theme-subtitle");
+
+editTheme.forEach((el) =>
+  el.addEventListener("click", function (e) {
+    if (
+      e.target.nextElementSibling.classList.contains("theme-colors-clicked")
+    ) {
+      e.target.nextElementSibling.classList.remove("theme-colors-clicked");
+      return;
+    }
+
+    const premadeTheme = document.querySelector("#theme-colors-premade");
+    premadeTheme.style.height = "0px";
+
+    const editColors = document.querySelectorAll("#theme-colors");
+    editColors.forEach((el) => el.classList.remove("theme-colors-clicked"));
+
+    e.target.nextElementSibling.classList.add("theme-colors-clicked");
+  })
+);
