@@ -1,94 +1,184 @@
 #themes {
-    width: calc(100% - 20rem);
-    height: calc(100% - 12rem);
-    padding: 10rem;
-    padding-top: 2rem;
+  width: 100%;
+}
+#premade-themes {
+  padding: 1rem 2rem;
+  width: calc(100% - 4rem);
+  box-shadow: 0.5rem 1rem 1rem var(--main-background-accent-three);
 }
 #theme-title {
-    font-size: 4rem;
-    margin-bottom: 2rem;
+  font-size: 4rem;
+  margin-bottom: 2rem;
+  padding: 1.5rem 3rem;
+}
+.theme-premade-subtitle {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+.create-container {
+  display: flex;
+  align-items: center;
+  padding: 1rem 0rem;
+  gap: 3rem;
+}
+.dropdown-title {
+  width: 50%;
+  overflow: hidden;
+}
+.theme-subtitle-container {
+  padding: 1rem;
+  display: flex;
+  width: calc(100% - 2rem);
+  justify-content: space-between;
+  cursor: pointer;
+  align-items: center;
+  transition: all 0.3s;
+}
+.theme-colors-clicked {
+  height: 5rem !important;
+  padding: 1rem 3rem !important;
+}
+.theme-subtitle-container-active {
+  box-shadow: 0rem 1rem 1rem var(--main-background-accent-three);
 }
 .theme-subtitle {
-    font-weight: normal;
-    margin: 1rem 0rem;
-    cursor: pointer;
-
+  font-weight: normal;
+  margin: 1rem 0rem;
 }
-#theme-colors,#theme-colors-premade {
-    display: flex;
-    gap: 1rem;
+#theme-colors,
+#theme-colors-premade {
+  display: flex;
+  overflow: hidden;
+  align-items: center;
+  gap: 1rem;
+  z-index: 9000000;
 }
 #theme-colors {
-    height: 0px;
-    overflow: hidden;
-    transition: all 0.3s;
+  height: 0px;
+  padding: 0rem 3rem;
+  padding-left: 4rem;
+  transition: all 0.3s;
 }
-#theme-colors-premade {
-    overflow: hidden;
+.theme-father,
+.theme-father-premade {
+  width: 3rem;
+  height: 3rem;
+  cursor: pointer;
+  display: grid;
+  border-radius: 4rem;
+  place-items: center;
 }
-.theme-colors-clicked { 
-    height: 5rem !important;
+.theme-father-premade {
+  border-radius: 0rem;
+  height: 6rem;
+  width: 6rem;
+  border-radius: 1rem;
+  overflow: hidden;
 }
-.theme-father{
-    width: 4rem;
-    height: 4rem;
-    cursor: pointer;
-    display: grid;
-    border-radius: 4rem;
-    place-items: center;
+.theme-father div,
+.theme-father-premade div {
+  width: 100%;
+  height: 100%;
+  border-radius: 2rem;
+  transition: all 0.3s;
 }
-.theme-father div {
-    width: 90%;
-    height: 90%;
-    border-radius: 2rem;
-    transition: all 0.3s;
-}
-.theme-father:hover {
-    & div {
-     transform: scale(0.8);
-    }
-}
-.theme-father:active {
-& div {
-    transform: scale(1.1);
-}
+.theme-father-premade div {
+  border-radius: 0px;
 }
 .blue-bg {
-background-color: blue;
+  background-color: blue;
 }
 .red-bg {
-    background-color: red;
+  background-color: red;
 }
 .green-bg {
-    background-color: green;
+  background-color: green;
 }
 .pink-bg {
-    background-color: pink;
+  background-color: pink;
 }
 .hot-pink-bg {
-    background-color: hotpink;
+  background-color: hotpink;
 }
 .yellow-bg {
-    background-color: yellow;
+  background-color: yellow;
 }
 .orange-bg {
-    background-color: orange;
+  background-color: orange;
 }
 .aqua-bg {
-    background-color: teal;
+  background-color: teal;
 }
 .purple-bg {
-    background-color: purple    ;
+  background-color: purple;
 }
 .gray-bg {
-    background-color: gray;
+  background-color: gray;
 }
 .black-bg {
-    background-color: black;
+  background-color: black;
 }
 .white-bg {
-    background-color: white;
+  background-color: white;
 }
 .colorful-bg {
-    background-color: brown;
+  background-color: brown;
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: gray;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: var(--primary-color);
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px var(--text-color);
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
 }

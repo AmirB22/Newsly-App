@@ -14,6 +14,7 @@
   --body-image: url("https://www.hdwallpapers.in/download/colorful_gradients-1920x1080.jpg");
   --main-background-accent: rgba(0, 120, 120, 0.1);
   --main-background-accent-two: rgba(0, 120, 120, 0.1);
+  --main-background-accent-three: rgba(0, 120, 120, 0.1);
 
   --input-color: white;
   --input-color-focused: white;
@@ -25,7 +26,6 @@
 
   --success-color: lime;
   --menu-color: var(--primary-color);
-
 
   --primary-color-2: rgb(0, 255, 0);
 }

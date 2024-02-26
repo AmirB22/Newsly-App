@@ -1999,23 +1999,38 @@ accentTwoThemeBtns.forEach((el) =>
   })
 );
 
-const editTheme = document.querySelectorAll(".theme-subtitle");
+const editTheme = document.querySelectorAll(".theme-subtitle-container");
 
 editTheme.forEach((el) =>
   el.addEventListener("click", function (e) {
     if (
-      e.target.nextElementSibling.classList.contains("theme-colors-clicked")
+      e.target
+        .closest(".theme-subtitle-container")
+        .nextElementSibling.classList.contains("theme-colors-clicked")
     ) {
-      e.target.nextElementSibling.classList.remove("theme-colors-clicked");
+      e.target
+        .closest(".theme-subtitle-container")
+        .nextElementSibling.classList.remove("theme-colors-clicked");
+      e.target
+        .closest(".theme-subtitle-container")
+        .classList.remove("theme-subtitle-container-active");
       return;
     }
 
-    const premadeTheme = document.querySelector("#theme-colors-premade");
-    premadeTheme.style.height = "0px";
-
     const editColors = document.querySelectorAll("#theme-colors");
     editColors.forEach((el) => el.classList.remove("theme-colors-clicked"));
+    const editContainers = document.querySelectorAll(
+      ".theme-subtitle-container"
+    );
+    editContainers.forEach((el) =>
+      el.classList.remove("theme-subtitle-container-active")
+    );
 
-    e.target.nextElementSibling.classList.add("theme-colors-clicked");
+    e.target
+      .closest(".theme-subtitle-container")
+      .nextElementSibling.classList.add("theme-colors-clicked");
+    e.target
+      .closest(".theme-subtitle-container")
+      .classList.add("theme-subtitle-container-active");
   })
 );

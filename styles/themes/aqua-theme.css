@@ -12,6 +12,7 @@
   --background-color: cyan;
   --main-background-accent: rgba(23, 23, 23, 0.1);
   --main-background-accent-two: rgba(23, 23, 23, 0.1);
+  --main-background-accent-three: rgba(23, 23, 23, 0.1);
 
   --input-color: white;
   --input-color-focused: white;
@@ -24,7 +25,5 @@
   --success-color: lime;
   --menu-color: var(--primary-color);
 
-
-  --primary-color-2: rgb(0, 230, 230);
-
+  --primary-color-2: rgb(0, 100, 100);
 }
