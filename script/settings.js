@@ -1886,32 +1886,32 @@ const mainContainer = document.querySelector("#main");
 
 let genTheme, contTheme, bgTheme, accentThemeOne, accentThemeTwo;
 
-if (loggedInAs && loggedInAs.theme) {
-  if (loggedInAs.theme.generalTheme)
-    generalTheme.setAttribute(
-      "href",
-      `../styles/themes/${loggedInAs.theme.generalTheme}.css`
-    );
-  if (loggedInAs.theme.containerTheme)
-    containerTheme.setAttribute(
-      "href",
-      `../styles/themes/container-colors/${loggedInAs.theme.containerTheme}.css`
-    );
-  if (loggedInAs.theme.backgroundTheme)
-    backgroundTheme.setAttribute(
-      "href",
-      `../styles/themes/background-colors/${loggedInAs.theme.backgroundTheme}.css`
-    );
-} else if (loggedInAs) {
-  loggedInAs.theme = {
-    generalTheme: null,
-    containerTheme: null,
-    backgroundTheme: null,
-    firstAccentTheme: null,
-    secondAccentTheme: null,
-  };
-  localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
-}
+// if (loggedInAs && loggedInAs.theme) {
+//   if (loggedInAs.theme.generalTheme)
+//     generalTheme.setAttribute(
+//       "href",
+//       `../styles/themes/${loggedInAs.theme.generalTheme}.css`
+//     );
+//   if (loggedInAs.theme.containerTheme)
+//     containerTheme.setAttribute(
+//       "href",
+//       `../styles/themes/container-colors/${loggedInAs.theme.containerTheme}.css`
+//     );
+//   if (loggedInAs.theme.backgroundTheme)
+//     backgroundTheme.setAttribute(
+//       "href",
+//       `../styles/themes/background-colors/${loggedInAs.theme.backgroundTheme}.css`
+//     );
+// } else if (loggedInAs) {
+//   loggedInAs.theme = {
+//     generalTheme: null,
+//     containerTheme: null,
+//     backgroundTheme: null,
+//     firstAccentTheme: null,
+//     secondAccentTheme: null,
+//   };
+//   localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+// }
 premadeBtns.forEach((el) =>
   el.addEventListener("click", function () {
     let genTheme = el.dataset.theme;

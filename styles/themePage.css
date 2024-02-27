@@ -62,12 +62,11 @@
   display: flex;
   overflow: hidden;
   align-items: center;
-  gap: 1rem;
+  gap: 0.5rem;
 }
 #theme-colors {
   height: 0px;
-  padding: 0rem 3rem;
-  padding-left: 4rem;
+  padding: 0rem 3.5rem;
   transition: all 0.3s;
 }
 .theme-father,
@@ -135,6 +134,103 @@
 .colorful-bg {
   background-color: brown;
 }
+.cyan-bg {
+  background-color: cyan;
+}
+.default-bg {
+  background-color: lime;
+}
+.color-premade {
+  overflow: hidden;
+  position: relative;
+}
+.blue-premade::before,
+.green-premade::before,
+.red-premade::before,
+.pink-premade::before,
+.hot-pink-premade::before,
+.orange-premade::before,
+.yellow-premade::before,
+.white-premade::before,
+.purple-premade::before,
+.colorful-premade::before,
+.default-premade::before,
+.cyan-premade::before {
+  background-color: white;
+}
+.blue-premade::after {
+  background-color: blue;
+}
+.green-premade::after {
+  background-color: green;
+}
+.gray-premade::before {
+  background-color: rgb(70, 70, 70);
+}
+.white-premade::before {
+  background-color: black;
+}
+.red-premade::after {
+  background-color: red;
+}
+.pink-premade::after {
+  background-color: pink;
+}
+.hot-pink-premade::after {
+  background-color: hotpink;
+}
+.orange-premade::after {
+  background-color: orange;
+}
+.yellow-premade::after {
+  background-color: yellow;
+}
+.black-premade::before {
+  background-color: rgb(70, 70, 70);
+}
+.black-premade::after {
+  background-color: rgb(11, 11, 11);
+}
+.white-premade::after {
+  background-color: white;
+}
+.gray-premade::after {
+  background-color: rgb(32, 32, 32);
+}
+.purple-premade::after {
+  background-color: purple;
+}
+.aqua-premade::before {
+  background-color: rgb(0, 79, 79);
+}
+.aqua-premade::after {
+  background-color: aqua;
+}
+.default-premade::after {
+  background-color: lime;
+}
+.cyan-premade::after {
+  background-color: cyan;
+}
+.color-premade::before {
+  content: "";
+  position: absolute;
+  height: 150%;
+  width: 150%;
+  transform: rotate(45deg);
+  right: 0%;
+  top: -70%;
+}
+.color-premade::after {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  transform: rotate(45deg);
+  top: -50%;
+  left: -50%;
+}
+
 .switch {
   position: relative;
   display: inline-block;

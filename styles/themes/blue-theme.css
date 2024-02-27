@@ -1,0 +1,33 @@
+:root {
+  --primary-color: rgb(0, 0, 255);
+  --primary-color-opacity-05: rgba(0, 0, 255, 0.05);
+  --primary-color-opacity-1: rgba(0, 0, 255, 0.1);
+  --primary-color-opacity-2: rgba(0, 0, 255, 0.2);
+  --primary-color-opacity-5: rgba(0, 0, 255, 0.5);
+
+  --control-window-background: cyan;
+  --control-window-text-color: white;
+
+  --input-background: rgb(255, 255, 255);
+  --input-text-background: transparent;
+
+  --background-color: cyan;
+  --main-background-accent: rgba(0, 0, 255, 0.1);
+  --main-background-accent-two: rgba(0, 0, 255, 0.1);
+  --main-background-accent-three: rgba(0, 0, 255, 0.1);
+
+  --theme-color: rgb(212, 255, 253);
+
+  --input-color: white;
+  --input-color-focused: white;
+  --input-text-background: transparent;
+
+  --text-color: #000000;
+  --main-background-color: rgb(255, 255, 255, 0.8);
+  --focused-background: transparent;
+
+  --success-color: lime;
+  --menu-color: var(--primary-color);
+
+  --primary-color-2: rgb(0, 200, 200);
+}

@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/x-icon" href="../final-logo.png" />
     <!-- prettier-ignore -->
-    <link rel="stylesheet" id="general-theme" href="../styles/themes/green-theme.css" />
+    <link rel="stylesheet" id="general-theme" href="../styles/themes/default-theme.css" />
     <!-- prettier-ignore -->
     <link rel="stylesheet" id="input-theme" href="../styles/themes//input-colors/default-inputs.css"/>
     <!-- prettier-ignore -->
     <link rel="stylesheet" id="background-theme" href="../styles/themes/background-colors/default-background.css"/>
     <!-- prettier-ignore -->
-    <link rel="stylesheet" id="container-theme" href="../styles/themes/container-colors/primary-container.css">
+    <link rel="stylesheet" id="container-theme" href="../styles/themes/container-colors/default-container.css">
     <!-- prettier-ignore -->
     <link rel="stylesheet" id="first-accent-theme" href="../styles/themes/accent-colors/default-accent.css"/>
     <!-- prettier-ignore -->
@@ -49,94 +49,108 @@
               <div id="theme-colors-premade">
                 <div
                   class="theme-color-father-premade theme-father-premade"
-                  data-theme=""
+                  data-theme="default-theme"
+                  data-color="lime"
+                >
+                  <div class="default-bg default-premade color-premade"></div>
+                </div>
+                <div
+                  class="theme-color-father-premade theme-father-premade"
+                  data-theme="blue-theme"
                   data-color="blue"
                 >
-                  <div class="blue-bg"></div>
+                  <div class="blue-bg blue-premade color-premade"></div>
+                </div>
+                <div
+                  class="theme-color-father-premade theme-father-premade"
+                  data-theme="cyan-theme"
+                  data-color="cyan"
+                >
+                  <div class="cyan-bg cyan-premade color-premade"></div>
                 </div>
                 <div
                   class="theme-color-father-premade theme-father-premade"
                   data-theme="green-theme"
                   data-color="green"
                 >
-                  <div class="green-bg"></div>
+                  <div class="green-bg green-premade color-premade"></div>
                 </div>
                 <div
                   class="theme-color-father-premade theme-father-premade"
                   data-theme="red-theme"
                   data-color="red"
                 >
-                  <div class="red-bg"></div>
+                  <div class="red-bg red-premade color-premade"></div>
                 </div>
                 <div
                   class="theme-color-father-premade theme-father-premade"
                   data-theme="pink-theme"
                   data-color="pink"
                 >
-                  <div class="pink-bg"></div>
+                  <div class="pink-bg pink-premade color-premade"></div>
                 </div>
                 <div
                   class="theme-color-father-premade theme-father-premade"
                   data-theme="hot-pink-theme"
                   data-color="hot-pink"
                 >
-                  <div class="hot-pink-bg"></div>
+                  <div class="hot-pink-bg hot-pink-premade color-premade"></div>
                 </div>
                 <div
                   class="theme-color-father-premade theme-father-premade"
                   data-theme="orange-theme"
                   data-color="orange"
                 >
-                  <div class="orange-bg"></div>
+                  <div class="orange-bg orange-premade color-premade"></div>
                 </div>
                 <div
                   class="theme-color-father-premade theme-father-premade"
                   data-theme="yellow-theme"
                   data-color="yellow"
                 >
-                  <div class="yellow-bg"></div>
+                  <div class="yellow-bg yellow-premade color-premade"></div>
                 </div>
                 <div
                   class="theme-color-father-premade theme-father-premade"
                   data-theme="night-mode-theme"
                   data-color="black"
                 >
-                  <div class="black-bg"></div>
+                  <div class="black-bg black-premade color-premade"></div>
                 </div>
                 <div
                   class="theme-color-father-premade theme-father-premade"
                   data-theme="reverse-theme"
                   data-color="white"
                 >
-                  <div class="white-bg"></div>
+                  <div class="white-bg white-premade color-premade"></div>
                 </div>
                 <div
                   class="theme-color-father-premade theme-father-premade"
                   data-theme="dark-theme"
                   data-color="gray"
                 >
-                  <div class="gray-bg"></div>
+                  <div class="gray-bg gray-premade color-premade"></div>
                 </div>
                 <div
                   class="theme-color-father-premade theme-father-premade"
                   data-theme="purple-theme"
                   data-color="purple"
                 >
-                  <div class="purple-bg"></div>
+                  <div class="purple-bg purple-premade color-premade"></div>
                 </div>
                 <div
                   class="theme-color-father-premade theme-father-premade"
                   data-theme="aqua-theme"
                   data-color="aqua"
                 >
-                  <div class="aqua-bg"></div>
+                  <div class="aqua-bg aqua-premade color-premade"></div>
                 </div>
                 <div
                   class="theme-color-father-premade theme-father-premade"
                   data-theme="colorful-theme"
                   data-color="colorful"
                 >
-                  <div class="colorful-bg"></div>
+                  <div class="colorful-bg colorful-premade color-premade"></div>
                 </div>
               </div>
               <div class="create-container">
@@ -152,7 +166,7 @@
                 <div id="detail-themes" class="dropdown-title">
                   <div class="theme-subtitle-container">
                     <h2 class="theme-subtitle">Detail color</h2>
-                    <i class="fa-solid fa-angle-down"></i>
+                    <i class="fa-solid fa-plus"></i>
                   </div>
                   <div id="theme-colors">
                     <div
@@ -251,7 +265,7 @@
                 <div id="container-themes" class="dropdown-title">
                   <div class="theme-subtitle-container">
                     <h2 class="theme-subtitle">Container color</h2>
-                    <i class="fa-solid fa-angle-down"></i>
+                    <i class="fa-solid fa-plus"></i>
                   </div>
                   <div id="theme-colors">
                     <div
@@ -284,7 +298,7 @@
                 <div id="background-themes" class="dropdown-title">
                   <div class="theme-subtitle-container">
                     <h2 class="theme-subtitle">Background color</h2>
-                    <i class="fa-solid fa-angle-down"></i>
+                    <i class="fa-solid fa-plus"></i>
                   </div>
                   <div id="theme-colors">
                     <div
@@ -316,7 +330,7 @@
                 <div id="accent-one-themes" class="dropdown-title">
                   <div class="theme-subtitle-container">
                     <h2 class="theme-subtitle">Accent color no.1</h2>
-                    <i class="fa-solid fa-angle-down"></i>
+                    <i class="fa-solid fa-plus"></i>
                   </div>
                   <div id="theme-colors">
                     <div
@@ -353,7 +367,7 @@
                 <div id="detail-themes" class="dropdown-title">
                   <div class="theme-subtitle-container">
                     <h2 class="theme-subtitle">Accent color no.3</h2>
-                    <i class="fa-solid fa-angle-down"></i>
+                    <i class="fa-solid fa-plus"></i>
                   </div>
                   <div id="theme-colors">
                     <div
@@ -452,7 +466,7 @@
                 <div id="container-themes" class="dropdown-title">
                   <div class="theme-subtitle-container">
                     <h2 class="theme-subtitle">Input color</h2>
-                    <i class="fa-solid fa-angle-down"></i>
+                    <i class="fa-solid fa-plus"></i>
                   </div>
                   <div id="theme-colors">
                     <div
@@ -485,7 +499,7 @@
                 <div id="background-themes" class="dropdown-title">
                   <div class="theme-subtitle-container">
                     <h2 class="theme-subtitle">Container border color</h2>
-                    <i class="fa-solid fa-angle-down"></i>
+                    <i class="fa-solid fa-plus"></i>
                   </div>
                   <div id="theme-colors">
                     <div
@@ -517,7 +531,7 @@
                 <div id="accent-two-themes" class="dropdown-title">
                   <div class="theme-subtitle-container">
                     <h2 class="theme-subtitle">Accent color no.2</h2>
-                    <i class="fa-solid fa-angle-down"></i>
+                    <i class="fa-solid fa-plus"></i>
                   </div>
                   <div id="theme-colors">
                     <div

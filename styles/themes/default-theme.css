@@ -16,12 +16,14 @@
   --main-background-accent-two: rgba(0, 255, 0, 0.1);
   --main-background-accent-three: rgba(23, 255, 0, 0.1);
 
+  --theme-color: rgb(206, 255, 206);
+
   --input-color: white;
   --input-color-focused: black;
   --input-text-background: transparent;
 
   --text-color: #000000;
-  --main-background-color: rgb(255, 255, 255, 1);
+  --main-background-color: rgb(255, 255, 255, 0.8);
 
   --success-color: lime;
   --menu-color: var(--primary-color);
