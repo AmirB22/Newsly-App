@@ -21,7 +21,7 @@
   --input-text-background: transparent;
 
   --text-color: #000000;
-  --main-background-color: rgb(255, 255, 255, 0.8);
+  --main-background-color: rgb(255, 255, 255, 1);
 
   --success-color: lime;
   --menu-color: var(--primary-color);

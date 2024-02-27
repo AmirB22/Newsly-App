@@ -16,12 +16,14 @@
   --main-background-accent-two: rgba(255, 255, 255, 0.1);
   --main-background-accent-three: rgba(255, 255, 255, 0.1);
 
+  --theme-color: rgb(0, 0, 0);
+
   --input-color: black;
   --input-color-focused: white;
   --input-text-background: transparent;
 
   --text-color: #ffffff;
-  --main-background-color: rgb(0, 0, 0, 0.8);
+  --main-background-color: rgb(0, 0, 0, 1);
   --focused-background: transparent;
 
   --success-color: lime;
@@ -44,4 +46,7 @@
 #change-name-cancel-button,
 #change-date-cancel-button {
   color: black !important;
+}
+.black-bg {
+  border: 1px solid white !important;
 }

@@ -4,4 +4,6 @@
   --text-color: white !important;
 
   --input-color-focused: white;
+
+  --theme-color: rgba(100, 100, 100, 1);
 }

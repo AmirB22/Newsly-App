@@ -3,4 +3,5 @@
   --text-color: var(var(--text-color));
 
   --input-color-focused: var(var(--input-color-focused));
+  --theme-color: var(var(--theme-color));
 }

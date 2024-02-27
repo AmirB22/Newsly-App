@@ -44,7 +44,7 @@ html {
   padding-bottom: 10rem;
   box-shadow: 1rem 0rem 2rem var(--main-background-accent-two);
 
-  z-index: 10000;
+  z-index: 1000;
 }
 #menu ul {
   display: flex;
@@ -578,7 +578,7 @@ html {
   #display-left {
     padding: 10rem 7rem;
   }
-  #display-left h1{
+  #display-left h1 {
     margin-bottom: 2rem;
   }
   #account-basics img {

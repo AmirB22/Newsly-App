@@ -5,11 +5,15 @@
   padding: 1rem 2rem;
   width: calc(100% - 4rem);
   box-shadow: 0.5rem 1rem 1rem var(--main-background-accent-three);
+  z-index: 5;
 }
 #theme-title {
   font-size: 4rem;
   margin-bottom: 2rem;
   padding: 1.5rem 3rem;
+}
+#create-own-theme {
+  width: 50%;
 }
 .theme-premade-subtitle {
   font-size: 2rem;
@@ -21,22 +25,30 @@
   padding: 1rem 0rem;
   gap: 3rem;
 }
+.create-own-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
 .dropdown-title {
-  width: 50%;
+  width: 100%;
   overflow: hidden;
 }
 .theme-subtitle-container {
   padding: 1rem;
   display: flex;
-  width: calc(100% - 2rem);
+  width: calc(100% - 2rem - 1px);
   justify-content: space-between;
   cursor: pointer;
   align-items: center;
-  transition: all 0.3s;
+  transition: height 0.4s, padding 0.4s;
+  border: 1px solid var(--primary-color-opacity-5);
+  border-left: none;
+  background-color: var(--theme-color);
 }
 .theme-colors-clicked {
   height: 5rem !important;
-  padding: 1rem 3rem !important;
+  padding: 0.7rem 3.5rem !important;
 }
 .theme-subtitle-container-active {
   box-shadow: 0rem 1rem 1rem var(--main-background-accent-three);
@@ -51,7 +63,6 @@
   overflow: hidden;
   align-items: center;
   gap: 1rem;
-  z-index: 9000000;
 }
 #theme-colors {
   height: 0px;
@@ -69,21 +80,21 @@
   place-items: center;
 }
 .theme-father-premade {
-  border-radius: 0rem;
   height: 6rem;
   width: 6rem;
-  border-radius: 1rem;
+
+  border-radius: 0rem;
   overflow: hidden;
 }
 .theme-father div,
 .theme-father-premade div {
-  width: 100%;
-  height: 100%;
+  width: 95%;
+  height: 95%;
   border-radius: 2rem;
   transition: all 0.3s;
 }
 .theme-father-premade div {
-  border-radius: 0px;
+  border-radius: 1rem;
 }
 .blue-bg {
   background-color: blue;
@@ -156,7 +167,7 @@
   width: 26px;
   left: 4px;
   bottom: 4px;
-  background-color: white;
+  background-color: var(--control-window-text-color);
   -webkit-transition: 0.4s;
   transition: 0.4s;
 }

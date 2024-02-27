@@ -6,6 +6,7 @@
   --primary-color-opacity-5: rgba(0, 0, 0, 0.5);
 
   --control-window-background: rgb(0, 0, 0);
+  --control-window-text-color: white;
   --input-background: rgb(0, 0, 0);
   --input-text-background: transparent;
 
@@ -13,6 +14,8 @@
   --main-background-accent: rgba(0, 0, 0, 0.1);
   --main-background-accent-two: rgba(0, 0, 0, 0.1);
   --main-background-accent-three: rgba(0, 0, 0, 0.1);
+
+  --theme-color: rgb(23, 23, 23);
 
   --input-color: white;
   --input-color-focused: white;

@@ -3,7 +3,11 @@
   --text-color: black;
 
   --input-color-focused: black;
+  --theme-color: rgb(255, 255, 255);
 }
 #main {
   border: 1px solid var(--text-color);
+}
+.white-bg {
+  border: 1px solid black;
 }
