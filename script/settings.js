@@ -2014,6 +2014,10 @@ editTheme.forEach((el) =>
       e.target
         .closest(".theme-subtitle-container")
         .classList.remove("theme-subtitle-container-active");
+      e.target
+        .closest(".theme-subtitle-container")
+        .querySelector(".fa-plus")
+        .classList.remove("rotated");
       return;
     }
 
@@ -2022,9 +2026,12 @@ editTheme.forEach((el) =>
     const editContainers = document.querySelectorAll(
       ".theme-subtitle-container"
     );
+    const pluses = document.querySelectorAll(".fa-plus");
+
     editContainers.forEach((el) =>
       el.classList.remove("theme-subtitle-container-active")
     );
+    pluses.forEach((el) => el.classList.remove("rotated"));
 
     e.target
       .closest(".theme-subtitle-container")
@@ -2032,5 +2039,19 @@ editTheme.forEach((el) =>
     e.target
       .closest(".theme-subtitle-container")
       .classList.add("theme-subtitle-container-active");
+    e.target
+      .closest(".theme-subtitle-container")
+      .querySelector(".fa-plus")
+      .classList.add("rotated");
   })
 );
+
+const themePage = document.querySelector("#themes");
+const leftTheme = document.querySelector("#theme-left");
+const rightTheme = document.querySelector("#theme-right");
+const themeCheckbox = document.querySelector("#theme-checkbox");
+
+themeCheckbox.addEventListener("change", function () {
+  leftTheme.classList.toggle("theme-left-smaller");
+  rightTheme.classList.toggle("theme-right-bigger");
+});
