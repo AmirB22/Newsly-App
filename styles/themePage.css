@@ -27,7 +27,7 @@
 }
 #create-own-theme {
   width: 100%;
-  margin-top: 50%;
+  margin-top: 25rem;
 }
 .theme-left-smaller {
   width: 60% !important;
@@ -80,7 +80,7 @@
 }
 .theme-right-bigger {
   opacity: 1 !important;
-  width: 100% !important;
+  width: 40% !important;
   height: 100%;
 }
 #premade-themes {
@@ -176,7 +176,7 @@
 #theme-colors {
   height: 0px;
   padding: 0rem 2rem;
-  transition: all 0.3s;
+  transition: all 0.4s;
   z-index: 20000;
 }
 #theme-colors-premade {
@@ -214,7 +214,7 @@
   width: 95%;
   height: 95%;
   border-radius: 2rem;
-  transition: all 0.3s;
+  transition: all 0.4s;
 }
 .theme-father-premade div {
   border-radius: 1rem;

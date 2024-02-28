@@ -1912,9 +1912,26 @@ let genTheme, contTheme, bgTheme, accentThemeOne, accentThemeTwo;
 //   };
 //   localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
 // }
+const fullTheme = {
+  detailTheme: "default-theme",
+  containerTheme: "default-container",
+  backgroundTheme: "default-background",
+  accentOneTheme: "default-accent",
+  accentTwoTheme: "default-accent-two",
+  inputTheme: "default-inputs",
+};
+
 premadeBtns.forEach((el) =>
   el.addEventListener("click", function () {
     let genTheme = el.dataset.theme;
+
+    fullTheme.detailTheme = `${genTheme}`;
+    fullTheme.containerTheme = "default-container";
+    fullTheme.backgroundTheme = "default-background";
+    fullTheme.accentOneTheme = "default-accent";
+    fullTheme.accentTwoTheme = "default-accent-two";
+    fullTheme.inputTheme = "default-inputs";
+
     generalTheme.setAttribute("href", `../styles/themes/${genTheme}.css`);
     containerTheme.setAttribute(
       "href",
@@ -1938,6 +1955,8 @@ themeBtns.forEach((el) =>
   el.addEventListener("click", function (e) {
     genTheme = el.dataset.theme;
     const color = el.dataset.color;
+
+    fullTheme.detailTheme = `${genTheme}`;
 
     generalTheme.setAttribute("href", `../styles/themes/${genTheme}.css`);
 
@@ -1969,6 +1988,8 @@ containerThemeBtns.forEach((el) =>
   el.addEventListener("click", function (e) {
     contTheme = el.dataset.theme;
 
+    fullTheme.containerTheme = `${contTheme}`;
+
     /*prettier-ignore */
     containerTheme.setAttribute("href", `../styles/themes/container-colors/${contTheme}.css`);
 
@@ -1980,6 +2001,8 @@ backgroundThemeBtns.forEach((el) =>
   el.addEventListener("click", function () {
     bgTheme = el.dataset.theme;
 
+    fullTheme.backgroundTheme = `${bgTheme}`;
+
     /*prettier-ignore */
     backgroundTheme.setAttribute("href", `../styles/themes/background-colors/${bgTheme}.css`);
     loggedInAs.theme.backgroundTheme = bgTheme;
@@ -1990,6 +2013,8 @@ accentOneThemeBtns.forEach((el) =>
   el.addEventListener("click", function () {
     accentThemeOne = el.dataset.theme;
 
+    fullTheme.accentOneTheme = `${accentThemeOne}`;
+
     /*prettier-ignore */
     firstAccentTheme.setAttribute("href", `../styles/themes/accent-colors/${accentThemeOne}.css`);
     loggedInAs.theme.firstAccentTheme = accentThemeOne;
@@ -1999,6 +2024,8 @@ accentOneThemeBtns.forEach((el) =>
 accentTwoThemeBtns.forEach((el) =>
   el.addEventListener("click", function () {
     accentThemeTwo = el.dataset.theme;
+
+    fullTheme.accentTwoTheme = `${accentThemeTwo}`;
 
     /*prettier-ignore */
     secondAccentTheme.setAttribute("href", `../styles/themes/accent-colors-two/${accentThemeTwo}.css`);
