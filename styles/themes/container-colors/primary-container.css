@@ -1,7 +1,7 @@
 :root {
   --main-background-color: var(--primary-color-2);
 
-  --text-color: white;
+  --text-color: var(--control-window-text-color);
 
   --input-color-focused: white;
 
@@ -43,4 +43,10 @@
 }
 .preference {
   border: 1px solid var(--text-color);
+}
+.theme-subtitle-container {
+  border: 1px solid var(--control-window-text-color) !important;
+}
+.theme-subtitle-container::after {
+  border-top: 1px solid var(--control-window-text-color) !important;
 }

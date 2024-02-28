@@ -11,3 +11,6 @@
 .white-bg {
   border: 1px solid black;
 }
+#global-body {
+  border: 1px solid black !important;
+}

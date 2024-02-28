@@ -1924,6 +1924,14 @@ premadeBtns.forEach((el) =>
       "href",
       `../styles/themes/background-colors/default-background.css`
     );
+    firstAccentTheme.setAttribute(
+      "href",
+      `../styles/themes/accent-colors/default-accent.css`
+    );
+    secondAccentTheme.setAttribute(
+      "href",
+      `../styles/themes/accent-colors-two/default-accent-two.css`
+    );
   })
 );
 themeBtns.forEach((el) =>
@@ -1942,17 +1950,17 @@ themeBtns.forEach((el) =>
     /*prettier-ignore */
     changingColorBackground.setAttribute("class", `theme-changing-color-bg ${color}-bg`);
     /*prettier-ignore */
-    changingColorBackground.parentElement.setAttribute("data-theme", `primary-container`);
+    changingColorBackground.parentElement.setAttribute("data-theme", `primary-background`);
 
     /*prettier-ignore */
     changingAccentOne.setAttribute("class", `theme-changing-color-accent-one ${color}-bg`);
     /*prettier-ignore*/
-    changingAccentOne.parentElement.setAttribute("data-theme", `primary-container`);
+    changingAccentOne.parentElement.setAttribute("data-theme", `default-accent`);
 
     /*prettier-ignore */
     changingAccentTwo.setAttribute("class", `theme-changing-accent-two ${color}-bg`);
     /*prettier-ignore */
-    changingAccentTwo.parentElement.setAttribute("data-theme", `primary-container`);
+    changingAccentTwo.parentElement.setAttribute("data-theme", `default-accent-two`);
 
     localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
   })
@@ -1999,9 +2007,9 @@ accentTwoThemeBtns.forEach((el) =>
   })
 );
 
-const editTheme = document.querySelectorAll(".theme-subtitle-container");
+const editThemeTwo = document.querySelectorAll(".theme-subtitle-main");
 
-editTheme.forEach((el) =>
+editThemeTwo.forEach((el) =>
   el.addEventListener("click", function (e) {
     if (
       e.target
@@ -2018,6 +2026,10 @@ editTheme.forEach((el) =>
         .closest(".theme-subtitle-container")
         .querySelector(".fa-plus")
         .classList.remove("rotated");
+      e.target
+        .closest(".theme-subtitle-container")
+        .classList.remove("theme-subtitle-container-clicked");
+
       return;
     }
 
@@ -2027,6 +2039,15 @@ editTheme.forEach((el) =>
       ".theme-subtitle-container"
     );
     const pluses = document.querySelectorAll(".fa-plus");
+
+    editThemeTwo.forEach((el) =>
+      el
+        .closest(".theme-subtitle-container")
+        .classList.remove("theme-subtitle-container-clicked")
+    );
+    e.target
+      .closest(".theme-subtitle-container")
+      .classList.add("theme-subtitle-container-clicked");
 
     editContainers.forEach((el) =>
       el.classList.remove("theme-subtitle-container-active")
@@ -2043,15 +2064,20 @@ editTheme.forEach((el) =>
       .closest(".theme-subtitle-container")
       .querySelector(".fa-plus")
       .classList.add("rotated");
+    console.log(e.target);
   })
 );
 
 const themePage = document.querySelector("#themes");
 const leftTheme = document.querySelector("#theme-left");
 const rightTheme = document.querySelector("#theme-right");
+const topTheme = document.querySelector("#theme-top");
 const themeCheckbox = document.querySelector("#theme-checkbox");
+const topPremade = document.querySelector("#premade-themes");
 
 themeCheckbox.addEventListener("change", function () {
   leftTheme.classList.toggle("theme-left-smaller");
   rightTheme.classList.toggle("theme-right-bigger");
+  topPremade.classList.toggle("premade-smaller");
+  topTheme.classList.toggle("theme-top-smaller");
 });
