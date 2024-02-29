@@ -1,9 +1,10 @@
 :root {
-  --background-color: -preview white;
+  --background-color-preview: white;
 }
 /* #main {
   border: 1px solid var(--primary-color-preview);
 }
+*/
 .theme-right-smaller-global {
   border: 1px solid black;
-} */
+}

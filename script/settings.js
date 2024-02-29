@@ -2028,6 +2028,7 @@ backgroundThemeBtns.forEach((el) =>
       "href",
       `../styles/themes copy/background-colors-preview/${bgTheme}.css`
     );
+    console.log(12333);
     loggedInAs.theme.backgroundTheme = bgTheme;
     localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
   })
