@@ -1,0 +1,33 @@
+:root {
+  --primary-color-preview: rgb(255, 192, 203);
+  --primary-color-opacity-05-preview: rgba(255, 192, 203, 0.05);
+  --primary-color-opacity-1-preview: rgba(255, 192, 203, 0.3);
+  --primary-color-opacity-2-preview: rgba(255, 0, 43, 0.2);
+  --primary-color-opacity-5-preview: rgba(255, 192, 203, 0.5);
+
+  --control-window-background-preview: rgb(255, 192, 203);
+  --control-window-text-color-preview: white;
+
+  --input-background-preview: rgb(255, 192, 203);
+  --input-text-background-preview: transparent;
+
+  --background-color-preview: rgb(255, 192, 203);
+  --main-background-accent-preview: rgba(255, 192, 203, 0.1);
+  --main-background-accent-two-preview: rgba(255, 192, 203, 0.3);
+  --main-background-accent-three-preview: rgba(255, 192, 203, 0.1);
+
+  --theme-color-preview: rgb(255, 242, 242);
+
+  --input-color-preview: white;
+  --input-color-focused-preview: black;
+  --input-text-background-preview: transparent;
+
+  --text-color-preview: #000000;
+  --main-background-color-preview: rgb(255, 255, 255, 0.8);
+  --focused-background-preview: transparent;
+
+  --success-color-preview: lime;
+  --menu-color-preview: var(--primary-color);
+
+  --primary-color-2-preview: rgb(255, 115, 203);
+}

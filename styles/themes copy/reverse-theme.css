@@ -1,0 +1,52 @@
+:root {
+  --primary-color-preview: rgb(255, 255, 255);
+  --primary-color-opacity-05-preview: rgba(255, 255, 255, 0.05);
+  --primary-color-opacity-1-preview: rgba(255, 255, 255, 0.1);
+  --primary-color-opacity-2-preview: rgba(255, 255, 255, 0.2);
+  --primary-color-opacity-5-preview: rgba(255, 255, 255, 0.5);
+
+  --control-window-background-preview: rgb(255, 255, 255);
+  --control-window-text-color-preview: black;
+
+  --input-background-preview: white;
+  --input-text-background-preview: transparent;
+
+  --background-color-preview: rgb(255, 255, 255);
+  --main-background-accent-preview: rgba(255, 255, 255, 0.1);
+  --main-background-accent-two-preview: rgba(255, 255, 255, 0.3);
+  --main-background-accent-three-preview: rgba(255, 255, 255, 0.1);
+
+  --theme-color-preview: rgb(0, 0, 0);
+
+  --input-color-preview: black;
+  --input-color-focused-preview: white;
+  --input-text-background-preview: transparent;
+
+  --text-color-preview: #ffffff;
+  --main-background-color-preview: rgb(0, 0, 0, 1);
+  --focused-background-preview: transparent;
+
+  --success-color-preview: lime;
+  --menu-color-preview: black;
+
+  --primary-color-2-preview: rgb(200, 200, 200);
+}
+/* #change-username-save-button,
+#change-password-save-button,
+#change-email-save-button,
+#change-gender-save-button,
+#change-name-save-button,
+#change-date-save-button {
+  background-color: black !important;
+}
+#change-username-cancel-button,
+#change-password-cancel-button,
+#change-email-cancel-button,
+#change-gender-cancel-button,
+#change-name-cancel-button,
+#change-date-cancel-button {
+  color: black !important;
+}
+.black-bg {
+  border: 1px solid white !important;
+} */

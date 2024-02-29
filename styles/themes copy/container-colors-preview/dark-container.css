@@ -1,0 +1,9 @@
+:root {
+  --main-background-color-preview: rgba(100, 100, 100, 1);
+
+  --text-color-preview: white !important;
+
+  --input-color-focused-preview: white;
+
+  --theme-color-preview: rgba(100, 100, 100, 1);
+}

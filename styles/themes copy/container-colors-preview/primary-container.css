@@ -1,0 +1,52 @@
+:root {
+  --main-background-color-preview: var(--primary-color-2-preview);
+
+  --text-color-preview: var(--control-window-text-color-preview);
+
+  --input-color-focused-preview: white;
+
+  --primary-color-opacity-2-preview: var(--text-color-preview);
+  --menu-text-color-preview: var(--menu-color-preview);
+
+  --theme-color-preview: var(--main-background-color-preview);
+}
+
+/* .control-window {
+  border: 1px solid var(--text-color-preview);
+  border-right: none;
+}
+.control-window::after {
+  border-top: 1px solid var(--text-color-preview) !important;
+}
+#change-username-save-button,
+#change-password-save-button,
+#change-email-save-button,
+#change-gender-save-button,
+#change-name-save-button,
+#change-date-save-button {
+  border: 1px solid var(--text-color-preview) !important;
+}
+#change-username-bottom input,
+#change-password-bottom input,
+#change-email-bottom-second input,
+#change-email-bottom input,
+#change-gender-bottom input,
+#change-name-bottom input,
+#change-date-bottom input {
+  border: 1px solid var(--text-color-preview) !important;
+}
+#change-gender-selection {
+  border: 1px solid var(--text-color-preview) !important;
+}
+.input-error-text {
+  color: var(--text-color) !important;
+}
+.preference {
+  border: 1px solid var(--text-color-preview);
+}
+.theme-subtitle-container {
+  border: 1px solid var(--control-window-text-color-preview) !important;
+}
+.theme-subtitle-container::after {
+  border-top: 1px solid var(--control-window-text-color-preview) !important;
+} */

@@ -1,0 +1,7 @@
+:root {
+  --main-background-color-preview: var(var(--main-background-color-preview));
+  --text-color-preview: var(var(--text-color));
+
+  --input-color-focused-preview: var(var(--input-color-focused-preview));
+  --theme-color-preview: var(var(--theme-color-preview));
+}

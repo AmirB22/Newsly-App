@@ -1,0 +1,5 @@
+:root {
+  --input-background-preview: var(var(--input-background-preview));
+  --input-color-preview: var(var(--input-color-preview));
+  --input-color-focused-preview: var(var(--input-color-focused-preview));
+}

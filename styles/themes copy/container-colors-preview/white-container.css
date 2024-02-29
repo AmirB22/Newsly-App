@@ -1,0 +1,16 @@
+:root {
+  --main-background-color-preview: rgba(255, 255, 255, 1);
+  --text-color-preview: black;
+
+  --input-color-focused-preview: black;
+  --theme-color-preview: rgb(255, 255, 255);
+}
+/* #main {
+  border: 1px solid var(--text-color-preview);
+}
+.white-bg {
+  border: 1px solid black;
+}
+#global-body {
+  border: 1px solid black !important;
+} */

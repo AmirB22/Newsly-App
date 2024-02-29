@@ -49,14 +49,14 @@
 #global-body {
   width: 50rem;
   height: 25rem;
-  background-color: var(--background-color);
+  background-color: var(--background-color-preview);
   display: grid;
   place-items: center;
-  border: 1px solid var(--primary-color);
-  background-image: var(--body-image);
+  border: 1px solid var(--primary-color-preview);
+  background-image: var(--body-image-preview);
 }
 .theme-right-smaller-global {
-  background-color: var(--main-background-color);
+  background-color: var(--main-background-color-preview);
   width: 95%;
   height: 90%;
   border-radius: 2rem;
@@ -66,15 +66,15 @@
 .global-left {
   width: 30%;
   height: 100%;
-  box-shadow: 1rem 0rem 1rem var(--main-background-accent-two);
+  box-shadow: 1rem 0rem 1rem var(--main-background-accent-two-preview);
 }
 .global-right {
   width: 70%;
   height: 100%;
-  background: var(--primary-color);
+  background: var(--primary-color-preview);
   background: linear-gradient(
     135deg,
-    var(--main-background-accent) 10%,
+    var(--main-background-accent-preview) 10%,
     rgba(235, 14, 219, 0) 30%
   );
 }

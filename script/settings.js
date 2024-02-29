@@ -1873,6 +1873,17 @@ const backgroundTheme = document.querySelector("#background-theme");
 const firstAccentTheme = document.querySelector("#first-accent-theme");
 const secondAccentTheme = document.querySelector("#second-accent-theme");
 
+/*Preview container elements */
+const generalThemePreview = document.querySelector("#general-theme-preview");
+/*prettier-ignore*/
+const containerThemePreview = document.querySelector("#container-theme-preview");
+/*prettier-ignore*/
+const backgroundThemePreview = document.querySelector("#background-theme-preview");
+/*prettier-ignore*/
+const firstAccentThemePreview = document.querySelector("#first-accent-theme-preview");
+/*prettier-ignore*/
+const secondAccentThemePreview = document.querySelector("#second-accent-theme-preview");
+
 /*prettier-ignore*/
 const changingColorContainer = document.querySelector(".theme-changing-color-cont");
 /*prettier-ignore*/
@@ -1932,22 +1943,25 @@ premadeBtns.forEach((el) =>
     fullTheme.accentTwoTheme = "default-accent-two";
     fullTheme.inputTheme = "default-inputs";
 
-    generalTheme.setAttribute("href", `../styles/themes/${genTheme}.css`);
-    containerTheme.setAttribute(
+    generalThemePreview.setAttribute(
       "href",
-      `../styles/themes/container-colors/default-container.css`
+      `../styles/themes copy/${genTheme}.css`
     );
-    backgroundTheme.setAttribute(
+    containerThemePreview.setAttribute(
       "href",
-      `../styles/themes/background-colors/default-background.css`
+      `../styles/themes copy/container-colors-preview/default-container.css`
     );
-    firstAccentTheme.setAttribute(
+    backgroundThemePreview.setAttribute(
       "href",
-      `../styles/themes/accent-colors/default-accent.css`
+      `../styles/themes copy/background-colors-preview/default-background.css`
     );
-    secondAccentTheme.setAttribute(
+    firstAccentThemePreview.setAttribute(
       "href",
-      `../styles/themes/accent-colors-two/default-accent-two.css`
+      `../styles/themes copy/accent-colors-preview/default-accent.css`
+    );
+    secondAccentThemePreview.setAttribute(
+      "href",
+      `../styles/themes copy/accent-colors-two-preview/default-accent-two.css`
     );
   })
 );
@@ -1958,7 +1972,10 @@ themeBtns.forEach((el) =>
 
     fullTheme.detailTheme = `${genTheme}`;
 
-    generalTheme.setAttribute("href", `../styles/themes/${genTheme}.css`);
+    generalThemePreview.setAttribute(
+      "href",
+      `../styles/themes copy/${genTheme}.css`
+    );
 
     loggedInAs.theme.generalTheme = genTheme;
     /*prettier-ignore */
@@ -1991,7 +2008,10 @@ containerThemeBtns.forEach((el) =>
     fullTheme.containerTheme = `${contTheme}`;
 
     /*prettier-ignore */
-    containerTheme.setAttribute("href", `../styles/themes/container-colors/${contTheme}.css`);
+    containerThemePreview.setAttribute(
+      "href",
+      `../styles/themes copy/container-colors-preview/${contTheme}.css`
+    );
 
     loggedInAs.theme.containerTheme = contTheme;
     localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
@@ -2004,7 +2024,10 @@ backgroundThemeBtns.forEach((el) =>
     fullTheme.backgroundTheme = `${bgTheme}`;
 
     /*prettier-ignore */
-    backgroundTheme.setAttribute("href", `../styles/themes/background-colors/${bgTheme}.css`);
+    backgroundThemePreview.setAttribute(
+      "href",
+      `../styles/themes copy/background-colors-preview/${bgTheme}.css`
+    );
     loggedInAs.theme.backgroundTheme = bgTheme;
     localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
   })
@@ -2016,7 +2039,10 @@ accentOneThemeBtns.forEach((el) =>
     fullTheme.accentOneTheme = `${accentThemeOne}`;
 
     /*prettier-ignore */
-    firstAccentTheme.setAttribute("href", `../styles/themes/accent-colors/${accentThemeOne}.css`);
+    firstAccentThemePreview.setAttribute(
+      "href",
+      `../styles/themes copy/accent-colors-preview/${accentThemeOne}.css`
+    )
     loggedInAs.theme.firstAccentTheme = accentThemeOne;
     localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
   })
@@ -2028,15 +2054,18 @@ accentTwoThemeBtns.forEach((el) =>
     fullTheme.accentTwoTheme = `${accentThemeTwo}`;
 
     /*prettier-ignore */
-    secondAccentTheme.setAttribute("href", `../styles/themes/accent-colors-two/${accentThemeTwo}.css`);
+    secondAccentThemePreview.setAttribute(
+      "href",
+      `../styles/themes copy/accent-colors-two-preview/${accentThemeTwo}.css`
+    );
     loggedInAs.theme.secondAccentTheme = accentThemeTwo;
     localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
   })
 );
 
-const editThemeTwo = document.querySelectorAll(".theme-subtitle-main");
+const openColorContainers = document.querySelectorAll(".theme-subtitle-main");
 
-editThemeTwo.forEach((el) =>
+openColorContainers.forEach((el) =>
   el.addEventListener("click", function (e) {
     if (
       e.target
@@ -2067,7 +2096,7 @@ editThemeTwo.forEach((el) =>
     );
     const pluses = document.querySelectorAll(".fa-plus");
 
-    editThemeTwo.forEach((el) =>
+    openColorContainers.forEach((el) =>
       el
         .closest(".theme-subtitle-container")
         .classList.remove("theme-subtitle-container-clicked")
@@ -2091,7 +2120,6 @@ editThemeTwo.forEach((el) =>
       .closest(".theme-subtitle-container")
       .querySelector(".fa-plus")
       .classList.add("rotated");
-    console.log(e.target);
   })
 );
 
@@ -2107,4 +2135,28 @@ themeCheckbox.addEventListener("change", function () {
   rightTheme.classList.toggle("theme-right-bigger");
   topPremade.classList.toggle("premade-smaller");
   topTheme.classList.toggle("theme-top-smaller");
+});
+
+const useTheme = document.querySelector("#use-theme");
+useTheme.addEventListener("click", function () {
+  generalTheme.setAttribute(
+    "href",
+    `../styles/themes/${fullTheme.detailTheme}.css`
+  );
+  containerTheme.setAttribute(
+    "href",
+    `../styles/themes/container-colors/${fullTheme.containerTheme}.css`
+  );
+  backgroundTheme.setAttribute(
+    "href",
+    `../styles/themes/background-colors/${fullTheme.backgroundTheme}.css`
+  );
+  firstAccentTheme.setAttribute(
+    "href",
+    `../styles/themes/accent-colors/${fullTheme.accentOneTheme}.css`
+  );
+  secondAccentTheme.setAttribute(
+    "href",
+    `../styles/themes/accent-colors-two/${fullTheme.accentTwoTheme}.css`
+  );
 });
