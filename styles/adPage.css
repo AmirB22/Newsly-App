@@ -1,19 +1,22 @@
 #advertisements {
   width: 100%;
   height: 100%;
+  color: var(--text-color);
 }
 .advertisements-top {
-  height: calc(20% - 5%);
+  height: calc(10% - 5%);
   width: calc(100% - 10%);
   padding: 2.5% 5%;
   display: flex;
-  justify-content: space-between;
-  box-shadow: 0rem 1rem 1rem var(--main-background-accent-two);
+  align-items: center;
+  gap: 3rem;
+  box-shadow: 0.7rem 1rem 1rem var(--main-background-accent-two);
 }
 .advertisements-bottom {
   display: grid;
   grid-template-columns: 50% 50%;
   grid-template-rows: 25% 25% 25% 25%;
+  padding: 5% 0%;
   height: 76%;
 }
 .ad-option {
@@ -41,7 +44,7 @@
   height: 25px;
   position: absolute;
   right: 4rem;
-  bottom: 1rem;
+  bottom: 2rem;
 }
 .ad-switch .slider:before {
   position: absolute;

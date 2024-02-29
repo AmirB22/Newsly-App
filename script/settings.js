@@ -29,7 +29,7 @@ const accountPage = function () {
                 <span class="wd40">Profile Picture</span>
                 <div class="flex wd60">
                   <img
-                    src="${loggedInAs.img}"
+                    src="${loggedInAs ? loggedInAs.img : "Log in"}"
                     alt=""
                   />
                   <div id="account-pfp-text" class="flex">
@@ -42,9 +42,11 @@ const accountPage = function () {
                 <p class="basic-info-key flex wd40">Name</p>
                 <p class="basic-info-value flex wd60">
                  ${
-                   loggedInAs._firstName
-                     ? `${loggedInAs._firstName}, ${loggedInAs._lastName}`
-                     : "Add a name..."
+                   loggedInAs
+                     ? loggedInAs._firstName
+                       ? `${loggedInAs._firstName}, ${loggedInAs._lastName}`
+                       : "Add a name..."
+                     : "Log in"
                  }<i class="fa-solid fa-angle-right"></i>
                 </p>
               </div>
@@ -52,9 +54,11 @@ const accountPage = function () {
                 <p class="basic-info-key flex wd40">Date of Birth</p>
                 <p class="basic-info-value flex wd60">
                  ${
-                   loggedInAs._dateOfBirth
-                     ? `${loggedInAs._dateOfBirth}`
-                     : "Add your date of birth..."
+                   loggedInAs
+                     ? loggedInAs._dateOfBirth
+                       ? `${loggedInAs._dateOfBirth}`
+                       : "Add your date of birth..."
+                     : "Log in"
                  }
                   <i class="fa-solid fa-angle-right"></i>
                 </p>
@@ -63,16 +67,20 @@ const accountPage = function () {
                 <p class="basic-info-key flex wd40">Gender</p>
                 <p class="basic-info-value flex wd60">
                  ${
-                   loggedInAs._gender
-                     ? `${loggedInAs._gender}`
-                     : "Add a gender..."
+                   loggedInAs
+                     ? loggedInAs._gender
+                       ? `${loggedInAs._gender}`
+                       : "Add a gender..."
+                     : "Log in"
                  }<i class="fa-solid fa-angle-right"></i>
                 </p>
               </div>
               <div class="basic-info flex basic-email">
                 <p class="basic-info-key flex wd40">Email</p>
                 <p class="basic-info-value flex wd60">
-                  ${loggedInAs.email} <i class="fa-solid fa-angle-right"></i>
+                  ${
+                    loggedInAs ? loggedInAs.email : "Log in"
+                  } <i class="fa-solid fa-angle-right"></i>
                 </p>
               </div>
             </div>
@@ -81,7 +89,9 @@ const accountPage = function () {
               <div class="account-info flex basic-username">
                 <p class="wd40">Username</p>
                 <p class="account-info-value flex wd60">
-                  ${loggedInAs.username} <i class="fa-solid fa-angle-right"></i>
+                  ${
+                    loggedInAs ? loggedInAs.username : "Log in"
+                  } <i class="fa-solid fa-angle-right"></i>
                 </p>
               </div>
               <div class="account-info flex basic-password">
@@ -138,14 +148,16 @@ const prefPage = function () {
             <div class="preference-profile-container">
               <div class="pref-profile-info"">
                 <h3>${
-                  loggedInAs._firstName
-                    ? `${loggedInAs._firstName}, ${loggedInAs._lastName}`
-                    : `${loggedInAs.username}`
+                  loggedInAs
+                    ? loggedInAs._firstName
+                      ? `${loggedInAs._firstName}, ${loggedInAs._lastName}`
+                      : `${loggedInAs.username}`
+                    : "Log in"
                 }</h3>
                 <p class="pref-view-profile">View profile</p>
               </div>
                 <div class="pref-profile-image">
-              <img src="${loggedInAs.img}" alt="" />
+              <img src="${loggedInAs ? loggedInAs.img : "Log in"}" alt="" />
               <div class="pref-view-profile-hover">
                 <p>View</p>
               </div>
@@ -156,7 +168,6 @@ const prefPage = function () {
             <div class="preference">
               <div class="pref-top">
                 <span class="fluent--paint-brush-16-filled dog"></span>
-
               </div>
               <div class="pref-bottom">
                 <div>
@@ -425,6 +436,11 @@ const prefPage = function () {
         "Theme"
       )
         changeTheme();
+      if (
+        e.target.closest(".preference").querySelector("h1").textContent ===
+        "Advertising"
+      )
+        changeAds();
     })
   );
 };
@@ -2269,12 +2285,13 @@ const changeTheme = function () {
     console.log(userAccounts);
   });
 };
-
 const themePageHTML = function (container) {
   return (container.innerHTML = `  <div id="themes">
           <div id="theme-left">
             <div id="theme-top">
-              <h2 id="theme-title">Themes</h2>
+            <div class="icon-title-container"><span class="fluent--paint-brush-16-filled dog"></span>
+             <h2 id="theme-title">Themes</h2>
+            </div>
               <div id="premade-themes">
                 <p class="theme-premade-subtitle">
                   Try some of these premade themes
@@ -2707,4 +2724,188 @@ const themePageHTML = function (container) {
           </div>
         </div>`);
 };
+
+const changeAdsHTML = function (container) {
+  return (container.innerHTML = ` <div id="advertisements">
+          <div class="advertisements-top">
+            <span class="fa-solid--ad dog"></span>
+            <div>
+              <h1>Advertisements</h1>
+              <p>
+                Choose what content is shown to you and how much of it is shown.
+              </p>
+            </div>
+          </div>
+          <div class="advertisements-bottom">
+            <div class="ad-option">
+              <h1>Categories</h1>
+              <p>
+                Specifically choose which categories are going to be shown in
+                your ad feed. This won't stop other ads from appearing, but the
+                main ads that are shown will be related to the categories you
+                add here.
+              </p>
+            </div>
+            <div class="ad-option">
+              <h1>Amount</h1>
+              <p>
+                Choose how many ads you get per day, as a non premium user the
+                minimum is 10 and maximum is 25.
+              </p>
+            </div>
+            <div class="ad-option">
+              <h1>Companies</h1>
+              <div class="ad-paragraph-switch-container">
+                <p>
+                  Choose whether you want to get personalized company
+                  advertisements in your ad feed or not.
+                </p>
+                <label id="company-switch" class="ad-switch">
+                  <input id="theme-checkbox" type="checkbox" />
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+            <div class="ad-option">
+              <h1>Foreign</h1>
+              <div class="ad-paragraph-switch-container">
+                <p>
+                  Show more ads from other countries and foreign companies, this
+                  option is used for users who want to reach further connections
+                  from people from all over the world.
+                </p>
+                <label id="foreign-switch" class="ad-switch">
+                  <input id="theme-checkbox" type="checkbox" />
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+                <div class="ad-option">
+              <h1>Familliar</h1>
+              <div class="ad-paragraph-switch-container">
+                <p>
+                  Show more ads that are in some way related to the categories
+                  you've followed. This won't stop other ads from appearing, but
+                  the main ads that are shown will be related to your likings.
+                </p>
+                <label id="familliar-switch" class="ad-switch">
+                  <input id="theme-checkbox" type="checkbox" />
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+            <div class="ad-option">
+              <h1>Hide ads</h1>
+              <div class="ad-paragraph-switch-container">
+                <p>
+                  Completely hide all ads altogether, in order to be able to
+                  turn this option on you will need to be a premium member.
+                </p>
+                <label id="hide-switch" class="ad-switch">
+                  <input id="theme-checkbox" type="checkbox" />
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+            <div class="ad-option">
+              <h1>Trending</h1>
+              <div class="ad-paragraph-switch-container">
+                <p>
+                  Show more ads from the Trending category, this might include
+                  ads that are not related to any of the categories you've
+                  followed. It will only show categories that other users have
+                  found useful. This won't stop other ads from appearing, but
+                  the main ads that are shown will be from the Trending
+                  category.
+                </p>
+                <label id="trending-switch" class="ad-switch">
+                  <input id="theme-checkbox" type="checkbox" />
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+            <div>
+              <div class="ad-option">
+                <h1>Adult</h1>
+                <div class="ad-paragraph-switch-container">
+                  <p>Choose whether or not to show adult (18+) ads or not.</p>
+                  <label id="adult-switch" class="ad-switch">
+                    <input id="theme-checkbox" type="checkbox" />
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>`);
+};
 //TODO: (maybe) Add getting new PIN code if the user forgot it (Requires username and password)
+if (loggedInAs && !loggedInAs._adSettings) {
+  loggedInAs._adSettings = {
+    company: false,
+    foreign: false,
+    hide: false,
+    familliar: false,
+    trending: false,
+    adult: true,
+  };
+}
+const changeAds = function () {
+  const container = document.querySelector("#display");
+
+  changeAdsHTML(container);
+
+  if (loggedInAs && loggedInAs._adSettings)
+    Object.entries(loggedInAs._adSettings).forEach((el) =>
+      el[1]
+        ? (document.querySelector(`#${el[0]}-switch input`).checked = true)
+        : -1
+    );
+
+  const switches = document.querySelectorAll(".ad-switch input");
+
+  switches.forEach((el) =>
+    el.addEventListener("change", function () {
+      if (el.checked && el.parentElement.id === "company-switch")
+        loggedInAs._adSettings.company = true;
+      else if (el.parentElement.id === "company-switch")
+        loggedInAs._adSettings.company = false;
+      if (el.checked && el.parentElement.id === "foreign-switch")
+        loggedInAs._adSettings.foreign = true;
+      else if (el.parentElement.id === "foreign-switch")
+        loggedInAs._adSettings.foreign = false;
+      if (el.checked && el.parentElement.id === "hide-switch")
+        loggedInAs._adSettings.hide = true;
+      else if (el.parentElement.id === "hide-switch")
+        loggedInAs._adSettings.hide = false;
+      if (el.checked && el.parentElement.id === "familliar-switch") {
+        loggedInAs._adSettings.familliar = true;
+        const trendingSwitch = document.querySelector("#trending-switch input");
+        trendingSwitch.checked = false;
+        loggedInAs._adSettings.trending = false;
+      } else if (el.parentElement.id === "familliar-switch") loggedInAs._adSettings.familliar = false;
+      if (el.checked && el.parentElement.id === "trending-switch") {
+        loggedInAs._adSettings.trending = true;
+        const familliarSwitch = document.querySelector(
+          "#familliar-switch input"
+        );
+        familliarSwitch.checked = false;
+        loggedInAs._adSettings.familliar = false;
+      } else if (el.parentElement.id === "trending-switch") loggedInAs._adSettings.trending = false;
+      if (el.checked && el.parentElement.id === "adult-switch")
+        loggedInAs._adSettings.adult = true;
+      else if (el.parentElement.id === "adult-switch")
+        loggedInAs._adSettings.adult = false;
+
+      localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+
+      userAccounts.forEach((el) =>
+        el.pin === loggedInAs.pin
+          ? (el._adSettings = loggedInAs._adSettings)
+          : -1
+      );
+
+      localStorage.setItem("accounts", JSON.stringify(userAccounts));
+    })
+  );
+};

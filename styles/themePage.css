@@ -11,7 +11,7 @@
 }
 #theme-top {
   padding: 1.5rem 3rem;
-  box-shadow: 0rem 1rem 1rem var(--main-background-accent-two);
+  box-shadow: 0.7rem 1rem 1rem var(--main-background-accent-two);
   height: calc(35% - 3rem);
   overflow: hidden;
   transition: all 0.4s;
@@ -33,6 +33,12 @@
 }
 #create-own-theme {
   width: 100%;
+}
+.icon-title-container {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  margin-bottom: 1rem;
 }
 .theme-left-smaller {
   width: 60% !important;
@@ -107,7 +113,6 @@
 }
 #theme-title {
   font-size: 4rem;
-  margin-bottom: 2rem;
 }
 .theme-premade-subtitle {
   font-size: 2rem;
