@@ -4,6 +4,58 @@ let Logged = JSON.parse(localStorage.getItem("logged")) || false;
 let loggedInAs = JSON.parse(localStorage.getItem("loggedInAs")) || {};
 let userAccounts = JSON.parse(localStorage.getItem("accounts")) || [];
 
+const generalTheme = document.querySelector("#general-theme");
+const containerTheme = document.querySelector("#container-theme");
+const backgroundTheme = document.querySelector("#background-theme");
+const firstAccentTheme = document.querySelector("#first-accent-theme");
+const secondAccentTheme = document.querySelector("#second-accent-theme");
+
+if (loggedInAs && loggedInAs.theme) {
+  if (loggedInAs.theme.detailTheme)
+    generalTheme.setAttribute(
+      "href",
+      `../styles/themes/${loggedInAs.theme.detailTheme}.css`
+    );
+  if (loggedInAs.theme.containerTheme)
+    containerTheme.setAttribute(
+      "href",
+      `../styles/themes/container-colors/${loggedInAs.theme.containerTheme}.css`
+    );
+  if (loggedInAs.theme.backgroundTheme)
+    backgroundTheme.setAttribute(
+      "href",
+      `../styles/themes/background-colors/${loggedInAs.theme.backgroundTheme}.css`
+    );
+  if (loggedInAs.theme.firstAccentTheme) {
+    firstAccentTheme.setAttribute(
+      "href",
+      `../styles/themes/accent-colors/${loggedInAs.theme.firstAccentTheme}.css`
+    );
+  }
+  if (loggedInAs.theme.secondAccentTheme) {
+    secondAccentTheme.setAttribute(
+      "href",
+      `../styles/themes/accent-colors-two/${loggedInAs.theme.secondAccentTheme}.css`
+    );
+  }
+  if (loggedInAs.theme.input) {
+    secondAccentTheme.setAttribute(
+      "href",
+      `../styles/themes/input-colors/${loggedInAs.theme.inputsTheme}.css`
+    );
+  }
+} else if (loggedInAs) {
+  loggedInAs.theme = {
+    detailTheme: null,
+    containerTheme: null,
+    backgroundTheme: null,
+    firstAccentTheme: null,
+    secondAccentTheme: null,
+    inputTheme: null,
+  };
+  localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+}
+
 const CategoriesOriginal = [
   "Business",
   "Science",

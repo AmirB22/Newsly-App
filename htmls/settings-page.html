@@ -33,6 +33,7 @@
     <link rel="stylesheet" href="../styles/settings.css" />
     <link rel="stylesheet" href="../styles/preferences.css" />
     <link rel="stylesheet" href="../styles/themePage.css" />
+    <link rel="stylesheet" href="../styles/adPage.css" />
 
     <script defer src="../script/settings.js"></script>
     <title>Newsly | Settings</title>
@@ -49,432 +50,106 @@
           <li id="menu-help">Help</li>
         </ul>
       </div>
-      <div id="display">
-        <div id="themes">
-          <div id="theme-left">
-            <div id="theme-top">
-              <h2 id="theme-title">Themes</h2>
-              <div id="premade-themes">
-                <p class="theme-premade-subtitle">
-                  Try some of these premade themes
+      <div id="display"
+        ><div id="advertisements">
+          <div class="advertisements-top">
+            <h1>Advertisements</h1>
+            <p
+              >Choose what content is shown to you and how much of it is shown.
+            </p>
+          </div>
+          <div class="advertisements-bottom">
+            <div class="ad-option">
+              <h1>Categories</h1>
+              <p>
+                Specifically choose which categories are going to be shown in
+                your ad feed. This won't stop other ads from appearing, but the
+                main ads that are shown will be related to your the categories
+                you add here.
+              </p>
+            </div>
+            <div class="ad-option">
+              <h1>Amount</h1>
+              <p>
+                Choose how many ads you get per day, as a non premium user the
+                minimum is 10 and maximum is 25.
+              </p>
+            </div>
+            <div class="ad-option">
+              <h1>Companies</h1>
+              <div class="ad-paragraph-switch-container">
+                <p
+                  >Choose whether you want to get personalized company
+                  advertisements in your ad feed or not.</p
+                >
+                <label class="ad-switch">
+                  <input id="theme-checkbox" type="checkbox" />
+                  <span class="slider round"></span> </label
+              ></div>
+            </div>
+            <div class="ad-option">
+              <h1>Foreign</h1>
+              <div class="ad-paragraph-switch-container">
+                <p>
+                  Show more ads from other countries and foreign companies, this
+                  option is used for users who want to reach further connections
+                  from people from all over the world.
                 </p>
-                <div id="theme-colors-premade">
-                  <div
-                    class="theme-color-father-premade theme-father-premade"
-                    data-theme="default-theme"
-                    data-color="lime"
-                  >
-                    <div class="default-bg default-premade color-premade"></div>
-                  </div>
-                  <div
-                    class="theme-color-father-premade theme-father-premade"
-                    data-theme="blue-theme"
-                    data-color="blue"
-                  >
-                    <div class="blue-bg blue-premade color-premade"></div>
-                  </div>
-                  <div
-                    class="theme-color-father-premade theme-father-premade"
-                    data-theme="cyan-theme"
-                    data-color="cyan"
-                  >
-                    <div class="cyan-bg cyan-premade color-premade"></div>
-                  </div>
-                  <div
-                    class="theme-color-father-premade theme-father-premade"
-                    data-theme="green-theme"
-                    data-color="green"
-                  >
-                    <div class="green-bg green-premade color-premade"></div>
-                  </div>
-                  <div
-                    class="theme-color-father-premade theme-father-premade"
-                    data-theme="red-theme"
-                    data-color="red"
-                  >
-                    <div class="red-bg red-premade color-premade"></div>
-                  </div>
-                  <div
-                    class="theme-color-father-premade theme-father-premade"
-                    data-theme="pink-theme"
-                    data-color="pink"
-                  >
-                    <div class="pink-bg pink-premade color-premade"></div>
-                  </div>
-                  <div
-                    class="theme-color-father-premade theme-father-premade"
-                    data-theme="hot-pink-theme"
-                    data-color="hot-pink"
-                  >
-                    <div
-                      class="hot-pink-bg hot-pink-premade color-premade"
-                    ></div>
-                  </div>
-                  <div
-                    class="theme-color-father-premade theme-father-premade"
-                    data-theme="orange-theme"
-                    data-color="orange"
-                  >
-                    <div class="orange-bg orange-premade color-premade"></div>
-                  </div>
-                  <div
-                    class="theme-color-father-premade theme-father-premade"
-                    data-theme="yellow-theme"
-                    data-color="yellow"
-                  >
-                    <div class="yellow-bg yellow-premade color-premade"></div>
-                  </div>
-                  <div
-                    class="theme-color-father-premade theme-father-premade"
-                    data-theme="night-mode-theme"
-                    data-color="black"
-                  >
-                    <div class="black-bg black-premade color-premade"></div>
-                  </div>
-                  <div
-                    class="theme-color-father-premade theme-father-premade"
-                    data-theme="reverse-theme"
-                    data-color="white"
-                  >
-                    <div class="white-bg white-premade color-premade"></div>
-                  </div>
-                  <div
-                    class="theme-color-father-premade theme-father-premade"
-                    data-theme="dark-theme"
-                    data-color="gray"
-                  >
-                    <div class="gray-bg gray-premade color-premade"></div>
-                  </div>
-                  <div
-                    class="theme-color-father-premade theme-father-premade"
-                    data-theme="purple-theme"
-                    data-color="purple"
-                  >
-                    <div class="purple-bg purple-premade color-premade"></div>
-                  </div>
-                  <div
-                    class="theme-color-father-premade theme-father-premade"
-                    data-theme="aqua-theme"
-                    data-color="aqua"
-                  >
-                    <div class="aqua-bg aqua-premade color-premade"></div>
-                  </div>
-                  <div
-                    class="theme-color-father-premade theme-father-premade"
-                    data-theme="colorful-theme"
-                    data-color="colorful"
-                  >
-                    <div
-                      class="colorful-bg colorful-premade color-premade"
-                    ></div>
-                  </div>
-                </div>
-              </div>
-              <div class="create-container">
-                <h2>Design your own theme ?</h2>
-                <label class="switch">
+                <label class="ad-switch">
                   <input id="theme-checkbox" type="checkbox" />
                   <span class="slider round"></span>
                 </label>
               </div>
             </div>
-            <div id="theme-bottom">
-              <div class="theme-right-title">
-                <h2>Your theme preview</h2>
-                <p>This is how your glorious theme will look like!</p>
-              </div>
-              <div id="global-body">
-                <div class="theme-right-smaller-global">
-                  <div class="global-left"></div>
-                  <div class="global-right"></div>
-                </div>
-              </div>
-              <button id="use-theme">Use</button>
-              <button id="cancel-theme">Cancel</button>
-              <button id="set-theme">Use by default</button>
+            <div class="ad-option">
+              <h1>Hide ads</h1>
+              <div class="ad-paragraph-switch-container">
+                <p
+                  >Completely hide all ads altogether, in order to be able to
+                  turn this option on you will need to be a premium member.</p
+                >
+                <label class="ad-switch">
+                  <input id="theme-checkbox" type="checkbox" />
+                  <span class="slider round"></span> </label
+              ></div>
             </div>
-          </div>
-          <div id="theme-right">
-            <div id="create-own-theme">
-              <div id="detail-themes" class="dropdown-title">
-                <div class="theme-subtitle-container">
-                  <div class="theme-subtitle-main">
-                    <h2 class="theme-subtitle">Detail color</h2>
-                    <i class="fa-solid fa-plus"></i>
-                  </div>
-                </div>
-                <div id="theme-colors">
-                  <div
-                    class="theme-color-father theme-father"
-                    data-theme="blue-theme"
-                    data-color="blue"
-                  >
-                    <div class="blue-bg"></div>
-                  </div>
-                  <div
-                    class="theme-color-father theme-father"
-                    data-theme="green-theme"
-                    data-color="green"
-                  >
-                    <div class="green-bg"></div>
-                  </div>
-                  <div
-                    class="theme-color-father theme-father"
-                    data-theme="red-theme"
-                    data-color="red"
-                  >
-                    <div class="red-bg"></div>
-                  </div>
-                  <div
-                    class="theme-color-father theme-father"
-                    data-theme="pink-theme"
-                    data-color="pink"
-                  >
-                    <div class="pink-bg"></div>
-                  </div>
-                  <div
-                    class="theme-color-father theme-father"
-                    data-theme="hot-pink-theme"
-                    data-color="hot-pink"
-                  >
-                    <div class="hot-pink-bg"></div>
-                  </div>
-                  <div
-                    class="theme-color-father theme-father"
-                    data-theme="orange-theme"
-                    data-color="orange"
-                  >
-                    <div class="orange-bg"></div>
-                  </div>
-                  <div
-                    class="theme-color-father theme-father"
-                    data-theme="yellow-theme"
-                    data-color="yellow"
-                  >
-                    <div class="yellow-bg"></div>
-                  </div>
-                  <div
-                    class="theme-color-father theme-father"
-                    data-theme="night-mode-theme"
-                    data-color="black"
-                  >
-                    <div class="black-bg"></div>
-                  </div>
-                  <div
-                    class="theme-color-father theme-father"
-                    data-theme="reverse-theme"
-                    data-color="white"
-                  >
-                    <div class="white-bg"></div>
-                  </div>
-                  <div
-                    class="theme-color-father theme-father"
-                    data-theme="dark-theme"
-                    data-color="gray"
-                  >
-                    <div class="gray-bg"></div>
-                  </div>
-                  <div
-                    class="theme-color-father theme-father"
-                    data-theme="purple-theme"
-                    data-color="purple"
-                  >
-                    <div class="purple-bg"></div>
-                  </div>
-                  <div
-                    class="theme-color-father theme-father"
-                    data-theme="aqua-theme"
-                    data-color="aqua"
-                  >
-                    <div class="aqua-bg"></div>
-                  </div>
-                  <div
-                    class="theme-color-father theme-father"
-                    data-theme="colorful-theme"
-                    data-color="colorful"
-                  >
-                    <div class="colorful-bg"></div>
-                  </div>
-                </div>
-              </div>
-              <div id="container-themes" class="dropdown-title">
-                <div class="theme-subtitle-container">
-                  <div class="theme-subtitle-main">
-                    <h2 class="theme-subtitle">Container color</h2>
-                    <i class="fa-solid fa-plus"></i>
-                  </div>
-                </div>
-                <div id="theme-colors">
-                  <div
-                    class="theme-color-father-cont theme-father theme-"
-                    data-theme="primary-container"
-                  >
-                    <div class="default-bg theme-changing-color-cont"></div>
-                  </div>
-
-                  <div
-                    class="theme-color-father-cont theme-father"
-                    data-theme="night-container"
-                  >
-                    <div class="black-bg"></div>
-                  </div>
-                  <div
-                    class="theme-color-father-cont theme-father"
-                    data-theme="white-container"
-                  >
-                    <div class="white-bg"></div>
-                  </div>
-                  <div
-                    class="theme-color-father-cont theme-father"
-                    data-theme="dark-container"
-                  >
-                    <div class="gray-bg"></div>
-                  </div>
-                </div>
-              </div>
-              <div id="background-themes" class="dropdown-title">
-                <div class="theme-subtitle-container">
-                  <div class="theme-subtitle-main">
-                    <h2 class="theme-subtitle">Background color</h2>
-                    <i class="fa-solid fa-plus"></i>
-                  </div>
-                </div>
-                <div id="theme-colors">
-                  <div
-                    class="theme-color-father-bg theme-father"
-                    data-theme="primary-background"
-                  >
-                    <div class="default-bg theme-changing-color-bg"></div>
-                  </div>
-                  <div
-                    class="theme-color-father-bg theme-father"
-                    data-theme="night-background"
-                  >
-                    <div class="black-bg"></div>
-                  </div>
-                  <div
-                    class="theme-color-father-bg theme-father"
-                    data-theme="white-background"
-                  >
-                    <div class="white-bg"></div>
-                  </div>
-                  <div
-                    class="theme-color-father-bg theme-father"
-                    data-theme="dark-background"
-                  >
-                    <div class="gray-bg"></div>
-                  </div>
-                </div>
-              </div>
-              <div id="accent-one-themes" class="dropdown-title">
-                <div class="theme-subtitle-container">
-                  <div class="theme-subtitle-main">
-                    <h2 class="theme-subtitle">Accent color no.1</h2>
-                    <i class="fa-solid fa-plus"></i>
-                  </div>
-                </div>
-                <div id="theme-colors">
-                  <div
-                    class="theme-color-father-accent-one theme-father theme-"
-                    data-theme="default-accent"
-                  >
-                    <div
-                      class="default-bg theme-changing-color-accent-one"
-                    ></div>
-                  </div>
-
-                  <div
-                    class="theme-color-father-accent-one theme-father"
-                    data-theme="dark-accent"
-                  >
-                    <div class="black-bg"></div>
-                  </div>
-                  <div
-                    class="theme-color-father-accent-one theme-father"
-                    data-theme="white-accent"
-                  >
-                    <div class="white-bg"></div>
-                  </div>
-                  <div
-                    class="theme-color-father-accent-one theme-father no-accent"
-                    data-theme="no-accent"
-                  >
-                    <div class="gray-bg"></div>
-                  </div>
-                </div>
-              </div>
-              <div id="accent-two-themes" class="dropdown-title">
-                <div class="theme-subtitle-container">
-                  <div class="theme-subtitle-main">
-                    <h2 class="theme-subtitle">Accent color no.2</h2>
-                    <i class="fa-solid fa-plus"></i>
-                  </div>
-                </div>
-                <div id="theme-colors">
-                  <div
-                    class="theme-color-father-accent-two theme-father theme-"
-                    data-theme="default-accent-two"
-                  >
-                    <div
-                      class="default-bg theme-changing-color-accent-two"
-                    ></div>
-                  </div>
-
-                  <div
-                    class="theme-color-father-accent-two theme-father"
-                    data-theme="dark-accent-two"
-                  >
-                    <div class="black-bg"></div>
-                  </div>
-                  <div
-                    class="theme-color-father-accent-two theme-father"
-                    data-theme="white-accent-two"
-                  >
-                    <div class="white-bg"></div>
-                  </div>
-                  <div
-                    class="theme-color-father-accent-two theme-father no-accent-two"
-                    data-theme="no-accent-two"
-                  >
-                    <div class="gray-bg"></div>
-                  </div>
-                </div>
-              </div>
-              <div id="accent-two-themes" class="dropdown-title">
-                <div class="theme-subtitle-container">
-                  <div class="theme-subtitle-main">
-                    <h2 class="theme-subtitle">Input color</h2>
-                    <i class="fa-solid fa-plus"></i>
-                  </div>
-                </div>
-                <div id="theme-colors">
-                  <div
-                    class="theme-color-father-accent-two theme-father theme-"
-                    data-theme="default-accent-two"
-                  >
-                    <div
-                      class="default-bg theme-changing-color-accent-two"
-                    ></div>
-                  </div>
-
-                  <div
-                    class="theme-color-father-accent-two theme-father"
-                    data-theme="dark-accent-two"
-                  >
-                    <div class="black-bg"></div>
-                  </div>
-                  <div
-                    class="theme-color-father-accent-two theme-father"
-                    data-theme="white-accent-two"
-                  >
-                    <div class="white-bg"></div>
-                  </div>
-                  <div
-                    class="theme-color-father-accent-two theme-father no-accent-two"
-                    data-theme="no-accent-two"
-                  >
-                    <div class="gray-bg"></div>
-                  </div>
+            <div class="ad-option">
+              <h1>Familliar</h1>
+              <div class="ad-paragraph-switch-container">
+                <p
+                  >Show more ads that are in some way related to the categories
+                  you've followed. This won't stop other ads from appearing, but
+                  the main ads that are shown will be related to your
+                  likings.</p
+                >
+                <label class="ad-switch">
+                  <input id="theme-checkbox" type="checkbox" />
+                  <span class="slider round"></span> </label
+              ></div>
+            </div>
+            <div class="ad-option">
+              <h1>Trending</h1>
+              <div class="ad-paragraph-switch-container">
+                <p
+                  >Show more ads from the Trending category, this might include
+                  ads that are not related to any of the categories you've
+                  followed. It will only show categories that other users have
+                  found useful
+                </p>
+                <label class="ad-switch">
+                  <input id="theme-checkbox" type="checkbox" />
+                  <span class="slider round"></span>
+                </label> </div
+            ></div>
+            <div>
+              <div class="ad-option">
+                <h1>Adult</h1>
+                <div class="ad-paragraph-switch-container">
+                  <p> Choose whether or not to show adult (18+) ads or not. </p>
+                  <label class="ad-switch">
+                    <input id="theme-checkbox" type="checkbox" />
+                    <span class="slider round"></span>
+                  </label>
                 </div>
               </div>
             </div>

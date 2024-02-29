@@ -9,8 +9,8 @@ body {
   background: rgb(73, 180, 58);
   background: linear-gradient(
     135deg,
-    rgba(73, 180, 58, 1) 0%,
-    rgba(196, 252, 69, 1) 100%
+    var(--primary-color) 0%,
+    var(--primary-color-2) 100%
   );
   width: calc(100vw - (100vw - 100%));
   min-height: 100svh;
@@ -85,7 +85,7 @@ body {
 .search-container input {
   width: 50%;
   padding: 1.5rem 1rem;
-  border: 2px solid lightgreen;
+  border: 2px solid var(--primary-color);
   border-top-right-radius: 1rem;
   border-bottom-right-radius: 1rem;
   font-size: 1.6rem;
@@ -107,10 +107,10 @@ body {
   font-size: 1.7rem;
   cursor: pointer;
   border: none;
-  border: 1px solid lime;
+  border: 1px solid var(--primary-color);
   border-right: none;
   background-color: white;
-  color: lime;
+  color: var(--primary-color);
   position: relative;
   right: -1rem;
 }
@@ -161,7 +161,7 @@ body {
   padding: 0.2rem 1.25rem;
 }
 .list-clicked {
-  color: lime;
+  color: var(--primary-color);
 }
 .list-button-list {
   position: relative;
@@ -178,7 +178,7 @@ body {
   height: 0.5rem;
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
-  background-color: lime;
+  background-color: var(--primary-color);
 }
 .list-container span {
   font-weight: 100;
@@ -305,7 +305,7 @@ body {
 }
 .weather-search-input {
   border: none;
-  border-bottom: 1px solid lime;
+  border-bottom: 1px solid var(--primary-color);
   padding: 0.5rem 1rem;
 }
 .weather-search-input-container {
@@ -315,7 +315,7 @@ body {
 .weather-search-button {
   background-color: transparent;
   border: none;
-  border-bottom: 1px solid lime;
+  border-bottom: 1px solid var(--primary-color);
   padding: 0.5rem 1rem;
   position: relative;
   left: 1rem;
@@ -475,7 +475,7 @@ body {
 .right-side-card-title {
   font-size: 1.7rem;
   height: 6rem;
-  max-width: 50%;
+  max-width: 100%;
   font-weight: normal;
   overflow: hidden;
 }
@@ -682,7 +682,7 @@ body {
 .Science,
 .Business,
 .World {
-  background-color: lime;
+  background-color: var(--primary-color);
 }
 .fifth-container {
   width: 100%;
@@ -737,7 +737,7 @@ body {
   height: 0px;
 }
 .page-top-submain-news-bottom::-webkit-scrollbar-thumb {
-  background-color: lime;
+  background-color: var(--primary-color);
 }
 .button-list {
   font-size: 1.5rem;
@@ -804,7 +804,7 @@ body {
 }
 .mid-account-section {
   width: 100%;
-  border-top: 1px solid lime;
+  border-top: 1px solid var(--primary-color);
   padding: 1rem 0rem;
   display: flex;
   flex-direction: column;
@@ -912,7 +912,7 @@ body {
   position: absolute;
   top: 45%;
   left: 48%;
-  color: lime;
+  color: var(--primary-color);
 }
 
 @keyframes animate {
@@ -1337,7 +1337,7 @@ body {
 }
 .home-page-stories {
   cursor: pointer;
-  color: lime;
+  color: var(--primary-color);
 }
 
 .dropdown-main {
@@ -1382,7 +1382,7 @@ body {
 .option-wrapper:hover {
   color: black;
   background-color: rgb(228, 228, 228);
-  border-bottom: 1px solid lime;
+  border-bottom: 1px solid var(--primary-color);
   margin-bottom: -1px;
   width: calc(100% - 2.5rem);
 }
@@ -1409,7 +1409,7 @@ body {
 }
 
 .dropdown::-webkit-scrollbar-thumb {
-  background-color: lime;
+  background-color: var(--primary-color);
 }
 .location-page-main {
   display: flex;
@@ -1612,7 +1612,7 @@ body {
   width: 5px;
 }
 .suggestions::-webkit-scrollbar-thumb {
-  background-color: lime;
+  background-color: var(--primary-color);
 }
 .suggestion {
   font-size: 1.7rem;
@@ -1681,8 +1681,7 @@ body {
 }
 .bookmark {
   position: absolute;
-
-  color: lime;
+  color: var(--primary-color);
   font-size: 1.7rem;
   padding: 1rem 1.3rem;
   margin: -1rem -1.3rem;
@@ -1860,7 +1859,7 @@ body {
   position: absolute;
   padding: 1rem;
   width: 5rem;
-  background-color: lime;
+  background-color: var(--primary-color);
   border: none;
   color: white;
   cursor: pointer;

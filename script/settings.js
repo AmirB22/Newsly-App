@@ -400,7 +400,6 @@ const prefPage = function () {
     userAccounts.forEach((el) => {
       if (loggedInAs.pin === el.pin) {
         el.timezone = loggedInAs.timezone;
-        console.log(el);
       }
     });
     localStorage.setItem("accounts", JSON.stringify(userAccounts));
@@ -416,6 +415,18 @@ const prefPage = function () {
     if (timezone.value === loggedInAs.timezone)
       timezone.setAttribute("selected", "");
   }
+
+  const prefPageButtons = document.querySelectorAll(".pref-bottom-button");
+
+  prefPageButtons.forEach((el) =>
+    el.addEventListener("click", function (e) {
+      if (
+        e.target.closest(".preference").querySelector("h1").textContent ===
+        "Theme"
+      )
+        changeTheme();
+    })
+  );
 };
 const changePages = function (e) {
   if (e.target.id === "menu-account") accountPage();
@@ -1052,15 +1063,13 @@ const genderHelper = function (e) {
 const changeEmail = function () {
   const changeContainer = document.querySelector("#display-right");
 
-  const changeEmailElement = document
-    .querySelector(".basic-email")
-    .querySelector(".basic-info-value");
   changeEmailHTML(changeContainer);
 
   const inputInnerText = document.querySelectorAll(".input-text");
   const inputs = document.querySelectorAll("#change-email input");
 
   handleIconRotation();
+
   const childArrow = changeEmailElement.firstElementChild;
   childArrow.style.transform = "rotate(180deg)";
 
@@ -1233,7 +1242,9 @@ const changeEmailHTML = function (container) {
 const changeEmailSecond = function () {
   const changeContainer = document.querySelector("#display-right");
 
-  const changeEmailElement = document.querySelector(".basic-email");
+  const changeEmailElement = document
+    .querySelector(".basic-email")
+    .querySelector(".basic-info-value");
 
   changeEmailSecondHTML(changeContainer);
 
@@ -1850,102 +1861,367 @@ const changeUsernameHTML = function (container) {
           </div>`);
 };
 
-//TODO: (maybe) Add getting new PIN code if the user forgot it (Requires username and password)
-
-//TODO: Create the username change page
-
-const allBtns = document.querySelectorAll(".theme-father");
-
-const premadeBtns = document.querySelectorAll(".theme-color-father-premade");
-const themeBtns = document.querySelectorAll(".theme-color-father");
-/*prettier-ignore*/
-const containerThemeBtns = document.querySelectorAll(".theme-color-father-cont");
-/*prettier-ignore*/
-const backgroundThemeBtns = document.querySelectorAll(".theme-color-father-bg");
-/*prettier-ignore*/
-const accentOneThemeBtns = document.querySelectorAll(".theme-color-father-accent-one");
-/*prettier-ignore*/
-const accentTwoThemeBtns = document.querySelectorAll(".theme-color-father-accent-two");
-
 const generalTheme = document.querySelector("#general-theme");
 const containerTheme = document.querySelector("#container-theme");
 const backgroundTheme = document.querySelector("#background-theme");
 const firstAccentTheme = document.querySelector("#first-accent-theme");
 const secondAccentTheme = document.querySelector("#second-accent-theme");
 
-/*Preview container elements */
-const generalThemePreview = document.querySelector("#general-theme-preview");
-/*prettier-ignore*/
-const containerThemePreview = document.querySelector("#container-theme-preview");
-/*prettier-ignore*/
-const backgroundThemePreview = document.querySelector("#background-theme-preview");
-/*prettier-ignore*/
-const firstAccentThemePreview = document.querySelector("#first-accent-theme-preview");
-/*prettier-ignore*/
-const secondAccentThemePreview = document.querySelector("#second-accent-theme-preview");
+if (loggedInAs && loggedInAs.theme) {
+  if (loggedInAs.theme.detailTheme)
+    generalTheme.setAttribute(
+      "href",
+      `../styles/themes/${loggedInAs.theme.detailTheme}.css`
+    );
+  if (loggedInAs.theme.containerTheme)
+    containerTheme.setAttribute(
+      "href",
+      `../styles/themes/container-colors/${loggedInAs.theme.containerTheme}.css`
+    );
+  if (loggedInAs.theme.backgroundTheme)
+    backgroundTheme.setAttribute(
+      "href",
+      `../styles/themes/background-colors/${loggedInAs.theme.backgroundTheme}.css`
+    );
+  if (loggedInAs.theme.firstAccentTheme) {
+    firstAccentTheme.setAttribute(
+      "href",
+      `../styles/themes/accent-colors/${loggedInAs.theme.firstAccentTheme}.css`
+    );
+  }
+  if (loggedInAs.theme.secondAccentTheme) {
+    secondAccentTheme.setAttribute(
+      "href",
+      `../styles/themes/accent-colors-two/${loggedInAs.theme.secondAccentTheme}.css`
+    );
+  }
+  if (loggedInAs.theme.input) {
+    secondAccentTheme.setAttribute(
+      "href",
+      `../styles/themes/input-colors/${loggedInAs.theme.inputsTheme}.css`
+    );
+  }
+} else if (loggedInAs) {
+  loggedInAs.theme = {
+    detailTheme: null,
+    containerTheme: null,
+    backgroundTheme: null,
+    firstAccentTheme: null,
+    secondAccentTheme: null,
+    inputTheme: null,
+  };
+  localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+}
 
-/*prettier-ignore*/
-const changingColorContainer = document.querySelector(".theme-changing-color-cont");
-/*prettier-ignore*/
-const changingColorBackground = document.querySelector(".theme-changing-color-bg");
-/*prettier-ignore*/
-const changingAccentOne = document.querySelector(".theme-changing-color-accent-one");
-/*prettier-ignore*/
-const changingAccentTwo = document.querySelector(".theme-changing-color-accent-two");
+const changeTheme = function () {
+  const container = document.querySelector("#display");
 
-const mainContainer = document.querySelector("#main");
+  themePageHTML(container);
 
-let genTheme, contTheme, bgTheme, accentThemeOne, accentThemeTwo;
+  const allBtns = document.querySelectorAll(".theme-father");
 
-// if (loggedInAs && loggedInAs.theme) {
-//   if (loggedInAs.theme.generalTheme)
-//     generalTheme.setAttribute(
-//       "href",
-//       `../styles/themes/${loggedInAs.theme.generalTheme}.css`
-//     );
-//   if (loggedInAs.theme.containerTheme)
-//     containerTheme.setAttribute(
-//       "href",
-//       `../styles/themes/container-colors/${loggedInAs.theme.containerTheme}.css`
-//     );
-//   if (loggedInAs.theme.backgroundTheme)
-//     backgroundTheme.setAttribute(
-//       "href",
-//       `../styles/themes/background-colors/${loggedInAs.theme.backgroundTheme}.css`
-//     );
-// } else if (loggedInAs) {
-//   loggedInAs.theme = {
-//     generalTheme: null,
-//     containerTheme: null,
-//     backgroundTheme: null,
-//     firstAccentTheme: null,
-//     secondAccentTheme: null,
-//   };
-//   localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
-// }
-const fullTheme = {
-  detailTheme: "default-theme",
-  containerTheme: "default-container",
-  backgroundTheme: "default-background",
-  accentOneTheme: "default-accent",
-  accentTwoTheme: "default-accent-two",
-  inputTheme: "default-inputs",
-};
+  const premadeBtns = document.querySelectorAll(".theme-color-father-premade");
+  const themeBtns = document.querySelectorAll(".theme-color-father");
+  /*prettier-ignore*/
+  const containerThemeBtns = document.querySelectorAll(".theme-color-father-cont");
+  /*prettier-ignore*/
+  const backgroundThemeBtns = document.querySelectorAll(".theme-color-father-bg");
+  /*prettier-ignore*/
+  const accentOneThemeBtns = document.querySelectorAll(".theme-color-father-accent-one");
+  /*prettier-ignore*/
+  const accentTwoThemeBtns = document.querySelectorAll(".theme-color-father-accent-two");
 
-premadeBtns.forEach((el) =>
-  el.addEventListener("click", function () {
-    let genTheme = el.dataset.theme;
+  /*Preview container elements */
+  const generalThemePreview = document.querySelector("#general-theme-preview");
+  /*prettier-ignore*/
+  const containerThemePreview = document.querySelector("#container-theme-preview");
+  /*prettier-ignore*/
+  const backgroundThemePreview = document.querySelector("#background-theme-preview");
+  /*prettier-ignore*/
+  const firstAccentThemePreview = document.querySelector("#first-accent-theme-preview");
+  /*prettier-ignore*/
+  const secondAccentThemePreview = document.querySelector("#second-accent-theme-preview");
 
-    fullTheme.detailTheme = `${genTheme}`;
-    fullTheme.containerTheme = "default-container";
-    fullTheme.backgroundTheme = "default-background";
-    fullTheme.accentOneTheme = "default-accent";
-    fullTheme.accentTwoTheme = "default-accent-two";
-    fullTheme.inputTheme = "default-inputs";
+  /*prettier-ignore*/
+  const changingColorContainer = document.querySelector(".theme-changing-color-cont");
+  /*prettier-ignore*/
+  const changingColorBackground = document.querySelector(".theme-changing-color-bg");
+  /*prettier-ignore*/
+  const changingAccentOne = document.querySelector(".theme-changing-color-accent-one");
+  /*prettier-ignore*/
+  const changingAccentTwo = document.querySelector(".theme-changing-color-accent-two");
 
+  const mainContainer = document.querySelector("#main");
+
+  let genTheme, contTheme, bgTheme, accentThemeOne, accentThemeTwo;
+
+  const fullTheme = {
+    detailTheme: "default-theme",
+    containerTheme: "default-container",
+    backgroundTheme: "default-background",
+    accentOneTheme: "default-accent",
+    accentTwoTheme: "default-accent-two",
+    inputsTheme: "default-inputs",
+  };
+
+  premadeBtns.forEach((el) =>
+    el.addEventListener("click", function () {
+      let genTheme = el.dataset.theme;
+      const color = el.dataset.color;
+
+      fullTheme.detailTheme = `${genTheme}`;
+      fullTheme.containerTheme = "default-container";
+      fullTheme.backgroundTheme = "default-background";
+      fullTheme.accentOneTheme = "default-accent";
+      fullTheme.accentTwoTheme = "default-accent-two";
+      fullTheme.inputsTheme = "default-inputs";
+
+      generalThemePreview.setAttribute(
+        "href",
+        `../styles/themes copy/${genTheme}.css`
+      );
+      containerThemePreview.setAttribute(
+        "href",
+        `../styles/themes copy/container-colors-preview/default-container.css`
+      );
+      backgroundThemePreview.setAttribute(
+        "href",
+        `../styles/themes copy/background-colors-preview/default-background.css`
+      );
+      firstAccentThemePreview.setAttribute(
+        "href",
+        `../styles/themes copy/accent-colors-preview/default-accent.css`
+      );
+      secondAccentThemePreview.setAttribute(
+        "href",
+        `../styles/themes copy/accent-colors-two-preview/default-accent-two.css`
+      );
+      /*prettier-ignore */
+      changingColorContainer.setAttribute("class", `theme-changing-color-cont ${color}-bg`);
+      /*prettier-ignore */
+      changingColorContainer.parentElement.setAttribute("data-theme", `primary-container`);
+
+      /*prettier-ignore */
+      changingColorBackground.setAttribute("class", `theme-changing-color-bg ${color}-bg`);
+      /*prettier-ignore */
+      changingColorBackground.parentElement.setAttribute("data-theme", `primary-background`);
+
+      /*prettier-ignore */
+      changingAccentOne.setAttribute("class", `theme-changing-color-accent-one ${color}-bg`);
+      /*prettier-ignore*/
+      changingAccentOne.parentElement.setAttribute("data-theme", `default-accent`);
+
+      /*prettier-ignore */
+      changingAccentTwo.setAttribute("class", `theme-changing-accent-two ${color}-bg`);
+      /*prettier-ignore */
+      changingAccentTwo.parentElement.setAttribute("data-theme", `default-accent-two`);
+    })
+  );
+  themeBtns.forEach((el) =>
+    el.addEventListener("click", function (e) {
+      genTheme = el.dataset.theme;
+      const color = el.dataset.color;
+
+      fullTheme.detailTheme = `${genTheme}`;
+
+      generalThemePreview.setAttribute(
+        "href",
+        `../styles/themes copy/${genTheme}.css`
+      );
+
+      loggedInAs.theme.detailTheme = genTheme;
+      /*prettier-ignore */
+      changingColorContainer.setAttribute("class", `theme-changing-color-cont ${color}-bg`);
+      /*prettier-ignore */
+      changingColorContainer.parentElement.setAttribute("data-theme", `primary-container`);
+
+      /*prettier-ignore */
+      changingColorBackground.setAttribute("class", `theme-changing-color-bg ${color}-bg`);
+      /*prettier-ignore */
+      changingColorBackground.parentElement.setAttribute("data-theme", `primary-background`);
+
+      /*prettier-ignore */
+      changingAccentOne.setAttribute("class", `theme-changing-color-accent-one ${color}-bg`);
+      /*prettier-ignore*/
+      changingAccentOne.parentElement.setAttribute("data-theme", `default-accent`);
+
+      /*prettier-ignore */
+      changingAccentTwo.setAttribute("class", `theme-changing-accent-two ${color}-bg`);
+      /*prettier-ignore */
+      changingAccentTwo.parentElement.setAttribute("data-theme", `default-accent-two`);
+
+      localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+    })
+  );
+  containerThemeBtns.forEach((el) =>
+    el.addEventListener("click", function (e) {
+      contTheme = el.dataset.theme;
+
+      fullTheme.containerTheme = `${contTheme}`;
+
+      /*prettier-ignore */
+      containerThemePreview.setAttribute(
+      "href",
+      `../styles/themes copy/container-colors-preview/${contTheme}.css`
+    );
+
+      loggedInAs.theme.containerTheme = contTheme;
+      localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+    })
+  );
+  backgroundThemeBtns.forEach((el) =>
+    el.addEventListener("click", function () {
+      bgTheme = el.dataset.theme;
+
+      fullTheme.backgroundTheme = `${bgTheme}`;
+
+      /*prettier-ignore */
+      backgroundThemePreview.setAttribute(
+      "href",
+      `../styles/themes copy/background-colors-preview/${bgTheme}.css`
+    );
+      loggedInAs.theme.backgroundTheme = bgTheme;
+      localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+    })
+  );
+  accentOneThemeBtns.forEach((el) =>
+    el.addEventListener("click", function () {
+      accentThemeOne = el.dataset.theme;
+
+      fullTheme.accentOneTheme = `${accentThemeOne}`;
+
+      /*prettier-ignore */
+      firstAccentThemePreview.setAttribute(
+      "href",
+      `../styles/themes copy/accent-colors-preview/${accentThemeOne}.css`
+    )
+      loggedInAs.theme.firstAccentTheme = accentThemeOne;
+      localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+    })
+  );
+  accentTwoThemeBtns.forEach((el) =>
+    el.addEventListener("click", function () {
+      accentThemeTwo = el.dataset.theme;
+
+      fullTheme.accentTwoTheme = `${accentThemeTwo}`;
+
+      /*prettier-ignore */
+      secondAccentThemePreview.setAttribute(
+      "href",
+      `../styles/themes copy/accent-colors-two-preview/${accentThemeTwo}.css`
+    );
+      loggedInAs.theme.secondAccentTheme = accentThemeTwo;
+      localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+    })
+  );
+
+  const openColorContainers = document.querySelectorAll(".theme-subtitle-main");
+
+  openColorContainers.forEach((el) =>
+    el.addEventListener("click", function (e) {
+      if (
+        e.target
+          .closest(".theme-subtitle-container")
+          .nextElementSibling.classList.contains("theme-colors-clicked")
+      ) {
+        e.target
+          .closest(".theme-subtitle-container")
+          .nextElementSibling.classList.remove("theme-colors-clicked");
+        e.target
+          .closest(".theme-subtitle-container")
+          .classList.remove("theme-subtitle-container-active");
+        e.target
+          .closest(".theme-subtitle-container")
+          .querySelector(".fa-plus")
+          .classList.remove("rotated");
+        e.target
+          .closest(".theme-subtitle-container")
+          .classList.remove("theme-subtitle-container-clicked");
+
+        return;
+      }
+
+      const editColors = document.querySelectorAll("#theme-colors");
+      editColors.forEach((el) => el.classList.remove("theme-colors-clicked"));
+      const editContainers = document.querySelectorAll(
+        ".theme-subtitle-container"
+      );
+      const pluses = document.querySelectorAll(".fa-plus");
+
+      openColorContainers.forEach((el) =>
+        el
+          .closest(".theme-subtitle-container")
+          .classList.remove("theme-subtitle-container-clicked")
+      );
+      e.target
+        .closest(".theme-subtitle-container")
+        .classList.add("theme-subtitle-container-clicked");
+
+      editContainers.forEach((el) =>
+        el.classList.remove("theme-subtitle-container-active")
+      );
+      pluses.forEach((el) => el.classList.remove("rotated"));
+
+      e.target
+        .closest(".theme-subtitle-container")
+        .nextElementSibling.classList.add("theme-colors-clicked");
+      e.target
+        .closest(".theme-subtitle-container")
+        .classList.add("theme-subtitle-container-active");
+      e.target
+        .closest(".theme-subtitle-container")
+        .querySelector(".fa-plus")
+        .classList.add("rotated");
+    })
+  );
+
+  const themePage = document.querySelector("#themes");
+  const leftTheme = document.querySelector("#theme-left");
+  const rightTheme = document.querySelector("#theme-right");
+  const topTheme = document.querySelector("#theme-top");
+  const bottomTheme = document.querySelector("#theme-bottom");
+  const themeCheckbox = document.querySelector("#theme-checkbox");
+  const topPremade = document.querySelector("#premade-themes");
+
+  themeCheckbox.addEventListener("change", function () {
+    leftTheme.classList.toggle("theme-left-smaller");
+    rightTheme.classList.toggle("theme-right-bigger");
+    topPremade.classList.toggle("premade-smaller");
+    topTheme.classList.toggle("theme-top-smaller");
+    bottomTheme.classList.toggle("theme-bottom-bigger");
+  });
+
+  const useTheme = document.querySelector("#use-theme");
+  const resetTheme = document.querySelector("#cancel-theme");
+  const defaultTheme = document.querySelector("#set-theme");
+
+  useTheme.addEventListener("click", function () {
+    generalTheme.setAttribute(
+      "href",
+      `../styles/themes/${fullTheme.detailTheme}.css`
+    );
+    containerTheme.setAttribute(
+      "href",
+      `../styles/themes/container-colors/${fullTheme.containerTheme}.css`
+    );
+    backgroundTheme.setAttribute(
+      "href",
+      `../styles/themes/background-colors/${fullTheme.backgroundTheme}.css`
+    );
+    firstAccentTheme.setAttribute(
+      "href",
+      `../styles/themes/accent-colors/${fullTheme.accentOneTheme}.css`
+    );
+    secondAccentTheme.setAttribute(
+      "href",
+      `../styles/themes/accent-colors-two/${fullTheme.accentTwoTheme}.css`
+    );
+  });
+
+  resetTheme.addEventListener("click", function () {
     generalThemePreview.setAttribute(
       "href",
-      `../styles/themes copy/${genTheme}.css`
+      `../styles/themes copy/default-theme.css`
     );
     containerThemePreview.setAttribute(
       "href",
@@ -1963,201 +2239,472 @@ premadeBtns.forEach((el) =>
       "href",
       `../styles/themes copy/accent-colors-two-preview/default-accent-two.css`
     );
-  })
-);
-themeBtns.forEach((el) =>
-  el.addEventListener("click", function (e) {
-    genTheme = el.dataset.theme;
-    const color = el.dataset.color;
 
-    fullTheme.detailTheme = `${genTheme}`;
+    fullTheme.detailTheme = "default-theme";
+    fullTheme.backgroundTheme = "default-background";
+    fullTheme.accentOneTheme = "default-accent";
+    fullTheme.accentTwoTheme = "default-accent-two";
+    fullTheme.inputsTheme - "default-inputs";
+  });
 
-    generalThemePreview.setAttribute(
-      "href",
-      `../styles/themes copy/${genTheme}.css`
-    );
-
-    loggedInAs.theme.generalTheme = genTheme;
-    /*prettier-ignore */
-    changingColorContainer.setAttribute("class", `theme-changing-color-cont ${color}-bg`);
-    /*prettier-ignore */
-    changingColorContainer.parentElement.setAttribute("data-theme", `primary-container`);
-
-    /*prettier-ignore */
-    changingColorBackground.setAttribute("class", `theme-changing-color-bg ${color}-bg`);
-    /*prettier-ignore */
-    changingColorBackground.parentElement.setAttribute("data-theme", `primary-background`);
-
-    /*prettier-ignore */
-    changingAccentOne.setAttribute("class", `theme-changing-color-accent-one ${color}-bg`);
-    /*prettier-ignore*/
-    changingAccentOne.parentElement.setAttribute("data-theme", `default-accent`);
-
-    /*prettier-ignore */
-    changingAccentTwo.setAttribute("class", `theme-changing-accent-two ${color}-bg`);
-    /*prettier-ignore */
-    changingAccentTwo.parentElement.setAttribute("data-theme", `default-accent-two`);
+  defaultTheme.addEventListener("click", function () {
+    loggedInAs.theme = {
+      detailTheme: fullTheme.detailTheme,
+      containerTheme: fullTheme.containerTheme,
+      backgroundTheme: fullTheme.backgroundTheme,
+      firstAccentTheme: fullTheme.accentOneTheme,
+      secondAccentTheme: fullTheme.accentTwoTheme,
+      inputTheme: fullTheme.inputsTheme,
+    };
 
     localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
-  })
-);
-containerThemeBtns.forEach((el) =>
-  el.addEventListener("click", function (e) {
-    contTheme = el.dataset.theme;
 
-    fullTheme.containerTheme = `${contTheme}`;
+    userAccounts.forEach((el) => {
+      if (loggedInAs.pin === el.pin) {
+        el.theme = loggedInAs.theme;
+      }
+    });
+    localStorage.setItem("accounts", JSON.stringify(userAccounts));
 
-    /*prettier-ignore */
-    containerThemePreview.setAttribute(
-      "href",
-      `../styles/themes copy/container-colors-preview/${contTheme}.css`
-    );
+    console.log(userAccounts);
+  });
+};
 
-    loggedInAs.theme.containerTheme = contTheme;
-    localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
-  })
-);
-backgroundThemeBtns.forEach((el) =>
-  el.addEventListener("click", function () {
-    bgTheme = el.dataset.theme;
+const themePageHTML = function (container) {
+  return (container.innerHTML = `  <div id="themes">
+          <div id="theme-left">
+            <div id="theme-top">
+              <h2 id="theme-title">Themes</h2>
+              <div id="premade-themes">
+                <p class="theme-premade-subtitle">
+                  Try some of these premade themes
+                </p>
+                <div id="theme-colors-premade">
+                  <div
+                    class="theme-color-father-premade theme-father-premade"
+                    data-theme="default-theme"
+                    data-color="lime"
+                  >
+                    <div class="default-bg default-premade color-premade"></div>
+                  </div>
+                  <div
+                    class="theme-color-father-premade theme-father-premade"
+                    data-theme="blue-theme"
+                    data-color="blue"
+                  >
+                    <div class="blue-bg blue-premade color-premade"></div>
+                  </div>
+                  <div
+                    class="theme-color-father-premade theme-father-premade"
+                    data-theme="cyan-theme"
+                    data-color="cyan"
+                  >
+                    <div class="cyan-bg cyan-premade color-premade"></div>
+                  </div>
+                  <div
+                    class="theme-color-father-premade theme-father-premade"
+                    data-theme="green-theme"
+                    data-color="green"
+                  >
+                    <div class="green-bg green-premade color-premade"></div>
+                  </div>
+                  <div
+                    class="theme-color-father-premade theme-father-premade"
+                    data-theme="red-theme"
+                    data-color="red"
+                  >
+                    <div class="red-bg red-premade color-premade"></div>
+                  </div>
+                  <div
+                    class="theme-color-father-premade theme-father-premade"
+                    data-theme="pink-theme"
+                    data-color="pink"
+                  >
+                    <div class="pink-bg pink-premade color-premade"></div>
+                  </div>
+                  <div
+                    class="theme-color-father-premade theme-father-premade"
+                    data-theme="hot-pink-theme"
+                    data-color="hot-pink"
+                  >
+                    <div
+                      class="hot-pink-bg hot-pink-premade color-premade"
+                    ></div>
+                  </div>
+                  <div
+                    class="theme-color-father-premade theme-father-premade"
+                    data-theme="orange-theme"
+                    data-color="orange"
+                  >
+                    <div class="orange-bg orange-premade color-premade"></div>
+                  </div>
+                  <div
+                    class="theme-color-father-premade theme-father-premade"
+                    data-theme="yellow-theme"
+                    data-color="yellow"
+                  >
+                    <div class="yellow-bg yellow-premade color-premade"></div>
+                  </div>
+                  <div
+                    class="theme-color-father-premade theme-father-premade"
+                    data-theme="night-mode-theme"
+                    data-color="black"
+                  >
+                    <div class="black-bg black-premade color-premade"></div>
+                  </div>
+                  <div
+                    class="theme-color-father-premade theme-father-premade"
+                    data-theme="reverse-theme"
+                    data-color="white"
+                  >
+                    <div class="white-bg white-premade color-premade"></div>
+                  </div>
+                  <div
+                    class="theme-color-father-premade theme-father-premade"
+                    data-theme="dark-theme"
+                    data-color="gray"
+                  >
+                    <div class="gray-bg gray-premade color-premade"></div>
+                  </div>
+                  <div
+                    class="theme-color-father-premade theme-father-premade"
+                    data-theme="purple-theme"
+                    data-color="purple"
+                  >
+                    <div class="purple-bg purple-premade color-premade"></div>
+                  </div>
+                  <div
+                    class="theme-color-father-premade theme-father-premade"
+                    data-theme="aqua-theme"
+                    data-color="aqua"
+                  >
+                    <div class="aqua-bg aqua-premade color-premade"></div>
+                  </div>
+                  <div
+                    class="theme-color-father-premade theme-father-premade"
+                    data-theme="colorful-theme"
+                    data-color="colorful"
+                  >
+                    <div
+                      class="colorful-bg colorful-premade color-premade"
+                    ></div>
+                  </div>
+                </div>
+              </div>
+              <div class="create-container">
+                <h2>Design your own theme ?</h2>
+                <label class="switch">
+                  <input id="theme-checkbox" type="checkbox" />
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+            <div id="theme-bottom">
+              <div class="theme-right-title">
+                <h2>Your theme preview</h2>
+                <p>This is how your glorious theme will look like!</p>
+              </div>
+              <div id="global-body">
+                <div class="theme-right-smaller-global">
+                  <div class="global-left"></div>
+                  <div class="global-right"></div>
+                </div>
+              </div>
+              <div id="theme-control-buttons">
+                <button id="cancel-theme"> Reset theme</button>
+                <button id="use-theme" class="theme-control">Use</button>
+                <button id="set-theme" class="theme-control"
+                  >Use by default</button
+                >
+              </div>
+            </div>
+          </div>
+          <div id="theme-right">
+            <div id="create-own-theme-container">
+              <div id="create-own-theme">
+                <div id="detail-themes" class="dropdown-title">
+                  <div class="theme-subtitle-container">
+                    <div class="theme-subtitle-main">
+                      <h2 class="theme-subtitle">Detail color</h2>
+                      <i class="fa-solid fa-plus"></i>
+                    </div>
+                  </div>
+                  <div id="theme-colors">
+                    <div
+                      class="theme-color-father theme-father"
+                      data-theme="blue-theme"
+                      data-color="blue"
+                    >
+                      <div class="blue-bg"></div>
+                    </div>
+                    <div
+                      class="theme-color-father theme-father"
+                      data-theme="green-theme"
+                      data-color="green"
+                    >
+                      <div class="green-bg"></div>
+                    </div>
+                    <div
+                      class="theme-color-father theme-father"
+                      data-theme="red-theme"
+                      data-color="red"
+                    >
+                      <div class="red-bg"></div>
+                    </div>
+                    <div
+                      class="theme-color-father theme-father"
+                      data-theme="pink-theme"
+                      data-color="pink"
+                    >
+                      <div class="pink-bg"></div>
+                    </div>
+                    <div
+                      class="theme-color-father theme-father"
+                      data-theme="hot-pink-theme"
+                      data-color="hot-pink"
+                    >
+                      <div class="hot-pink-bg"></div>
+                    </div>
+                    <div
+                      class="theme-color-father theme-father"
+                      data-theme="orange-theme"
+                      data-color="orange"
+                    >
+                      <div class="orange-bg"></div>
+                    </div>
+                    <div
+                      class="theme-color-father theme-father"
+                      data-theme="yellow-theme"
+                      data-color="yellow"
+                    >
+                      <div class="yellow-bg"></div>
+                    </div>
+                    <div
+                      class="theme-color-father theme-father"
+                      data-theme="night-mode-theme"
+                      data-color="black"
+                    >
+                      <div class="black-bg"></div>
+                    </div>
+                    <div
+                      class="theme-color-father theme-father"
+                      data-theme="reverse-theme"
+                      data-color="white"
+                    >
+                      <div class="white-bg"></div>
+                    </div>
+                    <div
+                      class="theme-color-father theme-father"
+                      data-theme="dark-theme"
+                      data-color="gray"
+                    >
+                      <div class="gray-bg"></div>
+                    </div>
+                    <div
+                      class="theme-color-father theme-father"
+                      data-theme="purple-theme"
+                      data-color="purple"
+                    >
+                      <div class="purple-bg"></div>
+                    </div>
+                    <div
+                      class="theme-color-father theme-father"
+                      data-theme="aqua-theme"
+                      data-color="aqua"
+                    >
+                      <div class="aqua-bg"></div>
+                    </div>
+                    <div
+                      class="theme-color-father theme-father"
+                      data-theme="colorful-theme"
+                      data-color="colorful"
+                    >
+                      <div class="colorful-bg"></div>
+                    </div>
+                  </div>
+                </div>
+                <div id="container-themes" class="dropdown-title">
+                  <div class="theme-subtitle-container">
+                    <div class="theme-subtitle-main">
+                      <h2 class="theme-subtitle">Container color</h2>
+                      <i class="fa-solid fa-plus"></i>
+                    </div>
+                  </div>
+                  <div id="theme-colors">
+                    <div
+                      class="theme-color-father-cont theme-father theme-"
+                      data-theme="primary-container"
+                    >
+                      <div class="default-bg theme-changing-color-cont"></div>
+                    </div>
 
-    fullTheme.backgroundTheme = `${bgTheme}`;
+                    <div
+                      class="theme-color-father-cont theme-father"
+                      data-theme="night-container"
+                    >
+                      <div class="black-bg"></div>
+                    </div>
+                    <div
+                      class="theme-color-father-cont theme-father"
+                      data-theme="white-container"
+                    >
+                      <div class="white-bg"></div>
+                    </div>
+                    <div
+                      class="theme-color-father-cont theme-father"
+                      data-theme="dark-container"
+                    >
+                      <div class="gray-bg"></div>
+                    </div>
+                  </div>
+                </div>
+                <div id="background-themes" class="dropdown-title">
+                  <div class="theme-subtitle-container">
+                    <div class="theme-subtitle-main">
+                      <h2 class="theme-subtitle">Background color</h2>
+                      <i class="fa-solid fa-plus"></i>
+                    </div>
+                  </div>
+                  <div id="theme-colors">
+                    <div
+                      class="theme-color-father-bg theme-father"
+                      data-theme="primary-background"
+                    >
+                      <div class="default-bg theme-changing-color-bg"></div>
+                    </div>
+                    <div
+                      class="theme-color-father-bg theme-father"
+                      data-theme="night-background"
+                    >
+                      <div class="black-bg"></div>
+                    </div>
+                    <div
+                      class="theme-color-father-bg theme-father"
+                      data-theme="white-background"
+                    >
+                      <div class="white-bg"></div>
+                    </div>
+                    <div
+                      class="theme-color-father-bg theme-father"
+                      data-theme="dark-background"
+                    >
+                      <div class="gray-bg"></div>
+                    </div>
+                  </div>
+                </div>
+                <div id="accent-one-themes" class="dropdown-title">
+                  <div class="theme-subtitle-container">
+                    <div class="theme-subtitle-main">
+                      <h2 class="theme-subtitle">Accent color no.1</h2>
+                      <i class="fa-solid fa-plus"></i>
+                    </div>
+                  </div>
+                  <div id="theme-colors">
+                    <div
+                      class="theme-color-father-accent-one theme-father theme-"
+                      data-theme="default-accent"
+                    >
+                      <div
+                        class="default-bg theme-changing-color-accent-one"
+                      ></div>
+                    </div>
 
-    /*prettier-ignore */
-    backgroundThemePreview.setAttribute(
-      "href",
-      `../styles/themes copy/background-colors-preview/${bgTheme}.css`
-    );
-    console.log(12333);
-    loggedInAs.theme.backgroundTheme = bgTheme;
-    localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
-  })
-);
-accentOneThemeBtns.forEach((el) =>
-  el.addEventListener("click", function () {
-    accentThemeOne = el.dataset.theme;
+                    <div
+                      class="theme-color-father-accent-one theme-father"
+                      data-theme="dark-accent"
+                    >
+                      <div class="black-bg"></div>
+                    </div>
+                    <div
+                      class="theme-color-father-accent-one theme-father"
+                      data-theme="white-accent"
+                    >
+                      <div class="white-bg"></div>
+                    </div>
+                    <div
+                      class="theme-color-father-accent-one theme-father no-accent"
+                      data-theme="no-accent"
+                    >
+                      <div class="gray-bg"></div>
+                    </div>
+                  </div>
+                </div>
+                <div id="accent-two-themes" class="dropdown-title">
+                  <div class="theme-subtitle-container">
+                    <div class="theme-subtitle-main">
+                      <h2 class="theme-subtitle">Accent color no.2</h2>
+                      <i class="fa-solid fa-plus"></i>
+                    </div>
+                  </div>
+                  <div id="theme-colors">
+                    <div
+                      class="theme-color-father-accent-two theme-father theme-"
+                      data-theme="default-accent-two"
+                    >
+                      <div
+                        class="default-bg theme-changing-color-accent-two"
+                      ></div>
+                    </div>
 
-    fullTheme.accentOneTheme = `${accentThemeOne}`;
+                    <div
+                      class="theme-color-father-accent-two theme-father"
+                      data-theme="dark-accent-two"
+                    >
+                      <div class="black-bg"></div>
+                    </div>
+                    <div
+                      class="theme-color-father-accent-two theme-father"
+                      data-theme="white-accent-two"
+                    >
+                      <div class="white-bg"></div>
+                    </div>
+                    <div
+                      class="theme-color-father-accent-two theme-father no-accent-two"
+                      data-theme="no-accent-two"
+                    >
+                      <div class="gray-bg"></div>
+                    </div>
+                  </div>
+                </div>
+                <div id="accent-two-themes" class="dropdown-title">
+                  <div class="theme-subtitle-container">
+                    <div class="theme-subtitle-main">
+                      <h2 class="theme-subtitle">Input color</h2>
+                      <i class="fa-solid fa-plus"></i>
+                    </div>
+                  </div>
+                  <div id="theme-colors">
+                    <div
+                      class="theme-color-father-accent-two theme-father theme-"
+                      data-theme="default-accent-two"
+                    >
+                      <div
+                        class="default-bg theme-changing-color-accent-two"
+                      ></div>
+                    </div>
 
-    /*prettier-ignore */
-    firstAccentThemePreview.setAttribute(
-      "href",
-      `../styles/themes copy/accent-colors-preview/${accentThemeOne}.css`
-    )
-    loggedInAs.theme.firstAccentTheme = accentThemeOne;
-    localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
-  })
-);
-accentTwoThemeBtns.forEach((el) =>
-  el.addEventListener("click", function () {
-    accentThemeTwo = el.dataset.theme;
-
-    fullTheme.accentTwoTheme = `${accentThemeTwo}`;
-
-    /*prettier-ignore */
-    secondAccentThemePreview.setAttribute(
-      "href",
-      `../styles/themes copy/accent-colors-two-preview/${accentThemeTwo}.css`
-    );
-    loggedInAs.theme.secondAccentTheme = accentThemeTwo;
-    localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
-  })
-);
-
-const openColorContainers = document.querySelectorAll(".theme-subtitle-main");
-
-openColorContainers.forEach((el) =>
-  el.addEventListener("click", function (e) {
-    if (
-      e.target
-        .closest(".theme-subtitle-container")
-        .nextElementSibling.classList.contains("theme-colors-clicked")
-    ) {
-      e.target
-        .closest(".theme-subtitle-container")
-        .nextElementSibling.classList.remove("theme-colors-clicked");
-      e.target
-        .closest(".theme-subtitle-container")
-        .classList.remove("theme-subtitle-container-active");
-      e.target
-        .closest(".theme-subtitle-container")
-        .querySelector(".fa-plus")
-        .classList.remove("rotated");
-      e.target
-        .closest(".theme-subtitle-container")
-        .classList.remove("theme-subtitle-container-clicked");
-
-      return;
-    }
-
-    const editColors = document.querySelectorAll("#theme-colors");
-    editColors.forEach((el) => el.classList.remove("theme-colors-clicked"));
-    const editContainers = document.querySelectorAll(
-      ".theme-subtitle-container"
-    );
-    const pluses = document.querySelectorAll(".fa-plus");
-
-    openColorContainers.forEach((el) =>
-      el
-        .closest(".theme-subtitle-container")
-        .classList.remove("theme-subtitle-container-clicked")
-    );
-    e.target
-      .closest(".theme-subtitle-container")
-      .classList.add("theme-subtitle-container-clicked");
-
-    editContainers.forEach((el) =>
-      el.classList.remove("theme-subtitle-container-active")
-    );
-    pluses.forEach((el) => el.classList.remove("rotated"));
-
-    e.target
-      .closest(".theme-subtitle-container")
-      .nextElementSibling.classList.add("theme-colors-clicked");
-    e.target
-      .closest(".theme-subtitle-container")
-      .classList.add("theme-subtitle-container-active");
-    e.target
-      .closest(".theme-subtitle-container")
-      .querySelector(".fa-plus")
-      .classList.add("rotated");
-  })
-);
-
-const themePage = document.querySelector("#themes");
-const leftTheme = document.querySelector("#theme-left");
-const rightTheme = document.querySelector("#theme-right");
-const topTheme = document.querySelector("#theme-top");
-const themeCheckbox = document.querySelector("#theme-checkbox");
-const topPremade = document.querySelector("#premade-themes");
-
-themeCheckbox.addEventListener("change", function () {
-  leftTheme.classList.toggle("theme-left-smaller");
-  rightTheme.classList.toggle("theme-right-bigger");
-  topPremade.classList.toggle("premade-smaller");
-  topTheme.classList.toggle("theme-top-smaller");
-});
-
-const useTheme = document.querySelector("#use-theme");
-useTheme.addEventListener("click", function () {
-  generalTheme.setAttribute(
-    "href",
-    `../styles/themes/${fullTheme.detailTheme}.css`
-  );
-  containerTheme.setAttribute(
-    "href",
-    `../styles/themes/container-colors/${fullTheme.containerTheme}.css`
-  );
-  backgroundTheme.setAttribute(
-    "href",
-    `../styles/themes/background-colors/${fullTheme.backgroundTheme}.css`
-  );
-  firstAccentTheme.setAttribute(
-    "href",
-    `../styles/themes/accent-colors/${fullTheme.accentOneTheme}.css`
-  );
-  secondAccentTheme.setAttribute(
-    "href",
-    `../styles/themes/accent-colors-two/${fullTheme.accentTwoTheme}.css`
-  );
-});
+                    <div
+                      class="theme-color-father-accent-two theme-father"
+                      data-theme="dark-accent-two"
+                    >
+                      <div class="black-bg"></div>
+                    </div>
+                    <div
+                      class="theme-color-father-accent-two theme-father"
+                      data-theme="white-accent-two"
+                    >
+                      <div class="white-bg"></div>
+                    </div>
+                    <div
+                      class="theme-color-father-accent-two theme-father no-accent-two"
+                      data-theme="no-accent-two"
+                    >
+                      <div class="gray-bg"></div>
+                    </div>
+                  </div>
+                </div> </div
+            ></div>
+          </div>
+        </div>`);
+};
+//TODO: (maybe) Add getting new PIN code if the user forgot it (Requires username and password)

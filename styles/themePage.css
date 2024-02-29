@@ -7,27 +7,32 @@
   height: 100%;
   width: 100%;
   max-width: 100%;
-  transition: all 0.5s;
+  transition: all 0.4s;
 }
 #theme-top {
   padding: 1.5rem 3rem;
   box-shadow: 0rem 1rem 1rem var(--main-background-accent-two);
-  height: 30%;
+  height: calc(35% - 3rem);
   overflow: hidden;
-  transition: all 0.5s;
+  transition: all 0.4s;
 }
 #theme-bottom {
   width: calc(100% - 10rem);
-  height: calc(70% - 10rem);
+  height: calc(65% - 10rem);
   padding: 5rem;
   display: flex;
   justify-content: center;
   align-items: flex-start;
   flex-direction: column;
+  position: relative;
+  transition: all 0.4s;
+}
+#create-own-theme-container {
+  height: 70%;
+  width: 100%;
 }
 #create-own-theme {
   width: 100%;
-  margin-top: 25rem;
 }
 .theme-left-smaller {
   width: 60% !important;
@@ -35,13 +40,14 @@
 #theme-right {
   width: 0%;
   height: 100%;
-  transition: width 0.5s, opacity 0.2s;
+  transition: width 0.4s, opacity 0.2s;
   opacity: 0;
   display: flex;
   align-items: center;
   box-shadow: -1rem 0rem 1rem var(--main-background-accent-two);
   flex-direction: column;
   z-index: 2;
+  justify-content: center;
 }
 .theme-right-title {
   text-align: center;
@@ -94,7 +100,10 @@
   padding: 0rem !important;
 }
 .theme-top-smaller {
-  height: 15% !important;
+  height: calc(20% - 3rem) !important;
+}
+.theme-bottom-bigger {
+  height: calc(80% - 10rem) !important;
 }
 #theme-title {
   font-size: 4rem;
@@ -115,6 +124,7 @@
 .theme-subtitle-container {
   border-radius: 5rem;
   width: 110%;
+  border-bottom-right-radius: 0rem;
   margin-left: -4rem;
   cursor: pointer;
   transition: height 0.4s, padding 0.4s;
@@ -354,12 +364,14 @@
   top: -50%;
   left: -50%;
 }
+.ad-switch,
 .switch {
   position: relative;
   display: inline-block;
   width: 60px;
   height: 34px;
 }
+.ad-switch input,
 .switch input {
   opacity: 0;
   width: 0;
@@ -409,4 +421,33 @@ input:checked + .slider:before {
 }
 .rotated {
   transform: rotate(45deg);
+}
+#theme-control-buttons {
+  display: flex;
+  gap: 1rem;
+  position: absolute;
+  bottom: 1rem;
+  right: 3rem;
+}
+.theme-control {
+  border: none;
+  padding: 1rem 2rem;
+  color: white;
+  cursor: pointer;
+}
+#use-theme,
+#set-theme {
+  background-color: lime;
+}
+#cancel-theme {
+  background-color: transparent;
+  padding: 0rem 1rem;
+  border: 0px;
+  color: var(--text-color);
+
+  cursor: pointer;
+}
+#cancel-theme:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2rem;
 }
