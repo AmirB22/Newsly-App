@@ -1929,6 +1929,15 @@ if (loggedInAs && loggedInAs.theme) {
   localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
 }
 
+const fullTheme = {
+  detailTheme: "default-theme",
+  containerTheme: "default-container",
+  backgroundTheme: "default-background",
+  accentOneTheme: "default-accent",
+  accentTwoTheme: "default-accent-two",
+  inputsTheme: "default-inputs",
+};
+
 const changeTheme = function () {
   const container = document.querySelector("#display");
 
@@ -1970,15 +1979,6 @@ const changeTheme = function () {
   const mainContainer = document.querySelector("#main");
 
   let genTheme, contTheme, bgTheme, accentThemeOne, accentThemeTwo;
-
-  const fullTheme = {
-    detailTheme: "default-theme",
-    containerTheme: "default-container",
-    backgroundTheme: "default-background",
-    accentOneTheme: "default-accent",
-    accentTwoTheme: "default-accent-two",
-    inputsTheme: "default-inputs",
-  };
 
   premadeBtns.forEach((el) =>
     el.addEventListener("click", function () {
@@ -2724,7 +2724,65 @@ const themePageHTML = function (container) {
           </div>
         </div>`);
 };
+const changeAds = function () {
+  const container = document.querySelector("#display");
 
+  changeAdsHTML(container);
+
+  if (loggedInAs && loggedInAs._adSettings)
+    Object.entries(loggedInAs._adSettings).forEach((el) =>
+      el[1]
+        ? (document.querySelector(`#${el[0]}-switch input`).checked = true)
+        : -1
+    );
+
+  const switches = document.querySelectorAll(".ad-switch input");
+
+  switches.forEach((el) =>
+    el.addEventListener("change", function () {
+      if (el.checked && el.parentElement.id === "company-switch")
+        loggedInAs._adSettings.company = true;
+      else if (el.parentElement.id === "company-switch")
+        loggedInAs._adSettings.company = false;
+      if (el.checked && el.parentElement.id === "foreign-switch")
+        loggedInAs._adSettings.foreign = true;
+      else if (el.parentElement.id === "foreign-switch")
+        loggedInAs._adSettings.foreign = false;
+      if (el.checked && el.parentElement.id === "hide-switch")
+        loggedInAs._adSettings.hide = true;
+      else if (el.parentElement.id === "hide-switch")
+        loggedInAs._adSettings.hide = false;
+      if (el.checked && el.parentElement.id === "familliar-switch") {
+        loggedInAs._adSettings.familliar = true;
+        const trendingSwitch = document.querySelector("#trending-switch input");
+        trendingSwitch.checked = false;
+        loggedInAs._adSettings.trending = false;
+      } else if (el.parentElement.id === "familliar-switch") loggedInAs._adSettings.familliar = false;
+      if (el.checked && el.parentElement.id === "trending-switch") {
+        loggedInAs._adSettings.trending = true;
+        const familliarSwitch = document.querySelector(
+          "#familliar-switch input"
+        );
+        familliarSwitch.checked = false;
+        loggedInAs._adSettings.familliar = false;
+      } else if (el.parentElement.id === "trending-switch") loggedInAs._adSettings.trending = false;
+      if (el.checked && el.parentElement.id === "adult-switch")
+        loggedInAs._adSettings.adult = true;
+      else if (el.parentElement.id === "adult-switch")
+        loggedInAs._adSettings.adult = false;
+
+      localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+
+      userAccounts.forEach((el) =>
+        el.pin === loggedInAs.pin
+          ? (el._adSettings = loggedInAs._adSettings)
+          : -1
+      );
+
+      localStorage.setItem("accounts", JSON.stringify(userAccounts));
+    })
+  );
+};
 const changeAdsHTML = function (container) {
   return (container.innerHTML = ` <div id="advertisements">
           <div class="advertisements-top">
@@ -2850,62 +2908,3 @@ if (loggedInAs && !loggedInAs._adSettings) {
     adult: true,
   };
 }
-const changeAds = function () {
-  const container = document.querySelector("#display");
-
-  changeAdsHTML(container);
-
-  if (loggedInAs && loggedInAs._adSettings)
-    Object.entries(loggedInAs._adSettings).forEach((el) =>
-      el[1]
-        ? (document.querySelector(`#${el[0]}-switch input`).checked = true)
-        : -1
-    );
-
-  const switches = document.querySelectorAll(".ad-switch input");
-
-  switches.forEach((el) =>
-    el.addEventListener("change", function () {
-      if (el.checked && el.parentElement.id === "company-switch")
-        loggedInAs._adSettings.company = true;
-      else if (el.parentElement.id === "company-switch")
-        loggedInAs._adSettings.company = false;
-      if (el.checked && el.parentElement.id === "foreign-switch")
-        loggedInAs._adSettings.foreign = true;
-      else if (el.parentElement.id === "foreign-switch")
-        loggedInAs._adSettings.foreign = false;
-      if (el.checked && el.parentElement.id === "hide-switch")
-        loggedInAs._adSettings.hide = true;
-      else if (el.parentElement.id === "hide-switch")
-        loggedInAs._adSettings.hide = false;
-      if (el.checked && el.parentElement.id === "familliar-switch") {
-        loggedInAs._adSettings.familliar = true;
-        const trendingSwitch = document.querySelector("#trending-switch input");
-        trendingSwitch.checked = false;
-        loggedInAs._adSettings.trending = false;
-      } else if (el.parentElement.id === "familliar-switch") loggedInAs._adSettings.familliar = false;
-      if (el.checked && el.parentElement.id === "trending-switch") {
-        loggedInAs._adSettings.trending = true;
-        const familliarSwitch = document.querySelector(
-          "#familliar-switch input"
-        );
-        familliarSwitch.checked = false;
-        loggedInAs._adSettings.familliar = false;
-      } else if (el.parentElement.id === "trending-switch") loggedInAs._adSettings.trending = false;
-      if (el.checked && el.parentElement.id === "adult-switch")
-        loggedInAs._adSettings.adult = true;
-      else if (el.parentElement.id === "adult-switch")
-        loggedInAs._adSettings.adult = false;
-
-      localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
-
-      userAccounts.forEach((el) =>
-        el.pin === loggedInAs.pin
-          ? (el._adSettings = loggedInAs._adSettings)
-          : -1
-      );
-
-      localStorage.setItem("accounts", JSON.stringify(userAccounts));
-    })
-  );
-};

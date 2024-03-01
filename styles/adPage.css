@@ -38,6 +38,7 @@
   font-size: 1.2rem;
   max-width: 90%;
 }
+.display-switch,
 .ad-switch {
   position: relative;
   width: 40px;
@@ -46,6 +47,7 @@
   right: 4rem;
   bottom: 2rem;
 }
+.display-switch .slider:before,
 .ad-switch .slider:before {
   position: absolute;
   content: "";
@@ -57,6 +59,7 @@
   -webkit-transition: 0.4s;
   transition: 0.4s;
 }
+.display-switch input:checked + .slider:before,
 .ad-switch input:checked + .slider:before {
   -webkit-transform: translateX(16px);
   -ms-transform: translateX(16px);

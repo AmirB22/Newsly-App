@@ -1,0 +1,41 @@
+#display-info {
+  height: 100%;
+  width: 100%;
+}
+.display-info-top {
+  height: 35%;
+  background-color: orange;
+}
+.display-title-container {
+  display: flex;
+  align-items: center;
+}
+.display-info-top-containers {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  gap: 5%;
+  height: 100%;
+}
+.display-option {
+  width: 20%;
+  background-color: red;
+  height: 60%;
+  border-radius: 3rem;
+  display: grid;
+  place-items: center;
+}
+.display-info-bottom {
+  background-color: green;
+  height: 65%;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 33.33% 33.33% 33.33%;
+}
+.display-option-bottom {
+  border: 3px solid blue;
+  margin: -3px;
+  display: grid;
+  place-content: center;
+  font-size: 3rem;
+}
