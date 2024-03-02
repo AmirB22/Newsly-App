@@ -441,6 +441,11 @@ const prefPage = function () {
         "Advertising"
       )
         changeAds();
+      if (
+        e.target.closest(".preference").querySelector("h1").textContent ===
+        "Displayed information"
+      )
+        changeDisplayInfo();
     })
   );
 };
@@ -2908,3 +2913,682 @@ if (loggedInAs && !loggedInAs._adSettings) {
     adult: true,
   };
 }
+
+if (loggedInAs && !loggedInAs._displaySettings) {
+  loggedInAs._displaySettings = {
+    name: "public",
+    date: "public",
+    gender: "public",
+    email: "email",
+    username: "showing",
+    image: "showing",
+  };
+}
+const changeDisplayInfo = function () {
+  const container = document.querySelector("#display");
+
+  changeDisplayInfoHTML(container);
+
+  const useDisplayModes = document.querySelectorAll(".display-use-mode");
+
+  const displayNameBtns = document.querySelectorAll(".display-name");
+  const displayDateBtns = document.querySelectorAll(".display-date");
+  const displayUsernameBtns = document.querySelectorAll(".display-username");
+  const displayEmailBtns = document.querySelectorAll(".display-email");
+
+  const arrayOfDisplays = [
+    displayNameBtns,
+    displayEmailBtns,
+    displayUsernameBtns,
+    displayDateBtns,
+  ];
+
+  const customBtn = document.querySelector(".use-custom");
+
+  useDisplayModes.forEach((el) =>
+    el.addEventListener("click", function () {
+      if (this.classList.contains("display-used-mode")) {
+        this.classList.remove("display-used-mode");
+        this.textContent = "Use";
+        return;
+      }
+
+      useDisplayModes.forEach((el) => {
+        el.classList.remove("display-used-mode");
+        el.textContent = "Use";
+      });
+
+      this.textContent = "Using";
+      this.classList.toggle("display-used-mode");
+
+      customBtn.classList.remove("used-custom");
+
+      arrayOfDisplays.forEach((el) =>
+        el.forEach((el) => el.classList.remove("display-picked"))
+      );
+      arrayOfToggles.forEach((el) =>
+        el.forEach((el) => el.classList.remove("display-toggled"))
+      );
+
+      if (this.id === "use-public-mode") {
+        handleRemovingButtonClassDisplay(0);
+        handleRemovingToggledButtonsClass(0, 0);
+        handleUpdatingDisplayLocalStorage("public", "showing", "showing");
+      }
+      if (this.id === "use-private-mode") {
+        handleRemovingButtonClassDisplay(1);
+        handleRemovingToggledButtonsClass(0, 1);
+        handleUpdatingDisplayLocalStorage("private", "showing", "hidden");
+      }
+      if (this.id === "use-super-private-mode") {
+        handleRemovingButtonClassDisplay(2);
+        handleRemovingToggledButtonsClass(1, 1);
+        handleUpdatingDisplayLocalStorage("super-private", "hidden", "hidden");
+      }
+      if (this.id === "use-fbi-mode") {
+        handleRemovingButtonClassDisplay(3);
+        handleRemovingToggledButtonsClass(1, 1);
+        handleUpdatingDisplayLocalStorage("fbi", "hidden", "hidden");
+      }
+      handleDisplayPreview();
+    })
+  );
+
+  const pickDisplayOption = document.querySelectorAll(".display-pick");
+
+  pickDisplayOption.forEach((el) =>
+    el.addEventListener("click", function () {
+      if (this.classList.contains("display-name")) {
+        displayNameBtns.forEach((el) => el.classList.remove("display-picked"));
+        handleUpadingIndividualLocalStorage("name", el);
+      }
+      if (this.classList.contains("display-date")) {
+        displayDateBtns.forEach((el) => el.classList.remove("display-picked"));
+        handleUpadingIndividualLocalStorage("date", el);
+      }
+      if (this.classList.contains("display-username")) {
+        displayUsernameBtns.forEach((el) =>
+          el.classList.remove("display-picked")
+        );
+        handleUpadingIndividualLocalStorage("username", el);
+      }
+      if (this.classList.contains("display-email")) {
+        displayEmailBtns.forEach((el) => el.classList.remove("display-picked"));
+        handleUpadingIndividualLocalStorage("email", el);
+      }
+      this.classList.add("display-picked");
+
+      handleDisplayPreview();
+
+      useDisplayModes.forEach((el) => {
+        el.classList.remove("display-used-mode");
+        el.textContent = "Use";
+      });
+
+      let custom = 0;
+      for (let i = 0; i < 4; i++) {
+        if (
+          displayNameBtns[i].classList.contains("display-picked") &&
+          displayDateBtns[i].classList.contains("display-picked") &&
+          displayEmailBtns[i].classList.contains("display-picked") &&
+          displayUsernameBtns[i].classList.contains("display-picked") &&
+          ((i === 0 &&
+            displayGenderBtns[0].classList.contains("display-toggled") &&
+            displayPfpBtns[0].classList.contains("display-toggled")) ||
+            (i === 1 &&
+              displayGenderBtns[0].classList.contains("display-toggled") &&
+              displayPfpBtns[1].classList.contains("display-toggled")) ||
+            (i === 2 &&
+              displayGenderBtns[1].classList.contains("display-toggled") &&
+              displayPfpBtns[1].classList.contains("display-toggled")) ||
+            (i === 3 &&
+              displayGenderBtns[1].classList.contains("display-toggled") &&
+              displayPfpBtns[1].classList.contains("display-toggled")))
+        ) {
+          custom = 1;
+          useDisplayModes[i].classList.add("display-used-mode");
+          useDisplayModes[i].textContent = "Using";
+        }
+      }
+      if (custom) customBtn.classList.remove("used-custom");
+      else customBtn.classList.add("used-custom");
+    })
+  );
+  const handleRemovingButtonClassDisplay = function (number) {
+    arrayOfDisplays.forEach((el) => el[number].classList.add("display-picked"));
+  };
+  const displayGenderBtns = document.querySelectorAll(".display-gender");
+  const displayPfpBtns = document.querySelectorAll(".display-pfp");
+
+  const arrayOfToggles = [displayGenderBtns, displayPfpBtns];
+
+  const handleRemovingToggledButtonsClass = function (value1, value2) {
+    displayGenderBtns[value1].classList.add("display-toggled");
+    displayPfpBtns[value2].classList.add("display-toggled");
+  };
+
+  const handleUpdatingDisplayLocalStorage = function (value, value2, value3) {
+    loggedInAs._displaySettings.name = value;
+    loggedInAs._displaySettings.date = value;
+    loggedInAs._displaySettings.email = value;
+    loggedInAs._displaySettings.username = value;
+    loggedInAs._displaySettings.gender = value2;
+    loggedInAs._displaySettings.image = value3;
+
+    localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+
+    userAccounts.forEach((el) =>
+      el.pin === loggedInAs.pin
+        ? (el._displaySettings = loggedInAs._displaySettings)
+        : -1
+    );
+
+    localStorage.setItem("accounts", JSON.stringify(userAccounts));
+  };
+  const handleUpadingIndividualLocalStorage = function (key, el) {
+    loggedInAs._displaySettings[`${key}`] = `${el.textContent
+      .replace("\n", "")
+      .toLowerCase()
+      .trim()
+      .replace(" ", "-")}`;
+
+    localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+
+    userAccounts.forEach((el) =>
+      el.pin === loggedInAs.pin
+        ? (el._displaySettings = loggedInAs._displaySettings)
+        : -1
+    );
+
+    localStorage.setItem("accounts", JSON.stringify(userAccounts));
+  };
+  const handleUpadingIndividualToggledLocalStorage = function (key, value) {
+    loggedInAs._displaySettings[`${key}`] = `${value}`;
+
+    localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+
+    userAccounts.forEach((el) =>
+      el.pin === loggedInAs.pin
+        ? (el._displaySettings = loggedInAs._displaySettings)
+        : -1
+    );
+
+    localStorage.setItem("accounts", JSON.stringify(userAccounts));
+  };
+  const handleDisplayPreview = function () {
+    const nameDisplayPreview = document.querySelector("#display-preview-name")
+      .parentElement.firstElementChild;
+    const dateDisplayPreview = document.querySelector("#display-preview-date")
+      .parentElement.firstElementChild;
+    const usernameDisplayPreview = document.querySelector(
+      "#display-preview-username"
+    ).parentElement.firstElementChild;
+    const emailDisplayPreview = document.querySelector("#display-preview-email")
+      .parentElement.firstElementChild;
+    if (loggedInAs._displaySettings.name === "public") {
+      nameDisplayPreview.textContent = `${
+        loggedInAs._firstName
+          ? `${loggedInAs._firstName}, ${loggedInAs._lastName}`
+          : "You haven't added a name"
+      }`;
+    } else if (loggedInAs._displaySettings.name === "private") {
+      nameDisplayPreview.textContent = `${
+        loggedInAs._firstName
+          ? `${loggedInAs._firstName}, ${loggedInAs._lastName.slice(
+              0,
+              loggedInAs._lastName.lastIndexOf(" ") + 2
+            )}.`
+          : "You haven't added a name"
+      }`;
+    } else if (loggedInAs._displaySettings.name === "super-private") {
+      nameDisplayPreview.textContent = `${
+        loggedInAs._firstName
+          ? `${loggedInAs._firstName.slice(0, 1)}. ${loggedInAs._lastName.slice(
+              0,
+              1
+            )}.`
+          : "You haven't added a name"
+      }`;
+    } else if (loggedInAs._displaySettings.name === "fbi") {
+      nameDisplayPreview.textContent = `${
+        loggedInAs._firstName ? `` : "You haven't added a name"
+      }`;
+    }
+    if (loggedInAs._displaySettings.date === "public") {
+      dateDisplayPreview.textContent = `${
+        loggedInAs._dateOfBirth
+          ? `${loggedInAs._dateOfBirth}`
+          : "You haven't added a date"
+      }`;
+    } else if (loggedInAs._displaySettings.date === "private") {
+      dateDisplayPreview.textContent = `${
+        loggedInAs._dateOfBirth
+          ? `${loggedInAs._dateOfBirth.slice(
+              loggedInAs._dateOfBirth.indexOf("/") + 1,
+              loggedInAs._dateOfBirth.length
+            )}`
+          : "You haven't added a date"
+      }`;
+    } else if (loggedInAs._displaySettings.date === "super-private") {
+      dateDisplayPreview.textContent = `${
+        loggedInAs._dateOfBirth
+          ? `${loggedInAs._dateOfBirth.slice(
+              loggedInAs._dateOfBirth.lastIndexOf("/") + 1,
+              loggedInAs._dateOfBirth.length
+            )}`
+          : "You haven't added a date"
+      }`;
+    } else if (loggedInAs._displaySettings.date === "fbi") {
+      dateDisplayPreview.textContent = `${
+        loggedInAs._dateOfBirth ? `` : "You haven't added a date"
+      }`;
+    }
+    if (loggedInAs._displaySettings.username === "public") {
+      usernameDisplayPreview.textContent = `${
+        loggedInAs.username
+          ? `${loggedInAs.username}`
+          : "You haven't added a username"
+      }`;
+    } else if (loggedInAs._displaySettings.username === "private") {
+      usernameDisplayPreview.textContent = `${
+        loggedInAs.username
+          ? `${loggedInAs.username.slice(
+              0,
+              (loggedInAs.username.length + 2) / 2
+            )}${"*".repeat(Math.ceil(loggedInAs.username.length / 2) - 1)}`
+          : "You haven't added a username"
+      }`;
+    } else if (loggedInAs._displaySettings.username === "super-private") {
+      usernameDisplayPreview.textContent = `${
+        loggedInAs.username
+          ? `${loggedInAs.username.slice(0, 1)}${"*".repeat(
+              loggedInAs.username.length - 1
+            )}`
+          : "You haven't added a name"
+      }`;
+    } else if (loggedInAs._displaySettings.username === "fbi") {
+      usernameDisplayPreview.textContent = `${
+        loggedInAs.username ? `` : "You haven't added a name"
+      }`;
+    }
+    if (loggedInAs._displaySettings.email === "public") {
+      emailDisplayPreview.textContent = `${
+        loggedInAs.email ? `${loggedInAs.email}` : "You haven't added a email"
+      }`;
+    } else if (loggedInAs._displaySettings.email === "private") {
+      emailDisplayPreview.textContent = `${
+        loggedInAs.email
+          ? `${loggedInAs.email.slice(
+              0,
+              loggedInAs.email.indexOf("@") / 2
+            )}${"*".repeat(
+              loggedInAs.email.slice(0, loggedInAs.email.indexOf("@") / 2)
+                .length
+            )}@gmail.com`
+          : "You haven't added a email"
+      }`;
+    } else if (loggedInAs._displaySettings.email === "super-private") {
+      emailDisplayPreview.textContent = `${
+        loggedInAs.email
+          ? `${loggedInAs.email.slice(0, 1)}${"*".repeat(
+              loggedInAs.email.length - 5
+            )}.com`
+          : "You haven't added a name"
+      }`;
+    } else if (loggedInAs._displaySettings.email === "fbi") {
+      emailDisplayPreview.textContent = `${
+        loggedInAs.email ? `` : "You haven't added a name"
+      }`;
+    }
+  };
+
+  const displayToggleButtons = document.querySelectorAll(".display-toggle");
+
+  displayToggleButtons.forEach((el) =>
+    el.addEventListener("click", function () {
+      if (this.classList.contains("display-gender")) {
+        displayGenderBtns.forEach((el) =>
+          el.classList.remove("display-toggled")
+        );
+        this.id === "show-gender"
+          ? handleUpadingIndividualToggledLocalStorage("gender", "showing")
+          : handleUpadingIndividualToggledLocalStorage("gender", "hidden");
+      }
+      if (this.classList.contains("display-pfp")) {
+        displayPfpBtns.forEach((el) => el.classList.remove("display-toggled"));
+        this.id === "show-picture"
+          ? handleUpadingIndividualToggledLocalStorage("image", "showing")
+          : handleUpadingIndividualToggledLocalStorage("image", "hidden");
+      }
+      this.classList.add("display-toggled");
+
+      useDisplayModes.forEach((el) => {
+        el.classList.remove("display-used-mode");
+        el.textContent = "Use";
+      });
+
+      let custom = 0;
+      for (let i = 0; i < 4; i++) {
+        if (
+          displayNameBtns[i].classList.contains("display-picked") &&
+          displayDateBtns[i].classList.contains("display-picked") &&
+          displayEmailBtns[i].classList.contains("display-picked") &&
+          displayUsernameBtns[i].classList.contains("display-picked") &&
+          ((i === 0 &&
+            displayGenderBtns[0].classList.contains("display-toggled") &&
+            displayPfpBtns[0].classList.contains("display-toggled")) ||
+            (i === 1 &&
+              displayGenderBtns[0].classList.contains("display-toggled") &&
+              displayPfpBtns[1].classList.contains("display-toggled")) ||
+            (i === 2 &&
+              displayGenderBtns[1].classList.contains("display-toggled") &&
+              displayPfpBtns[1].classList.contains("display-toggled")) ||
+            (i === 3 &&
+              displayGenderBtns[1].classList.contains("display-toggled") &&
+              displayPfpBtns[1].classList.contains("display-toggled")))
+        ) {
+          custom = 1;
+          useDisplayModes[i].classList.add("display-used-mode");
+          useDisplayModes[i].textContent = "Using";
+        }
+      }
+      if (custom) customBtn.classList.remove("used-custom");
+      else customBtn.classList.add("used-custom");
+    })
+  );
+
+  const handlePageLoad = function () {
+    if (loggedInAs._displaySettings.name === "public")
+      displayNameBtns[0].classList.add("display-picked");
+    if (loggedInAs._displaySettings.name === "private")
+      displayNameBtns[1].classList.add("display-picked");
+    if (loggedInAs._displaySettings.name === "super-private")
+      displayNameBtns[2].classList.add("display-picked");
+    if (loggedInAs._displaySettings.name === "fbi")
+      displayNameBtns[3].classList.add("display-picked");
+
+    if (loggedInAs._displaySettings.date === "public")
+      displayDateBtns[0].classList.add("display-picked");
+    if (loggedInAs._displaySettings.date === "private")
+      displayDateBtns[1].classList.add("display-picked");
+    if (loggedInAs._displaySettings.date === "super-private")
+      displayDateBtns[2].classList.add("display-picked");
+    if (loggedInAs._displaySettings.date === "fbi")
+      displayDateBtns[3].classList.add("display-picked");
+
+    if (loggedInAs._displaySettings.email === "public")
+      displayEmailBtns[0].classList.add("display-picked");
+    if (loggedInAs._displaySettings.email === "private")
+      displayEmailBtns[1].classList.add("display-picked");
+    if (loggedInAs._displaySettings.email === "super-private")
+      displayEmailBtns[2].classList.add("display-picked");
+    if (loggedInAs._displaySettings.email === "fbi")
+      displayEmailBtns[3].classList.add("display-picked");
+
+    if (loggedInAs._displaySettings.username === "public")
+      displayUsernameBtns[0].classList.add("display-picked");
+    if (loggedInAs._displaySettings.username === "private")
+      displayUsernameBtns[1].classList.add("display-picked");
+    if (loggedInAs._displaySettings.username === "super-private")
+      displayUsernameBtns[2].classList.add("display-picked");
+    if (loggedInAs._displaySettings.username === "fbi")
+      displayUsernameBtns[3].classList.add("display-picked");
+
+    if (loggedInAs._displaySettings.image === "showing")
+      displayPfpBtns[0].classList.add("display-toggled");
+    if (loggedInAs._displaySettings.image === "hidden")
+      displayPfpBtns[1].classList.add("display-toggled");
+
+    if (loggedInAs._displaySettings.gender === "showing")
+      displayGenderBtns[0].classList.add("display-toggled");
+    if (loggedInAs._displaySettings.gender === "hidden")
+      displayGenderBtns[1].classList.add("display-toggled");
+
+    handleDisplayPreview();
+
+    let custom = 0;
+    for (let i = 0; i < 4; i++) {
+      if (
+        displayNameBtns[i].classList.contains("display-picked") &&
+        displayDateBtns[i].classList.contains("display-picked") &&
+        displayEmailBtns[i].classList.contains("display-picked") &&
+        displayUsernameBtns[i].classList.contains("display-picked") &&
+        ((i === 0 &&
+          displayGenderBtns[0].classList.contains("display-toggled") &&
+          displayPfpBtns[0].classList.contains("display-toggled")) ||
+          (i === 1 &&
+            displayGenderBtns[0].classList.contains("display-toggled") &&
+            displayPfpBtns[1].classList.contains("display-toggled")) ||
+          (i === 2 &&
+            displayGenderBtns[1].classList.contains("display-toggled") &&
+            displayPfpBtns[1].classList.contains("display-toggled")) ||
+          (i === 3 &&
+            displayGenderBtns[1].classList.contains("display-toggled") &&
+            displayPfpBtns[1].classList.contains("display-toggled")))
+      ) {
+        custom = 1;
+        useDisplayModes[i].classList.add("display-used-mode");
+        useDisplayModes[i].textContent = "Using";
+      }
+    }
+    if (custom) customBtn.classList.remove("used-custom");
+    else customBtn.classList.add("used-custom");
+  };
+  handlePageLoad();
+};
+
+const changeDisplayInfoHTML = function (container) {
+  return (container.innerHTML = `
+   <div id="display-info">
+          <div class="display-info-top">
+            <div class="display-title-container">
+              <span class="fluent--code-text-16-filled dog"></span>
+              <div>
+                <h1>Displayed information</h1>
+                <p>
+                  Choose what content is shown to other people when they click
+                  on your profile.
+                </p>
+              </div>
+            </div>
+
+            <div class="display-info-top-containers">
+              <div class="display-option">
+                <h2>Public mode</h2>
+                <span class="mdi--shield-unlocked cat"></span>
+                <button id="use-public-mode" class="display-use-mode">
+                  Use
+                </button>
+              </div>
+              <div class="display-option">
+                <h2>Private mode</h2>
+                <span class="material-symbols--shield-locked cat"></span>
+                <button id="use-private-mode" class="display-use-mode">
+                  Use
+                </button>
+              </div>
+              <div class="display-option">
+                <h2>Super private mode</h2>
+                <span class="gis--globe-shield cat"></span>
+                <button id="use-super-private-mode" class="display-use-mode">
+                  Use
+                </button>
+              </div>
+              <div class="display-option">
+                <h2>FBI mode</h2>
+                <span class="streamline--incognito-mode-solid cat"></span>
+                <button id="use-fbi-mode" class="display-use-mode">Use</button>
+              </div>
+              <button class="use-custom">Custom</button>
+            </div>
+          </div>
+          <div class="display-info-bottom">
+            <div class="display-option-bottom">
+              <div class="display-option-top">
+                <div>
+                  <h2>First and last name</h2>
+                  <p>
+                    Choose what security level you want for your name display.
+                  </p>
+                </div>
+                <div class="display-preview-container">
+                  <span>Amar, Muric </span>
+                  <p id="display-preview-name" class="display-preview">
+                    PREVIEW
+                  </p>
+                </div>
+              </div>
+              <div class="display-button-container">
+                <button id="public-name" class="display-pick display-name">
+                  Public
+                </button>
+                <button id="private-name" class="display-pick display-name">
+                  Private
+                </button>
+                <button
+                  id="super-private-name"
+                  class="display-pick display-name"
+                >
+                  Super Private
+                </button>
+                <button id="fbi-name" class="display-pick display-name">
+                  FBI
+                </button>
+              </div>
+            </div>
+            <div class="display-option-bottom">
+              <div class="display-option-top">
+                <div>
+                  <h2>Display date of birth</h2>
+                  <p>
+                    Choose what security level you want for your date of birth
+                    display.
+                  </p>
+                </div>
+                <div class="display-preview-container">
+                  <span>27/12/2004 </span>
+                  <p id="display-preview-date" class="display-preview">
+                    PREVIEW
+                  </p>
+                </div>
+              </div>
+
+              <div class="display-button-container">
+                <button id="public-date" class="display-pick display-date">
+                  Public
+                </button>
+                <button id="private-date" class="display-pick display-date">
+                  Private
+                </button>
+                <button
+                  id="super-private-date"
+                  class="display-pick display-date"
+                >
+                  Super Private
+                </button>
+                <button id="fbi-date" class="display-pick display-date">
+                  FBI
+                </button>
+              </div>
+            </div>
+            <div class="display-option-bottom">
+              <div class="display-option-top">
+                <div>
+                  <h2>Display username</h2>
+                  <p>
+                    Choose what security level you want for your username
+                    display.
+                  </p>
+                </div>
+                <div class="display-preview-container">
+                  <span>Murga </span>
+                  <p id="display-preview-username" class="display-preview">
+                    PREVIEW
+                  </p>
+                </div>
+              </div>
+              <div class="display-button-container">
+                <button
+                  id="public-username"
+                  class="display-pick display-username"
+                >
+                  Public
+                </button>
+                <button
+                  id="private-username"
+                  class="display-pick display-username"
+                >
+                  Private
+                </button>
+                <button
+                  id="super-private-username"
+                  class="display-pick display-username"
+                >
+                  Super Private
+                </button>
+                <button id="fbi-username" class="display-pick display-username">
+                  FBI
+                </button>
+              </div>
+            </div>
+            <div class="display-option-bottom">
+              <div class="display-option-top">
+                <div>
+                  <h2>Display email</h2>
+                  <p>
+                    Choose what security level you want for your email display.
+                  </p>
+                </div>
+                <div class="display-preview-container">
+                  <span>muricamar2004@gmail.com </span>
+                  <p id="display-preview-email" class="display-preview">
+                    PREVIEW
+                  </p>
+                </div>
+              </div>
+              <div class="display-button-container">
+                <button id="public-email" class="display-pick display-email">
+                  Public
+                </button>
+                <button id="private-email" class="display-pick display-email">
+                  Private
+                </button>
+                <button
+                  id="super-private-email"
+                  class="display-pick display-email"
+                >
+                  Super Private
+                </button>
+                <button id="fbi-email" class="display-pick display-email">
+                  FBI
+                </button>
+              </div>
+            </div>
+            <div class="display-option-bottom">
+              <h2>Display gender</h2>
+              <p>Choose whether to show your gender or not.</p>
+
+              <div class="display-button-container">
+                <button id="show-gender" class="display-toggle display-gender">
+                  Show
+                </button>
+                <button id="hide-gender" class="display-toggle display-gender">
+                  Hide
+                </button>
+              </div>
+            </div>
+            <div class="display-option-bottom">
+              <h2>Show profile picture</h2>
+              <p>Choose whether to show your profile picture or not.</p>
+              <div class="display-button-container">
+                <button id="show-picture" class="display-toggle display-pfp">
+                  Show
+                </button>
+                <button id="hide-picture" class="display-toggle display-pfp">
+                  Hide
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>`);
+};

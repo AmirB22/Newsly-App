@@ -64,33 +64,203 @@
                 </p>
               </div>
             </div>
+
             <div class="display-info-top-containers">
               <div class="display-option">
-                <h2>Public</h2>
+                <h2>Public mode</h2>
+                <span class="mdi--shield-unlocked cat"></span>
+                <button id="use-public-mode" class="display-use-mode">
+                  Use
+                </button>
               </div>
-              <div class="display-option"><h2>Private</h2></div>
-              <div class="display-option"><h2>Super private</h2></div>
-              <div class="display-option"><h2>FBI</h2></div>
+              <div class="display-option">
+                <h2>Private mode</h2>
+                <span class="material-symbols--shield-locked cat"></span>
+                <button id="use-private-mode" class="display-use-mode">
+                  Use
+                </button>
+              </div>
+              <div class="display-option">
+                <h2>Super private mode</h2>
+                <span class="gis--globe-shield cat"></span>
+                <button id="use-super-private-mode" class="display-use-mode">
+                  Use
+                </button>
+              </div>
+              <div class="display-option">
+                <h2>FBI mode</h2>
+                <span class="streamline--incognito-mode-solid cat"></span>
+                <button id="use-fbi-mode" class="display-use-mode">Use</button>
+              </div>
+              <button class="use-custom">Custom</button>
             </div>
           </div>
           <div class="display-info-bottom">
             <div class="display-option-bottom">
-              <p>1</p>
+              <div class="display-option-top">
+                <div>
+                  <h2>First and last name</h2>
+                  <p>
+                    Choose what security level you want for your name display.
+                  </p>
+                </div>
+                <div class="display-preview-container">
+                  <span>Amar, Muric </span>
+                  <p id="display-preview-name" class="display-preview">
+                    PREVIEW
+                  </p>
+                </div>
+              </div>
+              <div class="display-button-container">
+                <button id="public-name" class="display-pick display-name">
+                  Public
+                </button>
+                <button id="private-name" class="display-pick display-name">
+                  Private
+                </button>
+                <button
+                  id="super-private-name"
+                  class="display-pick display-name"
+                >
+                  Super Private
+                </button>
+                <button id="fbi-name" class="display-pick display-name">
+                  FBI
+                </button>
+              </div>
             </div>
             <div class="display-option-bottom">
-              <p>2</p>
+              <div class="display-option-top">
+                <div>
+                  <h2>Display date of birth</h2>
+                  <p>
+                    Choose what security level you want for your date of birth
+                    display.
+                  </p>
+                </div>
+                <div class="display-preview-container">
+                  <span>27/12/2004 </span>
+                  <p id="display-preview-date" class="display-preview">
+                    PREVIEW
+                  </p>
+                </div>
+              </div>
+
+              <div class="display-button-container">
+                <button id="public-date" class="display-pick display-date">
+                  Public
+                </button>
+                <button id="private-date" class="display-pick display-date">
+                  Private
+                </button>
+                <button
+                  id="super-private-date"
+                  class="display-pick display-date"
+                >
+                  Super Private
+                </button>
+                <button id="fbi-date" class="display-pick display-date">
+                  FBI
+                </button>
+              </div>
             </div>
             <div class="display-option-bottom">
-              <p>3</p>
+              <div class="display-option-top">
+                <div>
+                  <h2>Display username</h2>
+                  <p>
+                    Choose what security level you want for your username
+                    display.
+                  </p>
+                </div>
+                <div class="display-preview-container">
+                  <span>Murga </span>
+                  <p id="display-preview-username" class="display-preview">
+                    PREVIEW
+                  </p>
+                </div>
+              </div>
+              <div class="display-button-container">
+                <button
+                  id="public-username"
+                  class="display-pick display-username"
+                >
+                  Public
+                </button>
+                <button
+                  id="private-username"
+                  class="display-pick display-username"
+                >
+                  Private
+                </button>
+                <button
+                  id="super-private-username"
+                  class="display-pick display-username"
+                >
+                  Super Private
+                </button>
+                <button id="fbi-username" class="display-pick display-username">
+                  FBI
+                </button>
+              </div>
             </div>
             <div class="display-option-bottom">
-              <p>4</p>
+              <div class="display-option-top">
+                <div>
+                  <h2>Display email</h2>
+                  <p>
+                    Choose what security level you want for your email display.
+                  </p>
+                </div>
+                <div class="display-preview-container">
+                  <span>muricamar2004@gmail.com </span>
+                  <p id="display-preview-email" class="display-preview">
+                    PREVIEW
+                  </p>
+                </div>
+              </div>
+              <div class="display-button-container">
+                <button id="public-email" class="display-pick display-email">
+                  Public
+                </button>
+                <button id="private-email" class="display-pick display-email">
+                  Private
+                </button>
+                <button
+                  id="super-private-email"
+                  class="display-pick display-email"
+                >
+                  Super Private
+                </button>
+                <button id="fbi-email" class="display-pick display-email">
+                  FBI
+                </button>
+              </div>
             </div>
             <div class="display-option-bottom">
-              <p>5</p>
+              <h2>Display gender</h2>
+              <p>Choose whether to show your gender or not.</p>
+
+              <div class="display-button-container">
+                <button id="show-gender" class="display-toggle display-gender">
+                  Show
+                </button>
+                <button id="hide-gender" class="display-toggle display-gender">
+                  Hide
+                </button>
+              </div>
             </div>
             <div class="display-option-bottom">
-              <p>6</p>
+              <h2>Show profile picture</h2>
+              <p>Choose whether to show your profile picture or not.</p>
+              <div class="display-button-container">
+                <button id="show-picture" class="display-toggle display-pfp">
+                  Show
+                </button>
+                <button id="hide-picture" class="display-toggle display-pfp">
+                  Hide
+                </button>
+              </div>
             </div>
           </div>
         </div>
