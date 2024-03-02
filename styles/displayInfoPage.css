@@ -87,7 +87,7 @@
 }
 .display-pick:hover,
 .display-toggle:hover {
-  background-color: var(--control-window-text-color);
+  background-color: var(--text-color);
   color: var(--primary-color);
   border-color: var(--primary-color);
 }
@@ -102,7 +102,7 @@
   margin-bottom: 1.5rem;
 }
 .used-custom {
-  border: 5px solid var(--control-window-text-color);
+  border: 5px solid var(--text-color);
   background-color: var(--primary-color);
   color: var(--control-window-text-color);
   margin: -3px;
@@ -149,18 +149,18 @@
 .display-used-mode {
   background-color: var(--primary-color);
   color: var(--control-window-text-color);
-  border: 5px solid var(--control-window-text-color);
+  border: 5px solid var(--text-color);
   margin: -5px;
 }
 .display-picked,
 .display-toggled {
   background-color: var(--primary-color);
   color: var(--control-window-text-color);
-  border: 5px solid var(--control-window-text-color);
+  border: 5px solid var(--text-color);
   height: 120%;
   width: calc(25% + 50px);
 }
 .display-picked:hover,
 .display-toggled:hover {
-  border: 5px solid var(--main-background-color);
+  border: 5px solid var(--primary-color);
 }

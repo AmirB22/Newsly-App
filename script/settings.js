@@ -133,8 +133,16 @@ const accountPage = function () {
 
   controlWindow.addEventListener("click", controlWindowHTML);
 };
+let themeTimeout, adTimeout, displayTimeout, dataTimeout;
+
 const prefPage = function () {
   removeCLickedClasses();
+
+  clearTimeout(displayTimeout);
+  clearTimeout(adTimeout);
+  clearTimeout(themeTimeout);
+  clearTimeout(dataTimeout);
+
   prefBtn.classList.add("menu-clicked");
   display.innerHTML = `  <div id="preferences">
           <div class="preferences-top">
@@ -178,9 +186,11 @@ const prefPage = function () {
                   </p>
                   
                 </div>
+               <div class="load-button-container"> 
+
                 <button class="pref-bottom-button">
                   Edit now <i class="fa-solid fa-pen-to-square"></i> 
-                </button>
+                </button> </div>
               </div>
             </div>
             <div class="preference">
@@ -195,9 +205,11 @@ const prefPage = function () {
                     many advertisements etc.
                   </p>
                 </div>
+                <div class="load-button-container">
                 <button class="pref-bottom-button">
                   Change
                 </button>
+                </div>
               </div>
             </div>
             <div class="preference">
@@ -212,9 +224,11 @@ const prefPage = function () {
                     click on your profile
                   </p>
                 </div>
+                 <div class="load-button-container">
                 <button class="pref-bottom-button">
                   Change
                 </button>
+                </div>
               </div>
             </div>
             <div class="preference">
@@ -229,6 +243,7 @@ const prefPage = function () {
                     people that share the same language
                   </p>
                 </div>
+                <div class="load-button-container"> 
             <select class="pref-bottom-select" id="choose-language">
               <option value="Choose" disabled selected >Choose</option>
               <option value="Afrikaans">Afrikaans</option>
@@ -304,6 +319,7 @@ const prefPage = function () {
               <option value="Welsh">Welsh</option>
               <option value="Xhosa">Xhosa</option>
             </select>
+            </div>
               </div>
             </div>
             <div class="preference">
@@ -315,6 +331,7 @@ const prefPage = function () {
                   <h1>Your timezone</h1>
                   <p>Share your timezone</p>
                 </div>
+                <div class="load-button-container"> 
            <select name="timezone_offset" id="choose-timezone" class="pref-bottom-select">
             <option value="Choose" disabled selected >Choose</option>
             <option value="-12:00">(GMT -12:00) Eniwetok, Kwajalein</option>
@@ -358,6 +375,7 @@ const prefPage = function () {
             <option value="+13:00">(GMT +13:00) Apia, Nukualofa</option>
             <option value="+14:00">(GMT +14:00) Line Islands, Tokelau</option>
           </select>
+          </div>
               </div>
             </div>
             <div class="preference">
@@ -369,9 +387,11 @@ const prefPage = function () {
                   <h1>Data sharing</h1>
                   <p>Choose what we do with the data you provide.</p>
                 </div>
+                <div class="load-button-container"> 
                 <button class="pref-bottom-button">
                   Change
                 </button>
+                </div>
               </div>
             </div>
           </div>
@@ -400,8 +420,8 @@ const prefPage = function () {
         el.language = loggedInAs.language;
       }
     });
+    localStorage.setItem("accounts", JSON.stringify(userAccounts));
   });
-  localStorage.setItem("accounts", JSON.stringify(userAccounts));
 
   timezoneSelection.addEventListener("change", function () {
     if (timezoneSelection.value === "Choose") return;
@@ -434,22 +454,75 @@ const prefPage = function () {
       if (
         e.target.closest(".preference").querySelector("h1").textContent ===
         "Theme"
-      )
-        changeTheme();
+      ) {
+        e.target
+          .closest(".pref-bottom-button")
+          .parentElement.insertAdjacentHTML(
+            "afterbegin",
+            `<i class="fa-spinner fa-solid pref-load"></i>`
+          );
+        prefPageButtons.forEach((el) => el.setAttribute("disabled", ""));
+        themeTimeout = setTimeout(() => {
+          changeTheme();
+        }, 1500);
+      }
       if (
         e.target.closest(".preference").querySelector("h1").textContent ===
         "Advertising"
-      )
-        changeAds();
+      ) {
+        e.target
+          .closest(".pref-bottom-button")
+          .parentElement.insertAdjacentHTML(
+            "afterbegin",
+            `<i class="fa-spinner fa-solid pref-load"></i>`
+          );
+        prefPageButtons.forEach((el) => el.setAttribute("disabled", ""));
+
+        adTimeout = setTimeout(() => {
+          changeAds();
+        }, 1500);
+      }
       if (
         e.target.closest(".preference").querySelector("h1").textContent ===
         "Displayed information"
-      )
-        changeDisplayInfo();
+      ) {
+        e.target
+          .closest(".pref-bottom-button")
+          .parentElement.insertAdjacentHTML(
+            "afterbegin",
+            `<i class="fa-spinner fa-solid pref-load"></i>`
+          );
+        prefPageButtons.forEach((el) => el.setAttribute("disabled", ""));
+
+        displayTimeout = setTimeout(() => {
+          changeDisplayInfo();
+        }, 1500);
+      }
+      if (
+        e.target.closest(".preference").querySelector("h1").textContent ===
+        "Data sharing"
+      ) {
+        e.target
+          .closest(".pref-bottom-button")
+          .parentElement.insertAdjacentHTML(
+            "afterbegin",
+            `<i class="fa-spinner fa-solid pref-load"></i>`
+          );
+        prefPageButtons.forEach((el) => el.setAttribute("disabled", ""));
+
+        displayTimeout = setTimeout(() => {
+          changeDataSharing();
+        }, 1500);
+      }
     })
   );
 };
+
+let checkSell;
+
 const changePages = function (e) {
+  clearInterval(checkSell);
+
   if (e.target.id === "menu-account") accountPage();
   else if (e.target.id === "menu-preferences") prefPage();
   else return;
@@ -511,7 +584,7 @@ const changeName = function () {
     }
     if (error) return;
 
-    changeContainer.innerHTML = `<i class="fa-solid fa-spinner spinning"></i>`;
+    changeContainer.innerHTML = `<i class="fa-solid fa-spinner spinning pref-load"></i>`;
 
     setTimeout(() => {
       loggedInAs._firstName = firstName.value;
@@ -1088,6 +1161,10 @@ const changeEmail = function () {
 
   const inputInnerText = document.querySelectorAll(".input-text");
   const inputs = document.querySelectorAll("#change-email input");
+
+  const changeEmailElement = document
+    .querySelector(".basic-email")
+    .querySelector(".basic-info-value");
 
   handleIconRotation();
 
@@ -2947,12 +3024,6 @@ const changeDisplayInfo = function () {
 
   useDisplayModes.forEach((el) =>
     el.addEventListener("click", function () {
-      if (this.classList.contains("display-used-mode")) {
-        this.classList.remove("display-used-mode");
-        this.textContent = "Use";
-        return;
-      }
-
       useDisplayModes.forEach((el) => {
         el.classList.remove("display-used-mode");
         el.textContent = "Use";
@@ -3587,6 +3658,220 @@ const changeDisplayInfoHTML = function (container) {
                 <button id="hide-picture" class="display-toggle display-pfp">
                   Hide
                 </button>
+              </div>
+            </div>
+          </div>
+        </div>`);
+};
+
+loggedInAs._dataSharingSettings = {
+  use: false,
+  share: false,
+  priceOptim: false,
+  anonSell: false,
+  cookies: false,
+  optim: false,
+  target: false,
+  sell: true,
+};
+
+const changeDataSharing = function () {
+  const container = document.querySelector("#display");
+
+  changeDataSharingHTML(container);
+
+  const switches = document.querySelectorAll(".data-switch input");
+
+  localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+
+  userAccounts.forEach((el) => {
+    if (loggedInAs.pin === el.pin) {
+      el._dataSharingSettings = loggedInAs._dataSharingSettings;
+    }
+  });
+  localStorage.setItem("accounts", JSON.stringify(userAccounts));
+
+  switches.forEach((el) =>
+    el.addEventListener("change", function () {
+      if (this.checked && this.parentElement.id === "use-switch")
+        loggedInAs._dataSharingSettings.use = true;
+      else if (this.parentElement.id === "use-switch")
+        loggedInAs._dataSharingSettings.use = false;
+      if (this.checked && this.parentElement.id === "share-switch")
+        loggedInAs._dataSharingSettings.share = true;
+      else if (this.parentElement.id === "share-switch")
+        loggedInAs._dataSharingSettings.share = false;
+      if (this.checked && this.parentElement.id === "price-switch")
+        loggedInAs._dataSharingSettings.priceOptim = true;
+      else if (this.parentElement.id === "price-switch")
+        loggedInAs._dataSharingSettings.priceOptim = false;
+      if (this.checked && this.parentElement.id === "anon-switch")
+        loggedInAs._dataSharingSettings.anonSell = true;
+      else if (this.parentElement.id === "anon-switch")
+        loggedInAs._dataSharingSettings.anonSell = false;
+      if (this.checked && this.parentElement.id === "cookie-switch")
+        loggedInAs._dataSharingSettings.cookies = true;
+      else if (this.parentElement.id === "cookie-switch")
+        loggedInAs._dataSharingSettings.cookies = false;
+      if (this.checked && this.parentElement.id === "optim-switch")
+        loggedInAs._dataSharingSettings.optim = true;
+      else if (this.parentElement.id === "optim-switch")
+        loggedInAs._dataSharingSettings.optim = false;
+      if (this.checked && this.parentElement.id === "target-switch")
+        loggedInAs._dataSharingSettings.target = true;
+      else if (this.parentElement.id === "target-switch")
+        loggedInAs._dataSharingSettings.target = false;
+      if (this.checked && this.parentElement.id === "sell-switch")
+        loggedInAs._dataSharingSettings.sell = true;
+      else if (this.parentElement.id === "sell-switch")
+        loggedInAs._dataSharingSettings.sell = false;
+
+      localStorage.setItem("loggedInAs", JSON.stringify(loggedInAs));
+
+      userAccounts.forEach((el) => {
+        if (loggedInAs.pin === el.pin) {
+          el._dataSharingSettings = loggedInAs._dataSharingSettings;
+        }
+      });
+      localStorage.setItem("accounts", JSON.stringify(userAccounts));
+    })
+  );
+
+  checkSell = setInterval(() => {
+    document.querySelector("#sell-switch input").checked = true;
+    loggedInAs._dataSharingSettings.sell = true;
+
+    userAccounts.forEach((el) => {
+      if (loggedInAs.pin === el.pin) {
+        el._dataSharingSettings = loggedInAs._dataSharingSettings;
+      }
+    });
+    localStorage.setItem("accounts", JSON.stringify(userAccounts));
+  }, 5000);
+};
+const changeDataSharingHTML = function (container) {
+  return (container.innerHTML = `
+    <div id="data">
+          <div class="data-top">
+            <span class="subway--sharing dog"></span>
+            <div>
+              <h1>Data Sharing</h1>
+              <p>Choose what we do with the date you provide.</p>
+            </div>
+          </div>
+          <div class="data-bottom">
+            <div class="data-option">
+              <h1>Use of your data</h1>
+              <div class="data-paragraph-switch-container">
+                <p>
+                  Choose whether you want us to look through the data you
+                  provide and use it to make the experience of the website feel
+                  more relatable or not.
+                </p>
+                <label id="use-switch" class="data-switch">
+                  <input id="theme-checkbox" type="checkbox" />
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+            <div class="data-option">
+              <h1>Sharing your data</h1>
+              <div class="data-paragraph-switch-container">
+                <p>
+                  Choose whether you want us to share the data you provide to
+                  other companies and institutions that may find it useful in
+                  their data analytics or not.
+                </p>
+                <label id="share-switch" class="data-switch">
+                  <input id="theme-checkbox" type="checkbox" />
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+            <div class="data-option">
+              <h1>Pricing optimization</h1>
+              <div class="data-paragraph-switch-container">
+                <p>
+                  Choose whether you want us to optimize the pricing of our
+                  memberships based on your location or not.
+                </p>
+                <label id="price-switch" class="data-switch">
+                  <input id="theme-checkbox" type="checkbox" />
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+            <div class="data-option">
+              <h1>Anonymized selling of your data</h1>
+              <div class="data-paragraph-switch-container">
+                <p>
+                  Choose whether you allow us to sell your data as an anonymous
+                  user to other companies / schools or other institutions that
+                  may use your data for various experiments and studies.
+                </p>
+                <label id="anon-switch" class="data-switch">
+                  <input id="theme-checkbox" type="checkbox" />
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+            <div class="data-option">
+              <h1>Cookies policy</h1>
+              <div class="data-paragraph-switch-container">
+                <p>
+                  Choose whether you want to accept cookies for a better site
+                  experience and more relatable and up-to-date news.
+                </p>
+                <label id="cookie-switch" class="data-switch">
+                  <input id="theme-checkbox" type="checkbox" />
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+            <div class="data-option">
+              <h1>Optimization</h1>
+              <div class="data-paragraph-switch-container">
+                <p>
+                  Choose whether or not you want us to use your data to optimize
+                  our website to the best of our abilities, using the news you
+                  look at the most and sharing those news to other users that
+                  have similar interests and hiding the ones you don't want to
+                  see.
+                </p>
+                <label id="optim-switch" class="data-switch">
+                  <input id="theme-checkbox" type="checkbox" />
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+            <div class="data-option">
+              <h1>Targeted Marketing</h1>
+              <div class="data-paragraph-switch-container">
+                <p>
+                  Choose whether you want us to use the data you provide to
+                  share products and other memberships that we find would be
+                  useful to you.
+                </p>
+                <label id="target-switch" class="data-switch">
+                  <input id="theme-checkbox" type="checkbox" />
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+            <div>
+              <div class="data-option">
+                <h1>Selling your data</h1>
+                <div class="data-paragraph-switch-container">
+                  <p>
+                    Choose whether or not you allow us to sell your data to
+                    other companies for unethical, profit centered,
+                    exploitative, corrupt and inhumane reasons.
+                  </p>
+                  <label id="sell-switch" class="data-switch">
+                    <input id="theme-checkbox" type="checkbox" checked />
+                    <span class="slider round"></span>
+                  </label>
+                </div>
               </div>
             </div>
           </div>

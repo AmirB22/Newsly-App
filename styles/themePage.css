@@ -369,6 +369,7 @@
   top: -50%;
   left: -50%;
 }
+.data-switch,
 .display-switch,
 .ad-switch,
 .switch {
@@ -377,6 +378,7 @@
   width: 60px;
   height: 34px;
 }
+.data-switch input,
 .display-switch input,
 .ad-switch input,
 .switch input {
@@ -428,6 +430,9 @@ input:checked + .slider:before {
 }
 .rotated {
   transform: rotate(45deg);
+}
+.pref-load {
+  color: var(--text-color);
 }
 #theme-control-buttons {
   display: flex;

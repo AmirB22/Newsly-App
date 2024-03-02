@@ -19,7 +19,7 @@
   --theme-color-preview: rgb(0, 0, 0);
 
   --input-color-preview: black;
-  --input-color-focused-preview: white;
+  --input-color-focused-preview: black !important;
   --input-text-background-preview: transparent;
 
   --text-color-preview: #ffffff;

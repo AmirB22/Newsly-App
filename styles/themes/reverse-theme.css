@@ -19,7 +19,7 @@
   --theme-color: rgb(0, 0, 0);
 
   --input-color: black;
-  --input-color-focused: white;
+  --input-color-focused: black !important;
   --input-text-background: transparent;
 
   --text-color: #ffffff;
@@ -27,7 +27,7 @@
   --focused-background: transparent;
 
   --success-color: lime;
-  --menu-color: black;
+  --menu-color: white;
 
   --primary-color-2: rgb(200, 200, 200);
 }

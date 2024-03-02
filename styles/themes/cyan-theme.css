@@ -6,7 +6,7 @@
   --primary-color-opacity-5: rgba(0, 255, 255, 0.5);
 
   --control-window-background: cyan;
-  --control-window-text-color: white;
+  --control-window-text-color: black !important;
 
   --input-background: rgb(0, 255, 255);
   --input-text-background: transparent;
@@ -19,15 +19,15 @@
   --theme-color: rgb(212, 255, 255);
 
   --input-color: white;
-  --input-color-focused: white;
+  --input-color-focused: black !important;
   --input-text-background: transparent;
 
-  --text-color: #000000;
+  --text-color: #000000 !important;
   --main-background-color: rgb(255, 255, 255, 0.8);
   --focused-background: transparent;
 
   --success-color: lime;
   --menu-color: var(--primary-color);
 
-  --primary-color-2: rgb(0, 200, 200);
+  --primary-color-2: rgb(0, 170, 170);
 }
