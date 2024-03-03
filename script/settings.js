@@ -12,8 +12,55 @@ const accountBtn = document.querySelector("#menu-account");
 console.log(loggedInAs);
 console.log(userAccounts);
 
+let themeTimeout, adTimeout, displayTimeout, dataTimeout;
+
 const removeCLickedClasses = () =>
   menuBtns.forEach((el) => el.classList.remove("menu-clicked"));
+
+const loadProfileContainer = function () {
+  const profileContainer = document.querySelector(".profile-container");
+
+  profileContainer.innerHTML = `  <div class="profile-image">
+            <img
+              src="${
+                loggedInAs
+                  ? loggedInAs.img
+                  : "https://art.pixilart.com/sr22591edfc8058.png"
+              }"
+              alt="User's profile picture"
+            />
+            <div class="view-profile-hover">
+              <p>View</p>
+            </div>
+          </div>
+          <div class="profile-info">
+            <h3 class="profile-name">${
+              loggedInAs
+                ? `${loggedInAs._firstName}, ${loggedInAs._lastName}`
+                : ""
+            }</h3>
+            ${
+              loggedInAs
+                ? `<p class="view-profile">View profile</p>`
+                : `<p class="login-profile">Log in</p>`
+            }
+          </div>`;
+
+  const viewProfile = document.querySelector(".view-profile");
+  const viewProfileImage = document.querySelector(".view-profile-hover");
+
+  [viewProfileImage, viewProfile].forEach((el) =>
+    el.addEventListener("click", function () {
+      clearTimeout(displayTimeout);
+      clearTimeout(adTimeout);
+      clearTimeout(themeTimeout);
+      clearTimeout(dataTimeout);
+      prefBtn.classList.add("menu-clicked");
+      accountPage();
+    })
+  );
+};
+loadProfileContainer();
 
 const accountPage = function () {
   removeCLickedClasses();
@@ -133,7 +180,6 @@ const accountPage = function () {
 
   controlWindow.addEventListener("click", controlWindowHTML);
 };
-let themeTimeout, adTimeout, displayTimeout, dataTimeout;
 
 const prefPage = function () {
   removeCLickedClasses();
@@ -152,24 +198,6 @@ const prefPage = function () {
                 The place where you can make your experience on the site
                 special.
               </p>
-            </div>
-            <div class="preference-profile-container">
-              <div class="pref-profile-info"">
-                <h3>${
-                  loggedInAs
-                    ? loggedInAs._firstName
-                      ? `${loggedInAs._firstName}, ${loggedInAs._lastName}`
-                      : `${loggedInAs.username}`
-                    : "Log in"
-                }</h3>
-                <p class="pref-view-profile">View profile</p>
-              </div>
-                <div class="pref-profile-image">
-              <img src="${loggedInAs ? loggedInAs.img : "Log in"}" alt="" />
-              <div class="pref-view-profile-hover">
-                <p>View</p>
-              </div>
-            </div>
             </div>
           </div>
           <div class="preferences-bottom">
@@ -397,16 +425,6 @@ const prefPage = function () {
           </div>
         </div>`;
 
-  const viewProfile = document.querySelector(".pref-view-profile");
-  const viewProfileImage = document.querySelector(".pref-view-profile-hover");
-
-  [viewProfileImage, viewProfile].forEach((el) =>
-    el.addEventListener("click", function () {
-      prefBtn.classList.add("menu-clicked");
-      accountPage();
-    })
-  );
-
   const languageSelection = document.querySelector("#choose-language");
   const timezoneSelection = document.querySelector("#choose-timezone");
 
@@ -537,6 +555,8 @@ const changeName = function () {
     .querySelector(".basic-name")
     .querySelector(".basic-info-value");
 
+  const profilePreviewName = document.querySelector(".profile-name");
+
   changeNameHTML(changeContainer);
 
   handleIconRotation();
@@ -609,6 +629,7 @@ const changeName = function () {
         successMessage.classList.add("hidden");
       }, 5000);
       changeNameElement.innerHTML = `${loggedInAs._firstName}, ${loggedInAs._lastName} <i class="fa-solid fa-angle-right" aria-hidden="true"></i>`;
+      profilePreviewName.innerHTML = `${loggedInAs._firstName}, ${loggedInAs._lastName}`;
     }, 3000);
   });
 

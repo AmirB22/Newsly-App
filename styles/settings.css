@@ -42,6 +42,7 @@ html {
   flex-direction: column;
   justify-content: center;
   padding-bottom: 10rem;
+  position: relative;
   box-shadow: 1rem 0rem 2rem var(--main-background-accent-two);
 
   z-index: 1000;
@@ -584,4 +585,62 @@ html {
   #account-basics img {
     width: 7rem;
   }
+}
+.profile-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: absolute;
+  bottom: 5rem;
+  width: 70%;
+  padding-left: 15%;
+  color: var(--text-color);
+}
+.profile-name {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 1.5rem;
+  width: 80%;
+}
+.view-profile {
+  cursor: pointer;
+}
+.view-profile:hover {
+  text-decoration: underline;
+}
+.profile-image {
+  width: 5rem;
+  height: 5rem;
+  position: relative;
+}
+.profile-image img {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 2.5rem;
+}
+.view-profile-hover {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 100%;
+  width: 100%;
+  border-radius: 2.5rem;
+  color: rgb(216, 216, 216);
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  transition: opacity 0.5s;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+.view-profile-hover:hover {
+  opacity: 1;
 }

@@ -6,52 +6,7 @@
   padding: 2.5% 5%;
   box-shadow: 0.7rem 1rem 1rem var(--main-background-accent-two);
 }
-.preference-profile-container {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-}
-.pref-profile-info {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: end;
-}
-.pref-view-profile {
-  cursor: pointer;
-}
-.pref-view-profile:hover {
-  text-decoration: underline;
-}
-.pref-profile-image {
-  width: 5rem;
-  height: 5rem;
-  position: relative;
-}
-.pref-profile-image img {
-  width: 100%;
-  height: 100%;
-  border-radius: 2.5rem;
-}
-.pref-view-profile-hover {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: rgba(0, 0, 0, 0.5);
-  height: 100%;
-  width: 100%;
-  border-radius: 2.5rem;
-  color: rgb(216, 216, 216);
-  display: grid;
-  place-items: center;
-  opacity: 0;
-  transition: opacity 0.5s;
-  cursor: pointer;
-}
-.pref-view-profile-hover:hover {
-  opacity: 1;
-}
+
 .preferences-bottom {
   width: 100%;
   height: 80%;
