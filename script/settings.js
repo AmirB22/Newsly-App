@@ -184,11 +184,6 @@ const accountPage = function () {
 const prefPage = function () {
   removeCLickedClasses();
 
-  clearTimeout(displayTimeout);
-  clearTimeout(adTimeout);
-  clearTimeout(themeTimeout);
-  clearTimeout(dataTimeout);
-
   prefBtn.classList.add("menu-clicked");
   display.innerHTML = `  <div id="preferences">
           <div class="preferences-top">
@@ -539,6 +534,10 @@ const prefPage = function () {
 let checkSell;
 
 const changePages = function (e) {
+  clearTimeout(displayTimeout);
+  clearTimeout(adTimeout);
+  clearTimeout(themeTimeout);
+  clearTimeout(dataTimeout);
   clearInterval(checkSell);
 
   if (e.target.id === "menu-account") accountPage();
@@ -2389,12 +2388,13 @@ const changeTheme = function () {
   });
 };
 const themePageHTML = function (container) {
-  return (container.innerHTML = `  <div id="themes">
+  return (container.innerHTML = `     <div id="themes">
           <div id="theme-left">
             <div id="theme-top">
-            <div class="icon-title-container"><span class="fluent--paint-brush-16-filled dog"></span>
-             <h2 id="theme-title">Themes</h2>
-            </div>
+              <div class="icon-title-container">
+                <span class="fluent--paint-brush-16-filled dog"></span>
+                <h2 id="theme-title">Themes</h2>
+              </div>
               <div id="premade-themes">
                 <p class="theme-premade-subtitle">
                   Try some of these premade themes
@@ -2531,299 +2531,299 @@ const themePageHTML = function (container) {
                 </div>
               </div>
               <div id="theme-control-buttons">
-                <button id="cancel-theme"> Reset theme</button>
+                <button id="cancel-theme">Reset theme</button>
                 <button id="use-theme" class="theme-control">Use</button>
-                <button id="set-theme" class="theme-control"
-                  >Use by default</button
-                >
+                <button id="set-theme" class="theme-control">
+                  Use by default
+                </button>
               </div>
             </div>
           </div>
           <div id="theme-right">
-            <div id="create-own-theme-container">
-              <div id="create-own-theme">
-                <div id="detail-themes" class="dropdown-title">
-                  <div class="theme-subtitle-container">
-                    <div class="theme-subtitle-main">
-                      <h2 class="theme-subtitle">Detail color</h2>
-                      <i class="fa-solid fa-plus"></i>
-                    </div>
-                  </div>
-                  <div id="theme-colors">
-                    <div
-                      class="theme-color-father theme-father"
-                      data-theme="blue-theme"
-                      data-color="blue"
-                    >
-                      <div class="blue-bg"></div>
-                    </div>
-                    <div
-                      class="theme-color-father theme-father"
-                      data-theme="green-theme"
-                      data-color="green"
-                    >
-                      <div class="green-bg"></div>
-                    </div>
-                    <div
-                      class="theme-color-father theme-father"
-                      data-theme="red-theme"
-                      data-color="red"
-                    >
-                      <div class="red-bg"></div>
-                    </div>
-                    <div
-                      class="theme-color-father theme-father"
-                      data-theme="pink-theme"
-                      data-color="pink"
-                    >
-                      <div class="pink-bg"></div>
-                    </div>
-                    <div
-                      class="theme-color-father theme-father"
-                      data-theme="hot-pink-theme"
-                      data-color="hot-pink"
-                    >
-                      <div class="hot-pink-bg"></div>
-                    </div>
-                    <div
-                      class="theme-color-father theme-father"
-                      data-theme="orange-theme"
-                      data-color="orange"
-                    >
-                      <div class="orange-bg"></div>
-                    </div>
-                    <div
-                      class="theme-color-father theme-father"
-                      data-theme="yellow-theme"
-                      data-color="yellow"
-                    >
-                      <div class="yellow-bg"></div>
-                    </div>
-                    <div
-                      class="theme-color-father theme-father"
-                      data-theme="night-mode-theme"
-                      data-color="black"
-                    >
-                      <div class="black-bg"></div>
-                    </div>
-                    <div
-                      class="theme-color-father theme-father"
-                      data-theme="reverse-theme"
-                      data-color="white"
-                    >
-                      <div class="white-bg"></div>
-                    </div>
-                    <div
-                      class="theme-color-father theme-father"
-                      data-theme="dark-theme"
-                      data-color="gray"
-                    >
-                      <div class="gray-bg"></div>
-                    </div>
-                    <div
-                      class="theme-color-father theme-father"
-                      data-theme="purple-theme"
-                      data-color="purple"
-                    >
-                      <div class="purple-bg"></div>
-                    </div>
-                    <div
-                      class="theme-color-father theme-father"
-                      data-theme="aqua-theme"
-                      data-color="aqua"
-                    >
-                      <div class="aqua-bg"></div>
-                    </div>
-                    <div
-                      class="theme-color-father theme-father"
-                      data-theme="colorful-theme"
-                      data-color="colorful"
-                    >
-                      <div class="colorful-bg"></div>
-                    </div>
+            <div id="create-own-theme">
+              <h1>Design</h1>
+              <div id="detail-themes" class="dropdown-title">
+                <div class="theme-subtitle-container">
+                  <div class="theme-subtitle-main">
+                    <h2 class="theme-subtitle">Detail color</h2>
+                    <i class="fa-solid fa-plus" aria-hidden="true"></i>
                   </div>
                 </div>
-                <div id="container-themes" class="dropdown-title">
-                  <div class="theme-subtitle-container">
-                    <div class="theme-subtitle-main">
-                      <h2 class="theme-subtitle">Container color</h2>
-                      <i class="fa-solid fa-plus"></i>
-                    </div>
+                <div id="theme-colors">
+                  <div
+                    class="theme-color-father theme-father"
+                    data-theme="blue-theme"
+                    data-color="blue"
+                  >
+                    <div class="blue-bg"></div>
                   </div>
-                  <div id="theme-colors">
-                    <div
-                      class="theme-color-father-cont theme-father theme-"
-                      data-theme="primary-container"
-                    >
-                      <div class="default-bg theme-changing-color-cont"></div>
-                    </div>
+                  <div
+                    class="theme-color-father theme-father"
+                    data-theme="green-theme"
+                    data-color="green"
+                  >
+                    <div class="green-bg"></div>
+                  </div>
+                  <div
+                    class="theme-color-father theme-father"
+                    data-theme="red-theme"
+                    data-color="red"
+                  >
+                    <div class="red-bg"></div>
+                  </div>
+                  <div
+                    class="theme-color-father theme-father"
+                    data-theme="pink-theme"
+                    data-color="pink"
+                  >
+                    <div class="pink-bg"></div>
+                  </div>
+                  <div
+                    class="theme-color-father theme-father"
+                    data-theme="hot-pink-theme"
+                    data-color="hot-pink"
+                  >
+                    <div class="hot-pink-bg"></div>
+                  </div>
+                  <div
+                    class="theme-color-father theme-father"
+                    data-theme="orange-theme"
+                    data-color="orange"
+                  >
+                    <div class="orange-bg"></div>
+                  </div>
+                  <div
+                    class="theme-color-father theme-father"
+                    data-theme="yellow-theme"
+                    data-color="yellow"
+                  >
+                    <div class="yellow-bg"></div>
+                  </div>
+                  <div
+                    class="theme-color-father theme-father"
+                    data-theme="night-mode-theme"
+                    data-color="black"
+                  >
+                    <div class="black-bg"></div>
+                  </div>
+                  <div
+                    class="theme-color-father theme-father"
+                    data-theme="reverse-theme"
+                    data-color="white"
+                  >
+                    <div class="white-bg"></div>
+                  </div>
+                  <div
+                    class="theme-color-father theme-father"
+                    data-theme="dark-theme"
+                    data-color="gray"
+                  >
+                    <div class="gray-bg"></div>
+                  </div>
+                  <div
+                    class="theme-color-father theme-father"
+                    data-theme="purple-theme"
+                    data-color="purple"
+                  >
+                    <div class="purple-bg"></div>
+                  </div>
+                  <div
+                    class="theme-color-father theme-father"
+                    data-theme="aqua-theme"
+                    data-color="aqua"
+                  >
+                    <div class="aqua-bg"></div>
+                  </div>
+                  <div
+                    class="theme-color-father theme-father"
+                    data-theme="colorful-theme"
+                    data-color="colorful"
+                  >
+                    <div class="colorful-bg"></div>
+                  </div>
+                </div>
+              </div>
+              <div id="container-themes" class="dropdown-title">
+                <div class="theme-subtitle-container">
+                  <div class="theme-subtitle-main">
+                    <h2 class="theme-subtitle">Container color</h2>
+                    <i class="fa-solid fa-plus" aria-hidden="true"></i>
+                  </div>
+                </div>
+                <div id="theme-colors">
+                  <div
+                    class="theme-color-father-cont theme-father theme-"
+                    data-theme="primary-container"
+                  >
+                    <div class="default-bg theme-changing-color-cont"></div>
+                  </div>
 
-                    <div
-                      class="theme-color-father-cont theme-father"
-                      data-theme="night-container"
-                    >
-                      <div class="black-bg"></div>
-                    </div>
-                    <div
-                      class="theme-color-father-cont theme-father"
-                      data-theme="white-container"
-                    >
-                      <div class="white-bg"></div>
-                    </div>
-                    <div
-                      class="theme-color-father-cont theme-father"
-                      data-theme="dark-container"
-                    >
-                      <div class="gray-bg"></div>
-                    </div>
+                  <div
+                    class="theme-color-father-cont theme-father"
+                    data-theme="night-container"
+                  >
+                    <div class="black-bg"></div>
+                  </div>
+                  <div
+                    class="theme-color-father-cont theme-father"
+                    data-theme="white-container"
+                  >
+                    <div class="white-bg"></div>
+                  </div>
+                  <div
+                    class="theme-color-father-cont theme-father"
+                    data-theme="dark-container"
+                  >
+                    <div class="gray-bg"></div>
                   </div>
                 </div>
-                <div id="background-themes" class="dropdown-title">
-                  <div class="theme-subtitle-container">
-                    <div class="theme-subtitle-main">
-                      <h2 class="theme-subtitle">Background color</h2>
-                      <i class="fa-solid fa-plus"></i>
-                    </div>
-                  </div>
-                  <div id="theme-colors">
-                    <div
-                      class="theme-color-father-bg theme-father"
-                      data-theme="primary-background"
-                    >
-                      <div class="default-bg theme-changing-color-bg"></div>
-                    </div>
-                    <div
-                      class="theme-color-father-bg theme-father"
-                      data-theme="night-background"
-                    >
-                      <div class="black-bg"></div>
-                    </div>
-                    <div
-                      class="theme-color-father-bg theme-father"
-                      data-theme="white-background"
-                    >
-                      <div class="white-bg"></div>
-                    </div>
-                    <div
-                      class="theme-color-father-bg theme-father"
-                      data-theme="dark-background"
-                    >
-                      <div class="gray-bg"></div>
-                    </div>
+              </div>
+              <div id="background-themes" class="dropdown-title">
+                <div class="theme-subtitle-container">
+                  <div class="theme-subtitle-main">
+                    <h2 class="theme-subtitle">Background color</h2>
+                    <i class="fa-solid fa-plus" aria-hidden="true"></i>
                   </div>
                 </div>
-                <div id="accent-one-themes" class="dropdown-title">
-                  <div class="theme-subtitle-container">
-                    <div class="theme-subtitle-main">
-                      <h2 class="theme-subtitle">Accent color no.1</h2>
-                      <i class="fa-solid fa-plus"></i>
-                    </div>
+                <div id="theme-colors">
+                  <div
+                    class="theme-color-father-bg theme-father"
+                    data-theme="primary-background"
+                  >
+                    <div class="default-bg theme-changing-color-bg"></div>
                   </div>
-                  <div id="theme-colors">
+                  <div
+                    class="theme-color-father-bg theme-father"
+                    data-theme="night-background"
+                  >
+                    <div class="black-bg"></div>
+                  </div>
+                  <div
+                    class="theme-color-father-bg theme-father"
+                    data-theme="white-background"
+                  >
+                    <div class="white-bg"></div>
+                  </div>
+                  <div
+                    class="theme-color-father-bg theme-father"
+                    data-theme="dark-background"
+                  >
+                    <div class="gray-bg"></div>
+                  </div>
+                </div>
+              </div>
+              <div id="accent-one-themes" class="dropdown-title">
+                <div class="theme-subtitle-container">
+                  <div class="theme-subtitle-main">
+                    <h2 class="theme-subtitle">Accent color no.1</h2>
+                    <i class="fa-solid fa-plus" aria-hidden="true"></i>
+                  </div>
+                </div>
+                <div id="theme-colors">
+                  <div
+                    class="theme-color-father-accent-one theme-father theme-"
+                    data-theme="default-accent"
+                  >
                     <div
-                      class="theme-color-father-accent-one theme-father theme-"
-                      data-theme="default-accent"
-                    >
-                      <div
-                        class="default-bg theme-changing-color-accent-one"
-                      ></div>
-                    </div>
+                      class="default-bg theme-changing-color-accent-one"
+                    ></div>
+                  </div>
 
-                    <div
-                      class="theme-color-father-accent-one theme-father"
-                      data-theme="dark-accent"
-                    >
-                      <div class="black-bg"></div>
-                    </div>
-                    <div
-                      class="theme-color-father-accent-one theme-father"
-                      data-theme="white-accent"
-                    >
-                      <div class="white-bg"></div>
-                    </div>
-                    <div
-                      class="theme-color-father-accent-one theme-father no-accent"
-                      data-theme="no-accent"
-                    >
-                      <div class="gray-bg"></div>
-                    </div>
+                  <div
+                    class="theme-color-father-accent-one theme-father"
+                    data-theme="dark-accent"
+                  >
+                    <div class="black-bg"></div>
+                  </div>
+                  <div
+                    class="theme-color-father-accent-one theme-father"
+                    data-theme="white-accent"
+                  >
+                    <div class="white-bg"></div>
+                  </div>
+                  <div
+                    class="theme-color-father-accent-one theme-father no-accent"
+                    data-theme="no-accent"
+                  >
+                    <div class="gray-bg"></div>
                   </div>
                 </div>
-                <div id="accent-two-themes" class="dropdown-title">
-                  <div class="theme-subtitle-container">
-                    <div class="theme-subtitle-main">
-                      <h2 class="theme-subtitle">Accent color no.2</h2>
-                      <i class="fa-solid fa-plus"></i>
-                    </div>
-                  </div>
-                  <div id="theme-colors">
-                    <div
-                      class="theme-color-father-accent-two theme-father theme-"
-                      data-theme="default-accent-two"
-                    >
-                      <div
-                        class="default-bg theme-changing-color-accent-two"
-                      ></div>
-                    </div>
-
-                    <div
-                      class="theme-color-father-accent-two theme-father"
-                      data-theme="dark-accent-two"
-                    >
-                      <div class="black-bg"></div>
-                    </div>
-                    <div
-                      class="theme-color-father-accent-two theme-father"
-                      data-theme="white-accent-two"
-                    >
-                      <div class="white-bg"></div>
-                    </div>
-                    <div
-                      class="theme-color-father-accent-two theme-father no-accent-two"
-                      data-theme="no-accent-two"
-                    >
-                      <div class="gray-bg"></div>
-                    </div>
+              </div>
+              <div id="accent-two-themes" class="dropdown-title">
+                <div class="theme-subtitle-container">
+                  <div class="theme-subtitle-main">
+                    <h2 class="theme-subtitle">Accent color no.2</h2>
+                    <i class="fa-solid fa-plus" aria-hidden="true"></i>
                   </div>
                 </div>
-                <div id="accent-two-themes" class="dropdown-title">
-                  <div class="theme-subtitle-container">
-                    <div class="theme-subtitle-main">
-                      <h2 class="theme-subtitle">Input color</h2>
-                      <i class="fa-solid fa-plus"></i>
-                    </div>
-                  </div>
-                  <div id="theme-colors">
+                <div id="theme-colors">
+                  <div
+                    class="theme-color-father-accent-two theme-father theme-"
+                    data-theme="default-accent-two"
+                  >
                     <div
-                      class="theme-color-father-accent-two theme-father theme-"
-                      data-theme="default-accent-two"
-                    >
-                      <div
-                        class="default-bg theme-changing-color-accent-two"
-                      ></div>
-                    </div>
+                      class="default-bg theme-changing-color-accent-two"
+                    ></div>
+                  </div>
 
-                    <div
-                      class="theme-color-father-accent-two theme-father"
-                      data-theme="dark-accent-two"
-                    >
-                      <div class="black-bg"></div>
-                    </div>
-                    <div
-                      class="theme-color-father-accent-two theme-father"
-                      data-theme="white-accent-two"
-                    >
-                      <div class="white-bg"></div>
-                    </div>
-                    <div
-                      class="theme-color-father-accent-two theme-father no-accent-two"
-                      data-theme="no-accent-two"
-                    >
-                      <div class="gray-bg"></div>
-                    </div>
+                  <div
+                    class="theme-color-father-accent-two theme-father"
+                    data-theme="dark-accent-two"
+                  >
+                    <div class="black-bg"></div>
                   </div>
-                </div> </div
-            ></div>
+                  <div
+                    class="theme-color-father-accent-two theme-father"
+                    data-theme="white-accent-two"
+                  >
+                    <div class="white-bg"></div>
+                  </div>
+                  <div
+                    class="theme-color-father-accent-two theme-father no-accent-two"
+                    data-theme="no-accent-two"
+                  >
+                    <div class="gray-bg"></div>
+                  </div>
+                </div>
+              </div>
+              <div id="accent-two-themes" class="dropdown-title">
+                <div class="theme-subtitle-container">
+                  <div class="theme-subtitle-main">
+                    <h2 class="theme-subtitle">Input color</h2>
+                    <i class="fa-solid fa-plus" aria-hidden="true"></i>
+                  </div>
+                </div>
+                <div id="theme-colors">
+                  <div
+                    class="theme-color-father-accent-two theme-father theme-"
+                    data-theme="default-accent-two"
+                  >
+                    <div
+                      class="default-bg theme-changing-color-accent-two"
+                    ></div>
+                  </div>
+
+                  <div
+                    class="theme-color-father-accent-two theme-father"
+                    data-theme="dark-accent-two"
+                  >
+                    <div class="black-bg"></div>
+                  </div>
+                  <div
+                    class="theme-color-father-accent-two theme-father"
+                    data-theme="white-accent-two"
+                  >
+                    <div class="white-bg"></div>
+                  </div>
+                  <div
+                    class="theme-color-father-accent-two theme-father no-accent-two"
+                    data-theme="no-accent-two"
+                  >
+                    <div class="gray-bg"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>`);
 };
@@ -3841,7 +3841,7 @@ const changeDataSharingHTML = function (container) {
               <div class="data-paragraph-switch-container">
                 <p>
                   Choose whether you want to accept cookies for a better site
-                  experience and more relatable and up-to-date news.
+                  experience and more relatable and up-to-date news or not.
                 </p>
                 <label id="cookie-switch" class="data-switch">
                   <input id="theme-checkbox" type="checkbox" />
