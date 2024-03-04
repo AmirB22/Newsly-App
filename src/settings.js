@@ -19,7 +19,7 @@ const mainListBtns = document.querySelectorAll("#main-list li");
 
 mainListBtns.forEach((el) =>
   el.addEventListener("click", function () {
-    mainListBtns.forEach((el) => el.classList.remove("main-list-clicked"));
+    removeMainListClickedClasses();
     this.classList.add("main-list-clicked");
   })
 );
@@ -28,6 +28,11 @@ let themeTimeout, adTimeout, displayTimeout, dataTimeout, removeMainListTimeout;
 
 const removeCLickedClasses = () =>
   menuBtns.forEach((el) => el.classList.remove("menu-clicked"));
+const removeMainListClickedClasses = () => {
+  const mainListBtns = document.querySelectorAll("#main-list li");
+
+  mainListBtns.forEach((el) => el.classList.remove("main-list-clicked"));
+};
 
 const loadProfileContainer = function () {
   const profileContainer = document.querySelector(".profile-container");
@@ -77,6 +82,8 @@ loadProfileContainer();
 
 const accountPage = function () {
   removeCLickedClasses();
+  addMainList();
+
   accountBtn.classList.add("menu-clicked");
 
   display.innerHTML = `
@@ -205,18 +212,27 @@ const addMainList = function () {
         <li>About</li>
       </ul> `
   );
-  menuList.remove();
+  const mainListBtns = document.querySelectorAll("#main-list li");
+
+  mainListBtns.forEach((el) =>
+    el.addEventListener("click", function () {
+      mainListBtns.forEach((el) => el.classList.remove("main-list-clicked"));
+      this.classList.add("main-list-clicked");
+    })
+  );
+  const moreMenuBtn = document.querySelector("#menu-more");
+
+  moreMenuBtn.remove();
 };
 const removeMainList = function () {
   // if (!document.querySelector("#main-list")) return;
 
-  menuList.innerHTML = ` <li id="menu-account">Account</li>
-          <li id="menu-privacy">Privacy</li>
-          <li id="menu-preferences">Preferences</li>
-          <li id="menu-bookmarks">Bookmarks</li>
-          <li id="menu-help">Help</li>
-          <li id="menu-more">More</li>`;
+  menuList.insertAdjacentHTML("beforeend", ` <li id="menu-more">More</li>`);
 
+  const mainList = document.querySelector("#main-list");
+  const moreMenuBtn = document.querySelector("#menu-more");
+
+  moreMenuBtn.addEventListener("click", () => (window.location.href = "#more"));
   mainList.remove();
 };
 
@@ -224,16 +240,24 @@ window.addEventListener("hashchange", function () {
   if (window.location.href.endsWith("preferences")) prefPage();
   if (window.location.href.endsWith("change-theme")) changeTheme();
   if (window.location.href.endsWith("change-ads")) changeAds();
+  if (window.location.href.endsWith("more")) morePage();
   /*prettier-ignore */
   if (window.location.href.endsWith("change-display-information")) changeDisplayInfo();
   if (window.location.href.endsWith("change-data-sharing")) changeDataSharing();
   if (window.location.href.endsWith("account")) accountPage();
+  if (
+    !window.location.href.endsWith("pricing") ||
+    !window.location.href.endsWith("about") ||
+    !window.location.href.endsWith("help") ||
+    !window.location.href.endsWith("membership")
+  )
+    removeMainListClickedClasses();
 });
 
 const prefPage = function () {
-  window.location.href = "#preferences";
-
   removeCLickedClasses();
+
+  addMainList();
 
   prefBtn.classList.add("menu-clicked");
   display.innerHTML = `  <div id="preferences">
@@ -529,7 +553,7 @@ const prefPage = function () {
           );
         prefPageButtons.forEach((el) => el.setAttribute("disabled", ""));
         themeTimeout = setTimeout(() => {
-          changeTheme();
+          window.location.href = "#preferences/change-theme";
         }, 1500);
       }
       if (
@@ -545,7 +569,7 @@ const prefPage = function () {
         prefPageButtons.forEach((el) => el.setAttribute("disabled", ""));
 
         adTimeout = setTimeout(() => {
-          changeAds();
+          window.location.href = "#preferences/change-ads";
         }, 1500);
       }
       if (
@@ -561,7 +585,7 @@ const prefPage = function () {
         prefPageButtons.forEach((el) => el.setAttribute("disabled", ""));
 
         displayTimeout = setTimeout(() => {
-          changeDisplayInfo();
+          window.location.href = "#preferences/change-display-information";
         }, 1500);
       }
       if (
@@ -577,7 +601,7 @@ const prefPage = function () {
         prefPageButtons.forEach((el) => el.setAttribute("disabled", ""));
 
         displayTimeout = setTimeout(() => {
-          changeDataSharing();
+          window.location.href = "#preferences/change-data-sharing";
         }, 1500);
       }
     })
@@ -593,9 +617,10 @@ const changePages = function (e) {
   clearTimeout(dataTimeout);
   clearInterval(checkSell);
   clearTimeout(removeMainListTimeout);
-
-  if (e.target.id === "menu-account") accountPage();
-  else if (e.target.id === "menu-preferences") prefPage();
+  removeMainListClickedClasses();
+  if (e.target.id === "menu-account") window.location.href = "#account";
+  else if (e.target.id === "menu-preferences")
+    window.location.href = "#preferences";
   else return;
 };
 
@@ -2095,14 +2120,14 @@ const fullTheme = {
 };
 
 const changeTheme = function () {
-  window.location.href = "#preferences/change-theme";
-
-  console.log(1);
   removeMainList();
 
   const container = document.querySelector("#display");
 
   themePageHTML(container);
+  removeCLickedClasses();
+
+  prefBtn.classList.add("menu-clicked");
 
   const allBtns = document.querySelectorAll(".theme-father");
 
@@ -2885,11 +2910,13 @@ const themePageHTML = function (container) {
         </div>`);
 };
 const changeAds = function () {
-  window.location.href = "#preferences/change-ads";
-
   const container = document.querySelector("#display");
 
   changeAdsHTML(container);
+  removeMainList();
+  removeCLickedClasses();
+
+  prefBtn.classList.add("menu-clicked");
 
   if (loggedInAs && loggedInAs._adSettings)
     Object.entries(loggedInAs._adSettings).forEach((el) =>
@@ -3084,9 +3111,11 @@ if (loggedInAs && !loggedInAs._displaySettings) {
 const changeDisplayInfo = function () {
   const container = document.querySelector("#display");
 
-  window.location.href = "#preferences/change-display-information";
-
   changeDisplayInfoHTML(container);
+  removeMainList();
+  removeCLickedClasses();
+
+  prefBtn.classList.add("menu-clicked");
 
   const useDisplayModes = document.querySelectorAll(".display-use-mode");
 
@@ -3759,9 +3788,11 @@ loggedInAs._dataSharingSettings = {
 const changeDataSharing = function () {
   const container = document.querySelector("#display");
 
-  window.location.href = "#preferences/change-data-sharing";
-
   changeDataSharingHTML(container);
+  removeMainList();
+  removeCLickedClasses();
+
+  prefBtn.classList.add("menu-clicked");
 
   const switches = document.querySelectorAll(".data-switch input");
 
@@ -3955,6 +3986,59 @@ const changeDataSharingHTML = function (container) {
                     <span class="slider round"></span>
                   </label>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>`);
+};
+
+const morePage = function () {
+  const container = document.querySelector("#display");
+
+  morePageHTML(container);
+  removeCLickedClasses();
+
+  const menuMoreBtn = document.querySelector("#menu-more");
+
+  menuMoreBtn.classList.add("menu-clicked");
+};
+const morePageHTML = function (container) {
+  return (container.innerHTML = `  <div id="more">
+          <div id="more-options">
+            <div class="more-option">
+              <div class="more-option-left">
+                <span class="solar--home-bold pig"> </span>
+              </div>
+              <div class="more-option-right">
+                <h1> Home </h1>
+                <p>Go to the home page</p>
+              </div>
+            </div>
+            <div class="more-option">
+              <div class="more-option-left">
+                <span class="ic--round-remember-me pig"></span>
+              </div>
+              <div class="more-option-right">
+                <h1> Membership </h1>
+                <p>Become a member</p>
+              </div>
+            </div>
+            <div class="more-option">
+              <div class="more-option-left">
+                <span class="simple-icons--cashapp pig"></span>
+              </div>
+              <div class="more-option-right">
+                <h1> Pricing </h1>
+                <p>Check out the prices</p>
+              </div>
+            </div>
+            <div class="more-option">
+              <div class="more-option-left"
+                ><span class="mdi--about pig"></span>
+              </div>
+              <div class="more-option-right">
+                <h1> About </h1>
+                <p>See what we are all about</p>
               </div>
             </div>
           </div>

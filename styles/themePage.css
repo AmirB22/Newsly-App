@@ -28,6 +28,7 @@
   transition: all 0.4s;
 }
 #create-own-theme {
+  margin-top: 41%;
   width: 100%;
 }
 .icon-title-container {
@@ -49,7 +50,6 @@
   box-shadow: -1rem 0rem 1rem var(--main-background-accent-two);
   flex-direction: column;
   z-index: 9999;
-  justify-content: center;
 }
 #theme-right h1 {
   font-family: "Dancing Script", sans-serif;

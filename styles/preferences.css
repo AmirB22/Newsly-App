@@ -34,7 +34,7 @@
   transform: scale(1.05);
 }
 .pref-bottom {
-  color: var(--input-color-focused);
+  color: var(--control-window-text-color);
   width: 100%;
   height: 50%;
   display: flex;
@@ -43,7 +43,7 @@
   align-items: flex-start;
 }
 .pref-top {
-  color: var(--input-color-focused);
+  color: var(--control-window-text-color);
   width: 100%;
   height: 50%;
 }
@@ -57,10 +57,11 @@
 .load-button-container .fa-spinner {
   font-size: 2rem;
   animation: spinning 2s linear infinite;
+  color: var(--control-window-text-color);
 }
 .pref-bottom-button,
 .pref-bottom-select {
-  background-color: var(--input-color);
+  background-color: var(--control-window-text-color);
   border: none;
   color: var(--primary-color);
   padding: 1rem 2rem;
