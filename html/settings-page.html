@@ -43,7 +43,13 @@
   </head>
   <body>
     <div id="main">
-      <!-- <div id="menu">
+      <ul id="main-list">
+        <li id="main-home" class="main-list-clicked">Home</li>
+        <li id="main-membership">Membership</li>
+        <li id="main-pricing">Pricing</li>
+        <li id="main-about">About</li>
+      </ul>
+      <div id="menu" class="menu-smaller">
         <div id="menu-list-container">
           <h1>Settings</h1>
           <ul id="menu-list">
@@ -52,7 +58,6 @@
             <li id="menu-preferences">Preferences</li>
             <li id="menu-bookmarks">Bookmarks</li>
             <li id="menu-help">Help</li>
-            <li id="menu-more" class="menu-clicked">More</li>
           </ul>
         </div>
         <div class="profile-container">
@@ -70,28 +75,71 @@
             <p class="view-profile">View profile</p>
           </div>
         </div>
-      </div> -->
-      <!-- <div id="display">
-        
-      </div> -->
-      <div id="home">
-        <div id="home-top">
-          <h1>Settings</h1>
-          <p
-            >The place where you can make your own experience on the website
-            feel special
-          </p>
-        </div>
-        <div id="home-options">
-          <div class="home-option"
-            ><span class="material-symbols--account-box log"> </span
-            >Account</div
-          >
-          <div class="home-option">Privacy</div>
-          <div class="home-option">Preferences</div>
-          <div class="home-option">Bookmarks</div>
-          <div class="home-option">Help</div>
-          <div class="home-option">More</div>
+      </div>
+      <div id="display" class="display-bigger">
+        <div id="home">
+          <div id="home-top">
+            <h1 id="home-settings">Settings</h1>
+            <h1>Home</h1>
+          </div>
+          <div id="home-bottom">
+            <div id="home-options">
+              <div class="home-option">
+                <div class="home-option-left">
+                  <span class="ri--account-box-fill for"></span>
+                </div>
+                <div class="home-option-right">
+                  <h1>Account</h1>
+                  <p>Check out your account</p>
+                </div>
+              </div>
+              <div class="home-option">
+                <div class="home-option-left">
+                  <span class="ic--baseline-privacy-tip for"></span>
+                </div>
+                <div class="home-option-right">
+                  <h1>Privacy</h1>
+                  <p>Take a look at our privacy policy</p>
+                </div>
+              </div>
+              <div class="home-option">
+                <div class="home-option-left">
+                  <span class="material-symbols--room-preferences for"></span>
+                </div>
+                <div class="home-option-right">
+                  <h1>Preferences</h1>
+                  <p>Modify the look of the website</p>
+                </div>
+              </div>
+              <div class="home-option">
+                <div class="home-option-left">
+                  <span class="bi--bookmark-fill for"></span>
+                </div>
+                <div class="home-option-right">
+                  <h1>Bookmarks</h1>
+                  <p>All of your favorite news in one place</p>
+                </div>
+              </div>
+              <div class="home-option">
+                <div class="home-option-left">
+                  <span class="material-symbols--live-help-rounded for"></span>
+                </div>
+                <div class="home-option-right">
+                  <h1>Help</h1>
+                  <p>Read through some FaQs</p>
+                </div>
+              </div>
+              <div class="home-option">
+                <div class="home-option-left">
+                  <span class="ion--arrow-redo-sharp for"></span>
+                </div>
+                <div class="home-option-right">
+                  <h1>More</h1>
+                  <p>Take a look at more options</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -61,6 +61,7 @@ html {
   margin-top: 50%;
 }
 #menu {
+  overflow: hidden;
   width: 20%;
   font-size: 2rem;
   display: flex;

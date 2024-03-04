@@ -13,6 +13,7 @@ const accountBtn = document.querySelector("#menu-account");
 console.log(loggedInAs);
 console.log(userAccounts);
 
+const menuContainer = document.querySelector("#menu");
 const mainContainer = document.querySelector("#main");
 const mainList = document.querySelector("#main-list");
 const mainListBtns = document.querySelectorAll("#main-list li");
@@ -21,6 +22,8 @@ mainListBtns.forEach((el) =>
   el.addEventListener("click", function () {
     removeMainListClickedClasses();
     this.classList.add("main-list-clicked");
+
+    if (this.id === "main-home") window.location.href = "#home";
   })
 );
 
@@ -206,10 +209,10 @@ const addMainList = function () {
   mainContainer.insertAdjacentHTML(
     "afterbegin",
     ` <ul id="main-list">
-        <li>Home</li>
-        <li>Membership</li>
-        <li>Pricing</li>
-        <li>About</li>
+        <li id="main-home">Home</li>
+        <li id="main-membership">Membership</li>
+        <li id="main-pricing">Pricing</li>
+        <li id="main-about">About</li>
       </ul> `
   );
   const mainListBtns = document.querySelectorAll("#main-list li");
@@ -218,14 +221,17 @@ const addMainList = function () {
     el.addEventListener("click", function () {
       mainListBtns.forEach((el) => el.classList.remove("main-list-clicked"));
       this.classList.add("main-list-clicked");
+
+      if (this.id === "main-home") window.location.href = "#home";
     })
   );
   const moreMenuBtn = document.querySelector("#menu-more");
 
+  if (!moreMenuBtn) return;
   moreMenuBtn.remove();
 };
 const removeMainList = function () {
-  // if (!document.querySelector("#main-list")) return;
+  if (!document.querySelector("#main-list")) return;
 
   menuList.insertAdjacentHTML("beforeend", ` <li id="menu-more">More</li>`);
 
@@ -237,18 +243,25 @@ const removeMainList = function () {
 };
 
 window.addEventListener("hashchange", function () {
+  menuContainer.classList.remove("menu-smaller");
+  display.classList.remove("display-bigger");
   if (window.location.href.endsWith("preferences")) prefPage();
   if (window.location.href.endsWith("change-theme")) changeTheme();
   if (window.location.href.endsWith("change-ads")) changeAds();
   if (window.location.href.endsWith("more")) morePage();
+  if (window.location.href.endsWith("home")) {
+    homePage();
+    menuContainer.classList.add("menu-smaller");
+    display.classList.add("display-bigger");
+  }
   /*prettier-ignore */
   if (window.location.href.endsWith("change-display-information")) changeDisplayInfo();
   if (window.location.href.endsWith("change-data-sharing")) changeDataSharing();
   if (window.location.href.endsWith("account")) accountPage();
   if (
-    !window.location.href.endsWith("pricing") ||
-    !window.location.href.endsWith("about") ||
-    !window.location.href.endsWith("help") ||
+    !window.location.href.endsWith("pricing") &&
+    !window.location.href.endsWith("about") &&
+    !window.location.href.endsWith("home") &&
     !window.location.href.endsWith("membership")
   )
     removeMainListClickedClasses();
@@ -3997,15 +4010,27 @@ const morePage = function () {
 
   morePageHTML(container);
   removeCLickedClasses();
+  removeMainList();
 
   const menuMoreBtn = document.querySelector("#menu-more");
+
+  const moreNavigateBtns = document.querySelectorAll(".more-option");
+
+  moreNavigateBtns.forEach((el) =>
+    el.addEventListener("click", function () {
+      if (this.id === "more-home") window.location.href = "#home";
+      if (this.id === "more-membership") window.location.href = "#membership";
+      if (this.id === "more-pricing") window.location.href = "#pricing";
+      if (this.id === "more-about") window.location.href = "#about";
+    })
+  );
 
   menuMoreBtn.classList.add("menu-clicked");
 };
 const morePageHTML = function (container) {
   return (container.innerHTML = `  <div id="more">
           <div id="more-options">
-            <div class="more-option">
+            <div class="more-option" id="more-home">
               <div class="more-option-left">
                 <span class="solar--home-bold pig"> </span>
               </div>
@@ -4015,7 +4040,7 @@ const morePageHTML = function (container) {
               </div>
             </div>
             <div class="more-option">
-              <div class="more-option-left">
+              <div class="more-option-left" id="more-membership">
                 <span class="ic--round-remember-me pig"></span>
               </div>
               <div class="more-option-right">
@@ -4023,7 +4048,7 @@ const morePageHTML = function (container) {
                 <p>Become a member</p>
               </div>
             </div>
-            <div class="more-option">
+            <div class="more-option" id="more-pricing">
               <div class="more-option-left">
                 <span class="simple-icons--cashapp pig"></span>
               </div>
@@ -4032,7 +4057,7 @@ const morePageHTML = function (container) {
                 <p>Check out the prices</p>
               </div>
             </div>
-            <div class="more-option">
+            <div class="more-option" id="more-about">
               <div class="more-option-left"
                 ><span class="mdi--about pig"></span>
               </div>
@@ -4043,4 +4068,89 @@ const morePageHTML = function (container) {
             </div>
           </div>
         </div>`);
+};
+
+const homePage = function () {
+  const container = document.querySelector("#display");
+
+  homePageHTML(container);
+
+  const homeNavigateBtns = document.querySelectorAll(".home-option");
+
+  homeNavigateBtns.forEach((el) =>
+    el.addEventListener("click", function () {
+      if (this.id === "home-preferences") window.location.href = "#preferences";
+      if (this.id === "home-help") window.location.href = "#help";
+      if (this.id === "home-account") window.location.href = "#account";
+      if (this.id === "home-bookmarks") window.location.href = "#bookmarks";
+      if (this.id === "home-privacy") window.location.href = "#privacy";
+      if (this.id === "home-more") window.location.href = "#more";
+    })
+  );
+};
+const homePageHTML = function (container) {
+  return (container.innerHTML = ` <div id="home">
+        <div id="home-top">
+          <h1 id="home-settings">Settings</h1>
+          <h1>Home</h1>
+        </div>
+        <div id="home-bottom">
+          <div id="home-options">
+            <div class="home-option" id="home-account">
+              <div class="home-option-left">
+                <span class="ri--account-box-fill for"></span>
+              </div>
+              <div class="home-option-right">
+                <h1>Account</h1>
+                <p>Check out your account</p>
+              </div>
+            </div>
+            <div class="home-option" id="home-privacy">
+              <div class="home-option-left">
+                <span class="ic--baseline-privacy-tip for"></span>
+              </div>
+              <div class="home-option-right">
+                <h1>Privacy</h1>
+                <p>Take a look at our privacy policy</p>
+              </div>
+            </div>
+            <div class="home-option" id="home-preferences">
+              <div class="home-option-left">
+                <span class="material-symbols--room-preferences for"></span>
+              </div>
+              <div class="home-option-right">
+                <h1>Preferences</h1>
+                <p>Modify the look of the website</p>
+              </div>
+            </div>
+            <div class="home-option" id="home-bookmarks">
+              <div class="home-option-left">
+                <span class="bi--bookmark-fill for"></span>
+              </div>
+              <div class="home-option-right">
+                <h1>Bookmarks</h1>
+                <p>All of your favorite news in one place</p>
+              </div>
+            </div>
+            <div class="home-option" id="home-help">
+              <div class="home-option-left">
+                <span class="material-symbols--live-help-rounded for"></span>
+              </div>
+              <div class="home-option-right">
+                <h1>Help</h1>
+                <p>Read through some FaQs</p>
+              </div>
+            </div>
+            <div class="home-option" id="home-more">
+              <div class="home-option-left">
+                <span class="ion--arrow-redo-sharp for"></span>
+              </div>
+              <div class="home-option-right">
+                <h1>More</h1>
+                <p>Take a look at more options</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>`);
 };
