@@ -35,6 +35,28 @@ html {
   z-index: 999;
   background-color: var(--main-background-color);
 }
+#main-list {
+  list-style: none;
+  display: flex;
+  position: absolute;
+  right: 5%;
+  top: 3%;
+  font-size: 2rem;
+  gap: 1rem;
+}
+#main-list li {
+  padding: 1rem 2rem;
+  border-radius: 4rem;
+  cursor: pointer;
+  z-index: 100000;
+  transition: all 0.2s;
+}
+#main-list li:hover {
+  background-color: var(--primary-color);
+}
+.main-list-clicked {
+  background-color: var(--primary-color) !important;
+}
 #menu {
   width: 20%;
   font-size: 2rem;

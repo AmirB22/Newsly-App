@@ -1,6 +1,7 @@
 "use strict";
 
-const menuBtns = document.querySelectorAll("#menu ul li");
+const menuList = document.querySelector("#menu-list");
+const menuBtns = document.querySelectorAll("#menu-list li");
 const display = document.querySelector("#display");
 
 const loggedInAs = JSON.parse(localStorage.getItem("loggedInAs"));
@@ -12,7 +13,18 @@ const accountBtn = document.querySelector("#menu-account");
 console.log(loggedInAs);
 console.log(userAccounts);
 
-let themeTimeout, adTimeout, displayTimeout, dataTimeout;
+const mainContainer = document.querySelector("#main");
+const mainList = document.querySelector("#main-list");
+const mainListBtns = document.querySelectorAll("#main-list li");
+
+mainListBtns.forEach((el) =>
+  el.addEventListener("click", function () {
+    mainListBtns.forEach((el) => el.classList.remove("main-list-clicked"));
+    this.classList.add("main-list-clicked");
+  })
+);
+
+let themeTimeout, adTimeout, displayTimeout, dataTimeout, removeMainListTimeout;
 
 const removeCLickedClasses = () =>
   menuBtns.forEach((el) => el.classList.remove("menu-clicked"));
@@ -55,6 +67,7 @@ const loadProfileContainer = function () {
       clearTimeout(adTimeout);
       clearTimeout(themeTimeout);
       clearTimeout(dataTimeout);
+      clearTimeout(removeMainListTimeout);
       prefBtn.classList.add("menu-clicked");
       accountPage();
     })
@@ -181,7 +194,45 @@ const accountPage = function () {
   controlWindow.addEventListener("click", controlWindowHTML);
 };
 
+const addMainList = function () {
+  if (document.querySelector("#main-list")) return;
+  mainContainer.insertAdjacentHTML(
+    "afterbegin",
+    ` <ul id="main-list">
+        <li>Home</li>
+        <li>Membership</li>
+        <li>Pricing</li>
+        <li>About</li>
+      </ul> `
+  );
+  menuList.remove();
+};
+const removeMainList = function () {
+  // if (!document.querySelector("#main-list")) return;
+
+  menuList.innerHTML = ` <li id="menu-account">Account</li>
+          <li id="menu-privacy">Privacy</li>
+          <li id="menu-preferences">Preferences</li>
+          <li id="menu-bookmarks">Bookmarks</li>
+          <li id="menu-help">Help</li>
+          <li id="menu-more">More</li>`;
+
+  mainList.remove();
+};
+
+window.addEventListener("hashchange", function () {
+  if (window.location.href.endsWith("preferences")) prefPage();
+  if (window.location.href.endsWith("change-theme")) changeTheme();
+  if (window.location.href.endsWith("change-ads")) changeAds();
+  /*prettier-ignore */
+  if (window.location.href.endsWith("change-display-information")) changeDisplayInfo();
+  if (window.location.href.endsWith("change-data-sharing")) changeDataSharing();
+  if (window.location.href.endsWith("account")) accountPage();
+});
+
 const prefPage = function () {
+  window.location.href = "#preferences";
+
   removeCLickedClasses();
 
   prefBtn.classList.add("menu-clicked");
@@ -464,6 +515,8 @@ const prefPage = function () {
 
   prefPageButtons.forEach((el) =>
     el.addEventListener("click", function (e) {
+      const mainList = document.querySelector("#main-list");
+
       if (
         e.target.closest(".preference").querySelector("h1").textContent ===
         "Theme"
@@ -539,6 +592,7 @@ const changePages = function (e) {
   clearTimeout(themeTimeout);
   clearTimeout(dataTimeout);
   clearInterval(checkSell);
+  clearTimeout(removeMainListTimeout);
 
   if (e.target.id === "menu-account") accountPage();
   else if (e.target.id === "menu-preferences") prefPage();
@@ -2041,6 +2095,11 @@ const fullTheme = {
 };
 
 const changeTheme = function () {
+  window.location.href = "#preferences/change-theme";
+
+  console.log(1);
+  removeMainList();
+
   const container = document.querySelector("#display");
 
   themePageHTML(container);
@@ -2077,8 +2136,6 @@ const changeTheme = function () {
   const changingAccentOne = document.querySelector(".theme-changing-color-accent-one");
   /*prettier-ignore*/
   const changingAccentTwo = document.querySelector(".theme-changing-color-accent-two");
-
-  const mainContainer = document.querySelector("#main");
 
   let genTheme, contTheme, bgTheme, accentThemeOne, accentThemeTwo;
 
@@ -2828,6 +2885,8 @@ const themePageHTML = function (container) {
         </div>`);
 };
 const changeAds = function () {
+  window.location.href = "#preferences/change-ads";
+
   const container = document.querySelector("#display");
 
   changeAdsHTML(container);
@@ -3024,6 +3083,8 @@ if (loggedInAs && !loggedInAs._displaySettings) {
 }
 const changeDisplayInfo = function () {
   const container = document.querySelector("#display");
+
+  window.location.href = "#preferences/change-display-information";
 
   changeDisplayInfoHTML(container);
 
@@ -3468,7 +3529,6 @@ const changeDisplayInfo = function () {
   };
   handlePageLoad();
 };
-
 const changeDisplayInfoHTML = function (container) {
   return (container.innerHTML = `
    <div id="display-info">
@@ -3698,6 +3758,8 @@ loggedInAs._dataSharingSettings = {
 
 const changeDataSharing = function () {
   const container = document.querySelector("#display");
+
+  window.location.href = "#preferences/change-data-sharing";
 
   changeDataSharingHTML(container);
 
