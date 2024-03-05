@@ -24,6 +24,8 @@ mainListBtns.forEach((el) =>
     this.classList.add("main-list-clicked");
 
     if (this.id === "main-home") window.location.href = "#home";
+    if (this.id === "main-membership") window.location.href = "#membership";
+    if (this.id === "main-pricing") window.location.href = "#pricing";
   })
 );
 
@@ -223,6 +225,8 @@ const addMainList = function () {
       this.classList.add("main-list-clicked");
 
       if (this.id === "main-home") window.location.href = "#home";
+      if (this.id === "main-membership") window.location.href = "#membership";
+      if (this.id === "main-pricing") window.location.href = "#pricing";
     })
   );
   const moreMenuBtn = document.querySelector("#menu-more");
@@ -249,6 +253,8 @@ window.addEventListener("hashchange", function () {
   if (window.location.href.endsWith("change-theme")) changeTheme();
   if (window.location.href.endsWith("change-ads")) changeAds();
   if (window.location.href.endsWith("more")) morePage();
+  if (window.location.href.endsWith("membership")) membershipPage();
+  if (window.location.href.endsWith("pricing")) pricingPage();
   if (window.location.href.endsWith("home")) {
     homePage();
     menuContainer.classList.add("menu-smaller");
@@ -4155,21 +4161,430 @@ const homePageHTML = function (container) {
       </div>`);
 };
 
-const controlBtns = document.querySelectorAll(".control-button");
-controlBtns.forEach((el) =>
-  el.addEventListener("click", function () {
-    const rightCard = document.querySelector(`[data-num="2"]`);
-    const mainCard = document.querySelector(`[data-num="1"]`);
-    const leftCard = document.querySelector(`[data-num="0"]`);
-    if (this.id === "right-control-button") {
-      rightCard.dataset.num = "1";
-      leftCard.dataset.num = "2";
-      mainCard.dataset.num = "0";
-    }
-    if (this.id === "left-control-button") {
-      rightCard.dataset.num = "0";
-      leftCard.dataset.num = "1";
-      mainCard.dataset.num = "2";
-    }
-  })
-);
+const membershipPage = function () {
+  const container = document.querySelector("#display");
+
+  membershipPageHTML(container);
+
+  document
+    .querySelector("#check-price-button")
+    .addEventListener("click", function () {
+      window.location.href = "#pricing";
+    });
+
+  const controlBtns = document.querySelectorAll(".control-button");
+  controlBtns.forEach((el) =>
+    el.addEventListener("click", function () {
+      const rightCard = document.querySelector(`[data-num="2"]`);
+      const mainCard = document.querySelector(`[data-num="1"]`);
+      const leftCard = document.querySelector(`[data-num="0"]`);
+      if (this.id === "right-control-button") {
+        rightCard.dataset.num = "1";
+        leftCard.dataset.num = "2";
+        mainCard.dataset.num = "0";
+
+        document.querySelector("#check-price-button").remove();
+
+        rightCard.querySelector(".membership-option-bottom").insertAdjacentHTML(
+          "beforeend",
+          `   <button id="check-price-button"
+                  ><span class="fluent-mdl2--see-do fog"></span>See
+                  price</button
+                >`
+        );
+        document
+          .querySelector("#check-price-button")
+          .addEventListener("click", function () {
+            window.location.href = "#pricing";
+          });
+      }
+      if (this.id === "left-control-button") {
+        rightCard.dataset.num = "0";
+        leftCard.dataset.num = "1";
+        mainCard.dataset.num = "2";
+
+        document.querySelector("#check-price-button").remove();
+
+        leftCard.querySelector(".membership-option-bottom").insertAdjacentHTML(
+          "beforeend",
+          `   <button id="check-price-button"
+                  ><span class="fluent-mdl2--see-do fog"></span>See
+                  price</button
+                >`
+        );
+        document
+          .querySelector("#check-price-button")
+          .addEventListener("click", function () {
+            window.location.href = "#pricing";
+          });
+      }
+    })
+  );
+};
+const membershipPageHTML = function (container) {
+  return (container.innerHTML = `<div id="membership">
+          <div id="membership-top">
+            <div id="membership-title">
+              <h1>Membership</h1>
+              <p
+                >Choose what subscription you want to increase your overall news
+                experience</p
+              >
+            </div>
+          </div>
+          <div id="membership-bottom">
+            <div id="control-buttons">
+              <button class="control-button" id="left-control-button"
+                ><i class="fa-solid fa-chevron-left"></i
+              ></button>
+              <button class="control-button" id="right-control-button"
+                ><i class="fa-solid fa-chevron-right"></i
+              ></button>
+            </div>
+            <div class="membership-option" id="gold" data-num="0">
+              <div class="membership-option-top">
+                <h2>Gold</h2>
+                <h1>Membership</h1>
+              </div>
+              <div class="membership-option-bottom">
+                <ul class="get-list">
+                  <li
+                    ><span class="carbon--checkmark fog"></span>Lorem,
+                    ipsum.</li
+                  >
+                  <li
+                    ><span class="carbon--checkmark fog"></span>Lorem,
+                    ipsum.</li
+                  >
+                  <li
+                    ><span class="carbon--checkmark fog"></span>Lorem,
+                    ipsum.</li
+                  >
+                  <li
+                    ><span class="carbon--checkmark fog"></span>Lorem,
+                    ipsum.</li
+                  >
+                  <li>
+                    <span class="material-symbols-light--close fog"></span
+                    >Lorem, ipsum.
+                  </li>
+                  <li>
+                    <span class="material-symbols-light--close fog"></span
+                    >Lorem, ipsum.
+                  </li>
+                  <li>
+                    <span class="material-symbols-light--close fog"></span
+                    >Lorem, ipsum.
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="membership-option" id="diamond" data-num="1">
+              <div class="membership-option-top">
+                <h2>Diamond</h2>
+                <h1>Membership</h1>
+              </div>
+              <div class="membership-option-bottom">
+                <ul class="get-list">
+                  <li
+                    ><span class="carbon--checkmark fog"></span>Lorem,
+                    ipsum.</li
+                  >
+                  <li
+                    ><span class="carbon--checkmark fog"></span>Lorem,
+                    ipsum.</li
+                  >
+                  <li
+                    ><span class="carbon--checkmark fog"></span>Lorem,
+                    ipsum.</li
+                  >
+                  <li
+                    ><span class="carbon--checkmark fog"></span>Lorem,
+                    ipsum.</li
+                  >
+                  <li
+                    ><span class="carbon--checkmark fog"></span>Lorem,
+                    ipsum.</li
+                  >
+                  <li
+                    ><span class="carbon--checkmark fog"></span>Lorem,
+                    ipsum.</li
+                  >
+                  <li
+                    ><span class="carbon--checkmark fog"></span>Lorem,
+                    ipsum.</li
+                  >
+                </ul>
+                <button id="check-price-button"
+                  ><span class="fluent-mdl2--see-do fog"></span>See
+                  price</button
+                >
+              </div>
+            </div>
+            <div class="membership-option" id="platinum" data-num="2">
+              <div class="membership-option-top">
+                <h2>Platinum</h2>
+                <h1>Membership</h1>
+              </div>
+              <div class="membership-option-bottom">
+                <ul class="get-list">
+                  <li
+                    ><span class="carbon--checkmark fog"></span>Lorem,
+                    ipsum.</li
+                  >
+                  <li
+                    ><span class="carbon--checkmark fog"></span>Lorem,
+                    ipsum.</li
+                  >
+                  <li
+                    ><span class="carbon--checkmark fog"></span>Lorem,
+                    ipsum.</li
+                  >
+                  <li
+                    ><span class="carbon--checkmark fog"></span>Lorem,
+                    ipsum.</li
+                  >
+                  <li
+                    ><span class="carbon--checkmark fog"></span>Lorem,
+                    ipsum.</li
+                  >
+                  <li>
+                    <span class="material-symbols-light--close fog"></span
+                    >Lorem, ipsum.
+                  </li>
+                  <li>
+                    <span class="material-symbols-light--close fog"></span
+                    >Lorem, ipsum.
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>`);
+};
+
+const pricingPage = function () {
+  const container = document.querySelector("#display");
+
+  pricingPageHTML(container);
+
+  const previewContainer = document.querySelector("#pricing-two");
+  const diamondMemmbershipBtn = document.querySelector(
+    "#diamond-membership-button"
+  );
+  const goldMembershipBtn = document.querySelector("#gold-membership-button");
+
+  diamondMemmbershipBtn.addEventListener("click", function () {
+    previewContainer.innerHTML = ` 
+  <div id="option-preview" class="gold-preview">
+                <div class="option-preview-top">
+                  <div class="option-preview-icon">
+                    <span class="game-icons--gold-bar lag"></span>
+                  </div>
+                  <div class="option-preview-title">
+                    <h1>Gold</h1>
+                    <p>News pawn</p>
+                  </div>
+                  <h1 class="membership-container">Membership</h1>
+                </div>
+                <div class="option-preview-bottom">
+                  <ul class="option-preview-list">
+                    <li
+                      ><span class="carbon--checkmark fog"></span>Lorem,
+                      ipsum.</li
+                    >
+                    <li
+                      ><span class="carbon--checkmark fog"></span>Lorem,
+                      ipsum.</li
+                    >
+                    <li
+                      ><span class="carbon--checkmark fog"></span>Lorem,
+                      ipsum.</li
+                    >
+                    <li
+                      ><span class="carbon--checkmark fog"></span>Lorem,
+                      ipsum.</li
+                    >
+                  </ul>
+                  <ul class="option-preview-list">
+                    <li
+                      ><span class="carbon--checkmark fog"></span>Lorem,
+                      ipsum.</li
+                    >
+                    <li>
+                      <span class="material-symbols-light--close fog"></span
+                      >Lorem, ipsum.
+                    </li>
+                    <li>
+                      <span class="material-symbols-light--close fog"></span
+                      >Lorem, ipsum.
+                    </li>
+                  </ul>
+                </div>
+                <div class="option-preview-button">
+                  <button>Buy</button>
+                </div>
+              </div>`;
+  });
+
+  goldMembershipBtn.addEventListener("click", function () {
+    previewContainer.innerHTML = ` 
+  <div id="option-preview" class="gold-preview">
+                <div class="option-preview-top">
+                  <div class="option-preview-icon">
+                    <span class="game-icons--gold-bar lag"></span>
+                  </div>
+                  <div class="option-preview-title">
+                    <h1>Gold</h1>
+                    <p>News pawn</p>
+                  </div>
+                  <h1 class="membership-container">Membership</h1>
+                </div>
+                <div class="option-preview-bottom">
+                  <ul class="option-preview-list">
+                    <li
+                      ><span class="carbon--checkmark fog"></span>Lorem,
+                      ipsum.</li
+                    >
+                    <li
+                      ><span class="carbon--checkmark fog"></span>Lorem,
+                      ipsum.</li
+                    >
+                    <li
+                      ><span class="carbon--checkmark fog"></span>Lorem,
+                      ipsum.</li
+                    >
+                    <li
+                      ><span class="carbon--checkmark fog"></span>Lorem,
+                      ipsum.</li
+                    >
+                  </ul>
+                  <ul class="option-preview-list">
+                    <li
+                      ><span class="carbon--checkmark fog"></span>Lorem,
+                      ipsum.</li
+                    >
+                    <li>
+                      <span class="material-symbols-light--close fog"></span
+                      >Lorem, ipsum.
+                    </li>
+                    <li>
+                      <span class="material-symbols-light--close fog"></span
+                      >Lorem, ipsum.
+                    </li>
+                  </ul>
+                </div>
+                <div class="option-preview-button">
+                  <button>Buy</button>
+                </div>
+              </div>`;
+  });
+};
+const pricingPageHTML = function (container) {
+  container.innerHTML = `  <div id="pricing">
+          <div id="pricing-top">
+            <div id="pricing-title">
+              <h1>Pricing</h1>
+              <p>Check out all of the membership's prices</p>
+            </div>
+          </div>
+          <div id="pricing-bottom">
+            <div id="pricing-one">
+              <div class="pricing-option" id="pricing-diamond">
+                <div class="pricing-option-top">
+                  <div class="pricing-option-icon">
+                    <span class="basil--diamond-solid lag"></span>
+                  </div>
+                  <div class="pricing-option-title">
+                    <h1>Diamond</h1>
+                    <p>Least amount of accessibilities</p>
+                  </div>
+                </div>
+                <div class="pricing-option-bottom" id="diamond-membership-button">
+                  <p>$ 59.99 <span>/m</span></p>
+                </div>
+              </div>
+              <div class="pricing-option" id="pricing-platinum">
+                <div class="pricing-option-top">
+                  <div class="pricing-option-icon">
+                    <span class="game-icons--emerald lag"></span>
+                  </div>
+                  <div class="pricing-option-title">
+                    <h1>Platinum</h1>
+                    <p>Least amount of accessibilities</p>
+                  </div>
+                </div>
+                <div class="pricing-option-bottom"  id="platinum-membership-button">
+                  <p>$ 29.99 <span>/m</span></p>
+                </div>
+              </div>
+              <div class="pricing-option" id="pricing-gold">
+                <div class="pricing-option-top">
+                  <div class="pricing-option-icon">
+                    <span class="game-icons--gold-bar lag"></span>
+                  </div>
+                  <div class="pricing-option-title">
+                    <h1>Gold</h1>
+                    <p>Least amount of accessibilities</p>
+                  </div>
+                </div>
+                <div class="pricing-option-bottom"  id="gold-membership-button">
+                  <p>$ 19.99 <span>/m</span></p>
+                </div>
+              </div>
+            </div>
+            <div id="pricing-two">
+              <div id="option-preview" class="diamond-preview">
+                <div class="option-preview-top">
+                  <div class="option-preview-icon">
+                    <span class="basil--diamond-solid lag"></span>
+                  </div>
+                  <div class="option-preview-title">
+                    <h1>Diamond</h1>
+                    <p>News wizard</p>
+                  </div>
+                  <h1 class="membership-container">Membership</h1>
+                </div>
+                <div class="option-preview-bottom">
+                  <ul class="option-preview-list">
+                    <li
+                      ><span class="carbon--checkmark fog"></span>Lorem,
+                      ipsum.</li
+                    >
+                    <li
+                      ><span class="carbon--checkmark fog"></span>Lorem,
+                      ipsum.</li
+                    >
+                    <li
+                      ><span class="carbon--checkmark fog"></span>Lorem,
+                      ipsum.</li
+                    >
+                    <li
+                      ><span class="carbon--checkmark fog"></span>Lorem,
+                      ipsum.</li
+                    >
+                  </ul>
+                  <ul class="option-preview-list">
+                    <li
+                      ><span class="carbon--checkmark fog"></span>Lorem,
+                      ipsum.</li
+                    >
+                    <li>
+                      <span class="material-symbols-light--close fog"></span
+                      >Lorem, ipsum.
+                    </li>
+                    <li>
+                      <span class="material-symbols-light--close fog"></span
+                      >Lorem, ipsum.
+                    </li>
+                  </ul>
+                </div>
+                <div class="option-preview-button">
+                  <button>Buy</button>
+                </div>
+              </div>
+            </div>
+            <div id="pricing-three"></div>
+          </div>
+        </div>`;
+};
