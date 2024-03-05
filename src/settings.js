@@ -4369,25 +4369,29 @@ const pricingPage = function () {
   pricingPageHTML(container);
 
   const previewContainer = document.querySelector("#pricing-two");
-  const diamondMemmbershipBtn = document.querySelector(
+  const diamondMembershipBtn = document.querySelector(
     "#diamond-membership-button"
+  );
+  const platinumMembershipBtn = document.querySelector(
+    "#platinum-membership-button"
   );
   const goldMembershipBtn = document.querySelector("#gold-membership-button");
 
-  diamondMemmbershipBtn.addEventListener("click", function () {
+  diamondMembershipBtn.addEventListener("click", function () {
     previewContainer.innerHTML = ` 
-  <div id="option-preview" class="gold-preview">
+  <div id="option-preview" class="diamond-preview">
                 <div class="option-preview-top">
                   <div class="option-preview-icon">
-                    <span class="game-icons--gold-bar lag"></span>
+                    <span class="basil--diamond-solid lag"></span>
                   </div>
                   <div class="option-preview-title">
-                    <h1>Gold</h1>
-                    <p>News pawn</p>
+                    <h1>Diamond</h1>
+                    <p>News wizard</p>
                   </div>
                   <h1 class="membership-container">Membership</h1>
                 </div>
                 <div class="option-preview-bottom">
+                <div class="option-preview-list-container">
                   <ul class="option-preview-list">
                     <li
                       ><span class="carbon--checkmark fog"></span>Lorem,
@@ -4412,21 +4416,68 @@ const pricingPage = function () {
                       ipsum.</li
                     >
                     <li>
-                      <span class="material-symbols-light--close fog"></span
+                      <span class="carbon--checkmark fog"></span
                       >Lorem, ipsum.
                     </li>
                     <li>
-                      <span class="material-symbols-light--close fog"></span
+                      <span class="carbon--checkmark fog"></span
                       >Lorem, ipsum.
                     </li>
-                  </ul>
-                </div>
-                <div class="option-preview-button">
-                  <button>Buy</button>
+                  </ul></div>
+                       <button>Buy</button>
                 </div>
               </div>`;
   });
-
+  platinumMembershipBtn.addEventListener("click", function () {
+    previewContainer.innerHTML = ` <div id="option-preview" class="platinum-preview">
+                <div class="option-preview-top">
+                  <div class="option-preview-icon">
+                  <span class="game-icons--emerald lag"></span>
+                  </div>
+                  <div class="option-preview-title">
+                    <h1>Platinum</h1>
+                    <p>News knight</p>
+                  </div>
+                  <h1 class="membership-container">Membership</h1>
+                </div>
+                <div class="option-preview-bottom">
+                <div class="option-preview-list-container">
+                  <ul class="option-preview-list">
+                    <li
+                      ><span class="carbon--checkmark fog"></span>Lorem,
+                      ipsum.</li
+                    >
+                    <li
+                      ><span class="carbon--checkmark fog"></span>Lorem,
+                      ipsum.</li
+                    >
+                    <li
+                      ><span class="carbon--checkmark fog"></span>Lorem,
+                      ipsum.</li
+                    >
+                    <li
+                      ><span class="carbon--checkmark fog"></span>Lorem,
+                      ipsum.</li
+                    >
+                  </ul>
+                  <ul class="option-preview-list">
+                    <li
+                      ><span class="carbon--checkmark fog"></span>Lorem,
+                      ipsum.</li
+                    >
+                    <li>
+                      <span class="carbon--checkmark fog"></span
+                      >Lorem, ipsum.
+                    </li>
+                    <li>
+                      <span class="carbon--checkmark fog"></span
+                      >Lorem, ipsum.
+                    </li>
+                  </ul></div>
+                       <button>Buy</button>
+                </div>
+              </div>`;
+  });
   goldMembershipBtn.addEventListener("click", function () {
     previewContainer.innerHTML = ` 
   <div id="option-preview" class="gold-preview">
@@ -4441,6 +4492,7 @@ const pricingPage = function () {
                   <h1 class="membership-container">Membership</h1>
                 </div>
                 <div class="option-preview-bottom">
+                 <div class="option-preview-list-container">
                   <ul class="option-preview-list">
                     <li
                       ><span class="carbon--checkmark fog"></span>Lorem,
@@ -4472,10 +4524,9 @@ const pricingPage = function () {
                       <span class="material-symbols-light--close fog"></span
                       >Lorem, ipsum.
                     </li>
-                  </ul>
-                </div>
-                <div class="option-preview-button">
+                  </ul></div>
                   <button>Buy</button>
+
                 </div>
               </div>`;
   });

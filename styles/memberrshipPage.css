@@ -23,6 +23,9 @@
   background-color: rgb(59, 59, 59);
   position: absolute;
   transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .membership-option h2 {
   padding: 2rem;
@@ -122,9 +125,11 @@
 }
 .membership-option-bottom {
   width: 100%;
+  margin-bottom: 10rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
 }
 #check-price-button {
   background-color: var(--primary-color);

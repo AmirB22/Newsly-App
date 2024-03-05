@@ -91,35 +91,28 @@
   position: relative;
 }
 .option-preview-bottom {
-  height: 30%;
+  height: 40%;
   width: 100%;
   display: flex;
   width: 100%;
   justify-content: space-around;
+  flex-direction: column;
+  align-items: center;
   background-color: rgb(50, 50, 50);
   border-bottom: 1px solid var(--primary-color);
 }
-.option-preview-button {
-  height: 10%;
-  width: 100%;
-  display: grid;
-  place-items: center;
-}
-.option-preview-button button {
-  height: 90%;
-  width: 30%;
-  border: 0px;
+.option-preview-bottom button {
   background-color: var(--primary-color);
   color: var(--control-window-text-color);
+  border: none;
+  padding: 1.5rem 4rem;
   cursor: pointer;
 }
-.option-preview-list:first-child {
-  border-right: 1px solid var(--primary-color);
-}
-.option-preview-list {
-  list-style: none;
-  text-align: center;
-  width: 50%;
+.option-preview-list-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  gap: 10%;
 }
 .option-preview-list li {
   padding: 0.5rem;
