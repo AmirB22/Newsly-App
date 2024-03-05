@@ -4154,3 +4154,22 @@ const homePageHTML = function (container) {
         </div>
       </div>`);
 };
+
+const controlBtns = document.querySelectorAll(".control-button");
+controlBtns.forEach((el) =>
+  el.addEventListener("click", function () {
+    const rightCard = document.querySelector(`[data-num="2"]`);
+    const mainCard = document.querySelector(`[data-num="1"]`);
+    const leftCard = document.querySelector(`[data-num="0"]`);
+    if (this.id === "right-control-button") {
+      rightCard.dataset.num = "1";
+      leftCard.dataset.num = "2";
+      mainCard.dataset.num = "0";
+    }
+    if (this.id === "left-control-button") {
+      rightCard.dataset.num = "0";
+      leftCard.dataset.num = "1";
+      mainCard.dataset.num = "2";
+    }
+  })
+);

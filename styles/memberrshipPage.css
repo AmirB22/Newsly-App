@@ -1,0 +1,113 @@
+#membership {
+  width: 100%;
+  height: 100%;
+}
+#membership-top {
+  height: 20%;
+  box-shadow: 0rem 2rem 1rem var(--main-background-accent);
+  display: flex;
+  align-items: center;
+}
+#membership-title {
+  margin-left: 2rem;
+}
+#membership-bottom {
+  height: 80%;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.membership-option {
+  width: 25%;
+  height: 80%;
+  background-color: rgb(59, 59, 59);
+  position: absolute;
+  transition: all 0.2s;
+}
+.membership-option h2 {
+  padding: 2rem;
+  text-align: center;
+}
+.membership-option h1 {
+  background-color: var(--primary-color);
+  color: var(--control-window-text-color);
+  padding: 1rem 2rem;
+  text-align: center;
+}
+.membership-option ul {
+  list-style: none;
+  margin: 1rem 0rem;
+}
+.membership-option li {
+  padding: 0.5rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.membership-option:before {
+  content: "";
+  width: 50%;
+  height: 5px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+#gold:before {
+  background-color: gold;
+}
+#diamond:before {
+  background-color: aqua;
+}
+#platinum:before {
+  background-color: teal;
+}
+.fog {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  background-color: currentColor;
+  -webkit-mask-image: var(--svg);
+  mask-image: var(--svg);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+.carbon--checkmark {
+  color: lime;
+  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%23000' d='m13 24l-9-9l1.414-1.414L13 21.171L26.586 7.586L28 9z'/%3E%3C/svg%3E");
+}
+.material-symbols-light--close {
+  color: red;
+  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='m6.4 18.308l-.708-.708l5.6-5.6l-5.6-5.6l.708-.708l5.6 5.6l5.6-5.6l.708.708l-5.6 5.6l5.6 5.6l-.708.708l-5.6-5.6z'/%3E%3C/svg%3E");
+}
+[data-num="0"] {
+  left: 5%;
+}
+[data-num="1"] {
+  left: 50%;
+  transform: translateX(-50%) scale(1.15);
+  z-index: 9999;
+}
+[data-num="2"] {
+  left: 70%;
+}
+#control-buttons {
+  display: flex;
+  width: 43%;
+  justify-content: space-between;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+}
+#control-buttons button {
+  background-color: var(--primary-color-opacity-5);
+  color: var(--control-window-text-color);
+  padding: 2rem 2.5rem;
+  border-radius: 5rem;
+  border: none;
+  cursor: pointer;
+}

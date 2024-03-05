@@ -37,6 +37,7 @@
     <link rel="stylesheet" href="../styles/displayInfoPage.css" />
     <link rel="stylesheet" href="../styles/morePage.css" />
     <link rel="stylesheet" href="../styles/homePage.css" />
+    <link rel="stylesheet" href="../styles/memberrshipPage.css" />
 
     <script defer src="../src/settings.js"></script>
     <title>Newsly | Settings</title>
@@ -44,12 +45,12 @@
   <body>
     <div id="main">
       <ul id="main-list">
-        <li id="main-home" class="main-list-clicked">Home</li>
-        <li id="main-membership">Membership</li>
+        <li id="main-home">Home</li>
+        <li id="main-membership" class="main-list-clicked">Membership</li>
         <li id="main-pricing">Pricing</li>
         <li id="main-about">About</li>
       </ul>
-      <div id="menu" class="menu-smaller">
+      <div id="menu">
         <div id="menu-list-container">
           <h1>Settings</h1>
           <ul id="menu-list">
@@ -76,67 +77,162 @@
           </div>
         </div>
       </div>
-      <div id="display" class="display-bigger">
-        <div id="home">
-          <div id="home-top">
-            <h1 id="home-settings">Settings</h1>
-            <h1>Home</h1>
+      <div id="display">
+        <div id="membership">
+          <div id="membership-top">
+            <div id="membership-title">
+              <h1>Membership</h1>
+              <p
+                >Choose what subscription you want to increase your overall news
+                experience</p
+              >
+            </div>
           </div>
-          <div id="home-bottom">
-            <div id="home-options">
-              <div class="home-option">
-                <div class="home-option-left">
-                  <span class="ri--account-box-fill for"></span>
-                </div>
-                <div class="home-option-right">
-                  <h1>Account</h1>
-                  <p>Check out your account</p>
-                </div>
+          <div id="membership-bottom">
+            <div id="control-buttons">
+              <button class="control-button" id="left-control-button"
+                ><i class="fa-solid fa-chevron-left"></i
+              ></button>
+              <button class="control-button" id="right-control-button"
+                ><i class="fa-solid fa-chevron-right"></i
+              ></button>
+            </div>
+            <div class="membership-option" id="gold" data-num="0">
+              <div class="membership-top">
+                <h2>Gold</h2>
+                <h1>19.99$/m</h1>
               </div>
-              <div class="home-option">
-                <div class="home-option-left">
-                  <span class="ic--baseline-privacy-tip for"></span>
-                </div>
-                <div class="home-option-right">
-                  <h1>Privacy</h1>
-                  <p>Take a look at our privacy policy</p>
-                </div>
+              <div class="membership-bottom">
+                <ul class="get-list">
+                  <li
+                    ><span class="carbon--checkmark fog"></span>Lorem,
+                    ipsum.</li
+                  >
+                  <li
+                    ><span class="carbon--checkmark fog"></span>Lorem,
+                    ipsum.</li
+                  >
+                  <li
+                    ><span class="carbon--checkmark fog"></span>Lorem,
+                    ipsum.</li
+                  >
+                  <li
+                    ><span class="carbon--checkmark fog"></span>Lorem,
+                    ipsum.</li
+                  >
+                  <li>
+                    <span class="material-symbols-light--close fog"></span
+                    >Lorem, ipsum.
+                  </li>
+                  <li>
+                    <span class="material-symbols-light--close fog"></span
+                    >Lorem, ipsum.
+                  </li>
+                  <li>
+                    <span class="material-symbols-light--close fog"></span
+                    >Lorem, ipsum.
+                  </li>
+                  <li>
+                    <span class="material-symbols-light--close fog"></span
+                    >Lorem, ipsum.
+                  </li>
+                  <li>
+                    <span class="material-symbols-light--close fog"></span
+                    >Lorem, ipsum.
+                  </li>
+                </ul>
               </div>
-              <div class="home-option">
-                <div class="home-option-left">
-                  <span class="material-symbols--room-preferences for"></span>
-                </div>
-                <div class="home-option-right">
-                  <h1>Preferences</h1>
-                  <p>Modify the look of the website</p>
-                </div>
+            </div>
+            <div class="membership-option" id="diamond" data-num="1">
+              <div class="membership-option-top">
+                <h2>Diamond</h2>
+                <h1>59.99$/m</h1>
               </div>
-              <div class="home-option">
-                <div class="home-option-left">
-                  <span class="bi--bookmark-fill for"></span>
-                </div>
-                <div class="home-option-right">
-                  <h1>Bookmarks</h1>
-                  <p>All of your favorite news in one place</p>
-                </div>
+              <div class="membership-option-bottom">
+                <ul class="get-list">
+                  <li
+                    ><span class="carbon--checkmark fog"></span>Lorem,
+                    ipsum.</li
+                  >
+                  <li
+                    ><span class="carbon--checkmark fog"></span>Lorem,
+                    ipsum.</li
+                  >
+                  <li
+                    ><span class="carbon--checkmark fog"></span>Lorem,
+                    ipsum.</li
+                  >
+                  <li
+                    ><span class="carbon--checkmark fog"></span>Lorem,
+                    ipsum.</li
+                  >
+                  <li
+                    ><span class="carbon--checkmark fog"></span>Lorem,
+                    ipsum.</li
+                  >
+                  <li
+                    ><span class="carbon--checkmark fog"></span>Lorem,
+                    ipsum.</li
+                  >
+                  <li
+                    ><span class="carbon--checkmark fog"></span>Lorem,
+                    ipsum.</li
+                  >
+                  <li>
+                    <span class="material-symbols-light--close fog"></span
+                    >Lorem, ipsum.
+                  </li>
+                  <li>
+                    <span class="material-symbols-light--close fog"></span
+                    >Lorem, ipsum.
+                  </li>
+                </ul>
               </div>
-              <div class="home-option">
-                <div class="home-option-left">
-                  <span class="material-symbols--live-help-rounded for"></span>
-                </div>
-                <div class="home-option-right">
-                  <h1>Help</h1>
-                  <p>Read through some FaQs</p>
-                </div>
+            </div>
+            <div class="membership-option" id="platinum" data-num="2">
+              <div class="membership-top">
+                <h2>Platinum</h2>
+                <h1>29.99$/m</h1>
               </div>
-              <div class="home-option">
-                <div class="home-option-left">
-                  <span class="ion--arrow-redo-sharp for"></span>
-                </div>
-                <div class="home-option-right">
-                  <h1>More</h1>
-                  <p>Take a look at more options</p>
-                </div>
+              <div class="membership-bottom">
+                <ul class="get-list">
+                  <li
+                    ><span class="carbon--checkmark fog"></span>Lorem,
+                    ipsum.</li
+                  >
+                  <li
+                    ><span class="carbon--checkmark fog"></span>Lorem,
+                    ipsum.</li
+                  >
+                  <li
+                    ><span class="carbon--checkmark fog"></span>Lorem,
+                    ipsum.</li
+                  >
+                  <li
+                    ><span class="carbon--checkmark fog"></span>Lorem,
+                    ipsum.</li
+                  >
+                  <li
+                    ><span class="carbon--checkmark fog"></span>Lorem,
+                    ipsum.</li
+                  >
+                  <li
+                    ><span class="carbon--checkmark fog"></span>Lorem,
+                    ipsum.</li
+                  >
+                  <li
+                    ><span class="carbon--checkmark fog"></span>Lorem,
+                    ipsum.</li
+                  >
+                  <li
+                    ><span class="carbon--checkmark fog"></span>Lorem,
+                    ipsum.</li
+                  >
+                  <li
+                    ><span class="carbon--checkmark fog"></span>Lorem,
+                    ipsum.</li
+                  >
+                </ul>
               </div>
             </div>
           </div>
