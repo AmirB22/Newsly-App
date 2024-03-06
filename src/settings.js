@@ -4654,18 +4654,16 @@ optionBtns.forEach((el) =>
     const discountElement = document.querySelector(".discount-price");
     const totalPriceelement = document.querySelectorAll(".total-price");
 
-    const membership = document.querySelector(
-      ".option-preview-title h1"
-    ).textContent;
+    /*prettier-ignore */
+    const membership = document.querySelector(".option-preview-title h1").textContent;
 
     const originalPriceValue = months * price;
     const discount = (originalPriceValue / 50).toFixed(1);
 
-    originalPriceElement.textContent = `${membership} ${months}x: ${originalPriceValue}`;
-    discountElement.textContent = `$${discount}`;
-    totalPriceelement.forEach(
-      (el) => (el.textContent = `$${originalPriceValue - discount}`)
-    );
+    originalPriceElement.textContent = `${months} month/s of ${membership}: ${originalPriceValue}$`;
+    discountElement.textContent = `- ${discount}$`;
+    /*prettier-ignore */
+    totalPriceelement.forEach((el) => (el.textContent = `${originalPriceValue - discount}$`));
   })
 );
 
