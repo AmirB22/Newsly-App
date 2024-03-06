@@ -4,6 +4,7 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  color: var(--text-color);
 }
 #pricing-top {
   height: 20%;
@@ -98,7 +99,7 @@
   justify-content: space-around;
   flex-direction: column;
   align-items: center;
-  background-color: rgb(50, 50, 50);
+  background-color: rgb(59, 59, 59);
   border-bottom: 1px solid var(--primary-color);
 }
 .option-preview-bottom button {
@@ -124,7 +125,188 @@
 #pricing-three {
   width: 35%;
   height: 100%;
-  background-color: blue;
+}
+#pricing-three-top {
+  height: 20%;
+  width: 100%s;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.pricing-proceed-card {
+  width: 25%;
+  height: 80%;
+  background-color: rgb(59, 59, 59);
+  display: grid;
+  place-items: center;
+  border: 3px solid var(--primary-color);
+  cursor: pointer;
+  position: relative;
+  transition: all 0.5s;
+}
+.pricing-proceed-card:hover {
+  transform: scale(1.15);
+  border-color: var(--control-window-text-color);
+}
+.pricing-proceed-card:hover .pricing-proceed-card-option span {
+  background-color: var(--control-window-text-color);
+  color: var(--primary-color);
+}
+.pricing-proceed-card-option {
+  text-align: center;
+}
+.pricing-proceed-card-option h2 {
+  font-size: 3rem;
+}
+.pricing-proceed-card-option p {
+  font-size: 1rem;
+}
+.pricing-proceed-card-option span {
+  background-color: var(--primary-color);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  font-size: 1.2rem;
+  color: var(--control-window-text-color);
+  transition: all 0.5s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Madimi One", sans-serif;
+}
+#pricing-three-bottom {
+  height: calc(80% - 2rem);
+  width: calc(100% - 2rem);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+#pricing-three-bottom-information {
+  width: 100%;
+  height: 50%;
+  padding-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.payment-option-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+.payment-option {
+  width: calc(48% - 2rem);
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: 1.2rem;
+  position: relative;
+  border: 1px solid var(--primary-color);
+  background-color: var(--primary-color);
+  margin: 1rem 0rem;
+  transition: all 0.2s;
+}
+.payment-option-clicked {
+  background-color: var(--control-window-text-color);
+  color: var(--primary-color);
+  border-color: var(--control-window-text-color);
+}
+.check {
+  background-color: white;
+  border: 1px solid white;
+  height: 1rem;
+  width: 1rem;
+  border-radius: 1rem;
+  position: absolute;
+  right: 1rem;
+}
+.checked {
+  background-color: var(--primary-color);
+  border: 1px solid var(--control-window-text-color);
+}
+.payment-detail-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  width: 100%;
+  height: 100%;
+}
+#pricing-three-bottom-checkout {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  font-size: 1.2rem;
+}
+.total {
+  border-top: 1px solid var(--primary-color);
+  padding-top: 1rem;
+  font-weight: bold;
+}
+#pricing-three-bottom-checkout p {
+  display: flex;
+  justify-content: space-between;
+}
+.payment-checkout-pay-button-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.payment-checkout-pay-button-container button {
+  border: none;
+  padding: 1rem 2rem;
+  width: 100%;
+  background-color: var(--primary-color);
+  color: var(--control-window-text-color);
+  cursor: pointer;
+}
+#pricing-three input {
+  border: 0px;
+  padding: 0.5rem 1rem;
+  width: calc(100% - 2rem);
+  background-color: var(--input-background);
+  color: var(--input-color);
+}
+#pricing-three input:focus {
+  outline: none;
+}
+.info-container {
+  width: 100%;
+}
+#card-number,
+#cardholder-name {
+  width: 100%;
+}
+#save-for-later {
+  width: auto !important;
+}
+.expiration-ccv-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.expiration-ccv-container input {
+  width: 100%;
+}
+.payment-information-label {
+  font-size: 1rem;
+}
+.save-for-later-container {
+  display: flex;
+  gap: 1rem;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}
+.payment-checkout-pay-encrypted {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
 }
 .pricing-option {
   height: 30%;
@@ -155,6 +337,30 @@
 .game-icons--emerald {
   --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23000' d='M310.375 16.75L89.405 75.72l58.126 50.905L282.563 90.28l2.032-.53zm17.063 7.844l-27.157 76.812l91.69 91.875l95.624-8.78zm-41.813 12.062l-8.594 33.657c-.28-15.516-38.03-17.018-107.56-4.376zm51.063 14.625l123.5 123.407l-58.844 7.563c16.2-21.37-32.277-91.112-64.656-130.97M74.75 87.72L15.594 308.405l79-31.47l37.28-139.155zm207.438 22l-133.032 35.81l-35.72 133.376l97.25 97.53l133.064-35.81l35.72-133.376zm-201.72 5.686l32.844 30.5l-30.156 118.97l-39.03 15.812c50.817-30.543 65.667-130.132 36.343-165.282zm195.876 14.78L359 213.377l-30.156 113.81l-44.688 11.97c119.527-107.872-34.816-238.375-131.5-140.875l9.875-37.405l113.814-30.688zM490.564 203l-92.877 8.53l-35.968 134.19l71.342 71.842L490.563 203zm-17.283 13.875L444.03 333.03c6.73-68.874-.03-90.85-30.655-111.5zm-371.155 77.188L20.22 326.688l161.75 161.468l17.31-96.72l-97.155-97.373zm.094 20l78.124 82.437l-7.438 61.375c-5.23-44.565-28.34-85.92-70.687-143.813zm246.124 44.687l-130.53 35.125l-17.564 98.188l221.688-59.157zm18.625 42.5l24.28 24.844l-115.22 32.72c61.28-26.446 83.34-37.418 90.94-57.564'/%3E%3C/svg%3E");
 }
+.ion--card {
+  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23000' d='M32 376a56 56 0 0 0 56 56h336a56 56 0 0 0 56-56V222H32Zm66-76a30 30 0 0 1 30-30h48a30 30 0 0 1 30 30v20a30 30 0 0 1-30 30h-48a30 30 0 0 1-30-30ZM424 80H88a56 56 0 0 0-56 56v26h448v-26a56 56 0 0 0-56-56'/%3E%3C/svg%3E");
+}
+.iconamoon--shield-yes-fill {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' fill-rule='evenodd' d='M11.606 2.08a1 1 0 0 1 .788 0l6.394 2.741A2 2 0 0 1 20 6.66v6.86a7 7 0 0 1-3.527 6.077l-3.977 2.272a1 1 0 0 1-.992 0l-3.977-2.272A7 7 0 0 1 4 13.518V6.66a2 2 0 0 1 1.212-1.838zm4.101 8.627a1 1 0 0 0-1.414-1.414L11 12.586l-1.293-1.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0z' clip-rule='evenodd'/%3E%3C/svg%3E");
+  background-color: currentColor;
+  -webkit-mask-image: var(--svg);
+  mask-image: var(--svg);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+.logos--paypal {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 302'%3E%3Cpath fill='%2327346a' d='M217.168 23.507C203.234 7.625 178.046.816 145.823.816h-93.52A13.393 13.393 0 0 0 39.076 12.11L.136 259.077c-.774 4.87 2.997 9.28 7.933 9.28h57.736l14.5-91.971l-.45 2.88c1.033-6.501 6.593-11.296 13.177-11.296h27.436c53.898 0 96.101-21.892 108.429-85.221c.366-1.873.683-3.696.957-5.477c-1.556-.824-1.556-.824 0 0c3.671-23.407-.025-39.34-12.686-53.765'/%3E%3Cpath fill='%2327346a' d='M102.397 68.84a11.737 11.737 0 0 1 5.053-1.14h73.318c8.682 0 16.78.565 24.18 1.756a101.6 101.6 0 0 1 6.177 1.182a89.928 89.928 0 0 1 8.59 2.347c3.638 1.215 7.026 2.63 10.14 4.287c3.67-23.416-.026-39.34-12.687-53.765C203.226 7.625 178.046.816 145.823.816H52.295C45.71.816 40.108 5.61 39.076 12.11L.136 259.068c-.774 4.878 2.997 9.282 7.925 9.282h57.744L95.888 77.58a11.717 11.717 0 0 1 6.509-8.74'/%3E%3Cpath fill='%232790c3' d='M228.897 82.749c-12.328 63.32-54.53 85.221-108.429 85.221H93.024c-6.584 0-12.145 4.795-13.168 11.296L61.817 293.621c-.674 4.262 2.622 8.124 6.934 8.124h48.67a11.71 11.71 0 0 0 11.563-9.88l.474-2.48l9.173-58.136l.591-3.213a11.71 11.71 0 0 1 11.562-9.88h7.284c47.147 0 84.064-19.154 94.852-74.55c4.503-23.15 2.173-42.478-9.739-56.054c-3.613-4.112-8.1-7.508-13.327-10.28c-.283 1.79-.59 3.604-.957 5.477'/%3E%3Cpath fill='%231f264f' d='M216.952 72.128a89.928 89.928 0 0 0-5.818-1.49a109.904 109.904 0 0 0-6.177-1.174c-7.408-1.199-15.5-1.765-24.19-1.765h-73.309a11.57 11.57 0 0 0-5.053 1.149a11.683 11.683 0 0 0-6.51 8.74l-15.582 98.798l-.45 2.88c1.025-6.501 6.585-11.296 13.17-11.296h27.444c53.898 0 96.1-21.892 108.428-85.221c.367-1.873.675-3.688.958-5.477c-3.122-1.648-6.501-3.072-10.14-4.279a83.26 83.26 0 0 0-2.77-.865'/%3E%3C/svg%3E");
+}
 .lag {
   display: inline-block;
   width: 7rem;
@@ -167,6 +373,10 @@
   -webkit-mask-size: 100% 100%;
   mask-size: 100% 100%;
   transition: all 0.3s;
+}
+.ion--card {
+  width: 2rem;
+  height: 2rem;
 }
 .pricing-option-top {
   display: flex;
@@ -216,4 +426,13 @@
   flex-direction: column;
   justify-content: center;
   width: 70%;
+}
+.paypal-login-container {
+  padding: 1rem 0rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.paypal-detail-title {
+  font-size: 1.1rem;
 }

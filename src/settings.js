@@ -4639,3 +4639,107 @@ const pricingPageHTML = function (container) {
           </div>
         </div>`;
 };
+
+const payOptions = document.querySelectorAll(".payment-option");
+const detailContainer = document.querySelector(".payment-detail-container");
+
+const optionBtns = document.querySelectorAll(".pricing-proceed-card");
+
+optionBtns.forEach((el) =>
+  el.addEventListener("click", function () {
+    const price = +this.querySelector(".pricing-price").textContent;
+    const months = +this.querySelector(".pricing-months").textContent;
+
+    const originalPriceElement = document.querySelector(".original-price");
+    const discountElement = document.querySelector(".discount-price");
+    const totalPriceelement = document.querySelectorAll(".total-price");
+
+    const membership = document.querySelector(
+      ".option-preview-title h1"
+    ).textContent;
+
+    const originalPriceValue = months * price;
+    const discount = (originalPriceValue / 50).toFixed(1);
+
+    originalPriceElement.textContent = `${membership} ${months}x: ${originalPriceValue}`;
+    discountElement.textContent = `$${discount}`;
+    totalPriceelement.forEach(
+      (el) => (el.textContent = `$${originalPriceValue - discount}`)
+    );
+  })
+);
+
+payOptions.forEach((el) =>
+  el.addEventListener("click", function () {
+    payOptions.forEach((el) => {
+      el.classList.remove("payment-option-clicked");
+      el.querySelector(".check").classList.remove("checked");
+    });
+
+    this.classList.add("payment-option-clicked");
+    this.querySelector(".check").classList.add("checked");
+
+    if (this.id === "pay-by-card")
+      detailContainer.innerHTML = `    <div class="card-number-container info-container">
+                      <label class="payment-information-label" for="card-number"
+                        >Card number</label
+                      >
+                      <input type="text" name="card-number" id="card-number" />
+                    </div>
+                    <div class="expiration-ccv-container info-container">
+                      <div class="expiration-container">
+                        <label
+                          class="payment-information-label"
+                          for="expiration-date"
+                          >Expiration date</label
+                        >
+                        <input
+                          type="text"
+                          name="expiration-date"
+                          id="expiration-date"
+                        />
+                      </div>
+                      <div class="ccv-container">
+                        <label class="payment-information-label" for="ccv"
+                          >CCV</label
+                        >
+                        <input type="password" name="ccv" id="ccv" />
+                      </div>
+                    </div>
+                    <div class="cardholder-container info-container">
+                      <label
+                        class="payment-information-label"
+                        for="cardholder-name"
+                        >Cardholder name</label
+                      >
+                      <input
+                        type="text"
+                        name="cardholder-name"
+                        id="cardholder-name"
+                      />
+                      <div class="save-for-later-container info-container">
+                        <input type="checkbox" name="" id="save-for-later" />
+                        <label for="save-for-later">Save card for later</label>
+                      </div>
+                    </div>`;
+    if (this.id === "pay-by-paypal")
+      detailContainer.innerHTML = `  <p class="paypal-detail-title"
+                      >Please log in to your paypal account to proceed with the
+                      purchase.</p
+                    >
+                    <div class="paypal-login-container info-container">
+                      <div class="payment-paypal-username info-container">
+                        <label class="payment-information-label" for="paypal-username">Username</label>
+                        <input type="text" name="" id="paypal-username" />
+                      </div>
+                      <div class="payment-paypal-password info-container">
+                        <label class="payment-information-label" for="paypal-password">Password</label>
+                        <input type="password" name="" id="paypal-password" />
+                            <div class="save-for-later-container info-container">
+                        <input type="checkbox" name="" id="save-for-later" />
+                        <label for="save-for-later">Save account for later</label>
+                      </div>
+                      </div>
+                    </div>`;
+  })
+);
