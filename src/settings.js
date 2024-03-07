@@ -4363,10 +4363,23 @@ const membershipPageHTML = function (container) {
         </div>`);
 };
 
+let membership,
+  originalPriceElement,
+  discountElement,
+  totalPriceElement,
+  increaseQuantity,
+  decreaseQuantity,
+  quantityElement;
+
 const pricingPage = function () {
   const container = document.querySelector("#display");
 
   pricingPageHTML(container);
+
+  const detailContainer = document.querySelector(".payment-detail-container");
+  originalPriceElement = document.querySelector(".original-price");
+  discountElement = document.querySelector(".discount-price");
+  totalPriceElement = document.querySelectorAll(".total-price");
 
   const previewContainer = document.querySelector("#pricing-two");
   const diamondMembershipBtn = document.querySelector(
@@ -4427,6 +4440,8 @@ const pricingPage = function () {
                        <button>Buy</button>
                 </div>
               </div>`;
+    updateBundleContainer();
+    customPayment();
   });
   platinumMembershipBtn.addEventListener("click", function () {
     previewContainer.innerHTML = ` <div id="option-preview" class="platinum-preview">
@@ -4477,6 +4492,8 @@ const pricingPage = function () {
                        <button>Buy</button>
                 </div>
               </div>`;
+    updateBundleContainer();
+    customPayment();
   });
   goldMembershipBtn.addEventListener("click", function () {
     previewContainer.innerHTML = ` 
@@ -4529,156 +4546,24 @@ const pricingPage = function () {
 
                 </div>
               </div>`;
+    customPayment();
+    updateBundleContainer();
   });
-};
-const pricingPageHTML = function (container) {
-  container.innerHTML = `  <div id="pricing">
-          <div id="pricing-top">
-            <div id="pricing-title">
-              <h1>Pricing</h1>
-              <p>Check out all of the membership's prices</p>
-            </div>
-          </div>
-          <div id="pricing-bottom">
-            <div id="pricing-one">
-              <div class="pricing-option" id="pricing-diamond">
-                <div class="pricing-option-top">
-                  <div class="pricing-option-icon">
-                    <span class="basil--diamond-solid lag"></span>
-                  </div>
-                  <div class="pricing-option-title">
-                    <h1>Diamond</h1>
-                    <p>Least amount of accessibilities</p>
-                  </div>
-                </div>
-                <div class="pricing-option-bottom" id="diamond-membership-button">
-                  <p>$ 59.99 <span>/m</span></p>
-                </div>
-              </div>
-              <div class="pricing-option" id="pricing-platinum">
-                <div class="pricing-option-top">
-                  <div class="pricing-option-icon">
-                    <span class="game-icons--emerald lag"></span>
-                  </div>
-                  <div class="pricing-option-title">
-                    <h1>Platinum</h1>
-                    <p>Least amount of accessibilities</p>
-                  </div>
-                </div>
-                <div class="pricing-option-bottom"  id="platinum-membership-button">
-                  <p>$ 29.99 <span>/m</span></p>
-                </div>
-              </div>
-              <div class="pricing-option" id="pricing-gold">
-                <div class="pricing-option-top">
-                  <div class="pricing-option-icon">
-                    <span class="game-icons--gold-bar lag"></span>
-                  </div>
-                  <div class="pricing-option-title">
-                    <h1>Gold</h1>
-                    <p>Least amount of accessibilities</p>
-                  </div>
-                </div>
-                <div class="pricing-option-bottom"  id="gold-membership-button">
-                  <p>$ 19.99 <span>/m</span></p>
-                </div>
-              </div>
-            </div>
-            <div id="pricing-two">
-              <div id="option-preview" class="diamond-preview">
-                <div class="option-preview-top">
-                  <div class="option-preview-icon">
-                    <span class="basil--diamond-solid lag"></span>
-                  </div>
-                  <div class="option-preview-title">
-                    <h1>Diamond</h1>
-                    <p>News wizard</p>
-                  </div>
-                  <h1 class="membership-container">Membership</h1>
-                </div>
-                <div class="option-preview-bottom">
-                  <ul class="option-preview-list">
-                    <li
-                      ><span class="carbon--checkmark fog"></span>Lorem,
-                      ipsum.</li
-                    >
-                    <li
-                      ><span class="carbon--checkmark fog"></span>Lorem,
-                      ipsum.</li
-                    >
-                    <li
-                      ><span class="carbon--checkmark fog"></span>Lorem,
-                      ipsum.</li
-                    >
-                    <li
-                      ><span class="carbon--checkmark fog"></span>Lorem,
-                      ipsum.</li
-                    >
-                  </ul>
-                  <ul class="option-preview-list">
-                    <li
-                      ><span class="carbon--checkmark fog"></span>Lorem,
-                      ipsum.</li
-                    >
-                    <li>
-                      <span class="material-symbols-light--close fog"></span
-                      >Lorem, ipsum.
-                    </li>
-                    <li>
-                      <span class="material-symbols-light--close fog"></span
-                      >Lorem, ipsum.
-                    </li>
-                  </ul>
-                </div>
-                <div class="option-preview-button">
-                  <button>Buy</button>
-                </div>
-              </div>
-            </div>
-            <div id="pricing-three"></div>
-          </div>
-        </div>`;
-};
 
-const payOptions = document.querySelectorAll(".payment-option");
-const detailContainer = document.querySelector(".payment-detail-container");
+  const payOptions = document.querySelectorAll(".payment-option");
+  const optionBtns = document.querySelectorAll(".pricing-proceed-card");
 
-const optionBtns = document.querySelectorAll(".pricing-proceed-card");
+  /*prettier-ignore */
+  optionBtns.forEach((el) => el.addEventListener("click", bundlePayment));
+  payOptions.forEach((el) =>
+    el.addEventListener("click", function () {
+      payOptions.forEach((el) => {
+        el.classList.remove("payment-option-clicked");
+        el.querySelector(".check").classList.remove("checked");
+      });
 
-optionBtns.forEach((el) =>
-  el.addEventListener("click", function () {
-    const price = +this.querySelector(".pricing-price").textContent;
-    const months = +this.querySelector(".pricing-months").textContent;
-
-    const originalPriceElement = document.querySelector(".original-price");
-    const discountElement = document.querySelector(".discount-price");
-    const totalPriceelement = document.querySelectorAll(".total-price");
-
-    /*prettier-ignore */
-    const membership = document.querySelector(".option-preview-title h1").textContent;
-
-    const originalPriceValue = months * price;
-    const discount = (originalPriceValue / 50).toFixed(1);
-
-    originalPriceElement.textContent = `${months} month/s of ${membership}: ${originalPriceValue}$`;
-    discountElement.textContent = `- ${discount}$`;
-    /*prettier-ignore */
-    totalPriceelement.forEach((el) => (el.textContent = `${originalPriceValue - discount}$`));
-  })
-);
-
-payOptions.forEach((el) =>
-  el.addEventListener("click", function () {
-    payOptions.forEach((el) => {
-      el.classList.remove("payment-option-clicked");
-      el.querySelector(".check").classList.remove("checked");
-    });
-
-    this.classList.add("payment-option-clicked");
-    this.querySelector(".check").classList.add("checked");
-
-    if (this.id === "pay-by-card")
-      detailContainer.innerHTML = `    <div class="card-number-container info-container">
+      if (this.id === "pay-by-card")
+        detailContainer.innerHTML = `    <div class="card-number-container info-container">
                       <label class="payment-information-label" for="card-number"
                         >Card number</label
                       >
@@ -4720,8 +4605,8 @@ payOptions.forEach((el) =>
                         <label for="save-for-later">Save card for later</label>
                       </div>
                     </div>`;
-    if (this.id === "pay-by-paypal")
-      detailContainer.innerHTML = `  <p class="paypal-detail-title"
+      if (this.id === "pay-by-paypal")
+        detailContainer.innerHTML = `  <p class="paypal-detail-title"
                       >Please log in to your paypal account to proceed with the
                       purchase.</p
                     >
@@ -4739,5 +4624,331 @@ payOptions.forEach((el) =>
                       </div>
                       </div>
                     </div>`;
-  })
-);
+
+      this.classList.add("payment-option-clicked");
+      this.querySelector(".check").classList.add("checked");
+    })
+  );
+
+  increaseQuantity = document.querySelector("#add-quantity");
+  decreaseQuantity = document.querySelector("#remove-quantity");
+  quantityElement = document.querySelector(".pricing-quantity");
+
+  const switchOptions = document.querySelector(".bundles-custom");
+
+  switchOptions.addEventListener("click", function () {
+    const bundleElement = document.querySelector("#pricing-three-top");
+
+    switchOptions.textContent =
+      switchOptions.textContent === "BUNDLES" ? "CUSTOM" : "BUNDLES";
+
+    bundleElement.classList.toggle("pricing-three-top-showing");
+  });
+};
+const pricingPageHTML = function (container) {
+  container.innerHTML = `    <div id="pricing">
+          <div id="pricing-top">
+            <div id="pricing-title">
+              <h1>Pricing</h1>
+              <p>Check out all of the membership's prices</p>
+            </div>
+          </div>
+          <div id="pricing-bottom">
+            <div id="pricing-one">
+              <div class="pricing-option" id="pricing-diamond">
+                <div class="pricing-option-top">
+                  <div class="pricing-option-icon">
+                    <span class="basil--diamond-solid lag"></span>
+                  </div>
+                  <div class="pricing-option-title">
+                    <h1>Diamond</h1>
+                    <p>Least amount of accessibilities</p>
+                  </div>
+                </div>
+                <div class="pricing-option-bottom" id="diamond-membership-button">
+                  <p>$ 59.99 <span>/m</span></p>
+                </div>
+              </div>
+              <div class="pricing-option" id="pricing-platinum">
+                <div class="pricing-option-top">
+                  <div class="pricing-option-icon">
+                    <span class="game-icons--emerald lag"></span>
+                  </div>
+                  <div class="pricing-option-title">
+                    <h1>Platinum</h1>
+                    <p>Least amount of accessibilities</p>
+                  </div>
+                </div>
+                <div class="pricing-option-bottom" id="platinum-membership-button">
+                  <p>$ 29.99 <span>/m</span></p>
+                </div>
+              </div>
+              <div class="pricing-option" id="pricing-gold">
+                <div class="pricing-option-top">
+                  <div class="pricing-option-icon">
+                    <span class="game-icons--gold-bar lag"></span>
+                  </div>
+                  <div class="pricing-option-title">
+                    <h1>Gold</h1>
+                    <p>Least amount of accessibilities</p>
+                  </div>
+                </div>
+                <div class="pricing-option-bottom" id="gold-membership-button">
+                  <p>$ 19.99 <span>/m</span></p>
+                </div>
+              </div>
+            </div>
+            <div id="pricing-two">
+              <div id="option-preview" class="gold-preview">
+                <div class="option-preview-top">
+                  <div class="option-preview-icon">
+                    <span class="basil--diamond-solid lag"></span>
+                  </div>
+                  <div class="option-preview-title">
+                    <h1>Gold</h1>
+                    <p>News wizard</p>
+                  </div>
+                  <h1 class="membership-container">Membership</h1>
+                </div>
+                <div class="option-preview-bottom">
+                  <div class="option-preview-list-container">
+                    <ul class="option-preview-list">
+                      <li>
+                        <span class="carbon--checkmark fog"></span>Lorem, ipsum.
+                      </li>
+                      <li>
+                        <span class="carbon--checkmark fog"></span>Lorem, ipsum.
+                      </li>
+                      <li>
+                        <span class="carbon--checkmark fog"></span>Lorem, ipsum.
+                      </li>
+                      <li>
+                        <span class="carbon--checkmark fog"></span>Lorem, ipsum.
+                      </li>
+                    </ul>
+                    <ul class="option-preview-list">
+                      <li>
+                        <span class="carbon--checkmark fog"></span>Lorem, ipsum.
+                      </li>
+                      <li>
+                        <span class="material-symbols-light--close fog"></span
+                        >Lorem, ipsum.
+                      </li>
+                      <li>
+                        <span class="material-symbols-light--close fog"></span
+                        >Lorem, ipsum.
+                      </li>
+                    </ul>
+                  </div>
+                  <button>Buy 1 month</button>
+                </div>
+              </div>
+            </div>
+            <div id="pricing-three">
+              <div id="pricing-three-top">
+                <div class="pricing-proceed-card">
+                  <div class="pricing-proceed-card-option">
+                    <h2 class="pricing-months">3</h2>
+                    <p>Months</p>
+                    <span
+                      >$
+                      <p class="pricing-price three-month-price">39.99</p>
+                      /m</span
+                    >
+                  </div>
+                </div>
+                <div class="pricing-proceed-card">
+                  <div class="pricing-proceed-card-option">
+                    <h2 class="pricing-months">6</h2>
+                    <p>Months</p>
+                    <span
+                      >$
+                      <p class="pricing-price six-month-price">34.99</p>
+                      /m
+                    </span>
+                  </div>
+                </div>
+                <div class="pricing-proceed-card">
+                  <div class="pricing-proceed-card-option">
+                    <h2 class="pricing-months">12</h2>
+                    <p>Months</p>
+                    <span
+                      >$
+                      <p class="pricing-price twelve-month-price">29.99</p>
+                      /m</span
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <div id="pricing-three-top-two">
+                <div id="payment-info-top">
+                  <h2>Payment information</h2>
+                  <p class="bundles-custom">BUNDLES</p>
+                </div>
+                <div id="pricing-top-container">
+                  <div class="pricing-title">
+                    <h3 class="pricing-membership">Diamond membership</h3>
+                    <p>Buy in advance</p>
+                  </div>
+                  <div class="pricing-control-quantity-buttons">
+                    <button id="add-quantity">+</button>
+                    <button id="remove-quantity">-</button>
+                    <h1 class="pricing-quantity">x1</h1>
+                  </div>
+                </div>
+              </div>
+              <div id="pricing-three-bottom">
+                <div id="pricing-three-bottom-title">
+                  <h2>Payment details</h2>
+                  <p>
+                    Complete your purchase by providing your payment details
+                  </p>
+                </div>
+                <div class="payment-option-container">
+                  <div class="payment-option" id="pay-by-card">
+                    <span class="ion--card lag"></span>
+                    <p>Pay by card</p>
+                    <div class="check"></div>
+                  </div>
+                  <div class="payment-option" id="pay-by-paypal">
+                    <span class="logos--paypal"></span>
+                    <p>Pay with PayPal</p>
+                    <div class="check"></div>
+                  </div>
+                </div>
+                <div id="pricing-three-bottom-information">
+                  <div class="payment-detail-container">
+                    <p class="paypal-detail-title">
+                      Please log in to your paypal account to proceed with the
+                      purchase.
+                    </p>
+                    <div class="paypal-login-container info-container">
+                      <div class="payment-paypal-username info-container">
+                        <label for="paypal-username">Username</label>
+                        <input type="text" name="" id="paypal-username" />
+                      </div>
+                      <div class="payment-paypal-password info-container">
+                        <label for="paypal-password">Password</label>
+                        <input type="password" name="" id="paypal-password" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div id="pricing-three-bottom-checkout">
+                  <p class="subtotal">
+                    Subtotal:
+                    <span class="subtotal-price"
+                      ><span class="original-price"></span
+                    ></span>
+                  </p>
+                  <p class="discount">
+                    Discount (2% per month):
+                    <span class="discount-price"></span>
+                  </p>
+                  <p class="total">Total <span class="total-price"></span></p>
+                  <div class="payment-checkout-pay-button-container">
+                    <button>
+                      Confirm & Pay <span class="total-price"></span>
+                    </button>
+                    <div class="payment-checkout-pay-encrypted">
+                      <span class="iconamoon--shield-yes-fill"></span>
+                      <p>Payments are secured and encrypted</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>`;
+};
+const updateCheckout = function (quantity, price) {
+  const originalPriceValue = quantity * price;
+  const discount = (originalPriceValue / 50).toFixed(1);
+
+  originalPriceElement.textContent = `${quantity} month/s of ${membership}: ${originalPriceValue.toFixed(
+    2
+  )}$`;
+  discountElement.textContent = `- ${discount}$`;
+  /*prettier-ignore */
+  totalPriceElement.forEach((el) => (el.textContent = `${(originalPriceValue - discount).toFixed(2)}$`));
+};
+
+const bundlePayment = function () {
+  const price = +this.querySelector(".pricing-price").textContent;
+  const months = +this.querySelector(".pricing-months").textContent;
+
+  console.log(price);
+
+  const originalPriceValue = months * price;
+  const discount = (originalPriceValue / 50).toFixed(1);
+
+  originalPriceElement.textContent = `${months} month/s of ${membership}: ${originalPriceValue}$`;
+  discountElement.textContent = `- ${discount}$`;
+  /*prettier-ignore */
+  totalPriceElement.forEach((el) => (el.textContent = `${originalPriceValue - discount}$`));
+};
+const customPayment = function () {
+  let quantity = 1;
+  quantityElement.textContent = `${quantity}x`;
+
+  let price;
+
+  membership = document.querySelector(".option-preview-title h1").textContent;
+
+  if (membership.startsWith("Diamond")) price = 59.99;
+  if (membership.startsWith("Gold")) price = 29.99;
+  if (membership.startsWith("Platinum")) price = 39.99;
+
+  document.querySelector(
+    ".pricing-membership"
+  ).textContent = `${membership} membership`;
+
+  increaseQuantity.addEventListener(
+    "click",
+    handleIncreaseQuantity.bind(null, quantity, price)
+  );
+  decreaseQuantity.addEventListener(
+    "click",
+    handleDecreaseQuantity.bind(null, quantity, price)
+  );
+};
+const handleIncreaseQuantity = function (quantity, price) {
+  if (quantity == 99) return;
+
+  quantity++;
+  quantityElement.textContent = `${quantity}x`;
+
+  updateCheckout(quantity, price);
+};
+const handleDecreaseQuantity = function (quantity, price) {
+  if (quantity == 1) return;
+
+  quantity--;
+  quantityElement.textContent = `${quantity}x`;
+
+  updateCheckout(quantity, price);
+};
+
+const updateBundleContainer = function () {
+  const prices = document.querySelectorAll(".pricing-price");
+
+  membership = document.querySelector(".option-preview-title h1").textContent;
+
+  let price;
+
+  if (membership.startsWith("Diamond")) price = 59.99;
+  if (membership.startsWith("Gold")) price = 29.99;
+  if (membership.startsWith("Platinum")) price = 39.99;
+
+  prices.forEach((el) => {
+    if (el.classList.contains("three-month-price"))
+      el.textContent = `${(price * 0.9).toFixed(2)}`;
+    if (el.classList.contains("six-month-price"))
+      el.textContent = `${(price * 0.8).toFixed(2)}`;
+    if (el.classList.contains("twelve-month-price"))
+      el.textContent = `${(price * 0.7).toFixed(2)}`;
+  });
+
+  console.log(prices);
+};

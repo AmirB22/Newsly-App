@@ -13,6 +13,69 @@
   display: flex;
   align-items: center;
 }
+#pricing-top-container {
+  display: flex;
+  width: calc(100% - 5rem);
+  padding-right: 5rem;
+  justify-content: space-between;
+  align-items: center;
+  height: 90%;
+}
+#pricing-top-container h2 {
+  height: 10%;
+}
+.pricing-control-quantity-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.pricing-control-quantity-buttons button {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 3rem;
+  border: none;
+  cursor: pointer;
+}
+.pricing-quantity {
+  margin-left: 2rem;
+  width: 3rem;
+}
+#payment-info-top {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  position: relative;
+}
+.bundles-custom {
+  background-color: var(--primary-color);
+  padding: 0.5rem;
+  border-radius: 2rem;
+  font-size: 1.3rem;
+
+  cursor: pointer;
+  width: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: absolute;
+  bottom: 150%;
+  right: 0;
+}
+#add-quantity {
+  background-color: var(--primary-color);
+  color: var(--control-window-text-color);
+}
+#remove-quantity {
+  background-color: transparent;
+  color: var(--text-color);
+  border: 1px solid var(--primary-color);
+  margin: -1px;
+}
+.pricing-control-quantity-buttons button:hover {
+  background-color: var(--control-window-text-color) !important;
+  color: var(--primary-color) !important;
+}
 #pricing-title {
   margin-left: 2rem;
 }
@@ -135,14 +198,18 @@
   justify-content: space-around;
   align-items: center;
   position: absolute;
-  background-color: black;
+  background-color: rgb(59, 59, 59);
   top: 0;
+
+  transition: all 0.3s;
+  z-index: 9999;
 }
 #pricing-three-top-two {
-  height: 20%;
+  height: calc(20% - 2rem);
+  padding: 1rem;
 }
 .pricing-three-top-showing {
-  width: 100%;
+  width: 100% !important;
 }
 .pricing-proceed-card {
   width: 25%;
