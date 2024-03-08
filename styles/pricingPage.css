@@ -325,9 +325,13 @@
   height: 40%;
 }
 .subtotal,
-.discount {
+.discount,
+.bundle-discount {
   color: rgb(211, 211, 211);
   padding: 0.5rem 0rem;
+}
+.checkout-info {
+  height: 7rem;
 }
 .total {
   border-top: 1px solid var(--primary-color);

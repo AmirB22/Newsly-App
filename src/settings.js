@@ -4364,24 +4364,21 @@ const membershipPageHTML = function (container) {
 };
 
 let membership,
-  originalPriceElement,
-  discountElement,
-  totalPriceElement,
   increaseQuantity,
   decreaseQuantity,
   quantityElement,
   quantity,
-  price;
+  price,
+  checkout;
 
 const pricingPage = function () {
   const container = document.querySelector("#display");
 
   pricingPageHTML(container);
 
+  checkout = document.querySelector(".checkout-info");
+
   const detailContainer = document.querySelector(".payment-detail-container");
-  originalPriceElement = document.querySelector(".original-price");
-  discountElement = document.querySelector(".discount-price");
-  totalPriceElement = document.querySelectorAll(".total-price");
 
   const previewContainer = document.querySelector("#pricing-two");
   const diamondMembershipBtn = document.querySelector(
@@ -4856,16 +4853,8 @@ const pricingPageHTML = function (container) {
                   </div>
                 </div>
                 <div id="pricing-three-bottom-checkout">
-                  <p class="subtotal">
-                    Subtotal:
-                    <span class="subtotal-price"
-                      ><span class="original-price"></span
-                    ></span>
-                  </p>
-                  <p class="discount">
-                    Discount (2% per month):
-                    <span class="discount-price"></span>
-                  </p>
+             <div class="checkout-info"></div>
+                 
                   <p class="total">Total <span class="total-price"></span></p>
                   <div class="payment-checkout-pay-button-container">
                     <button>
@@ -4884,29 +4873,95 @@ const pricingPageHTML = function (container) {
 };
 const updateCheckout = function (quantity, price) {
   const originalPriceValue = quantity * price;
-  const discount = (originalPriceValue / 50).toFixed(1);
+  const discount = (originalPriceValue / 50).toFixed(2);
 
+  const originalPriceElement = document.querySelector(".original-price");
+  const totalPriceElement = document.querySelectorAll(".total-price");
+
+  if (quantity >= 10 && !document.querySelector(".discount")) {
+    checkout.insertAdjacentHTML(
+      "afterbegin",
+      `
+ <p class="discount">
+                    Discount (2% per month after 10 months):
+                    <span class="discount-price"></span>
+                  </p>`
+    );
+
+    console.log(discount);
+  } else if (quantity < 10 && document.querySelector(".discount"))
+    document.querySelector(".discount").remove();
+
+  if (document.querySelector(".discount-price")) {
+    document.querySelector(".discount-price").textContent = `- ${discount}$`;
+
+    /*prettier-ignore */
+    totalPriceElement.forEach((el) => (el.textContent = `${(originalPriceValue - discount).toFixed(2)}$`));
+  }
   originalPriceElement.textContent = `${quantity} month/s of ${membership}: ${originalPriceValue.toFixed(
     2
   )}$`;
-  discountElement.textContent = `- ${discount}$`;
   /*prettier-ignore */
-  totalPriceElement.forEach((el) => (el.textContent = `${(originalPriceValue - discount).toFixed(2)}$`));
+  totalPriceElement.forEach((el) => (el.textContent = `${(originalPriceValue).toFixed(2)}$`));
 };
 
 const bundlePayment = function () {
-  const price = +this.querySelector(".pricing-price").textContent;
+  const bundlePrice = +this.querySelector(".pricing-price").textContent;
   const months = +this.querySelector(".pricing-months").textContent;
 
-  console.log(price);
+  let price;
+
+  if (membership.startsWith("Diamond")) price = 59.99;
+  if (membership.startsWith("Gold")) price = 19.99;
+  if (membership.startsWith("Platinum")) price = 29.99;
 
   const originalPriceValue = months * price;
-  const discount = (originalPriceValue / 50).toFixed(1);
+  const bundleDiscount = (originalPriceValue - bundlePrice * months).toFixed(2);
+  const discount = (originalPriceValue / 50).toFixed(2);
+
+  checkout.innerHTML = `<p class="subtotal">
+                    Subtotal:
+                    <span class="subtotal-price"
+                      ><span class="original-price"></span
+                    ></span>
+                  </p>
+                   <p class="bundle-discount">
+                    Bundle discount:
+                    <span class="bundle-discount-price"></span>
+                  </p>
+           `;
+
+  if (months >= 10 && !document.querySelector(".discount")) {
+    checkout.insertAdjacentHTML(
+      "afterbegin",
+      `
+ <p class="discount">
+                    Discount (2% per month after 10 months):
+                    <span class="discount-price"></span>
+                  </p>`
+    );
+
+    console.log(discount);
+  } else if (months < 10 && document.querySelector(".discount"))
+    document.querySelector(".discount").remove();
+
+  const totalPriceElement = document.querySelectorAll(".total-price");
+
+  if (document.querySelector(".discount-price")) {
+    document.querySelector(".discount-price").textContent = `- ${discount}$`;
+    /*prettier-ignore */
+    totalPriceElement.forEach((el) => (el.textContent = `${(originalPriceValue - bundleDiscount - discount).toFixed(2)}$`));
+  } else {
+    /*prettier-ignore */
+    totalPriceElement.forEach((el) => (el.textContent = `${(originalPriceValue - bundleDiscount).toFixed(2)}$`));
+  }
+  const originalPriceElement = document.querySelector(".original-price");
+  const bundleDiscountElement = document.querySelector(
+    ".bundle-discount-price"
+  );
 
   originalPriceElement.textContent = `${months} month/s of ${membership}: ${originalPriceValue}$`;
-  discountElement.textContent = `- ${discount}$`;
-  /*prettier-ignore */
-  totalPriceElement.forEach((el) => (el.textContent = `${(originalPriceValue - discount).toFixed(2)}$`));
+  bundleDiscountElement.textContent = `- ${bundleDiscount}$`;
 };
 const customPayment = function () {
   quantity = 1;
@@ -4922,10 +4977,20 @@ const customPayment = function () {
   document.querySelector(
     ".pricing-membership"
   ).textContent = `${membership} membership`;
+
+  checkout.innerHTML = `<p class="subtotal">
+                    Subtotal:
+                    <span class="subtotal-price"
+                      ><span class="original-price"></span
+                    ></span>
+                  </p>`;
+
+  const originalPriceElement = document.querySelector(".original-price");
+  const totalPriceElement = document.querySelectorAll(".total-price");
+
   originalPriceElement.textContent = `1 month of ${membership}: ${price}$`;
-  discountElement.textContent = `- ${(price * 0.02).toFixed(2)}$`;
   /*prettier-ignore */
-  totalPriceElement.forEach((el) => (el.textContent = `${(price - (price * 0.02)).toFixed(2)}$`));
+  totalPriceElement.forEach((el) => (el.textContent = `${price}$`));
 };
 
 const updateBundleContainer = function () {
