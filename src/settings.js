@@ -4635,6 +4635,9 @@ const pricingPage = function () {
 
   quantity = 1;
   increaseQuantity.addEventListener("click", function () {
+    if (document.querySelector(".bundle-discount"))
+      document.querySelector(".bundle-discount").remove();
+
     if (quantity == 99) return;
 
     quantity++;
@@ -4643,6 +4646,9 @@ const pricingPage = function () {
     updateCheckout(quantity, price);
   });
   decreaseQuantity.addEventListener("click", function () {
+    if (document.querySelector(".bundle-discount"))
+      document.querySelector(".bundle-discount").remove();
+
     if (quantity == 1) return;
 
     quantity--;
@@ -4656,8 +4662,19 @@ const pricingPage = function () {
   switchOptions.addEventListener("click", function () {
     const bundleElement = document.querySelector("#pricing-three-top");
 
-    switchOptions.textContent =
-      switchOptions.textContent === "BUNDLES" ? "CUSTOM" : "BUNDLES";
+    if (switchOptions.textContent === "BUNDLES") {
+      switchOptions.textContent = "CUSTOM";
+      document.querySelector("#pricing-three").style.overflow = "visible";
+
+      switchOptions.style.bottom = "250%";
+      switchOptions.style.transform = "trnaslateY(0%)";
+    } else {
+      switchOptions.textContent = "BUNDLES";
+      document.querySelector("#pricing-three").style.overflow = "hidden";
+
+      switchOptions.style.bottom = "50%";
+      switchOptions.style.transform = "trnaslateY(50%)";
+    }
 
     bundleElement.classList.toggle("pricing-three-top-showing");
   });
@@ -4836,20 +4853,7 @@ const pricingPageHTML = function (container) {
                 </div>
                 <div id="pricing-three-bottom-information">
                   <div class="payment-detail-container">
-                    <p class="paypal-detail-title">
-                      Please log in to your paypal account to proceed with the
-                      purchase.
-                    </p>
-                    <div class="paypal-login-container info-container">
-                      <div class="payment-paypal-username info-container">
-                        <label for="paypal-username">Username</label>
-                        <input type="text" name="" id="paypal-username" />
-                      </div>
-                      <div class="payment-paypal-password info-container">
-                        <label for="paypal-password">Password</label>
-                        <input type="password" name="" id="paypal-password" />
-                      </div>
-                    </div>
+
                   </div>
                 </div>
                 <div id="pricing-three-bottom-checkout">
@@ -4892,17 +4896,20 @@ const updateCheckout = function (quantity, price) {
   } else if (quantity < 10 && document.querySelector(".discount"))
     document.querySelector(".discount").remove();
 
-  if (document.querySelector(".discount-price")) {
+  if (
+    document.querySelector(".discount-price")
+  ) {
     document.querySelector(".discount-price").textContent = `- ${discount}$`;
 
     /*prettier-ignore */
     totalPriceElement.forEach((el) => (el.textContent = `${(originalPriceValue - discount).toFixed(2)}$`));
-  }
+  } /*prettier-ignore */ else
+    totalPriceElement.forEach(
+      (el) => (el.textContent = `${originalPriceValue.toFixed(2)}$`)
+    );
   originalPriceElement.textContent = `${quantity} month/s of ${membership}: ${originalPriceValue.toFixed(
     2
   )}$`;
-  /*prettier-ignore */
-  totalPriceElement.forEach((el) => (el.textContent = `${(originalPriceValue).toFixed(2)}$`));
 };
 
 const bundlePayment = function () {
@@ -4964,6 +4971,10 @@ const bundlePayment = function () {
   bundleDiscountElement.textContent = `- ${bundleDiscount}$`;
 };
 const customPayment = function () {
+  document
+    .querySelector("#pricing-three")
+    .classList.add("pricing-three-showing");
+
   quantity = 1;
 
   quantityElement.textContent = `${quantity}x`;
