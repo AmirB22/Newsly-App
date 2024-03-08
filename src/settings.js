@@ -4369,7 +4369,9 @@ let membership,
   totalPriceElement,
   increaseQuantity,
   decreaseQuantity,
-  quantityElement;
+  quantityElement,
+  quantity,
+  price;
 
 const pricingPage = function () {
   const container = document.querySelector("#display");
@@ -4546,8 +4548,8 @@ const pricingPage = function () {
 
                 </div>
               </div>`;
-    customPayment();
     updateBundleContainer();
+    customPayment();
   });
 
   const payOptions = document.querySelectorAll(".payment-option");
@@ -4633,6 +4635,24 @@ const pricingPage = function () {
   increaseQuantity = document.querySelector("#add-quantity");
   decreaseQuantity = document.querySelector("#remove-quantity");
   quantityElement = document.querySelector(".pricing-quantity");
+
+  quantity = 1;
+  increaseQuantity.addEventListener("click", function () {
+    if (quantity == 99) return;
+
+    quantity++;
+    quantityElement.textContent = `${quantity}x`;
+
+    updateCheckout(quantity, price);
+  });
+  decreaseQuantity.addEventListener("click", function () {
+    if (quantity == 1) return;
+
+    quantity--;
+    quantityElement.textContent = `${quantity}x`;
+
+    updateCheckout(quantity, price);
+  });
 
   const switchOptions = document.querySelector(".bundles-custom");
 
@@ -4886,48 +4906,26 @@ const bundlePayment = function () {
   originalPriceElement.textContent = `${months} month/s of ${membership}: ${originalPriceValue}$`;
   discountElement.textContent = `- ${discount}$`;
   /*prettier-ignore */
-  totalPriceElement.forEach((el) => (el.textContent = `${originalPriceValue - discount}$`));
+  totalPriceElement.forEach((el) => (el.textContent = `${(originalPriceValue - discount).toFixed(2)}$`));
 };
 const customPayment = function () {
-  let quantity = 1;
-  quantityElement.textContent = `${quantity}x`;
+  quantity = 1;
 
-  let price;
+  quantityElement.textContent = `${quantity}x`;
 
   membership = document.querySelector(".option-preview-title h1").textContent;
 
   if (membership.startsWith("Diamond")) price = 59.99;
-  if (membership.startsWith("Gold")) price = 29.99;
-  if (membership.startsWith("Platinum")) price = 39.99;
+  if (membership.startsWith("Gold")) price = 19.99;
+  if (membership.startsWith("Platinum")) price = 29.99;
 
   document.querySelector(
     ".pricing-membership"
   ).textContent = `${membership} membership`;
-
-  increaseQuantity.addEventListener(
-    "click",
-    handleIncreaseQuantity.bind(null, quantity, price)
-  );
-  decreaseQuantity.addEventListener(
-    "click",
-    handleDecreaseQuantity.bind(null, quantity, price)
-  );
-};
-const handleIncreaseQuantity = function (quantity, price) {
-  if (quantity == 99) return;
-
-  quantity++;
-  quantityElement.textContent = `${quantity}x`;
-
-  updateCheckout(quantity, price);
-};
-const handleDecreaseQuantity = function (quantity, price) {
-  if (quantity == 1) return;
-
-  quantity--;
-  quantityElement.textContent = `${quantity}x`;
-
-  updateCheckout(quantity, price);
+  originalPriceElement.textContent = `1 month of ${membership}: ${price}$`;
+  discountElement.textContent = `- ${(price * 0.02).toFixed(2)}$`;
+  /*prettier-ignore */
+  totalPriceElement.forEach((el) => (el.textContent = `${(price - (price * 0.02)).toFixed(2)}$`));
 };
 
 const updateBundleContainer = function () {
@@ -4935,11 +4933,9 @@ const updateBundleContainer = function () {
 
   membership = document.querySelector(".option-preview-title h1").textContent;
 
-  let price;
-
   if (membership.startsWith("Diamond")) price = 59.99;
-  if (membership.startsWith("Gold")) price = 29.99;
-  if (membership.startsWith("Platinum")) price = 39.99;
+  if (membership.startsWith("Gold")) price = 19.99;
+  if (membership.startsWith("Platinum")) price = 29.99;
 
   prices.forEach((el) => {
     if (el.classList.contains("three-month-price"))
@@ -4949,6 +4945,4 @@ const updateBundleContainer = function () {
     if (el.classList.contains("twelve-month-price"))
       el.textContent = `${(price * 0.7).toFixed(2)}`;
   });
-
-  console.log(prices);
 };
