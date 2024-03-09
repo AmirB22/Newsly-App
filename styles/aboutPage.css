@@ -1,0 +1,11 @@
+.container {
+  width: 50%;
+  font-size: 1.6rem;
+}
+h1 {
+  color: #333;
+  text-align: center;
+}
+p {
+  line-height: 1.6;
+}
