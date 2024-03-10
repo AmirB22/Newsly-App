@@ -1,0 +1,71 @@
+#bookmarks {
+  height: 100%;
+  width: 100%;
+}
+#bookmarks-top {
+  height: 20%;
+  width: inherit;
+  box-shadow: 0rem 2rem 1rem var(--main-background-accent);
+  display: flex;
+  align-items: center;
+}
+#bookmarks-bottom {
+  height: 80%;
+  width: inherit;
+}
+#bookmarks-title {
+  margin-left: 2rem;
+}
+#bookmarked-container {
+  margin-top: 3rem;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 10%;
+}
+#bookmarked-container button {
+  height: 100%;
+  width: 20%;
+  background-color: var(--primary-color);
+  color: var(--control-window-text-color);
+  border: none;
+  transition: all 0.4s;
+  cursor: pointer;
+}
+#bookmarked-container button:hover {
+  background-color: var(--control-window-text-color);
+  color: var(--primary-color);
+}
+#bookmarked {
+  width: 100%;
+  height: 100%;
+}
+#bookmarked-wrapper {
+  display: grid;
+  grid-template-columns: 33.3% 33.4% 33.3%;
+  place-items: center;
+  margin-top: 1rem;
+}
+.bookmarked-category {
+  height: 9rem;
+  width: 83%;
+  margin: 1rem 0rem;
+  display: flex;
+  align-items: center;
+  background-color: rgb(59, 59, 59);
+  border-radius: 1rem;
+}
+.bookmarked-category-left {
+  width: 30%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  font-size: 3rem;
+  box-shadow: 1rem 0rem 2rem var(--main-background-accent);
+}
+.bookmarked-category-right {
+  width: 70%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+}

@@ -40,6 +40,7 @@
     <link rel="stylesheet" href="../styles/memberrshipPage.css" />
     <link rel="stylesheet" href="../styles/pricingPage.css" />
     <link rel="stylesheet" href="../styles/aboutPage.css" />
+    <link rel="stylesheet" href="../styles/bookmarksPage.css" />
 
     <script defer src="../src/settings.js"></script>
     <title>Newsly | Settings</title>
@@ -50,7 +51,7 @@
         <li id="main-home">Home</li>
         <li id="main-membership">Membership</li>
         <li id="main-pricing">Pricing</li>
-        <li id="main-about" class="main-list-clicked">About</li>
+        <li id="main-about">About</li>
       </ul>
       <div id="menu">
         <div id="menu-list-container">
@@ -59,7 +60,7 @@
             <li id="menu-account">Account</li>
             <li id="menu-privacy">Privacy</li>
             <li id="menu-preferences">Preferences</li>
-            <li id="menu-bookmarks">Bookmarks</li>
+            <li id="menu-bookmarks" class="menu-clicked">Bookmarks</li>
             <li id="menu-help">Help</li>
           </ul>
         </div>
@@ -80,48 +81,30 @@
         </div>
       </div>
       <div id="display">
-        <div id="about">
-          <div id="about-top">
-            <h1 id="about-title">About Newsly</h1>
+        <div id="bookmarks">
+          <div id="bookmarks-top">
+            <h1 id="bookmarks-title">Bookmarks</h1>
           </div>
-          <div id="about-bottom">
-            <p>
-              Welcome to Newsly, your go-to source for the latest news and
-              information from around the world. At Newsly, we understand the
-              importance of staying informed in today's fast-paced world, which
-              is why we've created a platform that aggregates news articles from
-              various reputable sources and presents them to you in one
-              convenient location.
-            </p>
-            <p>
-              Our mission at Newsly is to provide you with a comprehensive and
-              diverse selection of news stories, covering a wide range of topics
-              including politics, technology, business, entertainment, sports,
-              and more. Whether you're interested in global events or niche
-              subjects, Newsly has something for everyone.
-            </p>
-            <p>
-              With Newsly, you can easily stay up-to-date on current events,
-              explore different perspectives on trending topics, and discover
-              interesting stories that matter to you. Our user-friendly
-              interface allows you to customize your news feed based on your
-              interests, so you can focus on the topics that are most relevant
-              to you.
-            </p>
+          <div id="bookmarks-bottom">
+            <div id="bookmarked-container">
+              <button class="bookmarks-button" id="bookmarked-categories">
+                CATEGORIES
+              </button>
+              <button class="bookmarks-button" id="bookmarked-locations">
+                LOCATIONS
+              </button>
+              <button class="bookmarks-button" id="bookmarked-sources">
+                SOURCES
+              </button>
+              <button class="bookmarks-button" id="bookmarked-searches">
+                SEARCHES
+              </button>
+              <button class="bookmarks-button" id="bookmarked-stories">
+                STORIES
+              </button>
+            </div>
+            <div id="bookmarked"></div>
           </div>
-          <p>
-            At Newsly, we are committed to delivering accurate, unbiased, and
-            timely news coverage. We prioritize quality journalism and strive to
-            maintain the highest standards of integrity and professionalism in
-            everything we do. You can trust Newsly to provide you with reliable
-            information that you can count on.
-          </p>
-          <p>
-            Thank you for choosing Newsly as your trusted source for news and
-            information. We're excited to have you join our community, and we
-            look forward to keeping you informed and engaged every step of the
-            way.
-          </p>
         </div>
       </div>
     </div>
