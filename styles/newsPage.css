@@ -1849,7 +1849,7 @@ body {
 }
 .special-button-home-local::after {
   content: "";
-  background-color: rgb(144, 144, 144);
+  background-color: rgb(145, 21, 21);
   position: absolute;
   left: 0rem;
   height: 2.5rem;
