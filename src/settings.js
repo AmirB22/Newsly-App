@@ -9,6 +9,7 @@ const userAccounts = JSON.parse(localStorage.getItem("accounts"));
 
 const prefBtn = document.querySelector("#menu-preferences");
 const accountBtn = document.querySelector("#menu-account");
+const bookmarkBtn = document.querySelector("#menu-bookmarks");
 
 console.log(loggedInAs);
 console.log(userAccounts);
@@ -258,6 +259,7 @@ window.addEventListener("hashchange", function () {
   if (window.location.href.endsWith("about")) aboutPage();
   if (window.location.href.endsWith("membership")) membershipPage();
   if (window.location.href.endsWith("pricing")) pricingPage();
+  if (window.location.href.endsWith("bookmarks")) bookmarksPage();
   if (window.location.href.endsWith("home")) {
     homePage();
     menuContainer.classList.add("menu-smaller");
@@ -643,7 +645,8 @@ const changePages = function (e) {
   if (e.target.id === "menu-account") window.location.href = "#account";
   else if (e.target.id === "menu-preferences")
     window.location.href = "#preferences";
-  else return;
+  else if (e.target.id === "menu-bookmarks")
+    window.location.href = "#bookmarks";
 };
 
 menuBtns.forEach((el) => el.addEventListener("click", (e) => changePages(e)));
@@ -5131,23 +5134,82 @@ const aboutPageHTML = function (container) {
         </div>`);
 };
 
-const bookmarkPage = document.querySelector("#bookmarked");
-const bookmarkBtns = document.querySelectorAll(".bookmarks-button");
+let bookmarkPage;
+const bookmarksPage = function () {
+  removeCLickedClasses();
+  addMainList();
 
-bookmarkBtns.forEach((el) =>
-  el.addEventListener("click", function () {
-    if (this.id === "bookmarked-categories") bookmarkedCategoriesHTML();
-    if (this.id === "bookmarked-locations") bookmarkedLocationsHTML();
-    if (this.id === "bookmarked-sources") bookmarkedSourcesHTML();
-    if (this.id === "bookmarked-searches") bookmarkedSearchesHTML();
-    if (this.id === "bookmarked-stories") bookmarkedStoriesHTML();
-  })
-);
+  bookmarkBtn.classList.add("menu-clicked");
+
+  const container = document.querySelector("#display");
+
+  bookmarksPageHTML(container);
+
+  bookmarkPage = document.querySelector("#bookmarked");
+  const bookmarkBtns = document.querySelectorAll(".bookmarks-button");
+
+  bookmarkBtns.forEach((el) =>
+    el.addEventListener("click", function () {
+      if (this.id === "bookmarked-categories") bookmarkedCategoriesHTML();
+      if (this.id === "bookmarked-locations") bookmarkedLocationsHTML();
+      if (this.id === "bookmarked-sources") bookmarkedSourcesHTML();
+      if (this.id === "bookmarked-searches") bookmarkedSearchesHTML();
+      if (this.id === "bookmarked-stories") bookmarkedStoriesHTML();
+    })
+  );
+};
+const bookmarksPageHTML = function (container) {
+  return (container.innerHTML = `   <div id="bookmarks">
+          <div id="bookmarks-top">
+            <div id="bookmarks-title">
+              <h1>Bookmarks</h1>
+              <p>Check out your favorite categories</p>
+            </div>
+          </div>
+          <div id="bookmarks-bottom">
+            <div id="bookmarked-container">
+              <button class="bookmarks-button" id="bookmarked-categories">
+                CATEGORIES
+              </button>
+              <button class="bookmarks-button" id="bookmarked-locations">
+                LOCATIONS
+              </button>
+              <button class="bookmarks-button" id="bookmarked-sources">
+                SOURCES
+              </button>
+              <button class="bookmarks-button" id="bookmarked-searches">
+                SEARCHES
+              </button>
+              <button class="bookmarks-button" id="bookmarked-stories">
+                STORIES
+              </button>
+            </div>
+            <div id="bookmarked">
+              <div id="none-bookmarked">
+                <img
+                  src="https://s3.amazonaws.com/digitalgov/hcd-intro_w600.png"
+                  alt=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>`);
+};
 
 const bookmarkedCategoriesHTML = function () {
   bookmarkPage.innerHTML = "";
   if (!loggedInAs.following || loggedInAs.following.length === 0) {
-    bookmarkPage.innerHTML = `<p>No categories followed</p>`;
+    bookmarkPage.innerHTML = ` <div id="none-bookmarked">
+                <img
+                  id="none-bookmarked-image"
+                  src="https://lh3.googleusercontent.com/nuos3uRehQ6gjGOJeBVvbTBnKGRpFBNScAyr9f3Z9CEpd_Loi1zB39poSX9QbdIjTNevSt2o=rw"
+                  alt=""
+                />
+                <p id="none-bookmarked-paragraph"
+                  >When you follow a topic it will appear here. You'll also see
+                  more related stories in the For You feed.</p
+                >
+              </div>`;
     return;
   }
   bookmarkPage.innerHTML = `<div id="bookmarked-wrapper"></div>`;
@@ -5170,7 +5232,17 @@ const bookmarkedLocationsHTML = function () {
     !loggedInAs.followedLocation ||
     loggedInAs.followedLocation.length === 0
   ) {
-    bookmarkPage.innerHTML = `<p>No locations followed</p>`;
+    bookmarkPage.innerHTML = ` 
+              <div id="none-bookmarked">
+                <img
+                  id="none-bookmarked-image"
+                  src="https://lh3.googleusercontent.com/SOCn77ylz-ppK_80GxYfcNeHebloX7Vx9IvKbGzL6Aken01llMjZYjKoPTsvSTkGkBc1rwL2=rw"
+                  alt=""
+                />
+                <p id="none-bookmarked-paragraph"
+                  >When you follow a location it will appear here.</p
+                >
+              </div>`;
     return;
   }
   bookmarkPage.innerHTML = `<div id="bookmarked-wrapper"></div>`;
@@ -5190,7 +5262,17 @@ const bookmarkedLocationsHTML = function () {
 const bookmarkedSourcesHTML = function () {
   bookmarkPage.innerHTML = "";
   if (!loggedInAs.followedSources || loggedInAs.followedSources.length === 0) {
-    bookmarkPage.innerHTML = `<p>No sources followed</p>`;
+    bookmarkPage.innerHTML = `  
+              <div id="none-bookmarked">
+                <img
+                  id="none-bookmarked-image"
+                  src="https://lh3.googleusercontent.com/tFGfZ19wiRAvJsi5LeFL42_k_gV7bXV6dj3aKnatkcPRWKpu2fHUp367Awcdd7JceiE_bzBc=rw"
+                  alt=""
+                />
+                <p id="none-bookmarked-paragraph"
+                  >When you follow a source it will appear here. You'll also see more stories from that source in the For You feed.</p
+                >
+              </div>`;
     return;
   }
   bookmarkPage.innerHTML = `<div id="bookmarked-wrapper"></div>`;
@@ -5213,7 +5295,16 @@ const bookmarkedSearchesHTML = function () {
     !loggedInAs.followedSearches ||
     loggedInAs.followedSearches.length === 0
   ) {
-    bookmarkPage.innerHTML = `<p>No searches followed</p>`;
+    bookmarkPage.innerHTML = `  <div id="none-bookmarked">
+                <img
+                  id="none-bookmarked-image"
+                  src="https://lh3.googleusercontent.com/o_tai07eFNo8w2jfrZY_vh2Mv3DnrgXM1Ven6HBYn4vFxe949KwJgvAhYdq2Hmr4C_5jUbkkn84=rw"
+                  alt=""
+                />
+                <p id="none-bookmarked-paragraph"
+                  >Your saved searches will appear here.</p
+                >
+              </div>`;
     return;
   }
 
@@ -5234,7 +5325,17 @@ const bookmarkedSearchesHTML = function () {
 const bookmarkedStoriesHTML = function () {
   bookmarkPage.innerHTML = "";
   if (!loggedInAs.followedStories || loggedInAs.followedStories.length === 0) {
-    bookmarkPage.innerHTML = `<p>No stories followed</p>`;
+    bookmarkPage.innerHTML = ` 
+              <div id="none-bookmarked">
+                <img
+                  id="none-bookmarked-image"
+                  src="https://lh3.googleusercontent.com/7Iv4pkYA_hqsvlyo6XNy3UU0tUYgBR9rGrDHekm8-6cHO14jbUrOu8dCU86to2kzYoRVHJn0Ow=s0-rw"
+                  alt=""
+                />
+                <p id="none-bookmarked-paragraph"
+                  >Your saved stories will appear here.</p
+                >
+              </div>`;
     return;
   }
 
