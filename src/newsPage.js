@@ -4999,3 +4999,4 @@ if (Logged) {
 }
 
 //TODO: create settings page
+const muric = true;
